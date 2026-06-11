@@ -1,0 +1,41 @@
+name: "Standings & Scorers — Weekly Sync"
+
+# Runs every Monday at 07:00 UTC
+# Re-fetches full standings tables and top scorers for all 8 competitions
+# Single API call per competition — cheap and fast
+
+on:
+  schedule:
+    - cron: "0 7 * * 1"   # Monday 07:00 UTC
+  workflow_dispatch:
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  sync-standings-scorers:
+    name: "Sync standings + scorers (all competitions)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Sync standings
+        run: python workers/fetch_competitions.py --mode standings
+
+      - name: Sync scorers
+        run: python workers/fetch_competitions.py --mode scorers
+
+      - name: Commit updated standings + scorers
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): weekly standings + scorers sync [skip ci]"
+          file_pattern: "data/**/*.json"

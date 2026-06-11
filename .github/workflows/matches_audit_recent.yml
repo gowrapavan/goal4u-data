@@ -1,0 +1,38 @@
+name: "Matches — Recent Audit"
+
+# Runs every 3 hours around the clock
+# Catches matches from the last 72h that are still stale
+# (status never updated, goals missing, lineup empty, etc.)
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch:
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  audit-recent:
+    name: "Patch matches from last 3 days"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run recent audit (lookback 72h)
+        run: python workers/audit_matches.py --mode recent
+
+      - name: Commit patched match files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): recent match audit [skip ci]"
+          file_pattern: "data/**/*.json"

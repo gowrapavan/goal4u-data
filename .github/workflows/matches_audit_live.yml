@@ -1,0 +1,38 @@
+name: "Matches — Live Audit"
+
+# Runs every 15 min between 13:00–23:45 UTC
+# Covers all European kick-off slots (14:00–23:00 UTC)
+# Only re-fetches matches that are IN_PLAY, PAUSED, or SCHEDULED with a past utcDate
+
+on:
+  schedule:
+    - cron: "0,15,30,45 13-23 * * *"
+  workflow_dispatch: # manual trigger from GitHub Actions UI
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  audit-live:
+    name: "Patch live & just-finished matches"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run live audit (lookback 6h)
+        run: python workers/audit_matches.py --mode live
+
+      - name: Commit patched match files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): live match audit [skip ci]"
+          file_pattern: "data/**/*.json"

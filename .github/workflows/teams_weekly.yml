@@ -1,0 +1,39 @@
+name: "Teams — Weekly Sync"
+
+# Runs every Monday at 08:00 UTC (1hr after standings sync to avoid API overlap)
+# Uses GET /competitions/{code}/teams — one call per competition, no per-team 403s
+# Squad/coach data is stable; only needs updating during transfer windows
+# Can also be triggered manually from GitHub Actions UI during transfer windows
+
+on:
+  schedule:
+    - cron: "0 8 * * 1"   # Monday 08:00 UTC
+  workflow_dispatch:
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  sync-teams:
+    name: "Sync teams + squads (all competitions)"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Sync teams
+        run: python workers/fetch_teams.py
+
+      - name: Commit updated team files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): weekly teams sync [skip ci]"
+          file_pattern: "data/**/*.json"
