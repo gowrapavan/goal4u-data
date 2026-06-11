@@ -1,0 +1,46 @@
+name: "Matches — Full Fetch"
+
+# Runs once a week (Every Sunday at 04:00 UTC)
+# Exhaustively pulls down the entire season match fixture grid across all 8 competitions.
+# This acts as a master baseline reset so the incremental live auditors have clean files to patch.
+
+on:
+  schedule:
+    - cron: "0 4 * * 0"   # Sunday 04:00 UTC
+  workflow_dispatch:     # Allows manual override triggers via GitHub UI
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  fetch-matches:
+    name: "Exhaustive fetch of all season fixtures"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run full match fetch
+        run: python workers/fetch_matches.py
+
+      - name: Force track data updates
+        run: git add -f data/
+
+      - name: Commit complete match logs
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore(data): full master match logs refreshed [skip ci]"
+          file_pattern: "data/**/*.json"
+          add_options: "-f"
