@@ -17,6 +17,11 @@ jobs:
   audit-live:
     name: "Patch live & just-finished matches"
     runs-on: ubuntu-latest
+    
+    # === ADD THESE THREE LINES HERE ===
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 

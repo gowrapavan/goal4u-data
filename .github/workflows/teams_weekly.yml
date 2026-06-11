@@ -18,6 +18,11 @@ jobs:
   sync-teams:
     name: "Sync teams + squads (all competitions)"
     runs-on: ubuntu-latest
+    
+    # === ADD THESE THREE LINES HERE ===
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 

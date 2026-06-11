@@ -17,6 +17,11 @@ jobs:
   sync-standings-scorers:
     name: "Sync standings + scorers (all competitions)"
     runs-on: ubuntu-latest
+
+    # === ADD THESE THREE LINES HERE ===
+    permissions:
+      contents: write
+      
     steps:
       - uses: actions/checkout@v4
 
