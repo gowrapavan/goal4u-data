@@ -14,9 +14,6 @@
             lift #1C2030 · border #242A3C · 
             electric #6EE7B7 (mint) · pulse #F472B6 (live pink) ·
             gold #FBBF24 · ice #38BDF8 · mist #64748B · text #E2E8F0
-   Type: Syne (display, widget headings) · Inter (body) · DM Mono (data)
-   Signature: Pitch-map inspired widget grid — modular cards that mirror
-              a football manager dashboard, not a website
 ═══════════════════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -62,6 +59,12 @@ body {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
+/* ── INTERACTIVE ELEMENTS ────────────────────────────────────────────── */
+.team-link { cursor: pointer; transition: opacity 0.15s, transform 0.15s; display: flex; align-items: center; border-radius: 4px; }
+.team-link:hover { opacity: 0.8; transform: translateX(2px); }
+.team-link-inline { cursor: pointer; transition: opacity 0.15s; }
+.team-link-inline:hover { opacity: 0.7; color: var(--mint) !important; }
+
 /* ── TOPBAR ─────────────────────────────────────────────────────────── */
 .topbar {
   position: sticky; top: 0; z-index: 200;
@@ -88,416 +91,116 @@ body {
   display: flex; align-items: center; justify-content: center;
 }
 .brand-mark svg { width: 18px; height: 18px; }
-.brand-name {
-  font-family: var(--display);
-  font-size: 18px; font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text);
-}
+.brand-name { font-family: var(--display); font-size: 18px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
 .brand-name b { color: var(--mint); font-weight: 800; }
-.brand-pill {
-  font-family: var(--mono);
-  font-size: 9px; font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--dim);
-  background: var(--lift);
-  border: 1px solid var(--border);
-  padding: 2px 7px; border-radius: 3px;
-}
+.brand-pill { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.14em; color: var(--dim); background: var(--lift); border: 1px solid var(--border); padding: 2px 7px; border-radius: 3px; }
 
-.topbar-tabs {
-  display: flex; align-items: center; gap: 1px;
-  flex: 1; justify-content: center;
-}
-.ttab {
-  display: flex; align-items: center; gap: 6px;
-  padding: 6px 16px;
-  font-family: var(--display);
-  font-size: 12px; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--dim);
-  background: none; border: none; cursor: pointer;
-  border-radius: 6px;
-  transition: color 0.15s, background 0.15s;
-  white-space: nowrap;
-}
+.topbar-tabs { display: flex; align-items: center; gap: 1px; flex: 1; justify-content: center; }
+.ttab { display: flex; align-items: center; gap: 6px; padding: 6px 16px; font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); background: none; border: none; cursor: pointer; border-radius: 6px; transition: color 0.15s, background 0.15s; white-space: nowrap; }
 .ttab svg { width: 12px; height: 12px; }
 .ttab:hover { color: var(--text); background: var(--lift); }
 .ttab.on { color: var(--mint); background: var(--mint-d); }
 
-.topbar-right {
-  display: flex; align-items: center; gap: 8px;
-  flex-shrink: 0;
-}
-.sel {
-  background: var(--lift);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 5px 24px 5px 10px;
-  font-family: var(--mono);
-  font-size: 11px; font-weight: 500;
-  color: var(--text);
-  cursor: pointer; outline: none;
-  appearance: none; -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2364748B'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
-  transition: border-color 0.15s;
-}
+.topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.sel { background: var(--lift); border: 1px solid var(--border); border-radius: 6px; padding: 5px 24px 5px 10px; font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--text); cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2364748B'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 8px center; transition: border-color 0.15s; }
 .sel:hover, .sel:focus { border-color: var(--mint); }
 
-.btn-docs {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 12px;
-  background: var(--lift);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-family: var(--mono);
-  font-size: 10px; font-weight: 500;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--ice);
-  cursor: pointer;
-  transition: border-color 0.15s, background 0.15s;
-}
-.btn-docs:hover { border-color: var(--ice); background: var(--ice-d); }
-.btn-docs.on { border-color: var(--ice); background: var(--ice-d); }
-.btn-docs svg { width: 12px; height: 12px; }
-
-.sync-badge {
-  display: flex; align-items: center; gap: 5px;
-  font-family: var(--mono);
-  font-size: 9px; color: var(--dim);
-  letter-spacing: 0.08em;
-}
-.sync-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%; background: var(--emerald);
-  animation: pulse-dot 2.4s ease-in-out infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50%      { opacity: 0.4; transform: scale(0.7); }
-}
+.sync-badge { display: flex; align-items: center; gap: 5px; font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: 0.08em; }
+.sync-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--emerald); animation: pulse-dot 2.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
 
 /* ── LIVE BAR ────────────────────────────────────────────────────────── */
-.live-bar {
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  height: 34px;
-  overflow: hidden;
-  display: flex; align-items: center;
-}
-.live-tag {
-  background: var(--pink);
-  color: #000;
-  font-family: var(--mono);
-  font-size: 9px; font-weight: 500;
-  letter-spacing: 0.18em;
-  padding: 0 14px; height: 100%;
-  display: flex; align-items: center;
-  flex-shrink: 0;
-  clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%);
-  padding-right: 20px;
-}
+.live-bar { background: var(--panel); border-bottom: 1px solid var(--border); height: 34px; overflow: hidden; display: flex; align-items: center; }
+.live-tag { background: var(--pink); color: #000; font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.18em; padding: 0 14px; height: 100%; display: flex; align-items: center; flex-shrink: 0; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%); padding-right: 20px; }
 .live-scroll-wrap { overflow: hidden; flex: 1; }
-.live-scroll-track {
-  display: flex; align-items: center;
-  animation: live-scroll 40s linear infinite;
-  white-space: nowrap; will-change: transform;
-}
+.live-scroll-track { display: flex; align-items: center; animation: live-scroll 40s linear infinite; white-space: nowrap; will-change: transform; }
 .live-scroll-track:hover { animation-play-state: paused; }
-@keyframes live-scroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.live-item {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 0 20px;
-  font-family: var(--mono);
-  font-size: 10px; font-weight: 500;
-  color: var(--sub);
-  border-right: 1px solid var(--border);
-}
-.live-item .comp-tag {
-  font-size: 8px; letter-spacing: 0.1em;
-  color: var(--mint); font-weight: 500;
-}
+@keyframes live-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.live-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 20px; font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--sub); border-right: 1px solid var(--border); }
+.live-item .comp-tag { font-size: 8px; letter-spacing: 0.1em; color: var(--mint); font-weight: 500; }
 .live-item .score { font-weight: 500; color: var(--text); font-size: 11px; }
-.live-item .live-pip {
-  width: 5px; height: 5px;
-  border-radius: 50%; background: var(--pink);
-  animation: pulse-dot 1s ease-in-out infinite;
-  flex-shrink: 0;
-}
-.live-item .rank-tag {
-  font-size: 8px; letter-spacing: 0.06em;
-  color: var(--gold); font-weight: 500;
-}
-.live-item .goals-tag {
-  font-size: 11px; font-weight: 500; color: var(--gold);
-}
+.live-item .live-pip { width: 5px; height: 5px; border-radius: 50%; background: var(--pink); animation: pulse-dot 1s ease-in-out infinite; flex-shrink: 0; }
+.live-item .rank-tag { font-size: 8px; letter-spacing: 0.06em; color: var(--gold); font-weight: 500; }
+.live-item .goals-tag { font-size: 11px; font-weight: 500; color: var(--gold); }
 
 /* ── COMPETITION PILL NAV ─────────────────────────────────────────────── */
-.comp-nav {
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-  display: flex; align-items: center; gap: 6px;
-  overflow-x: auto; height: 44px;
-  scrollbar-width: none;
-}
+.comp-nav { background: var(--panel); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; align-items: center; gap: 8px; overflow-x: auto; height: 54px; scrollbar-width: none; }
 .comp-nav::-webkit-scrollbar { display: none; }
-.comp-pill {
-  display: flex; align-items: center; gap: 6px;
-  padding: 5px 12px;
-  background: none;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  font-family: var(--mono);
-  font-size: 10px; font-weight: 500;
-  letter-spacing: 0.08em;
-  color: var(--sub);
-  cursor: pointer; flex-shrink: 0;
-  transition: all 0.15s;
-}
+.comp-pill { display: flex; align-items: center; gap: 8px; padding: 6px 16px 6px 8px; background: none; border: 1px solid var(--border); border-radius: 20px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; color: var(--sub); cursor: pointer; flex-shrink: 0; transition: all 0.15s; }
 .comp-pill:hover { border-color: var(--mint); color: var(--text); }
 .comp-pill.on { background: var(--mint-d); border-color: var(--mint); color: var(--mint); }
-.comp-pill .flag { font-size: 13px; line-height: 1; }
+.comp-pill-logo { width: 22px; height: 22px; object-fit: contain; background: #FFFFFF; border-radius: 50%; padding: 3px; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.5); }
 
-/* ── DOCS OVERLAY ─────────────────────────────────────────────────────── */
-.docs-overlay {
-  display: none;
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(8,9,13,0.7);
-  backdrop-filter: blur(8px);
-}
+/* ── OVERLAYS (DOCS & TEAM MODAL) ─────────────────────────────────────── */
+.docs-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(8,9,13,0.7); backdrop-filter: blur(8px); }
 .docs-overlay.on { display: flex; align-items: flex-start; justify-content: flex-end; }
-.docs-drawer {
-  width: min(820px, 90vw);
-  height: 100vh;
-  background: var(--panel);
-  border-left: 1px solid var(--border);
-  display: flex; flex-direction: column;
-  overflow: hidden;
-}
-.docs-drawer-top {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 14px 20px;
-  border-bottom: 1px solid var(--border);
-  background: var(--lift);
-  flex-shrink: 0;
-}
-.docs-drawer-title {
-  font-family: var(--display);
-  font-size: 14px; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--ice);
-  display: flex; align-items: center; gap: 8px;
-}
+.docs-drawer { width: min(820px, 90vw); height: 100vh; background: var(--panel); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: -10px 0 30px rgba(0,0,0,0.5); }
+.docs-drawer-top { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid var(--border); background: var(--lift); flex-shrink: 0; }
+.docs-drawer-title { font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ice); display: flex; align-items: center; gap: 8px; }
 .docs-drawer-title svg { width: 14px; height: 14px; }
-.docs-close-btn {
-  background: none; border: none;
-  color: var(--sub); cursor: pointer;
-  font-size: 20px; line-height: 1;
-  padding: 2px 6px; border-radius: 4px;
-  transition: color 0.15s;
-}
+.docs-close-btn { background: none; border: none; color: var(--sub); cursor: pointer; font-size: 20px; line-height: 1; padding: 2px 6px; border-radius: 4px; transition: color 0.15s; }
 .docs-close-btn:hover { color: var(--text); }
-.docs-content {
-  flex: 1; overflow-y: auto;
-  padding: 28px 32px;
-  font-size: 13px; line-height: 1.8;
-  color: var(--sub);
-}
-.docs-content h1 { font-family: var(--display); font-size: 28px; font-weight: 800; color: var(--text); margin: 0 0 16px; letter-spacing: -0.02em; }
-.docs-content h2 { font-family: var(--display); font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint); margin: 32px 0 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-.docs-content h3 { font-family: var(--display); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ice); margin: 20px 0 6px; }
-.docs-content h4 { font-family: var(--mono); font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); margin: 14px 0 5px; }
-.docs-content p { margin-bottom: 10px; }
-.docs-content blockquote { border-left: 3px solid var(--mint); padding: 8px 16px; margin: 10px 0; background: var(--mint-g); color: var(--text); border-radius: 0 5px 5px 0; }
-.docs-content blockquote strong { color: var(--mint); }
-.docs-content code { font-family: var(--mono); font-size: 11px; background: var(--lift); border: 1px solid var(--border); color: var(--ice); padding: 1px 5px; border-radius: 3px; }
-.docs-content pre { background: var(--void); border: 1px solid var(--border); border-radius: 8px; padding: 14px 18px; overflow-x: auto; margin: 10px 0; }
-.docs-content pre code { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; }
-.docs-content ul, .docs-content ol { padding-left: 20px; margin-bottom: 10px; }
-.docs-content li { margin-bottom: 3px; }
-.docs-content hr { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
-.docs-content a { color: var(--ice); }
-.docs-content strong { color: var(--text); font-weight: 600; }
-.docs-content table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12px; }
-.docs-content table th { background: var(--lift); font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border); }
-.docs-content table td { padding: 7px 10px; border-bottom: 1px solid var(--bsoft); color: var(--sub); }
-.docs-content table td code { font-size: 10px; }
+.docs-content { flex: 1; overflow-y: auto; padding: 28px 32px; font-size: 13px; line-height: 1.8; color: var(--sub); }
 
 /* ── MAIN LAYOUT ─────────────────────────────────────────────────────── */
 .page { max-width: 1600px; margin: 0 auto; padding: 24px; }
-
-/* ── WIDGET GRID SYSTEM ──────────────────────────────────────────────── */
-/* 
-  We use a named-area CSS grid to create a dashboard-style layout.
-  On desktop: 3 columns. The widgets flow into positions.
-  Standings gets a wide column; matches get a card grid; scorers sidebar.
-*/
-.dashboard {
-  display: grid;
-  grid-template-columns: 1fr 1fr 320px;
-  grid-template-rows: auto;
-  gap: 16px;
-  align-items: start;
-}
-
-/* Scorers always goes in col 3 */
+.dashboard { display: grid; grid-template-columns: 1fr 1fr 320px; grid-template-rows: auto; gap: 16px; align-items: start; }
 .widget-scorers { grid-column: 3; grid-row: 1 / 4; }
-/* Standings spans col 1-2 */
-.widget-standings { grid-column: 1 / 3; }
-/* Matches grid col 1-2 */
-.widget-matches { grid-column: 1 / 3; }
-/* Stat bar col 1-2 */
-.widget-statbar { grid-column: 1 / 3; }
+.widget-standings, .widget-matches, .widget-statbar { grid-column: 1 / 3; }
 
 /* ── WIDGET SHELL ─────────────────────────────────────────────────────── */
-.widget {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.widget-head {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--lift);
-  gap: 10px;
-}
-.widget-title {
-  display: flex; align-items: center; gap: 8px;
-  font-family: var(--display);
-  font-size: 11px; font-weight: 700;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--sub);
-}
+.widget { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+.widget-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--lift); gap: 10px; }
+.widget-title { display: flex; align-items: center; gap: 8px; font-family: var(--display); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sub); }
 .widget-title svg { width: 12px; height: 12px; }
 .widget-accent { color: var(--mint); }
 .widget-accent-gold { color: var(--gold); }
 .widget-accent-ice { color: var(--ice); }
-.widget-accent-pink { color: var(--pink); }
-
-.widget-meta {
-  font-family: var(--mono);
-  font-size: 9px; color: var(--dim);
-  letter-spacing: 0.1em;
-}
+.widget-meta { font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: 0.1em; }
 
 /* ── STAT BAR WIDGET ──────────────────────────────────────────────────── */
-.statbar-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0;
-}
-.stat-tile {
-  padding: 16px;
-  border-right: 1px solid var(--border);
-  position: relative;
-}
+.statbar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+.stat-tile { padding: 16px; border-right: 1px solid var(--border); position: relative; }
 .stat-tile:last-child { border-right: none; }
-.stat-tile-label {
-  font-family: var(--mono);
-  font-size: 8px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 6px;
-}
-.stat-tile-value {
-  font-family: var(--display);
-  font-size: 26px; font-weight: 800;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  line-height: 1;
-}
+.stat-tile-label { font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+.stat-tile-value { font-family: var(--display); font-size: 26px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
 .stat-tile-value.mint { color: var(--mint); }
 .stat-tile-value.gold { color: var(--gold); }
-.stat-tile-value.ice  { color: var(--ice); }
+.stat-tile-value.ice { color: var(--ice); }
 .stat-tile-value.pink { color: var(--pink); }
-.stat-tile-sub {
-  font-family: var(--mono);
-  font-size: 9px; color: var(--dim);
-  margin-top: 4px;
-}
+.stat-tile-sub { font-family: var(--mono); font-size: 9px; color: var(--dim); margin-top: 4px; }
 
 /* ── STANDINGS WIDGET ─────────────────────────────────────────────────── */
-.standings-tab-bar {
-  display: flex; align-items: center;
-  border-bottom: 1px solid var(--border);
-  background: var(--card);
-  padding: 0 16px;
-  gap: 0;
-}
-.stab {
-  padding: 8px 14px;
-  font-family: var(--mono);
-  font-size: 9px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--dim);
-  background: none; border: none; cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: color 0.15s, border-color 0.15s;
-}
+.standings-tab-bar { display: flex; align-items: center; border-bottom: 1px solid var(--border); background: var(--card); padding: 0 16px; gap: 0; }
+.stab { padding: 8px 14px; font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); background: none; border: none; cursor: pointer; border-bottom: 2px solid transparent; transition: color 0.15s, border-color 0.15s; }
 .stab:hover { color: var(--text); }
 .stab.on { color: var(--mint); border-bottom-color: var(--mint); }
 
 .tbl { width: 100%; border-collapse: collapse; }
-.tbl-h th {
-  font-family: var(--mono);
-  font-size: 9px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--dim);
-  background: var(--lift);
-  padding: 8px 12px;
-  text-align: center;
-  border-bottom: 1px solid var(--border);
-  white-space: nowrap;
-}
+.tbl-h th { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); background: var(--lift); padding: 8px 12px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
 .tbl-h th:nth-child(2) { text-align: left; }
 .tbl-h th.col-pts { color: var(--mint); }
 
-.tbl-body tr {
-  border-bottom: 1px solid var(--bsoft);
-  transition: background 0.1s;
-}
+.tbl-body tr { border-bottom: 1px solid var(--bsoft); transition: background 0.1s; }
 .tbl-body tr:last-child { border-bottom: none; }
 .tbl-body tr:hover { background: rgba(110,231,183,0.03); }
-.tbl-body td {
-  padding: 9px 12px;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 11px;
-  color: var(--sub);
-  background: var(--card);
-}
-.tbl-body td:nth-child(2) {
-  text-align: left;
-  font-family: var(--body);
-  background: var(--card);
-}
+/* Specific override so group headers don't get the hover effect */
+.tbl-body tr.group-header-row:hover { background: var(--lift); }
+
+.tbl-body td { padding: 9px 12px; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--sub); background: var(--card); }
+.tbl-body td:nth-child(2) { text-align: left; font-family: var(--body); background: var(--card); }
 
 .pos-cell { display: flex; align-items: center; gap: 8px; justify-content: center; }
 .pos-bar { width: 3px; height: 18px; border-radius: 2px; flex-shrink: 0; }
-.pos-bar.cl    { background: var(--ice); }
-.pos-bar.euro  { background: var(--violet); }
-.pos-bar.rel   { background: var(--ruby); }
+.pos-bar.cl { background: var(--ice); }
+.pos-bar.euro { background: var(--violet); }
+.pos-bar.rel { background: var(--ruby); }
 .pos-bar.plain { background: var(--border); }
 .pos-num { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--sub); }
 
 .club-cell { display: flex; align-items: center; gap: 10px; }
 .club-crest { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
-.club-crest-fb {
-  width: 20px; height: 20px;
-  background: var(--lift); border: 1px solid var(--border);
-  border-radius: 3px;
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 6px; color: var(--dim);
-  flex-shrink: 0;
-}
+.club-crest-fb { width: 20px; height: 20px; background: var(--lift); border: 1px solid var(--border); border-radius: 3px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 6px; color: var(--dim); flex-shrink: 0; }
 .club-name { font-size: 12px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; }
 
 .pts-val { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--mint); }
@@ -511,50 +214,17 @@ body {
 .fp.D { background: var(--lift); color: var(--dim); }
 .fp.L { background: rgba(248,113,113,0.12); color: var(--ruby); }
 
-.group-banner {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px;
-  background: var(--lift);
-  border-bottom: 1px solid var(--border);
-}
-.group-bar { width: 3px; height: 16px; background: var(--mint); border-radius: 2px; flex-shrink: 0; }
-.group-name { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mint); }
-
 /* ── MATCH WIDGET GRID ────────────────────────────────────────────────── */
-.match-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 1px;
-  background: var(--border);
-}
-.mcard {
-  background: var(--card);
-  padding: 14px 16px;
-  transition: background 0.12s;
-  position: relative;
-  overflow: hidden;
-}
-.mcard::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--border);
-  transition: background 0.2s;
-}
+.match-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1px; background: var(--border); }
+.mcard { background: var(--card); padding: 14px 16px; transition: background 0.12s; position: relative; overflow: hidden; }
+.mcard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: var(--border); transition: background 0.2s; }
 .mcard:hover { background: var(--lift); }
 .mcard.is-live::before { background: var(--pink); }
 .mcard.is-live { background: rgba(244,114,182,0.04); }
 
-.mcard-top {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 12px;
-}
+.mcard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
 .mcard-date { font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: 0.06em; }
-
-.chip {
-  font-family: var(--mono); font-size: 8px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  padding: 2px 7px; border-radius: 3px;
-}
+.chip { font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; }
 .chip-live { background: var(--pink); color: #000; }
 .chip-ft { background: var(--lift); color: var(--sub); border: 1px solid var(--border); }
 .chip-sched { background: transparent; color: var(--dim); border: 1px solid var(--bsoft); }
@@ -563,54 +233,22 @@ body {
 .mcard-team { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .mcard-team-l { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; }
 .mcard-crest { width: 18px; height: 18px; object-fit: contain; flex-shrink: 0; }
-.mcard-name {
-  font-size: 12px; font-weight: 500; color: var(--text);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  letter-spacing: -0.01em;
-}
+.mcard-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.01em; }
 .mcard-name.faded { color: var(--sub); font-weight: 400; }
 .mcard-score { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text); min-width: 18px; text-align: right; flex-shrink: 0; }
 .mcard-score.live { color: var(--pink); }
 .mcard-score.faded { color: var(--dim); font-weight: 400; }
 
-.mcard-foot {
-  margin-top: 10px; padding-top: 8px;
-  border-top: 1px solid var(--bsoft);
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--mono); font-size: 9px; color: var(--dimmer);
-  letter-spacing: 0.06em; text-transform: uppercase;
-}
-.mcard-formation {
-  font-family: var(--mono); font-size: 9px; color: var(--dim);
-  background: var(--lift); padding: 1px 5px; border-radius: 3px;
-}
+.mcard-foot { margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--bsoft); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 9px; color: var(--dimmer); letter-spacing: 0.06em; text-transform: uppercase; }
+.mcard-formation { font-family: var(--mono); font-size: 9px; color: var(--dim); background: var(--lift); padding: 1px 5px; border-radius: 3px; }
 
 /* ── SCORERS WIDGET (SIDEBAR) ─────────────────────────────────────────── */
-.scorer-list-head {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 8px 14px 8px;
-  font-family: var(--mono);
-  font-size: 8px; font-weight: 500;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--dim);
-  border-bottom: 1px solid var(--border);
-}
-.scorer-item {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 10px 14px;
-  border-bottom: 1px solid var(--bsoft);
-  gap: 12px;
-  transition: background 0.1s;
-}
+.scorer-list-head { display: flex; align-items: center; justify-content: space-between; padding: 8px 14px 8px; font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--border); }
+.scorer-item { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-bottom: 1px solid var(--bsoft); gap: 12px; transition: background 0.1s; }
 .scorer-item:last-child { border-bottom: none; }
 .scorer-item:hover { background: var(--mint-g); }
 .scorer-left { display: flex; align-items: center; gap: 10px; flex: 1; overflow: hidden; }
-.rank-chip {
-  width: 26px; height: 26px; border-radius: 5px;
-  font-family: var(--display); font-size: 13px; font-weight: 800;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
+.rank-chip { width: 26px; height: 26px; border-radius: 5px; font-family: var(--display); font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .rank-1 { background: var(--gold); color: #000; }
 .rank-2 { background: var(--sub); color: #000; }
 .rank-3 { background: #92400E; color: #fff; }
@@ -627,30 +265,15 @@ body {
 .stat-lbl { font-family: var(--mono); font-size: 7px; color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase; margin-top: 2px; }
 
 /* Match group header */
-.match-group-hd {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 16px;
-  background: var(--lift);
-  border-bottom: 1px solid var(--border);
-}
+.match-group-hd { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: var(--lift); border-bottom: 1px solid var(--border); }
 .match-group-hd .grp-bar { width: 2px; height: 14px; background: var(--mint); border-radius: 2px; flex-shrink: 0; }
 .match-group-hd span { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub); }
 
 /* ── EMPTY / ERROR STATES ────────────────────────────────────────────── */
-.empty-state {
-  padding: 48px 24px; text-align: center;
-  font-family: var(--display); font-size: 14px; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--dim);
-}
+.empty-state { padding: 48px 24px; text-align: center; font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dim); }
 .empty-state small { display: block; font-family: var(--mono); font-size: 9px; font-weight: 400; text-transform: none; letter-spacing: 0.08em; color: var(--dimmer); margin-top: 6px; }
 
-.error-state {
-  max-width: 480px; margin: 48px auto; padding: 32px 28px;
-  border: 1px solid rgba(248,113,113,0.2);
-  background: rgba(248,113,113,0.04);
-  border-radius: 10px; text-align: center;
-}
+.error-state { max-width: 480px; margin: 48px auto; padding: 32px 28px; border: 1px solid rgba(248,113,113,0.2); background: rgba(248,113,113,0.04); border-radius: 10px; text-align: center; }
 .error-state .err-icon { width: 40px; height: 40px; border-radius: 50%; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; color: var(--ruby); font-family: var(--mono); font-size: 18px; }
 .error-state .err-title { font-family: var(--display); font-size: 16px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #FCA5A5; margin-bottom: 10px; }
 .error-state .err-path { font-family: var(--mono); font-size: 10px; color: var(--sub); background: var(--void); padding: 10px 14px; border-radius: 6px; border: 1px solid var(--border); text-align: left; margin-bottom: 14px; line-height: 1.8; word-break: break-all; }
@@ -659,31 +282,16 @@ body {
 .error-state code { font-family: var(--mono); font-size: 10px; color: var(--ice); background: var(--lift); padding: 1px 5px; border-radius: 3px; }
 
 /* ── LOADING VEIL ─────────────────────────────────────────────────────── */
-.veil {
-  display: none; position: fixed; inset: 0; z-index: 800;
-  background: rgba(8,9,13,0.85); backdrop-filter: blur(6px);
-  align-items: center; justify-content: center; flex-direction: column; gap: 14px;
-}
+.veil { display: none; position: fixed; inset: 0; z-index: 800; background: rgba(8,9,13,0.85); backdrop-filter: blur(6px); align-items: center; justify-content: center; flex-direction: column; gap: 14px; }
 .veil.on { display: flex; }
-.spin {
-  width: 36px; height: 36px;
-  border: 2px solid var(--border);
-  border-top-color: var(--mint);
-  border-radius: 50%;
-  animation: spin 0.6s linear infinite;
-}
+.spin { width: 36px; height: 36px; border: 2px solid var(--border); border-top-color: var(--mint); border-radius: 50%; animation: spin 0.6s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .spin-label { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--mint); }
 
 /* ── RESPONSIVE ──────────────────────────────────────────────────────── */
 @media (max-width: 1200px) {
-  .dashboard {
-    grid-template-columns: 1fr 1fr;
-  }
-  .widget-scorers { grid-column: 1 / 3; }
-  .widget-standings { grid-column: 1 / 3; }
-  .widget-matches { grid-column: 1 / 3; }
-  .widget-statbar { grid-column: 1 / 3; }
+  .dashboard { grid-template-columns: 1fr 1fr; }
+  .widget-scorers, .widget-standings, .widget-matches, .widget-statbar { grid-column: 1 / 3; }
 }
 @media (max-width: 768px) {
   .topbar-inner { padding: 0 16px; }
@@ -739,10 +347,6 @@ body {
         <span id="sync-lbl">–</span>
       </div>
       <select class="sel" id="season-sel"></select>
-      <button class="btn-docs" id="docs-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Docs
-      </button>
     </div>
   </div>
 </nav>
@@ -756,19 +360,21 @@ body {
 </div>
 
 <!-- COMPETITION PILL NAV -->
-<div class="comp-nav" id="comp-nav"><!-- JS --></div>
+<div class="comp-nav" id="comp-nav"><!-- Dynamic from JSON --></div>
 
-<!-- DOCS DRAWER OVERLAY -->
-<div class="docs-overlay" id="docs-overlay">
-  <div class="docs-drawer">
+<!-- TEAM DETAILS MODAL OVERLAY -->
+<div class="docs-overlay" id="team-modal">
+  <div class="docs-drawer" style="width: min(560px, 95vw); margin-left: auto;">
     <div class="docs-drawer-top">
-      <div class="docs-drawer-title">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        Goal4u — API Documentation
+      <div class="docs-drawer-title" style="color:var(--text);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span id="team-modal-title">Team Profile</span>
       </div>
-      <button class="docs-close-btn" id="docs-close">&#x2715;</button>
+      <button class="docs-close-btn" id="team-close-btn">&#x2715;</button>
     </div>
-    <div class="docs-content" id="docs-content"><!-- MD rendered --></div>
+    <div class="docs-content" id="team-modal-content" style="padding: 24px;">
+      <!-- Populated dynamically via fetch_teams.py schema -->
+    </div>
   </div>
 </div>
 
@@ -785,58 +391,105 @@ body {
 
 <script>
 (() => {
-/* ─── README (embedded) ─────────────────────────────────────────────── */
-const README_MD = "# GOAL4U Sports API\n\n> **Zero-rate-limit caching proxy for football data.**\n> A self-hosted FastAPI backend that decouples your frontend entirely from third-party API rate limits by using GitHub Actions as an automated data pipeline.\n\n---\n\n## Table of Contents\n\n- [Why This Exists](#why-this-exists)\n- [How It Works \u2014 The Full Picture](#how-it-works--the-full-picture)\n- [Repository Structure](#repository-structure)\n- [Data File Layout](#data-file-layout)\n- [Getting Started](#getting-started)\n  - [Prerequisites](#prerequisites)\n  - [Local Setup](#local-setup)\n  - [Running the API Server](#running-the-api-server)\n  - [Running Workers Manually](#running-workers-manually)\n- [GitHub Actions Setup](#github-actions-setup)\n  - [Required Secret](#required-secret)\n  - [Workflow Schedule](#workflow-schedule)\n  - [How the Commit Step Works](#how-the-commit-step-works)\n- [API Reference](#api-reference)\n  - [Base URL & Versioning](#base-url--versioning)\n  - [Standard Response Envelopes](#standard-response-envelopes)\n  - [Status Codes & Error Format](#status-codes--error-format)\n  - [Competitions](#competitions)\n  - [Matches \u2014 Competition-Scoped](#matches--competition-scoped)\n  - [Matches \u2014 Global Feed](#matches--global-feed)\n  - [Teams](#teams)\n  - [Health Check](#health-check)\n  - [Match Status Enum](#match-status-enum)\n- [Data Schemas](#data-schemas)\n  - [Competition Object](#competition-object)\n  - [Match Object](#match-object)\n  - [Team Object](#team-object)\n  - [Standing Row Object](#standing-row-object)\n- [Worker Architecture](#worker-architecture)\n  - [fetch\\_matches.py](#fetch_matchespy)\n  - [fetch\\_teams.py](#fetch_teamspy)\n  - [fetch\\_competitions.py](#fetch_competitionspy)\n  - [workers/utils.py \u2014 Shared Utilities](#workersutilspy--shared-utilities)\n- [The Three Ingestion Rules](#the-three-ingestion-rules)\n- [In-Memory Store \u2014 How FastAPI Serves Data](#in-memory-store--how-fastapi-serves-data)\n- [Adding a New Competition](#adding-a-new-competition)\n- [Configuration Reference](#configuration-reference)\n- [Tracked Competitions](#tracked-competitions)\n\n---\n\n## Why This Exists\n\nFootball data APIs like [football-data.org](https://www.football-data.org) enforce strict per-minute and per-day rate limits. On their free tier, you get **10 requests per minute**. The moment your frontend starts polling for live scores during a match window \u2014 or you get any meaningful number of simultaneous users \u2014 you hit `429 Too Many Requests` errors that surface directly to end-users.\n\nOn top of that, calling a third-party API directly from frontend code means your **API key is exposed in the browser**. Anyone can open DevTools, grab it, and exhaust your quota.\n\nThe standard solution is a backend proxy, but a traditional proxy still bottlenecks every frontend request through a live upstream call. The approach here goes further: **the third-party API is never in the request path at all.**\n\n```\n\u274c  Frontend \u2192 football-data.org    (rate-limited, key exposed)\n\u274c  Frontend \u2192 Backend \u2192 football-data.org   (still rate-limited under load)\n\u2705  GitHub Actions \u2192 football-data.org \u2192 JSON files \u2192 FastAPI \u2192 Frontend\n```\n\nThe upstream API is called exactly once per scheduled interval, by a single GitHub Actions cron job, regardless of how many users are hitting your frontend. The FastAPI server reads from files that are already on disk \u2014 every response is served from memory in under 50ms with zero external calls.\n\n---\n\n## How It Works \u2014 The Full Picture\n\nThe system has four layers. Data only ever flows in one direction: **external API \u2192 workers \u2192 JSON files \u2192 FastAPI \u2192 frontend**. No layer reverses this flow.\n\n```\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  LAYER 1 \u2014 SOURCE                                                    \u2502\n\u2502  football-data.org v4 API  (rate-limited, authenticated)            \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                             \u2502  HTTP GET (once per schedule interval)\n                             \u25bc\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  LAYER 2 \u2014 INGESTION (GitHub Actions cron jobs)                     \u2502\n\u2502                                                                      \u2502\n\u2502  fetch_matches.py      \u2192 runs every 15 min                          \u2502\n\u2502  fetch_competitions.py \u2192 runs hourly (standings) / weekly (meta)    \u2502\n\u2502  fetch_teams.py        \u2192 runs daily at 06:00 UTC                    \u2502\n\u2502                                                                      \u2502\n\u2502  Each worker: fetches \u2192 validates \u2192 flattens \u2192 writes JSON          \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                             \u2502  git commit (only if data changed)\n                             \u25bc\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  LAYER 3 \u2014 STORAGE (repo JSON files, organized by competition code) \u2502\n\u2502                                                                      \u2502\n\u2502  data/competitions.json       \u2190 all competition metadata            \u2502\n\u2502  data/matches/{CODE}.json     \u2190 per-league match feed               \u2502\n\u2502  data/teams/{CODE}.json       \u2190 per-league team rosters             \u2502\n\u2502  data/standings/{CODE}.json   \u2190 per-league standing tables          \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                             \u2502  loaded into memory at startup (once)\n                             \u25bc\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  LAYER 4 \u2014 SERVER (FastAPI, Python)                                 \u2502\n\u2502                                                                      \u2502\n\u2502  All data held in-memory after startup                              \u2502\n\u2502  Query filtering done in Python \u2014 zero disk reads per request       \u2502\n\u2502  Response time target: < 50ms                                       \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                             \u2502  JSON over HTTP\n                             \u25bc\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502  LAYER 5 \u2014 CONSUMER (your frontend)                                 \u2502\n\u2502                                                                      \u2502\n\u2502  Unlimited concurrent requests                                      \u2502\n\u2502  No API key required                                                \u2502\n\u2502  No rate limits                                                     \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n```\n\n### The Startup Load\n\nWhen the FastAPI server starts, `api/main.py` calls `load_all_data()` once. This function walks the `data/` directory tree, reads every JSON file, and builds four in-memory collections:\n\n| Store Key | Type | Populated From |\n|---|---|---|\n| `store[\"competitions\"]` | `list` | `data/competitions.json` |\n| `store[\"matches\"]` | `list` | All `data/matches/{CODE}.json` files, merged into one flat list |\n| `store[\"teams\"]` | `dict` keyed by `str(team_id)` | All `data/teams/{CODE}.json` files, each team indexed by its ID |\n| `store[\"standings\"]` | `dict` keyed by `competition_code` | All `data/standings/{CODE}.json` files |\n\nAfter startup, the server never touches the filesystem again until it restarts. Every router reads directly from `store`. This is why the `< 50ms` response time target is achievable regardless of query complexity.\n\n### The GitHub Actions Sync\n\nEach GitHub Actions workflow:\n\n1. Checks out the repository\n2. Installs dependencies\n3. Runs the relevant Python worker with `FOOTBALL_DATA_API_KEY` injected from secrets\n4. Checks whether the data files actually changed (`git diff`)\n5. **Only commits if something changed** \u2014 prevents thousands of empty commits cluttering your history\n\nIf the upstream API fails (network error, 429, 5xx), the worker logs the error, writes nothing, and GitHub Actions exits with a non-zero status. The existing files on disk are untouched. The next run at the next schedule interval picks up where it left off.\n\n---\n\n## Repository Structure\n\n```\nGOAL4U-api/\n\u2502\n\u251c\u2500\u2500 data/                          # Static JSON files \u2014 the \"database\"\n\u2502   \u251c\u2500\u2500 competitions.json          # All tracked competition metadata\n\u2502   \u251c\u2500\u2500 matches/\n\u2502   \u2502   \u251c\u2500\u2500 PL.json                # Premier League matches\n\u2502   \u2502   \u251c\u2500\u2500 PD.json                # La Liga matches\n\u2502   \u2502   \u251c\u2500\u2500 BL1.json               # Bundesliga matches\n\u2502   \u2502   \u2514\u2500\u2500 ...                    # One file per tracked competition\n\u2502   \u251c\u2500\u2500 teams/\n\u2502   \u2502   \u251c\u2500\u2500 PL.json                # All Premier League clubs (array)\n\u2502   \u2502   \u251c\u2500\u2500 PD.json                # All La Liga clubs (array)\n\u2502   \u2502   \u2514\u2500\u2500 ...                    # One file per tracked competition\n\u2502   \u2514\u2500\u2500 standings/\n\u2502       \u251c\u2500\u2500 PL.json                # Premier League table (TOTAL/HOME/AWAY)\n\u2502       \u251c\u2500\u2500 PD.json                # La Liga table\n\u2502       \u2514\u2500\u2500 ...                    # One file per tracked competition\n\u2502\n\u251c\u2500\u2500 workers/                       # GitHub Actions data fetchers\n\u2502   \u251c\u2500\u2500 utils.py                   # Shared: HTTP client, safe_write, normalizers\n\u2502   \u251c\u2500\u2500 fetch_matches.py           # Fetches + writes data/matches/{CODE}.json\n\u2502   \u251c\u2500\u2500 fetch_competitions.py      # Fetches + writes competitions.json + standings\n\u2502   \u2514\u2500\u2500 fetch_teams.py             # Fetches + writes data/teams/{CODE}.json\n\u2502\n\u251c\u2500\u2500 api/                           # FastAPI application\n\u2502   \u251c\u2500\u2500 main.py                    # App entry point + startup data loader\n\u2502   \u251c\u2500\u2500 store.py                   # In-memory data store (shared singleton)\n\u2502   \u251c\u2500\u2500 utils.py                   # Shared router helpers (errors, list wrapper)\n\u2502   \u2514\u2500\u2500 routers/\n\u2502       \u251c\u2500\u2500 competitions.py        # /api/v1/competitions endpoints\n\u2502       \u251c\u2500\u2500 matches.py             # /api/v1/matches endpoints\n\u2502       \u2514\u2500\u2500 teams.py               # /api/v1/teams endpoints\n\u2502\n\u251c\u2500\u2500 .github/\n\u2502   \u2514\u2500\u2500 workflows/\n\u2502       \u251c\u2500\u2500 sync_matches.yml       # Cron: every 15 minutes\n\u2502       \u251c\u2500\u2500 sync_standings.yml     # Cron: every hour\n\u2502       \u251c\u2500\u2500 sync_teams.yml         # Cron: daily 06:00 UTC\n\u2502       \u2514\u2500\u2500 sync_competitions.yml  # Cron: weekly Monday 00:00 UTC\n\u2502\n\u251c\u2500\u2500 config.py                      # Single source of truth: codes, paths, strip lists\n\u251c\u2500\u2500 requirements.txt\n\u2514\u2500\u2500 README.md\n```\n\n---\n\n## Data File Layout\n\nEvery JSON file written by the workers follows the same envelope structure:\n\n```json\n{\n  \"_meta\": {\n    \"last_synced\": \"2026-06-10T14:30:00+00:00\",\n    \"source\": \"football-data.org v4\"\n  },\n  \"data\": [ ... ]\n}\n```\n\nThe `_meta` block is used by the `/health` endpoint to report last-sync times. The `data` key contains the actual payload \u2014 a list for matches and teams files, a dict for standings and competitions.\n\n### Why per-competition files?\n\nStoring data by competition code (e.g. `data/matches/PL.json`) rather than in a single monolithic file or by team/match ID provides several practical benefits:\n\n- **Targeted syncing** \u2014 the matches workflow only writes the file for each competition it successfully fetches. A failure for CL doesn't prevent PL from updating.\n- **Conditional Fallback isolation** \u2014 if the API returns a bad response for one competition, only that competition's file is preserved unchanged. Other files update normally.\n- **Git diff readability** \u2014 `git log --stat` shows exactly which league changed in each commit.\n- **Faster server startup** \u2014 files can be loaded in parallel if needed; the server doesn't have to parse one massive JSON blob.\n- **Debuggability** \u2014 you can open `data/matches/PL.json` in any editor and inspect what the frontend is actually being served for that league.\n\n---\n\n## Getting Started\n\n### Prerequisites\n\n- Python 3.11+\n- A free API key from [football-data.org](https://www.football-data.org/client/register)\n- Git\n\n### Local Setup\n\n```bash\n# Clone the repo\ngit clone https://github.com/your-username/goal4u-api.git\ncd goal4u-api\n\n# Create and activate a virtual environment\npython -m venv .venv\nsource .venv/bin/activate        # Linux/macOS\n# .venv\\Scripts\\activate         # Windows PowerShell\n\n# Install dependencies\npip install -r requirements.txt\n\n# Set your API key\nexport FOOTBALL_DATA_API_KEY=your_key_here\n# On Windows: $env:FOOTBALL_DATA_API_KEY = \"your_key_here\"\n```\n\n### Running the API Server\n\nThe server requires data files to exist before startup. Either run the workers first (see below) or use any pre-populated `data/` directory.\n\n```bash\n# Start the server from the repo root\nuvicorn api.main:app --reload\n\n# Server starts at http://localhost:8000\n# Interactive docs at http://localhost:8000/docs\n# ReDoc at http://localhost:8000/redoc\n```\n\nOn startup you will see log lines like:\n\n```\nINFO  Loaded 8 competitions\nINFO  Loaded 2847 matches from 8 competition files\nINFO  Loaded 160 teams\nINFO  Loaded standings for 5 competitions\n```\n\nIf any data file is missing, the server still starts \u2014 it just returns empty results for those endpoints and logs a warning. This means you can run the server before the first sync completes.\n\n### Running Workers Manually\n\nRun any worker from the **repo root** (not from inside the `workers/` directory \u2014 they use `sys.path.insert(0, \".\")` to find `config.py`):\n\n```bash\n# Fetch all matches \u2192 writes data/matches/{CODE}.json for each competition\npython workers/fetch_matches.py\n\n# Fetch all team rosters \u2192 writes data/teams/{CODE}.json for each competition\npython workers/fetch_teams.py\n\n# Fetch competition metadata only\npython workers/fetch_competitions.py --mode competitions\n\n# Fetch standings only\npython workers/fetch_competitions.py --mode standings\n\n# Fetch both (default)\npython workers/fetch_competitions.py --mode all\n```\n\nExpected log output for `fetch_matches.py`:\n\n```\n2026-06-10T14:30:00Z [INFO] fetch_matches: === fetch_matches started at 2026-06-10T14:30:00Z ===\n2026-06-10T14:30:01Z [INFO] fetch_matches: Fetching matches for PL ...\n2026-06-10T14:30:01Z [INFO] fetch_matches:   380 matches returned for PL\n2026-06-10T14:30:02Z [INFO] workers.utils: Wrote data/matches/PL.json (148332 bytes)\n2026-06-10T14:30:02Z [INFO] fetch_matches: Fetching matches for PD ...\n...\n2026-06-10T14:30:10Z [INFO] fetch_matches: === fetch_matches complete: 8/8 competitions written, 2847 matches total ===\n```\n\n---\n\n## GitHub Actions Setup\n\n### Required Secret\n\nGo to your repository \u2192 **Settings \u2192 Secrets and variables \u2192 Actions \u2192 New repository secret**.\n\n| Secret Name | Value |\n|---|---|\n| `FOOTBALL_DATA_API_KEY` | Your football-data.org API token |\n\nThis is the **only** manual setup step required. The `GITHUB_TOKEN` secret used to commit data files back to the repo is automatically provided by GitHub Actions \u2014 you don't need to create it.\n\n> **Security note:** The API key never appears in any committed file, log output, or workflow run summary. It is only ever injected as an environment variable for the duration of the worker process.\n\n### Workflow Schedule\n\n| Workflow File | Cron Expression | Frequency | What It Syncs |\n|---|---|---|---|\n| `sync_matches.yml` | `*/15 * * * *` | Every 15 minutes | `data/matches/{CODE}.json` for all competitions |\n| `sync_standings.yml` | `0 * * * *` | Every hour | `data/standings/{CODE}.json` for all competitions |\n| `sync_teams.yml` | `0 6 * * *` | Daily at 06:00 UTC | `data/teams/{CODE}.json` for all competitions |\n| `sync_competitions.yml` | `0 0 * * 1` | Weekly, Monday 00:00 UTC | `data/competitions.json` |\n\n**Why these intervals?**\n\n- **Matches every 15 min** \u2014 live scores update continuously during a match. 15 minutes is a safe polling interval that stays within the free tier's rate limits across all tracked competitions.\n- **Standings every hour** \u2014 the league table only changes once a match finishes. Hourly is more than sufficient.\n- **Teams daily** \u2014 squad changes (transfers, loans, injuries) happen slowly. A daily sync at 06:00 UTC catches overnight transfer news before the first matches of the day.\n- **Competition metadata weekly** \u2014 season dates, competition names, and area codes almost never change mid-season.\n\nAll workflows can also be triggered manually from the GitHub Actions UI using the `workflow_dispatch` trigger \u2014 useful for testing or forcing a refresh after a code change.\n\n### How the Commit Step Works\n\nEach workflow uses `git diff` to detect whether the data actually changed before committing:\n\n```yaml\n# From sync_matches.yml\nif git diff --quiet data/matches/; then\n  echo \"No changes \u2014 skipping commit\"\nelse\n  TIMESTAMP=$(date -u +\"%Y-%m-%dT%H:%MZ\")\n  git add data/matches/\n  git commit -m \"chore(sync): update matches ${TIMESTAMP}\"\n  git push\nfi\n```\n\nThis means:\n- Runs where the upstream API returned identical data (nothing changed since last sync) produce **zero commits** \u2014 your git log stays clean.\n- Each commit message is timestamped: `chore(sync): update matches 2026-06-10T14:30Z`\n- `git log --stat` on a match day shows exactly which competition files changed in each run.\n\n---\n\n## API Reference\n\n### Base URL & Versioning\n\nAll endpoints are prefixed with `/api/v1/`. The version prefix is hardcoded in `api/main.py` via `app.include_router(..., prefix=\"/api/v1\")` and will only change if a breaking schema change requires a v2.\n\n```\nhttp://localhost:8000/api/v1/     (local)\nhttps://your-deployment.com/api/v1/   (production)\n```\n\nInteractive API documentation (Swagger UI) is available at `/docs`. ReDoc is at `/redoc`.\n\n### Standard Response Envelopes\n\n**List responses** always use this wrapper \u2014 never a bare array:\n\n```json\n{\n  \"count\": 380,\n  \"filters\": {\n    \"status\": \"FINISHED\",\n    \"matchday\": 12\n  },\n  \"results\": [ ... ]\n}\n```\n\n- `count` \u2014 total number of items in `results` after all filters are applied\n- `filters` \u2014 echo of query parameters that were active in this request (omitted keys were not provided)\n- `results` \u2014 the actual array of objects\n\n**Single-object responses** return the object directly without a wrapper.\n\n### Status Codes & Error Format\n\n| HTTP Status | When |\n|---|---|\n| `200 OK` | Success |\n| `400 Bad Request` | Invalid query parameter value (unknown status, bad date format, conflicting params) |\n| `404 Not Found` | Unknown competition code, team ID, or match ID |\n\nAll errors follow this format:\n\n```json\n{\n  \"error\": \"Competition with code 'XYZ' not found. Use GET /api/v1/competitions to see all available codes.\",\n  \"status\": 404\n}\n```\n\n---\n\n### Competitions\n\n#### `GET /api/v1/competitions`\n\nReturns all tracked competitions as a list.\n\n**Response:**\n```json\n{\n  \"count\": 8,\n  \"filters\": {},\n  \"results\": [\n    {\n      \"id\": 2021,\n      \"name\": \"Premier League\",\n      \"code\": \"PL\",\n      \"type\": \"LEAGUE\",\n      \"area\": {\n        \"id\": 2072,\n        \"name\": \"England\",\n        \"code\": \"ENG\"\n      },\n      \"currentSeason\": {\n        \"id\": 733,\n        \"startDate\": \"2025-08-14\",\n        \"endDate\": \"2026-05-23\",\n        \"currentMatchday\": 38,\n        \"winner\": null\n      }\n    }\n  ]\n}\n```\n\n---\n\n#### `GET /api/v1/competitions/{code}`\n\nReturns a single competition by its code. Codes are case-insensitive.\n\n**Path parameter:**\n\n| Parameter | Type | Example |\n|---|---|---|\n| `code` | string | `PL`, `PD`, `BL1`, `CL` |\n\n**Response:** Competition object (same shape as above, unwrapped).\n\n**Error:** `404` if the code is not in the tracked list.\n\n---\n\n#### `GET /api/v1/competitions/{code}/standings`\n\nReturns the league table for a competition. Returns `404` for CUP-type competitions (Champions League group stage knockout rounds, World Cup) which use a bracket format instead of a points table.\n\n**Query parameters:**\n\n| Parameter | Type | Default | Description |\n|---|---|---|---|\n| `type` | `TOTAL` \\| `HOME` \\| `AWAY` | none | Filter to one standings type. Omit to return all three. |\n\n**Response:**\n```json\n{\n  \"competition_code\": \"PL\",\n  \"season\": {\n    \"id\": 733,\n    \"startDate\": \"2025-08-14\",\n    \"endDate\": \"2026-05-23\",\n    \"currentMatchday\": 38\n  },\n  \"filters\": { \"type\": \"TOTAL\" },\n  \"standings\": [\n    {\n      \"stage\": \"REGULAR_SEASON\",\n      \"type\": \"TOTAL\",\n      \"group\": null,\n      \"table\": [\n        {\n          \"position\": 1,\n          \"team\": {\n            \"id\": 65,\n            \"name\": \"Manchester City FC\",\n            \"shortName\": \"Man City\",\n            \"tla\": \"MCI\"\n          },\n          \"playedGames\": 38,\n          \"form\": \"WWWDW\",\n          \"won\": 28,\n          \"draw\": 5,\n          \"lost\": 5,\n          \"points\": 89,\n          \"goalsFor\": 96,\n          \"goalsAgainst\": 41,\n          \"goalDifference\": 55\n        }\n      ]\n    }\n  ]\n}\n```\n\n---\n\n#### `GET /api/v1/competitions/{code}/scorers`\n\nReturns top goal scorers for a competition, derived from the goal events stored in the match data. Only counts goals from `FINISHED` matches. Own goals are excluded from a player's tally but the match's goal event is still recorded.\n\n**Query parameters:**\n\n| Parameter | Type | Default | Constraints |\n|---|---|---|---|\n| `limit` | integer | `10` | min `1`, max `50` |\n\n**Response:**\n```json\n{\n  \"competition_code\": \"PL\",\n  \"filters\": { \"limit\": 10 },\n  \"count\": 10,\n  \"scorers\": [\n    {\n      \"player\": { \"id\": 44826, \"name\": \"Erling Haaland\" },\n      \"team\": { \"id\": 65, \"name\": \"Manchester City FC\", \"tla\": \"MCI\" },\n      \"goals\": 27,\n      \"assists\": 5,\n      \"penalties\": 4\n    }\n  ]\n}\n```\n\n---\n\n#### `GET /api/v1/competitions/{code}/matches`\n\nReturns all matches for a specific competition, with optional filtering.\n\n**Query parameters:**\n\n| Parameter | Type | Description |\n|---|---|---|\n| `matchday` | integer (\u2265 1) | Filter to a specific matchday |\n| `status` | string | Filter by status (see [Match Status Enum](#match-status-enum)). `LIVE` returns `IN_PLAY` + `PAUSED` combined. |\n\n**Examples:**\n```\nGET /api/v1/competitions/PL/matches?matchday=1\nGET /api/v1/competitions/PL/matches?status=LIVE\nGET /api/v1/competitions/PL/matches?matchday=12&status=FINISHED\n```\n\n**Response:** Standard list envelope containing [Match objects](#match-object).\n\n---\n\n#### `GET /api/v1/competitions/{code}/teams`\n\nReturns all clubs participating in a competition. Returns full team profiles (including squad) if team data has been synced; falls back to minimal stubs (id, name, tla) derived from match data if team files are not yet available.\n\n**Response:** Standard list envelope containing [Team objects](#team-object).\n\n---\n\n### Matches \u2014 Global Feed\n\n#### `GET /api/v1/matches`\n\nReturns matches across **all** tracked competitions, with filtering. All filter parameters are optional and combinable, with one exception: `date` cannot be combined with `dateFrom`/`dateTo`.\n\n**Query parameters:**\n\n| Parameter | Type | Description |\n|---|---|---|\n| `date` | `YYYY-MM-DD` | All matches on an exact date (UTC) |\n| `status` | string | Filter by status. `LIVE` returns `IN_PLAY` + `PAUSED` combined. |\n| `dateFrom` | `YYYY-MM-DD` | Start of a date range (inclusive) |\n| `dateTo` | `YYYY-MM-DD` | End of a date range (exclusive) |\n\n**Examples:**\n```\n# All matches today\nGET /api/v1/matches?date=2026-06-10\n\n# All currently live matches across all leagues\nGET /api/v1/matches?status=LIVE\n\n# All matches in a date window\nGET /api/v1/matches?dateFrom=2026-06-01&dateTo=2026-06-08\n\n# All finished matches today\nGET /api/v1/matches?date=2026-06-10&status=FINISHED\n```\n\n**Error cases:**\n- `400` if `date` is used together with `dateFrom` or `dateTo`\n- `400` if any date string is not in `YYYY-MM-DD` format\n- `400` if `status` is not a recognised value\n\n---\n\n#### `GET /api/v1/matches/{match_id}`\n\nReturns the full detail object for a single match.\n\n**Path parameter:**\n\n| Parameter | Type | Description |\n|---|---|---|\n| `match_id` | integer | The match's numeric ID from football-data.org |\n\n**Error:** `404` if no match with that ID exists in the current data.\n\n---\n\n### Teams\n\n#### `GET /api/v1/teams/{team_id}`\n\nReturns a team profile. By default the `squad` array is omitted to keep the response lightweight. Pass `?include=squad` to add the full player list.\n\n**Path parameter:**\n\n| Parameter | Type | Description |\n|---|---|---|\n| `team_id` | integer | The team's numeric ID from football-data.org |\n\n**Query parameters:**\n\n| Parameter | Type | Description |\n|---|---|---|\n| `include` | string | Pass `squad` to include the full squad array |\n\n**Examples:**\n```\nGET /api/v1/teams/65              # Man City \u2014 no squad\nGET /api/v1/teams/65?include=squad  # Man City \u2014 with full squad\n```\n\n**Response (without squad):**\n```json\n{\n  \"id\": 65,\n  \"name\": \"Manchester City FC\",\n  \"shortName\": \"Man City\",\n  \"tla\": \"MCI\",\n  \"venue\": \"Etihad Stadium\",\n  \"area_code\": \"ENG\",\n  \"coach\": {\n    \"id\": 33636,\n    \"name\": \"Pep Guardiola\",\n    \"nationality\": \"Spain\",\n    \"role\": \"HEAD_COACH\"\n  }\n}\n```\n\n**Response (with `?include=squad`):** Same as above with an additional `squad` array:\n\n```json\n{\n  \"squad\": [\n    {\n      \"id\": 44826,\n      \"name\": \"Erling Haaland\",\n      \"position\": \"Attacker\",\n      \"shirtNumber\": 9,\n      \"nationality\": \"Norway\"\n    }\n  ]\n}\n```\n\n**Error:** `404` if no team with that ID exists in the synced data.\n\n---\n\n### Health Check\n\n#### `GET /health`\n\nReturns the server's operational status and last-sync timestamps for all data resources. Useful for monitoring whether the GitHub Actions syncs are running correctly.\n\n**Response:**\n```json\n{\n  \"status\": \"ok\",\n  \"counts\": {\n    \"competitions\": 8,\n    \"matches\": 2847,\n    \"teams\": 160,\n    \"standings\": 5\n  },\n  \"last_synced\": {\n    \"competitions\": \"2026-06-09T00:00:00+00:00\",\n    \"matches\": {\n      \"PL\":  \"2026-06-10T14:30:00+00:00\",\n      \"PD\":  \"2026-06-10T14:30:01+00:00\",\n      \"BL1\": \"2026-06-10T14:30:02+00:00\"\n    }\n  }\n}\n```\n\n`standings` count will be less than the total number of tracked competitions because CUP-format competitions (WC, EC) do not have league tables.\n\n---\n\n### Match Status Enum\n\nThe `status` field on every match object will be one of these values:\n\n| Status | Meaning | Notes |\n|---|---|---|\n| `SCHEDULED` | Fixture date confirmed, kick-off time not yet set | Common for fixtures announced far in advance |\n| `TIMED` | Exact date and time confirmed | Standard pre-match state |\n| `IN_PLAY` | Match is currently live | Score updates every sync cycle |\n| `PAUSED` | Half-time break | Still counts as \"live\" for the `LIVE` filter |\n| `FINISHED` | Full-time result confirmed | Score is final |\n| `SUSPENDED` | Match stopped mid-game | May resume or be replayed |\n| `POSTPONED` | Rescheduled to a future date | `utcDate` will be updated once a new date is confirmed |\n| `CANCELLED` | Match will not be played | |\n| `AWARDED` | Result given without playing | Forfeit, walkover, or disqualification |\n| **`LIVE`** | **Pseudo-filter only** | **Not a real status value \u2014 expands to `IN_PLAY` + `PAUSED` in API queries** |\n\n---\n\n## Data Schemas\n\n### Competition Object\n\n```json\n{\n  \"id\": 2021,                        // football-data.org internal ID\n  \"name\": \"Premier League\",\n  \"code\": \"PL\",                      // 2\u20134 letter unique key used throughout this API\n  \"type\": \"LEAGUE\",                  // LEAGUE | CUP | LEAGUE_CUP\n  \"area\": {\n    \"id\": 2072,\n    \"name\": \"England\",\n    \"code\": \"ENG\"\n  },\n  \"currentSeason\": {\n    \"id\": 733,\n    \"startDate\": \"2025-08-14\",       // ISO 8601 date (no time component)\n    \"endDate\": \"2026-05-23\",\n    \"currentMatchday\": 38,\n    \"winner\": null                   // null during season; team object after final\n  }\n}\n```\n\n### Match Object\n\n```json\n{\n  \"id\": 419238,\n  \"competition_code\": \"PL\",\n  \"utcDate\": \"2026-04-12T14:00:00Z\", // ISO 8601 UTC\n  \"status\": \"FINISHED\",\n  \"matchday\": 32,\n  \"stage\": \"REGULAR_SEASON\",\n  \"group\": null,                     // non-null for group-stage cup matches\n  \"minute\": null,                    // current minute if IN_PLAY, else null\n  \"injuryTime\": null,                // injury time minutes if applicable\n  \"attendance\": 53274,\n  \"venue\": \"Etihad Stadium\",\n  \"homeTeam\": {\n    \"id\": 65,\n    \"name\": \"Manchester City FC\",\n    \"shortName\": \"Man City\",\n    \"tla\": \"MCI\"\n  },\n  \"awayTeam\": {\n    \"id\": 57,\n    \"name\": \"Arsenal FC\",\n    \"shortName\": \"Arsenal\",\n    \"tla\": \"ARS\"\n  },\n  \"score\": {\n    \"winner\": \"HOME_TEAM\",           // HOME_TEAM | AWAY_TEAM | DRAW | null\n    \"duration\": \"REGULAR\",          // REGULAR | EXTRA_TIME | PENALTIES\n    \"fullTime\":    { \"home\": 3, \"away\": 1 },\n    \"halfTime\":    { \"home\": 1, \"away\": 0 },\n    \"regularTime\": { \"home\": 3, \"away\": 1 },\n    \"extraTime\":   { \"home\": null, \"away\": null },\n    \"penalties\":   { \"home\": null, \"away\": null }\n  },\n  \"statistics\": {\n    \"home\": {\n      \"shots\": 16, \"shots_on_goal\": 8, \"shots_off_goal\": 5,\n      \"possession\": 61, \"fouls\": 9, \"corner_kicks\": 7,\n      \"yellow_cards\": 1, \"yellow_red_cards\": 0, \"red_cards\": 0,\n      \"saves\": 4, \"offsides\": 2\n    },\n    \"away\": {\n      \"shots\": 9, \"shots_on_goal\": 4, \"shots_off_goal\": 3,\n      \"possession\": 39, \"fouls\": 14, \"corner_kicks\": 3,\n      \"yellow_cards\": 2, \"yellow_red_cards\": 0, \"red_cards\": 0,\n      \"saves\": 5, \"offsides\": 1\n    }\n  },\n  \"goals\": [\n    {\n      \"minute\": 23,\n      \"injuryTime\": null,\n      \"type\": \"REGULAR\",             // REGULAR | PENALTY | OWN_GOAL\n      \"team\": { \"id\": 65, \"name\": \"Manchester City FC\", \"tla\": \"MCI\" },\n      \"scorer\": { \"id\": 44826, \"name\": \"Erling Haaland\" },\n      \"assist\": { \"id\": 11671, \"name\": \"Kevin De Bruyne\" },\n      \"score\": { \"home\": 1, \"away\": 0 }  // score at the moment of this goal\n    }\n  ],\n  \"bookings\": [\n    {\n      \"minute\": 56,\n      \"team\": { \"id\": 57, \"name\": \"Arsenal FC\", \"tla\": \"ARS\" },\n      \"player\": { \"id\": 8812, \"name\": \"Thomas Partey\" },\n      \"card\": \"YELLOW\"               // YELLOW | RED | YELLOW_RED\n    }\n  ],\n  \"substitutions\": [\n    {\n      \"minute\": 68,\n      \"team\": { \"id\": 65, \"name\": \"Manchester City FC\", \"tla\": \"MCI\" },\n      \"playerOut\": { \"id\": 44826, \"name\": \"Erling Haaland\" },\n      \"playerIn\":  { \"id\": 1234,  \"name\": \"Julian Alvarez\" }\n    }\n  ]\n}\n```\n\nAll fields are always present. Fields that are not yet applicable (e.g. `halfTime` score before half-time, `extraTime` in a regular-time match) are explicitly `null` rather than omitted. This is the **Null Normalization** rule \u2014 see [The Three Ingestion Rules](#the-three-ingestion-rules).\n\n### Team Object\n\n```json\n{\n  \"id\": 65,\n  \"name\": \"Manchester City FC\",\n  \"shortName\": \"Man City\",\n  \"tla\": \"MCI\",\n  \"venue\": \"Etihad Stadium\",\n  \"area_code\": \"ENG\",\n  \"coach\": {\n    \"id\": 33636,\n    \"name\": \"Pep Guardiola\",\n    \"nationality\": \"Spain\",\n    \"role\": \"HEAD_COACH\"\n  },\n  \"squad\": [\n    {\n      \"id\": 44826,\n      \"name\": \"Erling Haaland\",\n      \"position\": \"Attacker\",\n      \"shirtNumber\": 9,\n      \"nationality\": \"Norway\"\n    }\n  ]\n}\n```\n\n### Standing Row Object\n\n```json\n{\n  \"position\": 1,\n  \"team\": {\n    \"id\": 65,\n    \"name\": \"Manchester City FC\",\n    \"shortName\": \"Man City\",\n    \"tla\": \"MCI\"\n  },\n  \"playedGames\": 38,\n  \"form\": \"WWWDW\",        // last 5 matches: W=win, D=draw, L=loss\n  \"won\": 28,\n  \"draw\": 5,\n  \"lost\": 5,\n  \"points\": 89,\n  \"goalsFor\": 96,\n  \"goalsAgainst\": 41,\n  \"goalDifference\": 55\n}\n```\n\n---\n\n## Worker Architecture\n\n### `fetch_matches.py`\n\nThe most time-sensitive worker. Runs every 15 minutes.\n\n**Pipeline for each competition code:**\n\n```\n1. GET /competitions/{code}/matches\n   \u2514\u2500\u2500 Returns raw payload with full match objects for the current season\n\n2. For each match:\n   a. strip_fields() \u2014 remove lastUpdated, _links, referees, odds\n   b. flatten_team_ref() \u2014 reduce homeTeam/awayTeam to {id, name, shortName, tla}\n   c. flatten_score() \u2014 normalize all score sub-nodes, null-fill missing ones\n   d. flatten_statistics() \u2014 convert upstream list-of-stats to {home: {...}, away: {...}}\n      \u2022 Maps upstream space-separated names (\"Ball Possession\") to snake_case (\"possession\")\n      \u2022 Strips \"%\" from possession values, converts to float\n   e. flatten_goals/bookings/substitutions() \u2014 normalize event arrays\n   f. Null Normalization \u2014 ensure all MATCH_SCHEMA_KEYS are present\n\n3. Sort matches chronologically by utcDate\n\n4. safe_write(\"data/matches/{CODE}.json\", matches)\n   \u2514\u2500\u2500 Conditional Fallback: if fetch returned None, file is not touched\n```\n\n**Failure behavior:**\n- If one competition's fetch fails \u2192 that `{CODE}.json` is untouched; other competitions continue normally\n- If all competitions fail \u2192 `sys.exit(1)`, no files written\n\n### `fetch_teams.py`\n\nRuns daily. Makes **two API calls per team**: first to get the list of teams in a competition, then one per team to fetch its full profile including squad.\n\n**Pipeline for each competition code:**\n\n```\n1. GET /competitions/{code}/teams\n   \u2514\u2500\u2500 Returns a list of team stubs for all clubs in the competition\n\n2. For each team in the list:\n   a. GET /teams/{id}?squad=true\n      \u2514\u2500\u2500 Returns full team profile including coach and squad array\n   b. strip_fields() \u2014 remove crest, website, founded, clubColors, lastUpdated,\n                        _links, address, phone, email, activeCompetitions\n   c. flatten_coach() \u2014 normalize to {id, name, nationality, role}\n   d. flatten_player() for each squad member \u2014 keep id, name, position,\n                                                shirtNumber, nationality\n   e. Null Normalization on TEAM_SCHEMA_KEYS\n   f. Append to competition's team list\n\n3. safe_write(\"data/teams/{CODE}.json\", [team1, team2, ...])\n   \u2514\u2500\u2500 Full list for the competition written atomically as one file\n```\n\n**Key design choices:**\n- `seen_ids` set prevents duplicate fetches if a team appears multiple times in the upstream response\n- A failed detail fetch for one team is skipped with a warning \u2014 the rest of the competition's teams still write\n- If the initial `/competitions/{code}/teams` call fails, the entire `{CODE}.json` is preserved unchanged (Conditional Fallback). The server then loads the previous sync's data from that file on the next restart.\n\n### `fetch_competitions.py`\n\nRuns in two modes on different schedules:\n\n**`--mode competitions` (weekly):**\n```\nFor each tracked competition code:\n  GET /competitions/{code}\n  \u2192 strip, flatten, null-normalize\n  \u2192 append to list\n\nsafe_write(\"data/competitions.json\", [comp1, comp2, ...])\n```\n\n**`--mode standings` (hourly):**\n```\nFor each tracked competition code:\n  GET /competitions/{code}/standings\n  \u2192 if None returned \u2192 skip (Conditional Fallback, file preserved)\n  \u2192 if standings list is empty \u2192 skip (CUP format, no table)\n  \u2192 flatten each standings type (TOTAL/HOME/AWAY) and each table row\n  \u2192 safe_write(\"data/standings/{CODE}.json\", standings_object)\n```\n\nCUP-type competitions will never produce a standings file, which is why `standings` count in the `/health` response is lower than the total competition count.\n\n### `workers/utils.py` \u2014 Shared Utilities\n\nAll three workers import from this module. It contains four main components:\n\n**`fetch(endpoint, params, retries=3)`**\n\nThe single HTTP client used across all workers. Handles:\n- Attaching `X-Auth-Token` from the environment variable\n- `429` rate-limit responses: reads `X-RequestCounter-Reset` header and sleeps for that duration before retrying\n- `5xx` server errors: exponential back-off (2s, 4s, 8s)\n- `4xx` non-429 errors: logs and returns `None` immediately (don't retry a 404)\n- Network errors (`requests.RequestException`): retry with back-off up to `retries` attempts\n- Returns `None` on any failure \u2014 callers treat `None` as a signal to trigger Conditional Fallback\n\n**`safe_write(path, data)`**\n\nAtomic file writer with built-in Conditional Fallback:\n- If `data is None` \u2192 logs error, returns `False`, **does not touch the file**\n- Wraps data in the `{_meta, data}` envelope\n- Writes to `{path}.tmp` first, then `os.replace()` renames atomically \u2014 a crash mid-write never produces a corrupt file\n- Uses `json.dump(..., indent=2)` for human-readable, diffable output\n\n**`normalize_nulls(obj, schema_keys)`**\n\nEnsures every key in a schema is present in the output dict. Missing keys are set to `None` (explicit JSON `null`) rather than being omitted. This prevents `KeyError` exceptions in the frontend when a field is not yet available (e.g. `halfTime` before the half ends).\n\n**`strip_fields(obj, fields)`**\n\nRemoves non-essential fields in-place. Reduces file size and keeps payloads clean. Fields stripped include: emblem/crest URLs, `lastUpdated` timestamps, `_links` API metadata, ticket purchase links, internal admin fields. The strip lists are defined in `config.py`.\n\n---\n\n## The Three Ingestion Rules\n\nThese rules govern every worker. They are non-negotiable \u2014 violating any of them causes either frontend crashes (missing fields) or data loss (overwriting good data with bad).\n\n### Rule 1 \u2014 Conditional Fallback\n\n> If the external API returns any non-200 response, the worker must exit without writing any file.\n\nThe existing file on disk is treated as the last known good state. A failed sync preserves it exactly. The next successful sync will overwrite it with fresh data.\n\nThis means a 30-minute API outage appears to your frontend users as slightly stale data, not as a broken page with empty arrays or null responses.\n\n### Rule 2 \u2014 Null Normalization\n\n> All schema fields must always be present in the output JSON. Missing values are written as `null`, never omitted.\n\n```json\n// CORRECT \u2014 field present, value is null\n\"halfTime\": { \"home\": null, \"away\": null }\n\n// WRONG \u2014 field missing entirely\n// \"halfTime\" key does not exist\n```\n\nFrontend code that does `match.score.halfTime.home` must never throw a `TypeError: Cannot read property 'home' of undefined`. If the API didn't return a value, we write `null` so the key always exists.\n\n### Rule 3 \u2014 Storage Optimization (Strip on Ingest)\n\n> Non-essential fields from the upstream payload are removed during the flattening step, before writing.\n\nStripped fields include emblem/crest URLs, ticket purchase links, `lastUpdated` API timestamps, `_links` navigation metadata, historical seasons arrays, and admin/partner fields. The full strip lists are in `config.py`.\n\nThis keeps each JSON file as small as possible, which reduces startup load time, lowers memory usage in the FastAPI process, and keeps `git diff` output readable.\n\n---\n\n## In-Memory Store \u2014 How FastAPI Serves Data\n\n`api/store.py` defines a single module-level dict:\n\n```python\nstore: dict[str, Any] = {\n    \"competitions\": [],   # flat list of all competition objects\n    \"matches\":      [],   # flat list of ALL matches across all competitions\n    \"teams\":        {},   # dict: str(team_id) \u2192 team object\n    \"standings\":    {},   # dict: competition_code \u2192 standings object\n    \"_meta\":        {},   # last_synced timestamps\n}\n```\n\n`api/main.py` populates this dict once during the FastAPI lifespan startup hook. After that, every router in `api/routers/` imports `store` directly and filters in Python.\n\nKeeping `store` in its own module (`api/store.py`) rather than in `api/main.py` is intentional \u2014 it breaks the circular import that would otherwise occur when `main.py` imports routers and routers try to import from `main.py`.\n\n**Why a flat list for matches?**\n\nAll `data/matches/{CODE}.json` files are merged into a single `store[\"matches\"]` list on load. This means every filter operation (`?status=LIVE`, `?date=2026-06-10`, etc.) scans the full list. For the volumes involved (a few thousand matches per season across 8 competitions), this is faster than a database query with indexes because there is no serialization overhead, no network round-trip, and the data is already in CPU cache.\n\n**Why a dict keyed by `str(team_id)` for teams?**\n\nTeam lookups are almost always by ID (e.g. `GET /api/v1/teams/65`). A dict gives O(1) lookup instead of a linear scan. The key is `str(team_id)` rather than `int` because JSON object keys are always strings and using the same type avoids subtle bugs when the ID comes from URL path parameters (which FastAPI parses as `int`) vs JSON data (which Python's `json` module parses object keys as `str`).\n\n---\n\n## Adding a New Competition\n\n`config.py` is the only file you ever need to edit.\n\n```python\n# config.py\nTRACKED_COMPETITIONS: list[str] = [\n    \"PL\",    # Premier League\n    \"PD\",    # La Liga\n    \"BL1\",   # Bundesliga\n    \"SA\",    # Serie A\n    \"FL1\",   # Ligue 1\n    \"CL\",    # Champions League\n    \"EC\",    # European Championship\n    \"WC\",    # World Cup\n    \"PPL\",   # Primeira Liga (Portugal) \u2190 add this\n]\n```\n\nOn the next workflow run, all four workers will automatically include the new code in their fetch loops. New files will appear at:\n\n- `data/matches/PPL.json`\n- `data/teams/PPL.json`\n- `data/standings/PPL.json`\n\nThe new competition will appear in `GET /api/v1/competitions` immediately after the next weekly sync, and matches will start appearing in `GET /api/v1/competitions/PPL/matches` after the next 15-minute sync.\n\nTo find the correct competition code, browse the [football-data.org documentation](https://www.football-data.org/documentation/quickstart) or check the `code` field in the API's `/v4/competitions` response.\n\n---\n\n## Configuration Reference\n\nAll constants are defined in `config.py`.\n\n| Constant | Type | Description |\n|---|---|---|\n| `TRACKED_COMPETITIONS` | `list[str]` | Competition codes to sync. Adding a code here is the only change needed to track a new league. |\n| `COMPETITIONS_FILE` | `str` | Path: `data/competitions.json` |\n| `MATCHES_DIR` | `str` | Directory: `data/matches` \u2014 workers write `{CODE}.json` files here |\n| `STANDINGS_DIR` | `str` | Directory: `data/standings` |\n| `TEAMS_DIR` | `str` | Directory: `data/teams` |\n| `COMPETITION_STRIP_FIELDS` | `list[str]` | Fields stripped from upstream competition payloads: `emblem`, `lastUpdated`, `_links`, `seasons` |\n| `MATCH_STRIP_FIELDS` | `list[str]` | Fields stripped from upstream match payloads: `lastUpdated`, `_links`, `referees`, `odds` |\n| `TEAM_STRIP_FIELDS` | `list[str]` | Fields stripped from upstream team payloads: `crest`, `website`, `founded`, `clubColors`, `lastUpdated`, `_links`, `address`, `phone`, `email`, `activeCompetitions`, `runningCompetitions` |\n| `PERSON_STRIP_FIELDS` | `list[str]` | Fields stripped from person objects (scorers, assisters): `dateOfBirth`, `marketValue`, `contract`, `lastUpdated` |\n\n---\n\n## Tracked Competitions\n\n| Code | Competition | Country/Region |\n|---|---|---|\n| `PL` | Premier League | England |\n| `PD` | La Liga | Spain |\n| `BL1` | Bundesliga | Germany |\n| `SA` | Serie A | Italy |\n| `FL1` | Ligue 1 | France |\n| `CL` | UEFA Champions League | Europe |\n| `EC` | UEFA European Championship | Europe |\n| `WC` | FIFA World Cup | International |\n\n> Coverage depends on your football-data.org subscription tier. Free tier covers PL, PD, BL1, SA, FL1, CL, EC, and WC. Premium tiers add more leagues \u2014 add their codes to `TRACKED_COMPETITIONS` in `config.py` and they will be picked up automatically.";
-
-/* ─── COMPETITION CONFIG ─────────────────────────────────────────────── */
-const COMPS = [
-  { code:'PL',  name:'Premier League',   short:'EPL',  flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', country:'England' },
-  { code:'PD',  name:'La Liga',          short:'LAL',  flag:'🇪🇸', country:'Spain' },
-  { code:'BL1', name:'Bundesliga',       short:'BUN',  flag:'🇩🇪', country:'Germany' },
-  { code:'SA',  name:'Serie A',          short:'SRA',  flag:'🇮🇹', country:'Italy' },
-  { code:'FL1', name:'Ligue 1',          short:'L1F',  flag:'🇫🇷', country:'France' },
-  { code:'CL',  name:'Champions League', short:'UCL',  flag:'🇪🇺', country:'Europe' },
-  { code:'EC',  name:'Euros',            short:'EUR',  flag:'🏆', country:'UEFA' },
-  { code:'WC',  name:'World Cup',        short:'WC',   flag:'🌍', country:'FIFA' },
-];
-
 /* ─── STATE ──────────────────────────────────────────────────────────── */
+let COMPS = [];
 let currentComp = 'PL';
 let currentTab  = 'standings';
 let currentSeason = '';
+
+// Friendly names for the competition nav bar
+const CODE_MAP = {
+  'PL': 'Premier League',
+  'PD': 'La Liga',
+  'BL1': 'Bundesliga',
+  'SA': 'Serie A',
+  'FL1': 'Ligue 1',
+  'CL': 'Champions League',
+  'EC': 'Euros',
+  'WC': 'World Cup'
+};
+
+// Fixed sorting order for competitions
+const ORDER = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL', 'EC', 'WC'];
 
 /* ─── DOM ────────────────────────────────────────────────────────────── */
 const $ = id => document.getElementById(id);
 const seasonSel  = $('season-sel');
 const syncLbl    = $('sync-lbl');
-const docsBtn    = $('docs-btn');
-const docsOverlay= $('docs-overlay');
-const docsClose  = $('docs-close');
-const docsContent= $('docs-content');
 const liveTrack  = $('live-track');
 const compNav    = $('comp-nav');
 const dashboard  = $('dashboard');
 const veil       = $('veil');
+const teamModal  = $('team-modal');
+const teamClose  = $('team-close-btn');
 
-/* ─── SEASON INIT ────────────────────────────────────────────────────── */
-function initSeasons() {
+/* ─── APP INITIALIZATION ─────────────────────────────────────────────── */
+async function init() {
   const now = new Date();
   const y   = now.getFullYear();
   const cur = (now.getMonth() + 1 >= 7) ? `${y}-${y+1}` : `${y-1}-${y}`;
   const opts = [`${y-1}-${y}`, `${y}-${y+1}`];
-  seasonSel.innerHTML = opts.map(s =>
-    `<option value="${s}" ${s === cur ? 'selected' : ''}>${s}</option>`
-  ).join('');
+  seasonSel.innerHTML = opts.map(s => `<option value="${s}" ${s === cur ? 'selected' : ''}>${s}</option>`).join('');
   currentSeason = seasonSel.value;
+
+  // Wait for dynamic competitions load before painting dashboard
+  await fetchCompetitions();
+  
+  // Set default selection to the first loaded competition if PL wasn't fetched
+  if (COMPS.length > 0 && !COMPS.find(c => c.code === currentComp)) {
+    currentComp = COMPS[0].code;
+  }
+
+  buildCompNav();
+  buildLiveBar();
+  load();
+}
+
+async function fetchCompetitions() {
+  try {
+    const r = await fetch(`./data/${currentSeason}/competitions.json?t=${Date.now()}`);
+    if (r.ok) {
+      const j = await r.json();
+      COMPS = j.data || j;
+      
+      // Sort by fixed array order
+      COMPS.sort((a, b) => {
+        let ia = ORDER.indexOf(a.code);
+        let ib = ORDER.indexOf(b.code);
+        if (ia === -1) ia = 999;
+        if (ib === -1) ib = 999;
+        return ia - ib;
+      });
+    }
+  } catch (e) {
+    console.warn("Failed to load competitions.json. Using fallback.");
+  }
+  
+  if (!COMPS || COMPS.length === 0) {
+    COMPS = [
+      { code:'PL', name:'Premier League', area:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'} },
+      { code:'PD', name:'La Liga', area:{flag:'🇪🇸'} },
+      { code:'CL', name:'Champions League', area:{flag:'🇪🇺'} },
+      { code:'WC', name:'World Cup', area:{flag:'🌍'} }
+    ];
+  }
 }
 
 /* ─── COMPETITION PILL NAV ───────────────────────────────────────────── */
 function buildCompNav() {
-  compNav.innerHTML = COMPS.map(c =>
-    `<button class="comp-pill${c.code === currentComp ? ' on' : ''}" data-code="${c.code}">
-      <span class="flag">${c.flag}</span>${c.short}
-    </button>`
-  ).join('');
+  compNav.innerHTML = COMPS.map(c => {
+    const imgUrl = c.emblem || (c.area && c.area.flag) || '';
+    const iconHtml = imgUrl.length > 5 
+      ? `<img src="${imgUrl}" class="comp-pill-logo" alt="" onerror="this.style.display='none'">`
+      : `<span class="flag">⚽</span>`;
+      
+    const label = CODE_MAP[c.code] || c.name || c.code;
+    
+    return `<button class="comp-pill${c.code === currentComp ? ' on' : ''}" data-code="${c.code}">
+      ${iconHtml}${label}
+    </button>`;
+  }).join('');
+  
   compNav.querySelectorAll('.comp-pill').forEach(btn => {
     btn.addEventListener('click', () => {
       currentComp = btn.dataset.code;
@@ -847,72 +500,102 @@ function buildCompNav() {
   });
 }
 
-/* ─── MARKDOWN RENDERER ──────────────────────────────────────────────── */
-function md2html(md) {
-  let h = md
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-    .replace(/```([\s\S]*?)```/g, (_,c) => `<pre><code>${c.trim()}</code></pre>`)
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/^#### (.+)$/gm, '<h4>$1</h4>')
-    .replace(/^### (.+)$/gm,  '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm,   '<h2>$1</h2>')
-    .replace(/^# (.+)$/gm,    '<h1>$1</h1>')
-    .replace(/^> (.+)$/gm,    '<blockquote>$1</blockquote>')
-    .replace(/^---$/gm,       '<hr>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*([^*]+)\*/g,     '<em>$1</em>')
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-    .replace(/^  - (.+)$/gm, '<li style="margin-left:16px">$1</li>')
-    .replace(/^- (.+)$/gm,   '<li>$1</li>')
-    .replace(/^\d+\. (.+)$/gm,'<li>$1</li>')
-    .replace(/(<li[\s\S]*?<\/li>\n?)+/g, m => `<ul>${m}</ul>`)
-    .replace(/^(?!<[htplbricoau\d]|\s*$)(.+)$/gm, '<p>$1</p>');
-  return h;
+/* ─── TEAM PROFILE MODAL (Hooks into fetch_teams.py data) ────────────── */
+window.openTeamModal = async function(teamId) {
+  teamModal.classList.add('on');
+  $('team-modal-content').innerHTML = `
+    <div style="display:flex;justify-content:center;padding:48px 0;">
+      <div class="spin"></div>
+    </div>`;
+  
+  try {
+    const r = await fetch(`./data/${currentSeason}/teams/${currentComp}/${teamId}.json?t=${Date.now()}`);
+    if (!r.ok) throw new Error("Team details unavailable");
+    const j = await r.json();
+    const team = j.data || j;
+    renderTeamModal(team);
+  } catch(e) {
+    $('team-modal-content').innerHTML = `
+      <div class="empty-state">
+        Team Data Missing
+        <small>The pipeline has not fetched this team yet, or it's unavailable on this tier.<br><br>${e.message}</small>
+      </div>`;
+  }
+};
+
+function renderTeamModal(team) {
+  $('team-modal-title').textContent = team.name || 'Club Profile';
+  const crest = team.crest 
+    ? `<img src="${team.crest}" style="width:72px;height:72px;object-fit:contain;margin-right:20px;border-radius:50%;background:#fff;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,0.5);">` 
+    : `<div class="club-crest-fb" style="width:72px;height:72px;font-size:18px;margin-right:20px;">${(team.tla||'?')}</div>`;
+  
+  const coachHtml = team.coach && team.coach.name 
+    ? `<div style="font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:12px;">Manager: <span style="color:var(--text);font-weight:500;">${team.coach.name}</span></div>` 
+    : '';
+
+  let squadHtml = '';
+  if (team.squad && team.squad.length > 0) {
+    squadHtml = `
+      <table class="tbl" style="margin-top:24px;">
+        <thead class="tbl-h">
+          <tr>
+            <th style="width:40px">#</th>
+            <th style="text-align:left">Player</th>
+            <th>Pos</th>
+            <th>Nat</th>
+          </tr>
+        </thead>
+        <tbody class="tbl-body">
+          ${team.squad.map(p => `
+            <tr>
+              <td style="color:var(--dim)">${p.shirtNumber || '–'}</td>
+              <td style="text-align:left;color:var(--text);font-weight:500;">${p.name || '–'}</td>
+              <td style="font-size:10px;">${p.position || '–'}</td>
+              <td style="font-size:10px;">${p.nationality || '–'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+  } else {
+    squadHtml = `<div class="empty-state" style="padding:24px;">No squad data populated</div>`;
+  }
+
+  $('team-modal-content').innerHTML = `
+    <div style="display:flex;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--border);">
+      ${crest}
+      <div>
+        <div style="font-family:var(--display);font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px;letter-spacing:-0.02em;">${team.shortName || team.name}</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--sub)">${team.venue || ''} ${team.founded ? `· Est. ${team.founded}` : ''}</div>
+        ${coachHtml}
+      </div>
+    </div>
+    <h3 style="font-family:var(--display);font-size:13px;color:var(--mint);text-transform:uppercase;letter-spacing:0.06em;margin-top:24px;">First Team Squad</h3>
+    ${squadHtml}
+  `;
 }
 
-/* ─── DOCS ───────────────────────────────────────────────────────────── */
-function openDocs(open) {
-  if (open === undefined) open = !docsOverlay.classList.contains('on');
-  docsOverlay.classList.toggle('on', open);
-  docsBtn.classList.toggle('on', open);
-  if (open && !docsContent.innerHTML.trim()) {
-    docsContent.innerHTML = md2html(README_MD);
-  }
-}
-docsBtn.addEventListener('click', () => openDocs());
-docsClose.addEventListener('click', () => openDocs(false));
-docsOverlay.addEventListener('click', e => { if (e.target === docsOverlay) openDocs(false); });
+teamClose.addEventListener('click', () => teamModal.classList.remove('on'));
+teamModal.addEventListener('click', e => { if (e.target === teamModal) teamModal.classList.remove('on'); });
 
 /* ─── LIVE / TICKER BAR ──────────────────────────────────────────────── */
-/*
-  Live bar logic:
-  1. Try to find live matches (IN_PLAY / PAUSED) across all competitions → show them
-  2. If no live → show top 5 scorers from current competition (more useful than fake fixtures)
-  3. If no scorers → show recent results (FINISHED within 24h)
-*/
 async function buildLiveBar() {
-  const season = seasonSel.value;
-  const codes  = ['PL','PD','BL1','SA','FL1','CL'];
+  const codes = COMPS.slice(0, 6).map(c => c.code);
   let liveMatches = [];
   let recentResults = [];
 
   for (const code of codes) {
     try {
-      const r = await fetch(`./data/${season}/matches/${code}.json?t=${Date.now()}`);
+      const r = await fetch(`./data/${currentSeason}/matches/${code}.json?t=${Date.now()}`);
       if (!r.ok) continue;
       const j = await r.json();
       const matches = j.data || [];
       const live = matches.filter(m => m.status === 'IN_PLAY' || m.status === 'PAUSED');
-      const recent = matches.filter(m => {
-        if (m.status !== 'FINISHED') return false;
-        return (Date.now() - new Date(m.utcDate)) < 86400000;
-      });
+      const recent = matches.filter(m => m.status === 'FINISHED' && (Date.now() - new Date(m.utcDate)) < 86400000);
       liveMatches.push(...live.map(m => ({ m, code })));
       recentResults.push(...recent.slice(0, 3).map(m => ({ m, code })));
     } catch(_) {}
   }
 
-  // If we have live → show them with pink pip
   if (liveMatches.length > 0) {
     const itemHtml = liveMatches.map(({ m, code }) => {
       const h = (m.homeTeam||{}).shortName || (m.homeTeam||{}).tla || 'Home';
@@ -920,80 +603,46 @@ async function buildLiveBar() {
       const hs = m.score?.fullTime?.home ?? 0;
       const as_ = m.score?.fullTime?.away ?? 0;
       const min = m.minute ? `${m.minute}'` : 'LIVE';
-      return `<div class="live-item">
-        <div class="live-pip"></div>
-        <span class="comp-tag">${code}</span>
-        <span>${h}</span>
-        <span class="score">${hs}–${as_}</span>
-        <span>${a}</span>
-        <span class="mcard-formation">${min}</span>
-      </div>`;
+      return `<div class="live-item"><div class="live-pip"></div><span class="comp-tag">${code}</span><span>${h}</span><span class="score">${hs}–${as_}</span><span>${a}</span><span class="mcard-formation">${min}</span></div>`;
     }).join('');
     liveTrack.innerHTML = itemHtml + itemHtml;
     return;
   }
 
-  // No live → try top scorers from current competition
   try {
-    const r = await fetch(`./data/${season}/scorers/${currentComp}.json?t=${Date.now()}`);
+    const r = await fetch(`./data/${currentSeason}/scorers/${currentComp}.json?t=${Date.now()}`);
     if (r.ok) {
       const j = await r.json();
       const scorers = (j.data || {}).scorers || [];
       if (scorers.length > 0) {
-        const top = scorers.slice(0, 10);
-        const itemHtml = top.map((s, i) => {
-          const player = s.player || {};
-          const team = s.team || {};
-          return `<div class="live-item">
-            <span class="rank-tag">#${i+1}</span>
-            <span>${player.name || '—'}</span>
-            <span class="goals-tag">${s.goals ?? 0}⚽</span>
-            <span style="color:var(--sub);font-size:9px">${team.tla || team.shortName || ''}</span>
-          </div>`;
-        }).join('');
+        const itemHtml = scorers.slice(0, 10).map((s, i) => `<div class="live-item"><span class="rank-tag">#${i+1}</span><span>${(s.player||{}).name || '—'}</span><span class="goals-tag">${s.goals ?? 0}⚽</span><span style="color:var(--sub);font-size:9px">${(s.team||{}).tla || ''}</span></div>`).join('');
         liveTrack.innerHTML = itemHtml + itemHtml;
         return;
       }
     }
   } catch(_) {}
 
-  // Fallback: recent results
   if (recentResults.length > 0) {
     const itemHtml = recentResults.map(({ m, code }) => {
       const h = (m.homeTeam||{}).tla || (m.homeTeam||{}).shortName || 'HME';
       const a = (m.awayTeam||{}).tla || (m.awayTeam||{}).shortName || 'AWY';
-      const hs = m.score?.fullTime?.home ?? '?';
-      const as_ = m.score?.fullTime?.away ?? '?';
-      return `<div class="live-item">
-        <span class="comp-tag">${code}</span>
-        <span>${h}</span>
-        <span class="score">${hs}–${as_}</span>
-        <span>${a}</span>
-        <span style="color:var(--dim);font-size:8px">FT</span>
-      </div>`;
+      return `<div class="live-item"><span class="comp-tag">${code}</span><span>${h}</span><span class="score">${m.score?.fullTime?.home ?? '?'}–${m.score?.fullTime?.away ?? '?'}</span><span>${a}</span><span style="color:var(--dim);font-size:8px">FT</span></div>`;
     }).join('');
     liveTrack.innerHTML = itemHtml + itemHtml;
     return;
   }
 
-  // Ultimate fallback static
-  const comps = COMPS.slice(0, 5);
-  const staticHtml = comps.map(c =>
-    `<div class="live-item"><span class="comp-tag">${c.short}</span><span>${c.flag} ${c.name}</span></div>`
-  ).join('');
+  const staticHtml = COMPS.slice(0, 5).map(c => `<div class="live-item"><span class="comp-tag">${c.code}</span><span>${c.name}</span></div>`).join('');
   liveTrack.innerHTML = staticHtml + staticHtml;
 }
 
 /* ─── DATA FETCHER ───────────────────────────────────────────────────── */
 async function load() {
   veil.classList.add('on');
-  // load match data for stat bar + main content simultaneously
-  const season = seasonSel.value;
   const code = currentComp;
 
-  const dataPath = `./data/${season}/${currentTab}/${code}.json`;
-  // Also load standings for stat bar no matter which tab we're on
-  const standingsPath = `./data/${season}/standings/${code}.json`;
+  const dataPath = `./data/${currentSeason}/${currentTab}/${code}.json`;
+  const standingsPath = `./data/${currentSeason}/standings/${code}.json`;
 
   try {
     const [dataRes, standRes] = await Promise.all([
@@ -1023,53 +672,65 @@ async function load() {
 
 /* ─── RENDER DASHBOARD ───────────────────────────────────────────────── */
 function renderDashboard(data, standData, code) {
-  /* 
-    Always render:
-      - Scorers sidebar (col 3) from scorers data if on scorers tab,
-        or as sidebar companion on other tabs
-      - Stat bar (col 1-2) showing league-wide numbers
-      - Main content (col 1-2) based on current tab
-  */
-
-  if (currentTab === 'standings') {
-    renderStandingsDash(data, code);
-  } else if (currentTab === 'matches') {
-    renderMatchesDash(data, standData, code);
-  } else if (currentTab === 'scorers') {
-    renderScorersDash(data, code);
-  }
+  if (currentTab === 'standings') renderStandingsDash(data, code);
+  else if (currentTab === 'matches') renderMatchesDash(data, standData, code);
+  else if (currentTab === 'scorers') renderScorersDash(data, code);
 }
 
-/* ─── STANDINGS DASHBOARD ─────────────────────────────────────────────
-   JSON: { data: [ {stage, type, group, table: [StandingRow]} ] }
-   StandingRow: { position, team:{id,name,shortName,tla,crest},
-                  playedGames, won, draw, lost, points, goalsFor,
-                  goalsAgainst, goalDifference, form }
-────────────────────────────────────────────────────────────────────── */
+/* ─── STANDINGS DASHBOARD (WORLD CUP / CUP FORMAT AWARE) ────────────── */
 function renderStandingsDash(data, code) {
-  const groups = Array.isArray(data) ? data : [data];
+  let groups = [];
+  if (data && Array.isArray(data.standings)) groups = data.standings;
+  else if (Array.isArray(data)) groups = data;
+  else if (data) groups = [data];
+
   if (!groups.length || !groups[0]) {
-    dashboard.innerHTML = `<div class="widget widget-standings"><div class="empty-state">No standings data<small>Check data path: ./data/{season}/standings/${code}.json</small></div></div>`;
+    dashboard.innerHTML = `<div class="widget widget-standings"><div class="empty-state">No standings data<small>Check data path: ./data/${currentSeason}/standings/${code}.json</small></div></div>`;
     return;
   }
 
-  /* Stat bar — compute league-wide aggregates from TOTAL standings */
-  const totalGroup = groups.find(g => g.type === 'TOTAL') || groups[0];
-  const table = totalGroup.table || [];
-  const totalGoals = table.reduce((s,r) => s + (r.goalsFor || 0), 0);
-  const leader = table[0] || {};
+  // Identify World Cup / Group stage format
+  const isGroupStage = groups.some(g => g.group);
+
+  let allRows = [];
+  if (isGroupStage) {
+    allRows = groups.flatMap(g => g.table || []);
+  } else {
+    const totalGroup = groups.find(g => g.type === 'TOTAL') || groups[0];
+    allRows = totalGroup.table || [];
+  }
+
+  // Calculate Aggregates accurately for both single tables and nested groups
+  const totalGoals = allRows.reduce((s,r) => s + (r.goalsFor || 0), 0);
+  const totalMatches = allRows.reduce((s,r) => s + (r.playedGames || 0), 0) / 2;
+  const avgGoals = totalMatches > 0 ? (totalGoals / totalMatches).toFixed(2) : '0.00';
+
+  const sorted = [...allRows].sort((a,b) => (b.points||0) - (a.points||0) || (b.goalDifference||0) - (a.goalDifference||0));
+  const leader = sorted[0] || {};
   const leaderName = (leader.team?.tla || leader.team?.shortName || '–');
-  const leaderPts = leader.points ?? '–';
-  const totalMatches = table.reduce((s,r) => s + (r.playedGames || 0), 0) / 2;
-  const avgGoals = totalMatches > 0 ? (totalGoals / totalMatches).toFixed(2) : '–';
-  const relegated = table.filter((_,i) => i >= table.length - 3).map(r => r.team?.tla || '').join(' · ') || '–';
+  const leaderPts = leader.points ?? '0';
+
+  let relegatedLabel = 'Danger Zone';
+  let relegatedSub = 'relegation candidates';
+  let relegatedStr = '–';
+
+  if (isGroupStage) {
+    relegatedLabel = 'Total Teams';
+    relegatedSub = 'in tournament';
+    relegatedStr = `${allRows.length}`;
+  } else if (allRows.length > 6) {
+    relegatedStr = allRows.filter((_,i) => i >= allRows.length - 3).map(r => r.team?.tla || '').join(' · ') || '–';
+  }
+
+  const compObj = COMPS.find(c => c.code === code) || {};
+  const compName = CODE_MAP[code] || compObj.name || code;
 
   const statBarHtml = `
   <div class="widget widget-statbar">
     <div class="widget-head">
       <div class="widget-title widget-accent">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        League Pulse · ${COMPS.find(c=>c.code===code)?.name || code}
+        League Pulse · ${compName}
       </div>
       <span class="widget-meta">${currentSeason}</span>
     </div>
@@ -1092,41 +753,33 @@ function renderStandingsDash(data, code) {
       <div class="stat-tile">
         <div class="stat-tile-label">Matches Played</div>
         <div class="stat-tile-value">${Math.round(totalMatches)}</div>
-        <div class="stat-tile-sub">across ${table.length} clubs</div>
+        <div class="stat-tile-sub">across ${allRows.length} clubs</div>
       </div>
       <div class="stat-tile">
-        <div class="stat-tile-label">Danger Zone</div>
-        <div class="stat-tile-value pink" style="font-size:16px">${relegated}</div>
-        <div class="stat-tile-sub">relegation candidates</div>
+        <div class="stat-tile-label">${relegatedLabel}</div>
+        <div class="stat-tile-value pink" style="font-size:16px">${relegatedStr}</div>
+        <div class="stat-tile-sub">${relegatedSub}</div>
       </div>
     </div>
   </div>`;
 
-  /* Build standings table(s) */
-  let tableHtml = '';
-  groups.forEach(group => {
-    if (!group) return;
-    const rows  = group.table || [];
-    const label = group.group || (group.type !== 'TOTAL' ? group.type : '') || '';
-
-    if (label) {
-      tableHtml += `
-        <div class="group-banner">
-          <div class="group-bar"></div>
-          <span>${label.replace(/_/g,' ')}</span>
-        </div>`;
-    }
-
-    rows.forEach(row => {
+  const renderRows = (rows, isGrp) => {
+    return rows.map(row => {
       const pos  = row.position ?? 0;
       const team = row.team || {};
       const gd   = row.goalDifference ?? 0;
-      const form = (row.form || '').split(',').filter(Boolean);
+      
+      const formStr = row.form || '';
+      const form = formStr.includes(',') ? formStr.split(',').filter(Boolean) : formStr.split('').filter(Boolean);
 
       let barCls = 'plain';
-      if (pos <= 4)      barCls = 'cl';
-      else if (pos <= 6) barCls = 'euro';
-      else if (table.length > 6 && pos >= table.length - 2) barCls = 'rel';
+      if (isGrp) {
+        if (pos <= 2) barCls = 'cl'; // usually Top 2 advance out of groups
+      } else {
+        if (pos <= 4) barCls = 'cl';
+        else if (pos <= 6) barCls = 'euro';
+        else if (rows.length > 6 && pos >= rows.length - 2) barCls = 'rel';
+      }
 
       const crestHtml = team.crest
         ? `<img class="club-crest" src="${team.crest}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\\'club-crest-fb\\'>${(team.tla||'?').slice(0,3)}</div>'">`
@@ -1136,18 +789,53 @@ function renderStandingsDash(data, code) {
       const gdStr = gd > 0 ? `+${gd}` : String(gd);
       const formHtml = form.slice(-5).map(f => `<div class="fp ${f}">${f}</div>`).join('');
 
-      tableHtml += `<tr>
-        <td><div class="pos-cell"><div class="pos-bar ${barCls}"></div><span class="pos-num">${pos}</span></div></td>
-        <td><div class="club-cell">${crestHtml}<span class="club-name">${team.shortName||team.name||'–'}</span></div></td>
-        <td>${row.playedGames??0}</td>
-        <td><span class="pts-val">${row.points??0}</span></td>
-        <td>${row.won??0}</td><td>${row.draw??0}</td><td>${row.lost??0}</td>
-        <td>${row.goalsFor??0}</td><td>${row.goalsAgainst??0}</td>
-        <td class="${gdCls}" style="font-weight:500">${gdStr}</td>
-        <td><div class="form-row">${formHtml||'<span style="color:var(--dimmer)">–</span>'}</div></td>
+      return `<tr>
+        <td style="border-bottom: 1px solid var(--border);"><div class="pos-cell"><div class="pos-bar ${barCls}"></div><span class="pos-num">${pos}</span></div></td>
+        <td style="border-bottom: 1px solid var(--border);">
+          <div class="club-cell team-link" onclick="openTeamModal(${team.id})">
+            ${crestHtml}<span class="club-name">${team.shortName||team.name||'–'}</span>
+          </div>
+        </td>
+        <td style="border-bottom: 1px solid var(--border);">${row.playedGames??0}</td>
+        <td style="border-bottom: 1px solid var(--border);"><span class="pts-val">${row.points??0}</span></td>
+        <td style="border-bottom: 1px solid var(--border);">${row.won??0}</td>
+        <td style="border-bottom: 1px solid var(--border);">${row.draw??0}</td>
+        <td style="border-bottom: 1px solid var(--border);">${row.lost??0}</td>
+        <td style="border-bottom: 1px solid var(--border);">${row.goalsFor??0}</td>
+        <td style="border-bottom: 1px solid var(--border);">${row.goalsAgainst??0}</td>
+        <td class="${gdCls}" style="border-bottom: 1px solid var(--border);font-weight:500">${gdStr}</td>
+        <td style="border-bottom: 1px solid var(--border);"><div class="form-row">${formHtml||'<span style="color:var(--dimmer)">–</span>'}</div></td>
       </tr>`;
+    }).join('');
+  };
+
+  let tableHtml = '';
+  if (isGroupStage) {
+    groups.forEach(g => {
+      // PROPER Valid HTML injection for a table group header
+      tableHtml += `
+        <tr class="group-header-row" style="background: var(--lift);">
+          <td colspan="11" style="padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 3px; height: 16px; background: var(--mint); border-radius: 2px;"></div>
+              <span style="font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub);">${(g.group||'Group').replace(/_/g,' ')}</span>
+            </div>
+          </td>
+        </tr>`;
+      tableHtml += renderRows(g.table || [], true);
     });
-  });
+  } else {
+    const tgt = groups.find(g => g.type === 'TOTAL') || groups[0];
+    tableHtml += renderRows(tgt.table || [], false);
+  }
+
+  let tabBarHtml = '';
+  if (!isGroupStage && groups.length > 1) {
+    tabBarHtml = `
+    <div class="standings-tab-bar" id="std-tab-bar">
+      ${groups.map((g,i) => `<button class="stab${i===0?' on':''}" data-gi="${i}">${g.type||g.stage||'Group'}</button>`).join('')}
+    </div>`;
+  }
 
   const standingsWidgetHtml = `
   <div class="widget widget-standings">
@@ -1158,13 +846,9 @@ function renderStandingsDash(data, code) {
       </div>
       <div class="widget-meta" id="std-type-meta">${currentSeason}</div>
     </div>
-    <div class="standings-tab-bar" id="std-tab-bar">
-      ${groups.length > 1 ? groups.map((g,i) =>
-        `<button class="stab${i===0?' on':''}" data-gi="${i}">${g.type||g.stage||'Group'}</button>`
-      ).join('') : ''}
-    </div>
+    ${tabBarHtml}
     <div id="std-tables-wrap" style="overflow-x:auto">
-      <table class="tbl">
+      <table class="tbl" style="border-collapse: collapse;">
         <thead class="tbl-h">
           <tr>
             <th style="width:40px">Pos</th>
@@ -1182,204 +866,80 @@ function renderStandingsDash(data, code) {
     </div>
   </div>`;
 
-  /* Scorers sidebar — always shown as companion */
   const scorersSidebarHtml = `<div class="widget widget-scorers" id="scorers-sidebar-widget">
     <div class="widget-head">
       <div class="widget-title widget-accent-gold">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         Golden Boot
       </div>
-      <span class="widget-meta">${COMPS.find(c=>c.code===code)?.short||code}</span>
+      <span class="widget-meta">${compObj.code||code}</span>
     </div>
-    <div class="scorer-list-head">
-      <span>Player</span>
-      <span>Ast &nbsp; Goals</span>
-    </div>
-    <div id="scorers-sidebar-body"><div class="empty-state" style="padding:24px">Loading…<small>scorers/${code}.json</small></div></div>
+    <div class="scorer-list-head"><span>Player</span><span>Ast &nbsp; Goals</span></div>
+    <div id="scorers-sidebar-body"><div class="empty-state" style="padding:24px">Loading…</div></div>
   </div>`;
 
   dashboard.innerHTML = statBarHtml + standingsWidgetHtml + scorersSidebarHtml;
 
-  // Load scorers asynchronously into sidebar
-  loadScorersSidebar(code);
-
-  // Tab switching for TOTAL / HOME / AWAY
-  const tabBar = $('std-tab-bar');
-  if (tabBar && groups.length > 1) {
-    tabBar.querySelectorAll('.stab').forEach(btn => {
+  // Setup tab logic for non-group tournaments
+  if (!isGroupStage && groups.length > 1) {
+    const tabs = document.querySelectorAll('#std-tab-bar .stab');
+    tabs.forEach(btn => {
       btn.addEventListener('click', () => {
-        tabBar.querySelectorAll('.stab').forEach(b => b.classList.remove('on'));
+        tabs.forEach(b => b.classList.remove('on'));
         btn.classList.add('on');
-        const gi = parseInt(btn.dataset.gi);
-        const tbody = $('std-tbody');
-        if (!tbody) return;
-        const g = groups[gi];
-        const rows = g.table || [];
-        tbody.innerHTML = rows.map(row => {
-          const pos  = row.position ?? 0;
-          const team = row.team || {};
-          const gd   = row.goalDifference ?? 0;
-          const form = (row.form || '').split(',').filter(Boolean);
-          let barCls = 'plain';
-          if (pos <= 4) barCls = 'cl';
-          else if (pos <= 6) barCls = 'euro';
-          else if (rows.length > 6 && pos >= rows.length - 2) barCls = 'rel';
-          const crestHtml = team.crest
-            ? `<img class="club-crest" src="${team.crest}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\\'club-crest-fb\\'>${(team.tla||'?').slice(0,3)}</div>'">`
-            : `<div class="club-crest-fb">${(team.tla||team.shortName||'?').slice(0,3).toUpperCase()}</div>`;
-          const gdCls = gd > 0 ? 'gd-p' : gd < 0 ? 'gd-n' : 'gd-z';
-          const gdStr = gd > 0 ? `+${gd}` : String(gd);
-          const formHtml = form.slice(-5).map(f => `<div class="fp ${f}">${f}</div>`).join('');
-          return `<tr>
-            <td><div class="pos-cell"><div class="pos-bar ${barCls}"></div><span class="pos-num">${pos}</span></div></td>
-            <td><div class="club-cell">${crestHtml}<span class="club-name">${team.shortName||team.name||'–'}</span></div></td>
-            <td>${row.playedGames??0}</td>
-            <td><span class="pts-val">${row.points??0}</span></td>
-            <td>${row.won??0}</td><td>${row.draw??0}</td><td>${row.lost??0}</td>
-            <td>${row.goalsFor??0}</td><td>${row.goalsAgainst??0}</td>
-            <td class="${gdCls}" style="font-weight:500">${gdStr}</td>
-            <td><div class="form-row">${formHtml||'<span style="color:var(--dimmer)">–</span>'}</div></td>
-          </tr>`;
-        }).join('');
+        const g = groups[btn.dataset.gi];
+        document.getElementById('std-tbody').innerHTML = renderRows(g.table || [], false);
       });
     });
   }
+
+  loadScorersSidebar(code);
 }
 
-/* ─── LOAD SCORERS SIDEBAR ───────────────────────────────────────────── */
-async function loadScorersSidebar(code) {
-  const el = $('scorers-sidebar-body');
-  if (!el) return;
-  try {
-    const r = await fetch(`./data/${currentSeason}/scorers/${code}.json?t=${Date.now()}`);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    const j = await r.json();
-    const scorers = (j.data || {}).scorers || [];
-    el.innerHTML = scorers.length
-      ? scorerListHtml(scorers.slice(0, 20))
-      : `<div class="empty-state" style="padding:24px">No scorer data<small>scorers/${code}.json</small></div>`;
-  } catch(err) {
-    el.innerHTML = `<div class="empty-state" style="padding:24px">Unavailable<small>${err.message}</small></div>`;
-  }
-}
-
-/* ─── SCORERS LIST HTML HELPER ───────────────────────────────────────── */
-function scorerListHtml(scorers) {
-  return scorers.map((s, i) => {
-    const player  = s.player || {};
-    const team    = s.team   || {};
-    const goals   = s.goals  ?? 0;
-    const assists = s.assists ?? 0;
-    const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
-    return `<div class="scorer-item">
-      <div class="scorer-left">
-        <div class="rank-chip ${rankCls}">${i+1}</div>
-        <div class="scorer-info">
-          <div class="scorer-name">${player.name||'–'}</div>
-          <div class="scorer-club">${team.tla||team.shortName||team.name||'–'} ${player.nationality?`· ${player.nationality}`:''}</div>
-        </div>
-      </div>
-      <div class="scorer-right">
-        <div class="stat-col">
-          <div class="stat-n assists">${assists}</div>
-          <div class="stat-lbl">Ast</div>
-        </div>
-        <div class="stat-col">
-          <div class="stat-n goals">${goals}</div>
-          <div class="stat-lbl">Gls</div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-/* ─── MATCHES DASHBOARD ───────────────────────────────────────────────
-   JSON structure from fetch_matches.py:
-   { data: [ Match ] }
-   Match: {
-     id, utcDate, status, matchday, stage, group, minute, injuryTime,
-     attendance, venue, competition_code,
-     homeTeam: { id, name, shortName, tla, crest, leagueRank, formation, coach, lineup, bench },
-     awayTeam: { id, name, shortName, tla, crest, leagueRank, formation, coach, lineup, bench },
-     score: { winner, duration, fullTime:{home,away}, halfTime:{home,away}, ... },
-     statistics: { home:{shots,possession,...}, away:{...} },
-     goals: [ {minute, type, team, scorer, assist, score} ],
-     bookings: [ {minute, team, player, card} ],
-     referees: [ {id, name, type, nationality} ],
-     odds: { homeWin, draw, awayWin }
-   }
-────────────────────────────────────────────────────────────────────── */
+/* ─── MATCHES DASHBOARD ─────────────────────────────────────────────── */
 function renderMatchesDash(matches, standData, code) {
   if (!Array.isArray(matches) || !matches.length) {
     dashboard.innerHTML = `<div class="widget widget-matches"><div class="empty-state">No match data<small>./data/${currentSeason}/matches/${code}.json</small></div></div>`;
     return;
   }
 
-  // Separate by status
   const live    = matches.filter(m => m.status==='IN_PLAY'||m.status==='PAUSED');
   const upcoming= matches.filter(m => m.status==='SCHEDULED'||m.status==='TIMED').slice(0,20);
   const finished= matches.filter(m => m.status==='FINISHED').slice(-30).reverse();
 
-  // Stat bar — match counts
   const totalMatches = matches.length;
   const finishedCount= matches.filter(m=>m.status==='FINISHED').length;
-  const scheduledCount= matches.filter(m=>m.status==='SCHEDULED'||m.status==='TIMED').length;
-  const totalGoals = matches.filter(m=>m.status==='FINISHED').reduce((s,m) => {
-    const ft = m.score?.fullTime || {};
-    return s + (ft.home??0) + (ft.away??0);
-  }, 0);
-  const avgGoals = finishedCount > 0 ? (totalGoals / finishedCount).toFixed(2) : '–';
+  const scheduledCount= upcoming.length;
+  const totalGoals = matches.filter(m=>m.status==='FINISHED').reduce((s,m) => s + (m.score?.fullTime?.home??0) + (m.score?.fullTime?.away??0), 0);
+  const avgGoals = finishedCount > 0 ? (totalGoals / finishedCount).toFixed(2) : '0.00';
+
+  const compObj = COMPS.find(c => c.code === code) || {};
+  const compName = CODE_MAP[code] || compObj.name || code;
 
   const statBarHtml = `
   <div class="widget widget-statbar">
     <div class="widget-head">
       <div class="widget-title widget-accent">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-        Season Stats · ${COMPS.find(c=>c.code===code)?.name||code}
+        Season Stats · ${compName}
       </div>
       <span class="widget-meta">${currentSeason}</span>
     </div>
     <div class="statbar-grid">
-      <div class="stat-tile">
-        <div class="stat-tile-label">Total Matches</div>
-        <div class="stat-tile-value">${totalMatches}</div>
-        <div class="stat-tile-sub">all scheduled</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Played</div>
-        <div class="stat-tile-value mint">${finishedCount}</div>
-        <div class="stat-tile-sub">complete</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Remaining</div>
-        <div class="stat-tile-value ice">${scheduledCount}</div>
-        <div class="stat-tile-sub">upcoming</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Goals Scored</div>
-        <div class="stat-tile-value gold">${totalGoals}</div>
-        <div class="stat-tile-sub">season total</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Goals / Match</div>
-        <div class="stat-tile-value pink">${avgGoals}</div>
-        <div class="stat-tile-sub">avg per game</div>
-      </div>
+      <div class="stat-tile"><div class="stat-tile-label">Total Matches</div><div class="stat-tile-value">${totalMatches}</div><div class="stat-tile-sub">all scheduled</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Played</div><div class="stat-tile-value mint">${finishedCount}</div><div class="stat-tile-sub">complete</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Remaining</div><div class="stat-tile-value ice">${scheduledCount}</div><div class="stat-tile-sub">upcoming</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Goals Scored</div><div class="stat-tile-value gold">${totalGoals}</div><div class="stat-tile-sub">season total</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Goals / Match</div><div class="stat-tile-value pink">${avgGoals}</div><div class="stat-tile-sub">avg per game</div></div>
     </div>
   </div>`;
 
-  // Build match sections
   let sectionsHtml = '';
   const renderSection = (title, arr) => {
     if (!arr.length) return '';
-    const cards = arr.map(match => matchCardHtml(match)).join('');
     return `
-      <div class="match-group-hd">
-        <div class="grp-bar"></div>
-        <span>${title}</span>
-        <span style="color:var(--dim);font-size:9px;margin-left:auto">${arr.length} match${arr.length!==1?'es':''}</span>
-      </div>
-      <div class="match-grid">${cards}</div>`;
+      <div class="match-group-hd"><div class="grp-bar"></div><span>${title}</span><span style="color:var(--dim);font-size:9px;margin-left:auto">${arr.length} match${arr.length!==1?'es':''}</span></div>
+      <div class="match-grid">${arr.map(matchCardHtml).join('')}</div>`;
   };
 
   sectionsHtml += renderSection('🔴 LIVE NOW', live);
@@ -1393,7 +953,7 @@ function renderMatchesDash(matches, standData, code) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Fixtures &amp; Results
       </div>
-      <span class="widget-meta">${COMPS.find(c=>c.code===code)?.name||code}</span>
+      <span class="widget-meta">${compName}</span>
     </div>
     ${sectionsHtml || `<div class="empty-state">No fixture data</div>`}
   </div>`;
@@ -1404,7 +964,7 @@ function renderMatchesDash(matches, standData, code) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         Top Scorers
       </div>
-      <span class="widget-meta">${COMPS.find(c=>c.code===code)?.short||code}</span>
+      <span class="widget-meta">${compObj.code||code}</span>
     </div>
     <div class="scorer-list-head"><span>Player</span><span>Ast &nbsp; Gls</span></div>
     <div id="scorers-sidebar-body"><div class="empty-state" style="padding:24px">Loading…</div></div>
@@ -1414,11 +974,7 @@ function renderMatchesDash(matches, standData, code) {
   loadScorersSidebar(code);
 }
 
-/* ─── MATCH CARD HTML ─────────────────────────────────────────────────
-   Uses: status, minute, utcDate, homeTeam/awayTeam (shortName, tla, crest,
-         leagueRank, formation), score.fullTime, score.halfTime,
-         matchday, stage, goals (for scorers list)
-────────────────────────────────────────────────────────────────────── */
+/* ─── MATCH CARD HTML ───────────────────────────────────────────────── */
 function matchCardHtml(match) {
   const home   = match.homeTeam || {};
   const away   = match.awayTeam || {};
@@ -1429,66 +985,59 @@ function matchCardHtml(match) {
   const hs  = match.score?.fullTime?.home;
   const as_ = match.score?.fullTime?.away;
   const hasScore = hs != null && as_ != null;
-
   const homeWon = hasScore && hs > as_;
   const awayWon = hasScore && as_ > hs;
 
   let dateStr = '–';
   if (match.utcDate) {
     const d = new Date(match.utcDate);
-    dateStr = d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' })
-            + ' ' + d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', hour12:false });
+    dateStr = d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' }) + ' ' + d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', hour12:false });
   }
 
   let chipHtml;
   if (isLive) {
-    const min = match.minute ? `${match.minute}'` : 'LIVE';
+    const min = match.minute ? `${match.minute}'${match.injuryTime ? `+${match.injuryTime}` : ''}` : 'LIVE';
     chipHtml = `<span class="chip chip-live">${min}</span>`;
-  } else if (isDone) {
-    chipHtml = `<span class="chip chip-ft">FT</span>`;
-  } else {
-    chipHtml = `<span class="chip chip-sched">${status.replace(/_/g,' ')}</span>`;
-  }
+  } else if (isDone) chipHtml = `<span class="chip chip-ft">FT</span>`;
+  else chipHtml = `<span class="chip chip-sched">${status.replace(/_/g,' ')}</span>`;
 
-  const crestImg = (team, sz=18) => team.crest
-    ? `<img class="mcard-crest" style="width:${sz}px;height:${sz}px" src="${team.crest}" alt="" loading="lazy" onerror="this.style.display='none'">`
-    : '';
-
+  const crestImg = (team) => team.crest ? `<img class="mcard-crest" src="${team.crest}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
   const hScoreCls = `mcard-score${isLive?' live':''}${isDone&&!homeWon?' faded':''}`;
   const aScoreCls = `mcard-score${isLive?' live':''}${isDone&&!awayWon?' faded':''}`;
 
-  // Goals summary (from goals array)
   const goals = match.goals || [];
   let goalsSummary = '';
   if (isDone && goals.length > 0) {
-    const homeGoals = goals.filter(g => g.team?.name === home.name || g.team?.id === home.id);
-    const awayGoals = goals.filter(g => g.team?.name === away.name || g.team?.id === away.id);
+    const homeGoals = goals.filter(g => {
+      const isHomeTeam = g.team?.id === home.id || g.team?.name === home.name;
+      return g.type === 'OWN_GOAL' ? !isHomeTeam : isHomeTeam;
+    });
+    const awayGoals = goals.filter(g => {
+      const isAwayTeam = g.team?.id === away.id || g.team?.name === away.name;
+      return g.type === 'OWN_GOAL' ? !isAwayTeam : isAwayTeam;
+    });
+    
     const goalLine = (gs) => gs.map(g => {
       const name = (g.scorer?.name||'').split(' ').pop();
       const min = g.minute ? `${g.minute}'` : '';
-      return `${name} ${min}`;
+      const typeStr = g.type === 'PENALTY' ? ' (P)' : g.type === 'OWN_GOAL' ? ' (OG)' : '';
+      return `${name}${typeStr} ${min}`;
     }).join(', ');
+    
     if (homeGoals.length) goalsSummary += `<div style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-top:3px;line-height:1.4">${goalLine(homeGoals)}</div>`;
     if (awayGoals.length) goalsSummary += `<div style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-top:1px;line-height:1.4;text-align:right">${goalLine(awayGoals)}</div>`;
   }
 
-  // Formation badges
   const homeFm = home.formation ? `<span class="mcard-formation">${home.formation}</span>` : '';
   const awayFm = away.formation ? `<span class="mcard-formation">${away.formation}</span>` : '';
+  const rankBadge = (team) => team.leagueRank ? `<span style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-left:3px">#${team.leagueRank}</span>` : '';
 
-  // League rank badge
-  const rankBadge = (team) => team.leagueRank
-    ? `<span style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-left:3px">#${team.leagueRank}</span>`
-    : '';
-
-  return `<div class="mcard${isLive?' is-live':''}">
-    <div class="mcard-top">
-      <span class="mcard-date">${dateStr}</span>
-      ${chipHtml}
-    </div>
+  return `
+  <div class="mcard${isLive?' is-live':''}">
+    <div class="mcard-top"><span class="mcard-date">${dateStr}</span>${chipHtml}</div>
     <div class="mcard-fixture">
       <div class="mcard-team">
-        <div class="mcard-team-l">
+        <div class="mcard-team-l team-link" onclick="openTeamModal(${home.id})">
           ${crestImg(home)}
           <span class="mcard-name${isDone&&!homeWon?' faded':''}">${home.shortName||home.tla||'Home'}</span>
           ${rankBadge(home)}
@@ -1497,7 +1046,7 @@ function matchCardHtml(match) {
         <span class="${hScoreCls}">${hasScore||isLive?(hs??0):'–'}</span>
       </div>
       <div class="mcard-team">
-        <div class="mcard-team-l">
+        <div class="mcard-team-l team-link" onclick="openTeamModal(${away.id})">
           ${crestImg(away)}
           <span class="mcard-name${isDone&&!awayWon?' faded':''}">${away.shortName||away.tla||'Away'}</span>
           ${rankBadge(away)}
@@ -1514,68 +1063,41 @@ function matchCardHtml(match) {
   </div>`;
 }
 
-/* ─── SCORERS DASHBOARD ───────────────────────────────────────────────
-   JSON from fetch_competitions.py:
-   { data: { competition_code, season, count, scorers: [
-     { player:{id,name,firstName,lastName,dateOfBirth,nationality,position,shirtNumber},
-       team:{id,name,shortName,tla,crest},
-       playedMatches, goals, assists, penalties }
-   ] } }
-────────────────────────────────────────────────────────────────────── */
+/* ─── SCORERS DASHBOARD ─────────────────────────────────────────────── */
 function renderScorersDash(payload, code) {
-  // payload could be the whole {competition_code, scorers, ...} object
   const scorers = (payload.scorers || (Array.isArray(payload) ? payload : []));
   if (!scorers.length) {
     dashboard.innerHTML = `<div class="widget widget-standings"><div class="empty-state">No scorer data<small>./data/${currentSeason}/scorers/${code}.json</small></div></div>`;
     return;
   }
 
-  // Stat bar from scorers data
   const topGoals   = scorers[0]?.goals ?? 0;
   const topScorer  = scorers[0]?.player?.name || '–';
   const totalGoals = scorers.reduce((s,sc) => s + (sc.goals||0), 0);
   const totalAst   = scorers.reduce((s,sc) => s + (sc.assists||0), 0);
   const totalPen   = scorers.reduce((s,sc) => s + (sc.penalties||0), 0);
 
+  const compObj = COMPS.find(c => c.code === code) || {};
+  const compName = CODE_MAP[code] || compObj.name || code;
+
   const statBarHtml = `
   <div class="widget widget-statbar">
     <div class="widget-head">
       <div class="widget-title widget-accent-gold">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        Golden Boot Stats · ${COMPS.find(c=>c.code===code)?.name||code}
+        Golden Boot Stats · ${compName}
       </div>
       <span class="widget-meta">${currentSeason}</span>
     </div>
     <div class="statbar-grid">
-      <div class="stat-tile">
-        <div class="stat-tile-label">Top Scorer</div>
-        <div class="stat-tile-value gold" style="font-size:16px">${topScorer.split(' ').pop()}</div>
-        <div class="stat-tile-sub">${topGoals} goals</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Total Goals</div>
-        <div class="stat-tile-value mint">${totalGoals}</div>
-        <div class="stat-tile-sub">by top ${scorers.length} players</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Total Assists</div>
-        <div class="stat-tile-value ice">${totalAst}</div>
-        <div class="stat-tile-sub">by top ${scorers.length}</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Penalties</div>
-        <div class="stat-tile-value pink">${totalPen}</div>
-        <div class="stat-tile-sub">scored</div>
-      </div>
-      <div class="stat-tile">
-        <div class="stat-tile-label">Players Tracked</div>
-        <div class="stat-tile-value">${scorers.length}</div>
-        <div class="stat-tile-sub">in ranking</div>
-      </div>
+      <div class="stat-tile"><div class="stat-tile-label">Top Scorer</div><div class="stat-tile-value gold" style="font-size:16px">${topScorer.split(' ').pop()}</div><div class="stat-tile-sub">${topGoals} goals</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Total Goals</div><div class="stat-tile-value mint">${totalGoals}</div><div class="stat-tile-sub">by top ${scorers.length} players</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Total Assists</div><div class="stat-tile-value ice">${totalAst}</div><div class="stat-tile-sub">by top ${scorers.length}</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Penalties</div><div class="stat-tile-value pink">${totalPen}</div><div class="stat-tile-sub">scored</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Players Tracked</div><div class="stat-tile-value">${scorers.length}</div><div class="stat-tile-sub">in ranking</div></div>
     </div>
   </div>`;
 
-  // Full scorers table (wider — occupies col 1-2)
   let rowsHtml = '';
   scorers.forEach((s, i) => {
     const player  = s.player || {};
@@ -1584,12 +1106,9 @@ function renderScorersDash(payload, code) {
     const assists = s.assists ?? 0;
     const pens    = s.penalties ?? 0;
     const played  = s.playedMatches ?? 0;
-    const gpg     = played > 0 ? (goals / played).toFixed(2) : '–';
+    const gpg     = played > 0 ? (goals / played).toFixed(2) : '0.00';
     const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
-
-    const crestHtml = team.crest
-      ? `<img style="width:16px;height:16px;object-fit:contain;flex-shrink:0;margin-right:6px" src="${team.crest}" alt="" loading="lazy" onerror="this.style.display='none'">`
-      : '';
+    const crestHtml = team.crest ? `<img style="width:16px;height:16px;object-fit:contain;flex-shrink:0;margin-right:6px" src="${team.crest}" alt="" loading="lazy">` : '';
 
     rowsHtml += `<tr>
       <td style="text-align:center"><div class="rank-chip ${rankCls}" style="margin:0 auto">${i+1}</div></td>
@@ -1598,7 +1117,9 @@ function renderScorersDash(payload, code) {
         <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-top:1px">${player.position||''} ${player.nationality?'· '+player.nationality:''}</div>
       </td>
       <td style="text-align:left">
-        <div style="display:flex;align-items:center">${crestHtml}<span style="font-size:11px;color:var(--sub)">${team.shortName||team.tla||'–'}</span></div>
+        <div class="team-link team-link-inline" style="display:inline-flex;align-items:center;" onclick="openTeamModal(${team.id})">
+          ${crestHtml}<span style="font-size:11px;color:var(--sub)">${team.shortName||team.tla||'–'}</span>
+        </div>
       </td>
       <td style="font-weight:500;color:var(--mint);font-size:15px">${goals}</td>
       <td style="color:var(--sub)">${assists}</td>
@@ -1615,46 +1136,50 @@ function renderScorersDash(payload, code) {
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         Top Scorers
       </div>
-      <span class="widget-meta">${COMPS.find(c=>c.code===code)?.name||code} · ${currentSeason}</span>
+      <span class="widget-meta">${compName} · ${currentSeason}</span>
     </div>
     <div style="overflow-x:auto">
-      <table class="tbl">
-        <thead class="tbl-h">
-          <tr>
-            <th style="width:40px">#</th>
-            <th style="text-align:left">Player</th>
-            <th style="text-align:left">Club</th>
-            <th class="col-pts" title="Goals">G</th>
-            <th title="Assists">A</th>
-            <th title="Penalties">Pen</th>
-            <th title="Matches Played">MP</th>
-            <th title="Goals per game">G/M</th>
-          </tr>
-        </thead>
-        <tbody class="tbl-body">${rowsHtml}</tbody>
-      </table>
+      <table class="tbl"><thead class="tbl-h"><tr><th style="width:40px">#</th><th style="text-align:left">Player</th><th style="text-align:left">Club</th><th class="col-pts" title="Goals">G</th><th title="Assists">A</th><th title="Penalties">Pen</th><th title="Matches Played">MP</th><th title="Goals per game">G/M</th></tr></thead><tbody class="tbl-body">${rowsHtml}</tbody></table>
     </div>
   </div>`;
 
   dashboard.innerHTML = statBarHtml + scorersWidgetHtml;
 }
 
-/* ─── ERROR HTML ─────────────────────────────────────────────────────── */
+/* ─── SIDEBAR HELPERS ────────────────────────────────────────────────── */
+async function loadScorersSidebar(code) {
+  const el = $('scorers-sidebar-body');
+  if (!el) return;
+  try {
+    const r = await fetch(`./data/${currentSeason}/scorers/${code}.json?t=${Date.now()}`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const j = await r.json();
+    const scorers = (j.data || {}).scorers || [];
+    el.innerHTML = scorers.length
+      ? scorers.slice(0, 20).map((s, i) => {
+          const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+          return `<div class="scorer-item">
+            <div class="scorer-left">
+              <div class="rank-chip ${rankCls}">${i+1}</div>
+              <div class="scorer-info">
+                <div class="scorer-name">${(s.player||{}).name||'–'}</div>
+                <div class="scorer-club team-link team-link-inline" style="display:inline-block;" onclick="openTeamModal(${s.team?.id})">${s.team?.tla||s.team?.shortName||'–'} ${(s.player||{}).nationality?`· ${(s.player||{}).nationality}`:''}</div>
+              </div>
+            </div>
+            <div class="scorer-right">
+              <div class="stat-col"><div class="stat-n assists">${s.assists??0}</div><div class="stat-lbl">Ast</div></div>
+              <div class="stat-col"><div class="stat-n goals">${s.goals??0}</div><div class="stat-lbl">Gls</div></div>
+            </div>
+          </div>`;
+        }).join('')
+      : `<div class="empty-state" style="padding:24px">No scorer data</div>`;
+  } catch(err) {
+    el.innerHTML = `<div class="empty-state" style="padding:24px">Unavailable<small>${err.message}</small></div>`;
+  }
+}
+
 function errHtml(path, msg) {
-  return `<div style="padding:48px 0">
-    <div class="error-state">
-      <div class="err-icon">✕</div>
-      <div class="err-title">Data Not Found</div>
-      <div class="err-path">
-        <span class="lbl">Path:</span> ${path}<br>
-        <span class="lbl">Error:</span> ${msg}
-      </div>
-      <p class="err-hint">
-        Run <code>python workers/fetch_competitions.py</code> or push to GitHub to trigger Actions.
-        Click <strong>Docs</strong> above for full setup instructions.
-      </p>
-    </div>
-  </div>`;
+  return `<div style="padding:48px 0"><div class="error-state"><div class="err-icon">✕</div><div class="err-title">Data Not Found</div><div class="err-path"><span class="lbl">Path:</span> ${path}<br><span class="lbl">Error:</span> ${msg}</div></div></div>`;
 }
 
 /* ─── EVENT BINDINGS ─────────────────────────────────────────────────── */
@@ -1667,17 +1192,10 @@ document.querySelectorAll('.ttab').forEach(btn => {
   });
 });
 
-seasonSel.addEventListener('change', () => {
-  currentSeason = seasonSel.value;
-  buildLiveBar();
-  load();
-});
+seasonSel.addEventListener('change', () => { currentSeason = seasonSel.value; buildLiveBar(); load(); });
 
-/* ─── INIT ───────────────────────────────────────────────────────────── */
-initSeasons();
-buildCompNav();
-buildLiveBar();
-load();
+/* ─── TRIGGER INIT ───────────────────────────────────────────────────── */
+init();
 
 })();
 </script>
