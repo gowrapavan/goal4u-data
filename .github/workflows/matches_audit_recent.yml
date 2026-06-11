@@ -40,3 +40,4 @@ jobs:
         with:
           commit_message: "chore(data): recent match audit [skip ci]"
           file_pattern: "data/**/*.json"
+          add_options: "-f" # <--- ADD THIS EXACT LINE HERE

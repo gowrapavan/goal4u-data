@@ -35,9 +35,10 @@ jobs:
       # === ADD THIS CRITICAL STEP HERE ===
       - name: Force track data updates
         run: git add -f data/
-        
+
       - name: Commit updated team files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore(data): weekly teams sync [skip ci]"
           file_pattern: "data/**/*.json"
+          add_options: "-f" # <--- ADD THIS EXACT LINE HERE

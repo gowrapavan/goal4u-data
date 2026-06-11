@@ -43,3 +43,4 @@ jobs:
         with:
           commit_message: "chore(data): weekly standings + scorers sync [skip ci]"
           file_pattern: "data/**/*.json"
+          add_options: "-f" # <--- ADD THIS EXACT LINE HERE
