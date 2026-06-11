@@ -30,6 +30,11 @@ jobs:
 
       - name: Run live audit (lookback 6h)
         run: python workers/audit_matches.py --mode live
+        
+      # === ADD THIS CRITICAL STEP HERE ===
+      - name: Force track data updates
+        run: git add -f data/
+        
 
       - name: Commit patched match files
         uses: stefanzweifel/git-auto-commit-action@v5

@@ -31,7 +31,11 @@ jobs:
 
       - name: Sync teams
         run: python workers/fetch_teams.py
-
+      
+      # === ADD THIS CRITICAL STEP HERE ===
+      - name: Force track data updates
+        run: git add -f data/
+        
       - name: Commit updated team files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:

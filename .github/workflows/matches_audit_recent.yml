@@ -31,6 +31,10 @@ jobs:
       - name: Run recent audit (lookback 72h)
         run: python workers/audit_matches.py --mode recent
 
+      # === ADD THIS CRITICAL STEP HERE ===
+      - name: Force track data updates
+        run: git add -f data/
+        
       - name: Commit patched match files
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
