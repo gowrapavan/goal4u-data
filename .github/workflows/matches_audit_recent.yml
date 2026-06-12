@@ -3,6 +3,7 @@ name: "Matches — Recent Audit"
 # Runs every 3 hours around the clock
 # Catches matches from the last 72h that are still stale
 # (status never updated, goals missing, lineup empty, etc.)
+# After any match updates, also re-fetches standings for the affected competition.
 
 on:
   schedule:
@@ -15,13 +16,12 @@ env:
 
 jobs:
   audit-recent:
-    name: "Patch matches from last 3 days"
+    name: "Patch matches from last 3 days + refresh standings"
     runs-on: ubuntu-latest
 
-    # === ADD THESE THREE LINES HERE ===
     permissions:
       contents: write
-      
+
     steps:
       - uses: actions/checkout@v4
 
@@ -36,13 +36,12 @@ jobs:
       - name: Run recent audit (lookback 72h)
         run: python workers/audit_matches.py --mode recent
 
-      # === ADD THIS CRITICAL STEP HERE ===
       - name: Force track data updates
         run: git add -f data/
-        
-      - name: Commit patched match files
+
+      - name: Commit patched match files + refreshed standings
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(data): recent match audit [skip ci]"
+          commit_message: "chore(data): recent match audit + standings refresh [skip ci]"
           file_pattern: "data/**/*.json"
-          add_options: "-f" # <--- ADD THIS EXACT LINE HERE
+          add_options: "-f"

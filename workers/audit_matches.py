@@ -18,6 +18,10 @@ This script:
   3. Fetches only those matches individually via GET /matches/{id}
   4. Patches them in-place in the local list
   5. Re-sorts chronologically and writes the file back atomically
+  6. If any matches were updated, immediately re-fetches standings for that
+     competition via GET /competitions/{code}/standings and writes the result
+     to data/{season}/standings/{CODE}.json — so the table is always in sync
+     with the latest match results without waiting for the weekly sync.
 
 AUDIT CRITERIA — a match is re-fetched if ANY of these are true:
   • status is IN_PLAY or PAUSED  (live right now)
@@ -44,6 +48,12 @@ Sync schedule (GitHub Actions):
     Every 15 minutes  →  python workers/audit_matches.py --mode live
     Every 3 hours     →  python workers/audit_matches.py --mode recent
     Daily 06:00 UTC   →  python workers/audit_matches.py --mode all
+
+NOTE on lookback windows:
+    live   = 12h  (not 6h — WC/Copa América have 19:00–23:00 UTC kick-offs;
+                   6h live window with 01:00 UTC cron misses those by minutes)
+    recent = 72h  (catches anything from last 3 days — safety net)
+    all    = 168h (weekly full sweep)
 """
 
 import json
@@ -55,6 +65,7 @@ from pathlib import Path
 sys.path.insert(0, ".")
 
 from config import TRACKED_COMPETITIONS, get_season_paths
+from workers.fetch_competitions import fetch_all_standings, flatten_standings
 from workers.fetch_matches import flatten_match
 from workers.utils import fetch, safe_write
 
@@ -69,7 +80,7 @@ logger = logging.getLogger("audit_matches")
 # ── CONSTANTS ─────────────────────────────────────────────────────────────────
 
 # How far back to look for matches that might need updating
-LOOKBACK_HOURS_LIVE   = 6     # --mode live:   only matches from last 6 hours
+LOOKBACK_HOURS_LIVE   = 12    # --mode live:   last 12h (covers WC Americas kick-offs + grace)
 LOOKBACK_HOURS_RECENT = 72    # --mode recent: last 3 days
 LOOKBACK_HOURS_ALL    = 168   # --mode all:    last 7 days (whole matchweek)
 
@@ -105,13 +116,19 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
       FINISHED with missing data → re-fetch if within lookback window
       TIMED/SCHEDULED past  → re-fetch if utcDate is in the past and within window
       Future SCHEDULED      → skip
-      POSTPONED             → skip (manual re-fetch if needed)
+      POSTPONED             → re-fetch if within lookback window (may be rescheduled)
       CANCELLED/AWARDED/etc → skip
+
+    KEY FIX: The cutoff window uses a GRACE PERIOD of max(lookback_hours, 12h) so
+    that matches played just outside the live-audit window (e.g. WC kick-offs at
+    19:00Z checked at 01:00Z+6h=cutoff 19:00Z exactly) are never silently dropped.
+    Also: FINISHED matches that lack goals data are always re-evaluated — a prior
+    live-audit run may have written FINISHED with null score before the API caught up.
     """
     status   = match.get("status", "")
     utc_date = _parse_utc(match.get("utcDate"))
 
-    # Always grab live matches
+    # Always grab live matches regardless of window
     if status in LIVE_STATUSES:
         return True
 
@@ -123,43 +140,53 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
     if utc_date is None:
         return False
 
-    cutoff = now - timedelta(hours=lookback_hours)
+    # ── FIX 1: Use a grace window so borderline matches aren't silently dropped.
+    # A match at 19:00Z checked at 01:00Z with lookback=6h has cutoff=19:00Z exactly
+    # — floating point / scheduling jitter can push it just outside. Add 2h grace.
+    grace_hours = max(lookback_hours, 12)  # never use less than 12h lookback for cutoff
+    cutoff = now - timedelta(hours=grace_hours)
 
-    # Only look at matches within the lookback window
+    # Only look at matches within the extended lookback window
     if utc_date < cutoff:
         return False
 
     # Future matches — not played yet
     if utc_date > now:
-        # Edge case: if it's SCHEDULED but within 2 hours of now — might have started
+        # Edge case: SCHEDULED within 2 hours of now — might have already started
         if status in SCHEDULED_STATUSES and (utc_date - now) < timedelta(hours=2):
             return True
         return False
 
-    # utcDate is in the past from here on
+    # utcDate is in the past from here on ──────────────────────────────────────
 
     if status in SCHEDULED_STATUSES:
-        # Was scheduled but time has passed — clearly needs update
+        # Was scheduled but kick-off time has passed — clearly needs update
+        return True
+
+    # ── FIX 2: POSTPONED inside the lookback window should be re-checked.
+    # The status may have changed to TIMED (rescheduled) or FINISHED.
+    if status == "POSTPONED":
         return True
 
     if status == FINISHED_STATUS:
-        # Check if the result data is actually populated
         score     = match.get("score") or {}
         full_time = score.get("fullTime") or {}
         home_g    = full_time.get("home")
         away_g    = full_time.get("away")
 
-        # Score is null — data didn't arrive when originally fetched
-        if home_g is None and away_g is None:
+        # ── FIX 3: Score is null or both zero-typed None — data not populated yet.
+        # This happens when a live-audit run writes FINISHED before the API fills
+        # score.fullTime (common in first ~5 min after final whistle).
+        if home_g is None or away_g is None:
             return True
 
-        # Goals happened but list is empty — arrived late
+        # Goals happened but goal-event list is empty — event data arrived late
         goals_recorded = (home_g or 0) + (away_g or 0)
         goals_in_list  = len(match.get("goals") or [])
         if goals_recorded > 0 and goals_in_list == 0:
             return True
 
-        # Lineup/bench empty on a finished match (API populates post-match)
+        # Lineup/bench empty on a finished match (API populates them post-match)
         home_team = match.get("homeTeam") or {}
         away_team = match.get("awayTeam") or {}
         if (
@@ -167,13 +194,14 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
             and not home_team.get("bench")
             and not away_team.get("lineup")
             and not away_team.get("bench")
-            and utc_date > cutoff  # only within lookback window
         ):
             return True
 
+        # Data looks complete — no need to re-fetch
         return False
 
-    return False
+    # Any unrecognised status inside the lookback window — re-fetch to be safe
+    return True
 
 
 def _read_existing_matches(path: str) -> list[dict]:
@@ -207,10 +235,14 @@ def _read_existing_matches(path: str) -> list[dict]:
 def audit_competition(
     code: str,
     matches_dir: str,
+    standings_dir: str,
     lookback_hours: int,
 ) -> tuple[int, int, int]:
     """
     Audit and patch matches for one competition.
+
+    After any match updates, immediately re-fetches the standings for that
+    competition so the league table reflects the new results right away.
 
     Returns (stale_count, updated_count, skipped_count).
     """
@@ -305,6 +337,32 @@ def audit_competition(
             logger.info("  %s: wrote %d total matches (%d updated)", code, len(matches), updated)
         else:
             logger.error("  %s: failed to write patched file", code)
+
+        # ── STANDINGS REFRESH ──────────────────────────────────────────────────
+        # Matches changed → the league table is now stale. Re-fetch standings for
+        # this competition immediately so the API always returns current positions.
+        # CUP competitions (CL, WC, EC) return no TOTAL league table — flatten_standings
+        # returns None for those and we skip gracefully.
+        logger.info("  %s: refreshing standings after match updates ...", code)
+        standings_raw = fetch(f"/competitions/{code}/standings")
+        if standings_raw is None:
+            logger.warning(
+                "  %s: standings fetch failed — existing standings file preserved", code
+            )
+        else:
+            flattened_standings = flatten_standings(standings_raw, code)
+            if flattened_standings is None:
+                logger.info(
+                    "  %s: no standings table (CUP format) — skipping standings write", code
+                )
+            else:
+                standings_path = f"{standings_dir}/{code}.json"
+                if safe_write(standings_path, flattened_standings):
+                    logger.info("  %s: standings refreshed ✓", code)
+                else:
+                    logger.error("  %s: failed to write standings file", code)
+        # ── END STANDINGS REFRESH ──────────────────────────────────────────────
+
     else:
         logger.info("  %s: no updates needed", code)
 
@@ -317,7 +375,7 @@ def run(mode: str = "recent") -> None:
     """
     Run the audit across all tracked competitions.
 
-    mode = "live"    →  lookback 6h   — catch matches in play right now
+    mode = "live"    →  lookback 12h  — catch matches in play + recently finished (incl. WC)
     mode = "recent"  →  lookback 72h  — patch last 3 days
     mode = "all"     →  lookback 168h — patch entire last matchweek
     """
@@ -328,9 +386,10 @@ def run(mode: str = "recent") -> None:
     }
     lookback_hours = lookback_map[mode]
 
-    paths       = get_season_paths()
-    season      = paths["season"]
-    matches_dir = paths["matches_dir"]
+    paths         = get_season_paths()
+    season        = paths["season"]
+    matches_dir   = paths["matches_dir"]
+    standings_dir = paths["standings_dir"]
 
     logger.info(
         "=== audit_matches [mode=%s, lookback=%dh, season=%s] started at %s ===",
@@ -342,7 +401,9 @@ def run(mode: str = "recent") -> None:
     total_skipped = 0
 
     for code in TRACKED_COMPETITIONS:
-        stale, updated, skipped = audit_competition(code, matches_dir, lookback_hours)
+        stale, updated, skipped = audit_competition(
+            code, matches_dir, standings_dir, lookback_hours
+        )
         total_stale   += stale
         total_updated += updated
         total_skipped += skipped
@@ -371,7 +432,7 @@ if __name__ == "__main__":
         choices=["live", "recent", "all"],
         default="recent",
         help=(
-            "live   = matches from last 6h (for cron every 15min)  |  "
+            "live   = matches from last 12h (for cron every 15min, covers WC Americas)  |  "
             "recent = last 3 days (every 3h)  |  "
             "all    = last 7 days (daily)"
         ),

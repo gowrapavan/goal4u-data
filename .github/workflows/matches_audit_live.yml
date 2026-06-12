@@ -3,6 +3,7 @@ name: "Matches — Live Audit"
 # Runs every 15 min between 13:00–23:45 UTC
 # Covers all European kick-off slots (14:00–23:00 UTC)
 # Only re-fetches matches that are IN_PLAY, PAUSED, or SCHEDULED with a past utcDate
+# After any match updates, also re-fetches standings for the affected competition.
 
 on:
   schedule:
@@ -15,10 +16,9 @@ env:
 
 jobs:
   audit-live:
-    name: "Patch live & just-finished matches"
+    name: "Patch live & just-finished matches + refresh standings"
     runs-on: ubuntu-latest
-    
-    # === ADD THESE THREE LINES HERE ===
+
     permissions:
       contents: write
 
@@ -33,17 +33,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run live audit (lookback 6h)
+      - name: Run live audit (lookback 12h)
         run: python workers/audit_matches.py --mode live
 
-      # === ADD THIS CRITICAL STEP HERE ===
       - name: Force track data updates
         run: git add -f data/
-        
 
-      - name: Commit patched match files
+      - name: Commit patched match files + refreshed standings
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore(data): live match audit [skip ci]"
+          commit_message: "chore(data): live match audit + standings refresh [skip ci]"
           file_pattern: "data/**/*.json"
-          add_options: "-f" # <--- ADD THIS EXACT LINE HERE
+          add_options: "-f"

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-11T09:44:05.466071+00:00",
+    "last_synced": "2026-06-12T10:52:59.742323+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -28,7 +28,7 @@
         "winner": null
       },
       "utcDate": "2026-06-11T19:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_A",
@@ -61,15 +61,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -115,7 +115,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11412,
+          "name": "Wilton Sampaio",
+          "type": "REFEREE",
+          "nationality": "Brazil"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -146,7 +153,7 @@
         "winner": null
       },
       "utcDate": "2026-06-12T02:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_A",
@@ -179,15 +186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -233,7 +240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 276653,
+          "name": "Amin Omar",
+          "type": "REFEREE",
+          "nationality": "Egypt"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
