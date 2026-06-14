@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-14T16:46:00.280488+00:00",
+    "last_synced": "2026-06-14T18:08:53.782139+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -1028,7 +1028,7 @@
         "winner": null
       },
       "utcDate": "2026-06-14T17:00:00Z",
-      "status": "TIMED",
+      "status": "PAUSED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
@@ -1061,15 +1061,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -1240,7 +1240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 76608,
+          "name": "Ismail Elfath",
+          "type": "REFEREE",
+          "nationality": "United States"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
