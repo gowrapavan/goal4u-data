@@ -18,8 +18,7 @@ jobs:
   sync-teams:
     name: "Sync teams + squads (all competitions)"
     runs-on: ubuntu-latest
-    
-    # === ADD THESE THREE LINES HERE ===
+
     permissions:
       contents: write
 
@@ -36,14 +35,12 @@ jobs:
 
       - name: Sync teams
         run: python workers/fetch_teams.py
-      
-      # === ADD THIS CRITICAL STEP HERE ===
-      - name: Force track data updates
-        run: git add -f data/
 
       - name: Commit updated team files
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore(data): weekly teams sync [skip ci]"
-          file_pattern: "data/**/*.json"
-          add_options: "-f" # <--- ADD THIS EXACT LINE HERE
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f data/
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "chore(data): weekly teams sync [skip ci]"
+          git push
