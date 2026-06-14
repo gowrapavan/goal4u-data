@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-14T19:56:48.456050+00:00",
+    "last_synced": "2026-06-14T21:10:29.037877+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -1153,7 +1153,7 @@
         "winner": null
       },
       "utcDate": "2026-06-14T20:00:00Z",
-      "status": "TIMED",
+      "status": "PAUSED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_F",
@@ -1186,15 +1186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -1365,7 +1365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 43918,
+          "name": "François Letexier",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
