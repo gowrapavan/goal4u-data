@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-15T22:59:30.701468+00:00",
+    "last_synced": "2026-06-15T23:07:47.632063+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -1778,7 +1778,7 @@
         "winner": null
       },
       "utcDate": "2026-06-15T22:00:00Z",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_H",
@@ -1818,8 +1818,8 @@
           "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -1990,7 +1990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 56007,
+          "name": "César Ramos",
+          "type": "REFEREE",
+          "nationality": "Mexico"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
