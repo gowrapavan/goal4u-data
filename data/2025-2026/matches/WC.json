@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-14T23:44:21.645527+00:00",
+    "last_synced": "2026-06-15T02:06:28.312438+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -1278,7 +1278,7 @@
         "winner": null
       },
       "utcDate": "2026-06-14T23:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
@@ -1311,15 +1311,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -1365,7 +1365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 43918,
+          "name": "François Letexier",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -1483,7 +1490,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57435,
+          "name": "Yael Falcón",
+          "type": "REFEREE",
+          "nationality": "Argentina"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
