@@ -58,20 +58,36 @@ def get_competition_url(code: str, season: str) -> str | None:
 def fetch_html(url: str) -> str | None:
     """Download HTML from YallaShoot with basic bot protection bypass."""
     headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": "https://www.google.com/",
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Upgrade-Insecure-Requests": "1",
     }
+    
+    # Use a session to persist TCP connections and cookies (helps with basic WAFs)
+    session = requests.Session()
+    session.headers.update(headers)
     
     for attempt in range(1, 4):
         try:
-            resp = requests.get(url, headers=headers, timeout=15)
+            resp = session.get(url, timeout=15)
             if resp.status_code == 200:
                 return resp.text
+                
             print(f"  [Warn] HTTP {resp.status_code} on {url}. Retrying...")
-            time.sleep(3)
+            
+            # Print debug info if we get a 403 to see if it's a Cloudflare challenge
+            if resp.status_code == 403:
+                print(f"  [Debug] Response Headers: {resp.headers}")
+                print(f"  [Debug] Response Body snippet: {resp.text[:500]}")
+                
+            time.sleep(5)
         except requests.RequestException as e:
             print(f"  [Warn] Request failed: {e}. Retrying...")
-            time.sleep(3)
+            time.sleep(5)
             
     return None
 

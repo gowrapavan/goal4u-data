@@ -77,15 +77,23 @@ _HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/125.0.0.0 Safari/537.36"
+        "Chrome/137.0.0.0 Safari/537.36"
     ),
-    "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
     "Accept-Encoding": "gzip, deflate, br",
+    "Referer":         "https://www.google.com/",
     "Cache-Control":   "no-cache",
+    "Pragma":          "no-cache",
+    "Upgrade-Insecure-Requests": "1",
 }
 _REQUEST_TIMEOUT = 20   # seconds
 _RETRY_DELAYS    = [5, 15, 30]   # back-off for 429 / 5xx
+
+# Create a global session to pool connections & hold cookies across multiple matches
+_session = requests.Session()
+_session.headers.update(_HEADERS)
+
 
 # CSS class → our snake_case stat key
 _STAT_CLASS_MAP: dict[str, str] = {
@@ -196,17 +204,24 @@ def _fetch_html(url: str) -> str | None:
             logger.info("Waiting %ds before retry %d …", delay, attempt)
             time.sleep(delay)
         try:
-            resp = requests.get(url, headers=_HEADERS, timeout=_REQUEST_TIMEOUT)
+            resp = _session.get(url, timeout=_REQUEST_TIMEOUT)
 
             if resp.status_code == 200:
                 return resp.text
 
-            if resp.status_code == 429:
-                retry_after = int(resp.headers.get("Retry-After", 60))
+            # Handle 403 Forbidden and 429 Rate Limits similarly
+            if resp.status_code in (403, 429):
+                retry_after = int(resp.headers.get("Retry-After", 60)) if resp.status_code == 429 else 10
                 logger.warning(
-                    "429 Rate limited — sleeping %ds (attempt %d/%d)",
-                    retry_after, attempt, len(_RETRY_DELAYS) + 1,
+                    "HTTP %d — sleeping %ds (attempt %d/%d)",
+                    resp.status_code, retry_after, attempt, len(_RETRY_DELAYS) + 1,
                 )
+                
+                # Debug logging to identify Cloudflare/WAF block vs native block
+                if resp.status_code == 403:
+                    logger.info("403 Headers: %s", dict(resp.headers))
+                    logger.info("403 Body snippet: %s", resp.text[:500].replace('\n', ' '))
+                
                 time.sleep(retry_after)
                 continue
 
@@ -217,14 +232,11 @@ def _fetch_html(url: str) -> str | None:
                 )
                 continue
 
-            # Skip 404s without failing (stats just aren't ready yet)
             if resp.status_code == 404:
                 logger.info("HTTP 404 for %s — Stats not yet available.", url)
                 return None
 
-            logger.error(
-                "HTTP %d for %s — not retrying", resp.status_code, url
-            )
+            logger.error("HTTP %d for %s — not retrying", resp.status_code, url)
             return None
 
         except requests.RequestException as exc:
