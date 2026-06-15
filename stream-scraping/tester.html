@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Goal4u Stream Tester</title>
+    <style>
+        body { margin: 0; font-family: system-ui, -apple-system, sans-serif; background: #0f172a; color: #f8fafc; display: flex; height: 100vh; overflow: hidden; }
+        
+        /* Sidebar */
+        #sidebar { width: 350px; background: #1e293b; display: flex; flex-direction: column; border-right: 1px solid #334155; }
+        .header { padding: 15px; background: #0f172a; border-bottom: 1px solid #334155; }
+        select { width: 100%; padding: 10px; background: #334155; color: white; border: none; border-radius: 5px; outline: none; cursor: pointer; }
+        
+        /* Match List */
+        #match-list { flex: 1; overflow-y: auto; padding: 10px; }
+        .match-card { background: #334155; padding: 12px; margin-bottom: 10px; border-radius: 8px; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; gap: 10px; }
+        .match-card:hover, .match-card.active { background: #475569; border-left: 4px solid #3b82f6; }
+        .logos { display: flex; gap: 5px; }
+        .logos img { width: 30px; height: 30px; object-fit: contain; background: white; border-radius: 50%; padding: 2px; }
+        .match-info { flex: 1; }
+        .teams { font-weight: bold; font-size: 14px; margin-bottom: 4px; }
+        .time { font-size: 12px; color: #94a3b8; }
+        
+        /* Player Area */
+        #player-area { flex: 1; display: flex; flex-direction: column; padding: 20px; }
+        .status-bar { padding: 15px; background: #1e293b; border-radius: 8px; margin-bottom: 20px; font-family: monospace; word-break: break-all; }
+        .iframe-container { flex: 1; background: #000; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #334155; }
+        iframe { width: 100%; height: 100%; border: none; }
+        
+        .empty-state { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 1.2rem; }
+    </style>
+</head>
+<body>
+
+    <div id="sidebar">
+        <div class="header">
+            <h3 style="margin: 0 0 10px 0;">Stream Sources</h3>
+            <select id="source-selector">
+                <option value="sportsonline.json">sportsonline.json</option>
+                <option value="hesgoal.json">hesgoal.json</option>
+                <option value="livekora.json">livekora.json</option>
+                <option value="freekora.json">freekora.json</option>
+                <option value="yallashots.json">yallashots.json</option>
+                <option value="soccerhd.json">soccerhd.json</option>
+                <option value="streamfree.json">streamfree.json</option>
+                <option value="liverscore.json">liverscore.json</option>
+            </select>
+        </div>
+        <div id="match-list">
+            </div>
+    </div>
+
+    <div id="player-area">
+        <div class="status-bar" id="status-url">Select a match to test the stream URL...</div>
+        <div class="iframe-container">
+            <div id="empty-state" class="empty-state">No stream loaded</div>
+            <iframe id="video-player" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+        </div>
+    </div>
+
+    <script>
+        const selector = document.getElementById('source-selector');
+        const matchList = document.getElementById('match-list');
+        const statusUrl = document.getElementById('status-url');
+        const player = document.getElementById('video-player');
+        const emptyState = document.getElementById('empty-state');
+
+        // Fetch JSON data based on selection
+        async function loadMatches(filename) {
+            matchList.innerHTML = '<div style="text-align: center; color: #94a3b8;">Loading...</div>';
+            
+            try {
+                // Fetch from the local json/ folder
+                const response = await fetch(`./json/${filename}`);
+                if (!response.ok) throw new Error('File not found or empty');
+                
+                const matches = await response.json();
+                
+                if (matches.length === 0) {
+                    matchList.innerHTML = '<div style="text-align: center; color: #94a3b8;">No matches found in this file.</div>';
+                    return;
+                }
+
+                renderList(matches);
+            } catch (error) {
+                matchList.innerHTML = `<div style="color: #ef4444; padding: 10px;">Error loading ${filename}:<br>${error.message}</div>`;
+            }
+        }
+
+        // Render the matches into the sidebar
+        function renderList(matches) {
+            matchList.innerHTML = '';
+            
+            matches.forEach((match, index) => {
+                const card = document.createElement('div');
+                card.className = 'match-card';
+                card.innerHTML = `
+                    <div class="logos">
+                        <img src="${match.home_logo}" alt="Home" onerror="this.src='https://via.placeholder.com/30'">
+                        <img src="${match.away_logo}" alt="Away" onerror="this.src='https://via.placeholder.com/30'">
+                    </div>
+                    <div class="match-info">
+                        <div class="teams">${match.home_team || 'TBA'} vs ${match.away_team || 'TBA'}</div>
+                        <div class="time">${match.time || 'Time TBD'} | ${match.league || 'Unknown League'}</div>
+                    </div>
+                `;
+                
+                card.onclick = () => {
+                    // Visual active state
+                    document.querySelectorAll('.match-card').forEach(c => c.classList.remove('active'));
+                    card.classList.add('active');
+                    
+                    // Load Stream
+                    playStream(match.url);
+                };
+                
+                matchList.appendChild(card);
+            });
+        }
+
+        // Load the URL into the iframe
+        function playStream(url) {
+            emptyState.style.display = 'none';
+            
+            if (!url) {
+                statusUrl.innerHTML = `<span style="color: #ef4444;">[ERROR] No URL provided in the JSON for this match.</span>`;
+                player.src = '';
+                return;
+            }
+
+            statusUrl.innerHTML = `<span style="color: #10b981;">[LOADING]</span> ${url}`;
+            player.src = url;
+        }
+
+        // Initialize
+        selector.addEventListener('change', (e) => loadMatches(e.target.value));
+        loadMatches(selector.value); // Load initial selection
+    </script>
+</body>
+</html>

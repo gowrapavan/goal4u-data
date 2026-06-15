@@ -1,3 +1,4 @@
+# D:\test\football\API\stream-scraping\core\utils.py
 import pytz
 from datetime import datetime
 import re
@@ -15,6 +16,8 @@ def convert_time(timestr, src_tz):
 
 def short_label(home, away):
     """Generate short label like bri-man."""
-    h = re.sub(r'[^a-z]', '', home.lower())[:3] or home.lower()[:3]
-    a = re.sub(r'[^a-z]', '', away.lower())[:3] or away.lower()[:3]
+    home_str = str(home or "")
+    away_str = str(away or "")
+    h = re.sub(r'[^a-z]', '', home_str.lower())[:3] or home_str.lower()[:3] or "hom"
+    a = re.sub(r'[^a-z]', '', away_str.lower())[:3] or away_str.lower()[:3] or "awy"
     return f"{h}-{a}"

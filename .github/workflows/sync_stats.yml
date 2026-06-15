@@ -1,0 +1,57 @@
+name: "Match Links & Stats — Hourly Sync"
+
+on:
+  schedule:
+    # Runs every hour at minute 0
+    - cron: "0 * * * *"
+
+  # Manual trigger from GitHub Actions UI
+  workflow_dispatch:
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  sync-match-stats:
+    name: "Sync match links + scrape match stats"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Update match links database
+        run: |
+          echo "Fetching latest match URLs..."
+          python workers/fetch_match_links.py --all
+
+      - name: Scrape match statistics
+        run: |
+          echo "Scraping stats for current week's matches..."
+          python workers/fetch_match_stats.py --all --week
+
+      - name: Commit updated match links and stats
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # data/ is gitignored, so force add it
+          git add -f data/
+
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+
+          git commit -m "chore(data): hourly match links + stats sync [skip ci]"
+          git push
