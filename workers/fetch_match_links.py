@@ -17,8 +17,10 @@ import re
 import os
 import json
 import time
-import requests
 from difflib import SequenceMatcher
+
+# Use curl_cffi to bypass Cloudflare TLS fingerprinting
+from curl_cffi import requests
 
 # Only import safe_write from utils
 from utils import safe_write
@@ -56,20 +58,11 @@ def get_competition_url(code: str, season: str) -> str | None:
 # ── HTTP & I/O Helpers ────────────────────────────────────────────────────────
 
 def fetch_html(url: str) -> str | None:
-    """Download HTML from YallaShoot with basic bot protection bypass."""
-    headers = {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Referer": "https://www.google.com/",
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
-        "Upgrade-Insecure-Requests": "1",
-    }
+    """Download HTML from YallaShoot using curl_cffi to bypass TLS fingerprinting."""
     
-    # Use a session to persist TCP connections and cookies (helps with basic WAFs)
-    session = requests.Session()
-    session.headers.update(headers)
+    # We impersonate a real Chrome browser. curl_cffi will automatically handle 
+    # the complex headers, HTTP/2 multiplexing, and TLS ciphers for us.
+    session = requests.Session(impersonate="chrome120")
     
     for attempt in range(1, 4):
         try:
@@ -81,11 +74,11 @@ def fetch_html(url: str) -> str | None:
             
             # Print debug info if we get a 403 to see if it's a Cloudflare challenge
             if resp.status_code == 403:
-                print(f"  [Debug] Response Headers: {resp.headers}")
+                print(f"  [Debug] Response Headers: {dict(resp.headers)}")
                 print(f"  [Debug] Response Body snippet: {resp.text[:500]}")
                 
             time.sleep(5)
-        except requests.RequestException as e:
+        except Exception as e:
             print(f"  [Warn] Request failed: {e}. Retrying...")
             time.sleep(5)
             

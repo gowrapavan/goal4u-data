@@ -63,8 +63,10 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
-import requests
 from bs4 import BeautifulSoup, Tag
+
+# Use curl_cffi to bypass Cloudflare TLS fingerprinting
+from curl_cffi import requests
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -73,26 +75,11 @@ BASE_DIR  = Path("data")          # repo root; override via DATA_DIR env var
 SEASON    = "2025-2026"           # override via SEASON env var
 
 # Request settings
-_HEADERS = {
-    "User-Agent": (
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-        "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/137.0.0.0 Safari/537.36"
-    ),
-    "Accept":          "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-    "Accept-Language": "en-US,en;q=0.9",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Referer":         "https://www.google.com/",
-    "Cache-Control":   "no-cache",
-    "Pragma":          "no-cache",
-    "Upgrade-Insecure-Requests": "1",
-}
 _REQUEST_TIMEOUT = 20   # seconds
 _RETRY_DELAYS    = [5, 15, 30]   # back-off for 429 / 5xx
 
-# Create a global session to pool connections & hold cookies across multiple matches
-_session = requests.Session()
-_session.headers.update(_HEADERS)
+# Create a global session impersonating Chrome to bypass WAFs
+_session = requests.Session(impersonate="chrome120")
 
 
 # CSS class → our snake_case stat key
@@ -196,7 +183,7 @@ def _slug_from_url(url: str) -> str:
 
 def _fetch_html(url: str) -> str | None:
     """
-    Fetch the HTML of a match page with retry / back-off logic.
+    Fetch the HTML of a match page with retry / back-off logic and TLS spoofing.
     Returns the raw HTML string on success, None on failure.
     """
     for attempt, delay in enumerate([0] + _RETRY_DELAYS, start=1):
@@ -219,8 +206,7 @@ def _fetch_html(url: str) -> str | None:
                 
                 # Debug logging to identify Cloudflare/WAF block vs native block
                 if resp.status_code == 403:
-                    logger.info("403 Headers: %s", dict(resp.headers))
-                    logger.info("403 Body snippet: %s", resp.text[:500].replace('\n', ' '))
+                    logger.info("403 Body snippet: %s", resp.text[:200].replace('\n', ' '))
                 
                 time.sleep(retry_after)
                 continue
@@ -239,7 +225,7 @@ def _fetch_html(url: str) -> str | None:
             logger.error("HTTP %d for %s — not retrying", resp.status_code, url)
             return None
 
-        except requests.RequestException as exc:
+        except Exception as exc:
             logger.warning(
                 "Network error (attempt %d/%d): %s",
                 attempt, len(_RETRY_DELAYS) + 1, exc,
