@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-15T19:07:55.288065+00:00",
+    "last_synced": "2026-06-15T20:49:46.146911+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -1689,12 +1689,12 @@
         "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -1865,7 +1865,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11043,
+          "name": "Maurizio Mariani",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
