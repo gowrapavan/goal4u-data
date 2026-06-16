@@ -19,8 +19,8 @@ import json
 import time
 from difflib import SequenceMatcher
 
-# Use curl_cffi to bypass Cloudflare TLS fingerprinting
-from curl_cffi import requests
+# Unified Cloudflare bypass fetcher (Playwright → curl_cffi → free proxy)
+from workers.cf_fetcher import fetch_html as _cf_fetch_html
 
 # Only import safe_write from utils
 from utils import safe_write
@@ -58,31 +58,20 @@ def get_competition_url(code: str, season: str) -> str | None:
 # ── HTTP & I/O Helpers ────────────────────────────────────────────────────────
 
 def fetch_html(url: str) -> str | None:
-    """Download HTML from YallaShoot using curl_cffi to bypass TLS fingerprinting."""
-    
-    # We impersonate a real Chrome browser. curl_cffi will automatically handle 
-    # the complex headers, HTTP/2 multiplexing, and TLS ciphers for us.
-    session = requests.Session(impersonate="chrome120")
-    
-    for attempt in range(1, 4):
-        try:
-            resp = session.get(url, timeout=15)
-            if resp.status_code == 200:
-                return resp.text
-                
-            print(f"  [Warn] HTTP {resp.status_code} on {url}. Retrying...")
-            
-            # Print debug info if we get a 403 to see if it's a Cloudflare challenge
-            if resp.status_code == 403:
-                print(f"  [Debug] Response Headers: {dict(resp.headers)}")
-                print(f"  [Debug] Response Body snippet: {resp.text[:500]}")
-                
-            time.sleep(5)
-        except Exception as e:
-            print(f"  [Warn] Request failed: {e}. Retrying...")
-            time.sleep(5)
-            
-    return None
+    """Download HTML from YallaShoot using the CF bypass cascade.
+
+    Tries (in order):
+      1. Playwright + stealth  — solves JS challenges (required on GitHub Actions)
+      2. curl_cffi             — fast TLS impersonation (good locally)
+      3. Free rotating proxies — last-resort fallback
+
+    See workers/cf_fetcher.py for implementation details.
+    """
+    print(f"  [Fetching] {url}")
+    html = _cf_fetch_html(url, retries=2)
+    if not html:
+        print(f"  ✗ All fetch methods failed for {url}")
+    return html
 
 def load_json(path: str) -> dict | None:
     """Helper to safely load a JSON file."""

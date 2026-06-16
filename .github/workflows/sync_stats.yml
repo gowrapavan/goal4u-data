@@ -10,6 +10,7 @@ on:
 
 env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
   PYTHONUNBUFFERED: "1"
 
 jobs:
@@ -28,30 +29,34 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install playwright playwright-stealth
+ 
+      # 2. Install Chromium browser binary (cached across runs)
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
+ 
+      # 3. Install Xvfb (virtual display) so headless=False works on Linux CI
+      #    This is the key step — CF bot detection checks navigator.webdriver
+      #    and several other signals that are only clean in non-headless mode.
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+ 
+      # 4. Run your scraping steps WRAPPED in xvfb-run
+      #    This gives Chromium a real virtual display to render into.
+      - name: Sync match links
+        run: xvfb-run --auto-servernum python workers/fetch_match_links.py --all
+ 
+      - name: Scrape match stats
+        run: xvfb-run --auto-servernum python -m workers.fetch_match_stats --all --week
 
-      - name: Update match links database
+      # 5. Save the data! Commit and push the newly scraped files back to the repo.
+      - name: Commit and Push Data
         run: |
-          echo "Fetching latest match URLs..."
-          python workers/fetch_match_links.py --all
-
-      - name: Scrape match statistics
-        run: |
-          echo "Scraping stats for current week's matches..."
-          python workers/fetch_match_stats.py --all --week
-
-      - name: Commit updated match links and stats
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # data/ is gitignored, so force add it
-          git add -f data/
-
-          git diff --cached --quiet && echo "Nothing to commit" && exit 0
-
-          git commit -m "chore(data): hourly match links + stats sync [skip ci]"
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/
+          git commit -m "chore: automated hourly sync for match links and stats" || echo "No new data to commit"
           git push

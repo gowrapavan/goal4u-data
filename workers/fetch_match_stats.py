@@ -65,8 +65,8 @@ from typing import Any
 
 from bs4 import BeautifulSoup, Tag
 
-# Use curl_cffi to bypass Cloudflare TLS fingerprinting
-from curl_cffi import requests
+# Unified Cloudflare bypass fetcher (Playwright → curl_cffi → free proxy)
+from workers.cf_fetcher import fetch_html as _cf_fetch_html
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
@@ -74,12 +74,6 @@ BASE_URL  = "https://yallashoot.soccer/live/"
 BASE_DIR  = Path("data")          # repo root; override via DATA_DIR env var
 SEASON    = "2025-2026"           # override via SEASON env var
 
-# Request settings
-_REQUEST_TIMEOUT = 20   # seconds
-_RETRY_DELAYS    = [5, 15, 30]   # back-off for 429 / 5xx
-
-# Create a global session impersonating Chrome to bypass WAFs
-_session = requests.Session(impersonate="chrome120")
 
 
 # CSS class → our snake_case stat key
@@ -183,56 +177,22 @@ def _slug_from_url(url: str) -> str:
 
 def _fetch_html(url: str) -> str | None:
     """
-    Fetch the HTML of a match page with retry / back-off logic and TLS spoofing.
+    Fetch the HTML of a match page using the CF bypass cascade.
+
+    Tries (in order):
+      1. Playwright + stealth  — solves the JS challenge CF issues on datacenter IPs
+      2. curl_cffi             — fast TLS impersonation (works locally)
+      3. Free rotating proxies — last-resort fallback
+
     Returns the raw HTML string on success, None on failure.
     """
-    for attempt, delay in enumerate([0] + _RETRY_DELAYS, start=1):
-        if delay:
-            logger.info("Waiting %ds before retry %d …", delay, attempt)
-            time.sleep(delay)
-        try:
-            resp = _session.get(url, timeout=_REQUEST_TIMEOUT)
+    logger.info("Fetching: %s", url)
+    html = _cf_fetch_html(url, retries=2)
 
-            if resp.status_code == 200:
-                return resp.text
+    if html is None:
+        logger.error("All fetch methods exhausted for %s", url)
 
-            # Handle 403 Forbidden and 429 Rate Limits similarly
-            if resp.status_code in (403, 429):
-                retry_after = int(resp.headers.get("Retry-After", 60)) if resp.status_code == 429 else 10
-                logger.warning(
-                    "HTTP %d — sleeping %ds (attempt %d/%d)",
-                    resp.status_code, retry_after, attempt, len(_RETRY_DELAYS) + 1,
-                )
-                
-                # Debug logging to identify Cloudflare/WAF block vs native block
-                if resp.status_code == 403:
-                    logger.info("403 Body snippet: %s", resp.text[:200].replace('\n', ' '))
-                
-                time.sleep(retry_after)
-                continue
-
-            if resp.status_code >= 500:
-                logger.warning(
-                    "Server error %d on attempt %d/%d — retrying",
-                    resp.status_code, attempt, len(_RETRY_DELAYS) + 1,
-                )
-                continue
-
-            if resp.status_code == 404:
-                logger.info("HTTP 404 for %s — Stats not yet available.", url)
-                return None
-
-            logger.error("HTTP %d for %s — not retrying", resp.status_code, url)
-            return None
-
-        except Exception as exc:
-            logger.warning(
-                "Network error (attempt %d/%d): %s",
-                attempt, len(_RETRY_DELAYS) + 1, exc,
-            )
-
-    logger.error("All retries exhausted for %s", url)
-    return None
+    return html
 
 
 # ── Parse helpers ─────────────────────────────────────────────────────────────
