@@ -22,9 +22,6 @@ from difflib import SequenceMatcher
 # Unified Cloudflare bypass fetcher (Playwright → curl_cffi → free proxy)
 from workers.cf_fetcher import fetch_html as _cf_fetch_html
 
-# Only import safe_write from utils
-from utils import safe_write
-
 # Define constants locally since utils.py is path-agnostic
 SEASON = "2025-2026"
 DATA_DIR = "data"
