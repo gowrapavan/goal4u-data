@@ -12,8 +12,8 @@ env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
   WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
   PYTHONUNBUFFERED: "1"
-  # This tells Python to treat the root of the repo as the starting point for imports
-  PYTHONPATH: "."
+  # Use the absolute workspace path so Python always finds absolute imports like 'utils'
+  PYTHONPATH: ${{ github.workspace }}
 
 jobs:
   sync-match-stats:
@@ -49,7 +49,6 @@ jobs:
       # 4. Run your scraping steps WRAPPED in xvfb-run
       #    This gives Chromium a real virtual display to render into.
       - name: Sync match links
-        # CHANGED to use the -m flag to resolve the 'workers' module import
         run: xvfb-run --auto-servernum python -m workers.fetch_match_links --all
  
       - name: Scrape match stats
