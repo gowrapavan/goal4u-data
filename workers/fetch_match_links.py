@@ -240,9 +240,17 @@ def load_fd_matches(competition: str) -> list[dict]:
     return data.get("data", [])
 
 def save_match_links(competition: str, records: list[dict]):
+    """Creates the directory if it doesn't exist and safely writes the JSON file."""
     out_path = os.path.join(DATA_DIR, SEASON, "match-links", f"{competition}.json")
-    safe_write(out_path, records)
-
+    
+    # Ensure the target directory exists
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    
+    # Write the data with the {"data": [...]} envelope expected by the stats scraper
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump({"data": records}, f, indent=2, ensure_ascii=False)
+        
+    print(f"  ✓ Saved {len(records)} matches to {out_path}")
 # ── CLI entry point ───────────────────────────────────────────────────────────
 
 def process_one(competition: str):
