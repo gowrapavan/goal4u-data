@@ -256,8 +256,16 @@ def _parse_match_header(soup: BeautifulSoup) -> dict:
         away_crest = (away_wrap.select_one("img.match-scoreboard__club-logo") or {}).get("src")
 
     score_nums = soup.select(".match-scoreboard__score-number")
-    home_score = int(_txt(score_nums[0], "0")) if score_nums else 0
-    away_score = int(_txt(score_nums[1], "0")) if len(score_nums) > 1 else 0
+
+    def _parse_score(el) -> int:
+        val = _txt(el, "0").strip()
+        try:
+            return int(val)
+        except ValueError:
+            return 0  # Fallback to 0 if the site shows a dash "-" for unplayed matches
+
+    home_score = _parse_score(score_nums[0]) if len(score_nums) > 0 else 0
+    away_score = _parse_score(score_nums[1]) if len(score_nums) > 1 else 0
 
     ht_home = ht_away = None
     footer_el = soup.select_one(".match-scoreboard__footer-line")
