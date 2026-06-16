@@ -12,8 +12,6 @@ env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
   WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
   PYTHONUNBUFFERED: "1"
-  # Use the absolute workspace path so Python always finds absolute imports like 'utils'
-  PYTHONPATH: ${{ github.workspace }}
 
 jobs:
   sync-match-stats:
@@ -35,24 +33,25 @@ jobs:
         run: |
           pip install -r requirements.txt
           pip install playwright playwright-stealth
- 
+
       # 2. Install Chromium browser binary (cached across runs)
       - name: Install Playwright Chromium
         run: playwright install chromium --with-deps
- 
+
       # 3. Install Xvfb (virtual display) so headless=False works on Linux CI
       #    This is the key step — CF bot detection checks navigator.webdriver
       #    and several other signals that are only clean in non-headless mode.
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
- 
-      # 4. Run your scraping steps WRAPPED in xvfb-run
-      #    This gives Chromium a real virtual display to render into.
+
+      # 4. Run your scraping steps WRAPPED in xvfb-run.
+      #    PYTHONPATH is set inline so xvfb-run inherits it correctly —
+      #    a top-level env: block value isn't reliably forwarded through xvfb-run.
       - name: Sync match links
-        run: xvfb-run --auto-servernum python -m workers.fetch_match_links --all
- 
+        run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_links --all
+
       - name: Scrape match stats
-        run: xvfb-run --auto-servernum python -m workers.fetch_match_stats --all --week
+        run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_stats --all --week
 
       # 5. Save the data! Commit and push the newly scraped files back to the repo.
       - name: Commit and Push Data
