@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-17T16:34:43.404393+00:00",
+    "last_synced": "2026-06-17T19:12:16.205182+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -2528,7 +2528,7 @@
         "winner": null
       },
       "utcDate": "2026-06-17T17:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 1,
       "stage": "GROUP_STAGE",
       "group": "GROUP_K",
@@ -2561,15 +2561,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -2740,7 +2740,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 9374,
+          "name": "Clément Turpin",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
