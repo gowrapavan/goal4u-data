@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-18T20:36:12.777819+00:00",
+    "last_synced": "2026-06-18T21:12:40.348441+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -3149,11 +3149,11 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-18T19:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_B",
@@ -3186,15 +3186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -3274,7 +3274,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-18T22:00:00Z",
@@ -3365,7 +3365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 58065,
+          "name": "Cristián Garay",
+          "type": "REFEREE",
+          "nationality": "Chile"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
