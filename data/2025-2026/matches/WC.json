@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-19T22:30:06.707903+00:00",
+    "last_synced": "2026-06-19T23:38:53.675317+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -3524,7 +3524,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 2,
+        "currentMatchday": 1,
         "winner": null
       },
       "utcDate": "2026-06-19T19:00:00Z",
@@ -3649,7 +3649,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-19T22:00:00Z",
@@ -3693,8 +3693,8 @@
           "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -3865,7 +3865,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 206208,
+          "name": "Alejandro Hernández Hernández",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
