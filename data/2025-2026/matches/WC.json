@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-19T19:59:35.237402+00:00",
+    "last_synced": "2026-06-19T20:02:46.060099+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -3528,7 +3528,7 @@
         "winner": null
       },
       "utcDate": "2026-06-19T19:00:00Z",
-      "status": "IN_PLAY",
+      "status": "PAUSED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_D",
@@ -3568,7 +3568,7 @@
           "away": 0
         },
         "halfTime": {
-          "home": 0,
+          "home": 2,
           "away": 0
         },
         "regularTime": {
@@ -3740,7 +3740,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 236055,
+          "name": "Il'giz Tantashev",
+          "type": "REFEREE",
+          "nationality": "Uzbekistan"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
