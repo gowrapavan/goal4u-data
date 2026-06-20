@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-19T23:38:53.675317+00:00",
+    "last_synced": "2026-06-20T01:51:19.711394+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -3524,7 +3524,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-19T19:00:00Z",
@@ -3649,11 +3649,11 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 2,
+        "currentMatchday": 1,
         "winner": null
       },
       "utcDate": "2026-06-19T22:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_C",
@@ -3778,7 +3778,7 @@
         "winner": null
       },
       "utcDate": "2026-06-20T00:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_C",
@@ -3811,15 +3811,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -3899,7 +3899,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-20T03:00:00Z",
@@ -3990,7 +3990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 190010,
+          "name": "Ivan Barton",
+          "type": "REFEREE",
+          "nationality": null
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
