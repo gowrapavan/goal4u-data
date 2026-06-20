@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-20T16:47:51.604416+00:00",
+    "last_synced": "2026-06-20T18:07:01.328839+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -4028,7 +4028,7 @@
         "winner": null
       },
       "utcDate": "2026-06-20T17:00:00Z",
-      "status": "TIMED",
+      "status": "PAUSED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_F",
@@ -4061,15 +4061,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -4240,7 +4240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 116383,
+          "name": "Juan Benítez",
+          "type": "REFEREE",
+          "nationality": "Paraguay"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
