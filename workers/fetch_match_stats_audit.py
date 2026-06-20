@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-workers/fetch_match_stats.py
+workers/fetch_match_stats_audit.py
 ──────────────────────────────────────────────────────────────────────────────
 Scrapes deep match statistics (possession, shots, lineups, goals, cards,
 substitutions, player ratings, xG) from yallashoot.soccer — bypassing the
@@ -42,12 +42,11 @@ Sync schedule:
     On-demand for finished matches (manual trigger or cron at match end).
 
 Usage:
-    # Scrape all matches for a competition dynamically using the link database
-    python -m workers.fetch_match_stats --competition PL
-    python -m workers.fetch_match_stats --competition WC --today
+    # Audit all competitions — fetch up to 50 missing FINISHED stats (default, used by GHA)
+    python -m workers.fetch_match_stats_audit --all
 
-    # Scrape a single match
-    python -m workers.fetch_match_stats --url https://yallashoot.soccer/live/netherlands-japan-2026-06-14/
+    # Audit a single competition, custom limit
+    python -m workers.fetch_match_stats_audit --competition WC --limit 20
 """
 
 from __future__ import annotations
@@ -130,7 +129,7 @@ logging.basicConfig(
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     datefmt="%Y-%m-%dT%H:%M:%SZ",
 )
-logger = logging.getLogger("fetch_match_stats")
+logger = logging.getLogger("fetch_match_stats_audit")
 
 
 # ── Path helpers ──────────────────────────────────────────────────────────────
@@ -601,11 +600,10 @@ def _discover_competition_codes() -> list[str]:
 
 def run_competition(
     code: str,
-    period: str | None = None,
     force: bool = False,
     delay: float = 3.0,
     limit: int | None = None,
-    statuses: tuple[str, ...] = ("FINISHED", "IN_PLAY", "PAUSED", "LIVE", "TIMED", "SCHEDULED"),
+    statuses: tuple[str, ...] = ("FINISHED",),  # audit: finished matches only
 ) -> tuple[int, int, int, int]:
     """
     Scrape stats for one competition.
@@ -620,11 +618,13 @@ def run_competition(
     matches = _load_competition_matches(code)
     if not matches: return 0, 0, 0, 0
 
+    # Audit mode: scan ALL finished matches regardless of date.
+    # No period filter — a match finished in week 1 still needs its stats
+    # even when run_competition is called in week 4.
     eligible = [m for m in matches if m.get("status") in statuses]
-    if period: eligible = _filter_matches_by_period(eligible, period)
 
     if not eligible:
-        logger.info("%s: nothing to scrape — returning", code)
+        logger.info("%s: no FINISHED matches found — nothing to audit", code)
         return 0, 0, 0, 0
 
     # ── Load Exact URLs from our Database ──
@@ -724,34 +724,33 @@ def run_competition(
 
 
 def run_all_competitions(
-    period: str | None = None,
     force: bool = False,
     delay: float = 3.0,
-    limit: int | None = None,
+    limit: int = 50,
 ) -> None:
     """
-    Run across all discovered competitions.
+    Audit all competitions for missing FINISHED-match stats and fetch up to
+    `limit` of them (default 50).
 
-    When --limit N is supplied, a shared budget of N total fetches is distributed
-    across competitions in discovery order.  Once the budget is exhausted the
-    remaining competitions are reported as pending and the run exits cleanly —
-    the next scheduled run will continue from where this one stopped.
+    The 50-fetch budget is shared across all competitions in discovery order.
+    Deferred matches are picked up automatically on the next hourly run —
+    the pre-scan skips any match that already has a stat file on disk, so
+    the budget is never wasted on re-fetching.
     """
     codes = _discover_competition_codes()
     if not codes: sys.exit(1)
 
     total_ok = total_failed = total_skipped = total_pending = 0
-    budget_remaining = limit  # None means unlimited
+    budget_remaining = limit  # shared across all competitions
 
     for code in codes:
-        if budget_remaining is not None and budget_remaining <= 0:
-            logger.info("Global fetch budget exhausted — skipping remaining competition: %s", code)
-            total_pending += 1   # rough accounting; exact count unknown without pre-scan
+        if budget_remaining <= 0:
+            logger.info("Global fetch budget of %d exhausted — deferring: %s", limit, code)
+            total_pending += 1
             continue
 
         ok, failed, skipped, pending = run_competition(
             code,
-            period=period,
             force=force,
             delay=delay,
             limit=budget_remaining,
@@ -761,11 +760,10 @@ def run_all_competitions(
         total_skipped += skipped
         total_pending += pending
 
-        if budget_remaining is not None:
-            budget_remaining -= (ok + failed)
+        budget_remaining -= (ok + failed)
 
     logger.info(
-        "=== run_all_competitions complete: %d fetched / %d failed / %d skipped / %d pending ===",
+        "=== audit complete: %d fetched / %d failed / %d skipped / %d pending next run ===",
         total_ok, total_failed, total_skipped, total_pending,
     )
 
@@ -818,54 +816,49 @@ def run_batch(urls: list[str], delay: float = 3.0) -> tuple[int, int]:
 # ── CLI ───────────────────────────────────────────────────────────────────────
 
 def _main() -> None:
-    parser = argparse.ArgumentParser(description="Scrape match stats from yallashoot.soccer.")
-    
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--url", "-u", help="Single match URL to scrape.")
-    group.add_argument("--file", "-f", help="Path to a text file containing one match URL per line.")
-    group.add_argument("--match", "-m", nargs=3, metavar=("HOME", "AWAY", "DATE"), help="Build URL from team names and date.")
-    group.add_argument("--competition", "-c", metavar="CODE", help="Scrape all eligible matches for one competition.")
-    group.add_argument("--all", "-a", action="store_true", dest="all_competitions", help="Scrape all discovered competitions.")
-
-    parser.add_argument("--delay", type=float, default=3.0, help="Seconds between requests.")
-    parser.add_argument("--force", action="store_true", help="Re-scrape even when the output file already exists.")
-    parser.add_argument(
-        "--limit", type=int, default=None, metavar="N",
-        help=(
-            "Maximum number of HTTP fetches to perform in this run (across all competitions "
-            "when used with --all). Matches that are skipped because a stat file already "
-            "exists do NOT count toward this limit — only real network requests do. "
-            "Remaining matches are deferred to the next scheduled run."
-        ),
+    parser = argparse.ArgumentParser(
+        description=(
+            "Audit all competitions for missing FINISHED-match stats and fetch "
+            "up to LIMIT of them per run. Existing stat files are always skipped. "
+            "Designed for fully automated hourly execution — no manual inputs needed."
+        )
     )
 
-    date_group = parser.add_mutually_exclusive_group()
-    date_group.add_argument("--today", action="store_true", help="Only process matches scheduled for today.")
-    date_group.add_argument("--week", action="store_true", help="Only process matches in the current week.")
-    date_group.add_argument("--month", action="store_true", help="Only process matches in the current month.")
-    date_group.add_argument("--year", action="store_true", help="Only process matches in the current year.")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--all", "-a", action="store_true", dest="all_competitions",
+        help="Audit all discovered competitions (recommended for automated runs).",
+    )
+    group.add_argument(
+        "--competition", "-c", metavar="CODE",
+        help="Audit a single competition, e.g. WC or PL.",
+    )
+
+    parser.add_argument(
+        "--limit", type=int, default=50, metavar="N",
+        help=(
+            "Max HTTP fetches this run across all competitions (default: 50). "
+            "Only real network requests count — existing files are pre-scanned "
+            "and excluded so the budget is never wasted on skips."
+        ),
+    )
+    parser.add_argument(
+        "--delay", type=float, default=3.0,
+        help="Seconds to wait between requests (default: 3).",
+    )
 
     args = parser.parse_args()
 
-    period = "today" if args.today else "week" if args.week else "month" if args.month else "year" if args.year else None
-
-    if args.url:
-        sys.exit(0 if run_single(args.url) else 1)
-    elif args.file:
-        urls = [line.strip() for line in Path(args.file).read_text().splitlines() if line.strip() and not line.startswith("#")]
-        ok, fail = run_batch(urls, delay=args.delay)
-        sys.exit(0 if fail == 0 else 1)
-    elif args.match:
-        sys.exit(0 if run_single(build_url(*args.match)) else 1)
+    if args.all_competitions:
+        run_all_competitions(delay=args.delay, limit=args.limit)
+        sys.exit(0)
     elif args.competition:
         ok, failed, skipped, pending = run_competition(
-            args.competition, period=period, force=args.force,
-            delay=args.delay, limit=args.limit,
+            args.competition,
+            delay=args.delay,
+            limit=args.limit,
         )
         sys.exit(0 if failed == 0 else 1)
-    elif args.all_competitions:
-        run_all_competitions(period=period, force=args.force, delay=args.delay, limit=args.limit)
-        sys.exit(0)
 
 if __name__ == "__main__":
     _main()

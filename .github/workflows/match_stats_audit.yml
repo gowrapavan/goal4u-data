@@ -5,17 +5,8 @@ on:
     # Runs every hour at minute 30 (offset from the links workflow at :00)
     - cron: "30 * * * *"
 
-  # Manual trigger from GitHub Actions UI
+  # Manual trigger — no inputs, same behaviour as the scheduled run
   workflow_dispatch:
-    inputs:
-      limit:
-        description: "Max fetches this run (default: 50)"
-        required: false
-        default: "50"
-      force:
-        description: "Re-scrape even if stat file already exists (true/false)"
-        required: false
-        default: "false"
 
 env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
@@ -49,26 +40,15 @@ jobs:
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
-      # ── Core step ──────────────────────────────────────────────────────────
-      # --month   : covers the full ongoing WC tournament window
-      # --limit 50: max 50 real HTTP fetches per run — existing stat files are
-      #             pre-scanned and excluded from the count, so the cap only
-      #             applies to genuine new scrapes. Deferred matches are picked
-      #             up automatically on the next hourly run.
-      # No --force: already-scraped matches are always skipped for speed.
+      # Scans ALL competitions for FINISHED matches that have no stat file on disk.
+      # Fetches at most 50 per run (hardcoded in the script default).
+      # No date filter — covers every finished match across the whole season,
+      # not just the current week/month, so nothing gets permanently missed.
+      # Deferred matches are picked up automatically on the next hourly run.
       - name: Audit and scrape missing stats
         run: |
-          LIMIT="${{ github.event.inputs.limit || '50' }}"
-          FORCE_FLAG=""
-          if [ "${{ github.event.inputs.force }}" = "true" ]; then
-            FORCE_FLAG="--force"
-          fi
           PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum \
-            python -m workers.fetch_match_stats_audit \
-              --all \
-              --month \
-              --limit "$LIMIT" \
-              $FORCE_FLAG
+            python -m workers.fetch_match_stats_audit --all
 
       - name: Commit and Push Data
         run: |
