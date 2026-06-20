@@ -86,10 +86,14 @@ def extract_match_urls(html: str) -> list[dict]:
     """
     Extract all unique YallaShoot match URLs.
     Example: https://yallashoot.soccer/live/liverpool-bournemouth-2025-08-15/
+
+    NOTE: The slug character class includes unicode word chars (\w) so that
+    teams with accented names (Curaçao → curacao, Côte d'Ivoire, etc.) are
+    captured correctly regardless of how YallaShoot encodes them in the URL.
     """
     pattern = re.compile(
-        r'https://yallashoot\.soccer/live/([a-z0-9\-]+)-(\d{4}-\d{2}-\d{2})/',
-        re.IGNORECASE,
+        r'https://yallashoot\.soccer/live/([\w\-]+)-(\d{4}-\d{2}-\d{2})/',
+        re.IGNORECASE | re.UNICODE,
     )
 
     seen = set()
@@ -121,6 +125,19 @@ def normalize_name(name: str) -> str:
         
     name = name.lower()
     
+    # Normalize unicode accented characters to their ASCII equivalents
+    # so slugs like "curacao" match API names like "Curaçao"
+    _unicode_map = str.maketrans({
+        "ç": "c", "ć": "c", "č": "c",
+        "é": "e", "è": "e", "ê": "e", "ë": "e",
+        "á": "a", "à": "a", "â": "a", "ä": "a", "ã": "a",
+        "í": "i", "ì": "i", "î": "i", "ï": "i",
+        "ó": "o", "ò": "o", "ô": "o", "ö": "o", "õ": "o",
+        "ú": "u", "ù": "u", "û": "u", "ü": "u",
+        "ñ": "n", "ß": "ss", "ø": "o", "å": "a",
+    })
+    name = name.translate(_unicode_map)
+    
     # Replace special characters with spaces
     name = re.sub(r"[^a-z0-9]", " ", name)
     name = " ".join(name.split()).strip()
@@ -145,7 +162,11 @@ def normalize_name(name: str) -> str:
         "qarabag agdam": "qarabag",
         "fk bodo glimt": "bodoglimt",
         "bodo glimt": "bodoglimt",
-        "fk kairat": "kairat almaty"
+        "fk kairat": "kairat almaty",
+        # WC-specific names that differ between API and YallaShoot slugs
+        "curacao": "curacao",          # API: "Curaçao" → already normalized above
+        "ivory coast": "ivory coast",  # API: "Côte d'Ivoire" → normalized above
+        "cote d ivoire": "ivory coast",
     }
     
     for k, v in aliases.items():

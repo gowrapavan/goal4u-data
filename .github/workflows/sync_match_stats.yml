@@ -1,0 +1,54 @@
+name: "Match Stats — 5-Hour Sync"
+
+on:
+  schedule:
+    # Runs at minute 0 of hours 0, 5, 10, 15, 20 UTC every day
+    - cron: "0 0,5,10,15,20 * * *"
+
+  # Manual trigger from GitHub Actions UI
+  workflow_dispatch:
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  scrape-match-stats:
+    name: "Scrape match stats"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install playwright playwright-stealth
+
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      - name: Scrape match stats
+        # --month instead of --week so the full WC tournament window is always covered.
+        # --force is intentionally OMITTED — existing files are skipped to keep the run fast.
+        run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_stats --all --month
+
+      - name: Commit and Push Data
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -f data/
+          git commit -m "chore: automated 5-hour stats sync" || echo "No new data to commit"
+          git push
