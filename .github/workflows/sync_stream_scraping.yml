@@ -40,14 +40,12 @@ jobs:
         run: python main.py
 
       - name: Commit and push updated JSON
-        # Runs from repo root (default working-directory) since main.py now
-        # writes to <root>/stream-data, not stream-scraping/json.
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # -f because stream-data/ is gitignored (it's scraper output, not source)
           git add -f stream-data/*.json
+          git add stream-scraping/core/translation_cache.json
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
@@ -56,10 +54,6 @@ jobs:
 
           git commit -m "Update live stream data [skip ci]"
 
-          # Another workflow may have pushed to this branch while the
-          # scrape was running. Rebase onto the latest remote state and
-          # retry instead of letting a plain `git push` fail on a
-          # non-fast-forward.
           for attempt in 1 2 3 4 5; do
             git fetch origin "${GITHUB_REF_NAME}"
             if git rebase "origin/${GITHUB_REF_NAME}"; then

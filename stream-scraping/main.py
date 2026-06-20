@@ -2,6 +2,7 @@ import os
 import json
 from core.team_data import load_team_data
 from core.hd_extractor import extract_m3u8_matches
+from core.translate import translate_matches
 # Import your scrapers
 from scrapers import (
     sportsonline,
@@ -42,6 +43,12 @@ def run_scrapers():
         try:
             data = fetch_function()
             if data:
+                # Arabic-language sources (freekora, koraaclub, koralivetv,
+                # live_soccer, yallashots) come back with Arabic team/league
+                # text; this is a no-op for sources that are already English
+                # (hesgoal, sportsonline, yallasport).
+                data = translate_matches(data)
+
                 filepath = os.path.join(JSON_FOLDER, filename)
                 with open(filepath, "w", encoding="utf-8") as f:
                     json.dump(data, f, ensure_ascii=False, indent=2)
