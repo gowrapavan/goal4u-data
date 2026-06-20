@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-20T21:10:35.780186+00:00",
+    "last_synced": "2026-06-20T22:18:26.918553+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -2774,7 +2774,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 2,
+        "currentMatchday": 1,
         "winner": null
       },
       "utcDate": "2026-06-17T23:00:00Z",
@@ -2899,7 +2899,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-18T02:00:00Z",
@@ -3399,7 +3399,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-19T01:00:00Z",
@@ -3899,7 +3899,7 @@
         "id": 2398,
         "startDate": "2026-06-11",
         "endDate": "2026-07-19",
-        "currentMatchday": 1,
+        "currentMatchday": 2,
         "winner": null
       },
       "utcDate": "2026-06-20T03:00:00Z",
@@ -4153,7 +4153,7 @@
         "winner": null
       },
       "utcDate": "2026-06-20T20:00:00Z",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "matchday": 2,
       "stage": "GROUP_STAGE",
       "group": "GROUP_E",
@@ -4186,10 +4186,10 @@
         "bench": []
       },
       "score": {
-        "winner": "AWAY_TEAM",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
+          "home": 2,
           "away": 1
         },
         "halfTime": {
@@ -4365,7 +4365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 176659,
+          "name": "Ning Ma",
+          "type": "REFEREE",
+          "nationality": "China PR"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
