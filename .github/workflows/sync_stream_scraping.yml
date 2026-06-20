@@ -40,13 +40,14 @@ jobs:
         run: python main.py
 
       - name: Commit and push updated JSON
-        working-directory: stream-scraping
+        # Runs from repo root (default working-directory) since main.py now
+        # writes to <root>/stream-data, not stream-scraping/json.
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
-          # -f because json/ is gitignored (it's scraper output, not source)
-          git add -f json/*.json
+          # -f because stream-data/ is gitignored (it's scraper output, not source)
+          git add -f stream-data/*.json
 
           if git diff --cached --quiet; then
             echo "No changes to commit"
