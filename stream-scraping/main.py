@@ -14,7 +14,9 @@ from scrapers import (
     yallasport,
 )
 
-JSON_FOLDER = os.path.join(os.path.dirname(__file__), "json")
+# main.py lives at <root>/stream-scraping/main.py, so one level up is <root>.
+ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+JSON_FOLDER = os.path.join(ROOT_DIR, "stream-data")
 os.makedirs(JSON_FOLDER, exist_ok=True)
 
 # Map output filenames to their respective scrape functions
