@@ -1,0 +1,79 @@
+name: "Match Stats — Hourly Audit (50/run)"
+
+on:
+  schedule:
+    # Runs every hour at minute 30 (offset from the links workflow at :00)
+    - cron: "30 * * * *"
+
+  # Manual trigger from GitHub Actions UI
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "Max fetches this run (default: 50)"
+        required: false
+        default: "50"
+      force:
+        description: "Re-scrape even if stat file already exists (true/false)"
+        required: false
+        default: "false"
+
+env:
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  audit-match-stats:
+    name: "Audit + scrape missing match stats"
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install playwright playwright-stealth
+
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      # ── Core step ──────────────────────────────────────────────────────────
+      # --month   : covers the full ongoing WC tournament window
+      # --limit 50: max 50 real HTTP fetches per run — existing stat files are
+      #             pre-scanned and excluded from the count, so the cap only
+      #             applies to genuine new scrapes. Deferred matches are picked
+      #             up automatically on the next hourly run.
+      # No --force: already-scraped matches are always skipped for speed.
+      - name: Audit and scrape missing stats
+        run: |
+          LIMIT="${{ github.event.inputs.limit || '50' }}"
+          FORCE_FLAG=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then
+            FORCE_FLAG="--force"
+          fi
+          PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum \
+            python -m workers.fetch_match_stats_audit \
+              --all \
+              --month \
+              --limit "$LIMIT" \
+              $FORCE_FLAG
+
+      - name: Commit and Push Data
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add -f data/
+          git commit -m "chore: hourly stats audit — $(date -u +%Y-%m-%dT%H:%M:%SZ)" || echo "No new stats to commit"
+          git push
