@@ -1,0 +1,78 @@
+# .github/workflows/sync_stream_scraping.yml
+name: Sync Stream Scraping
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  # Prevents two runs of THIS workflow from overlapping (e.g. if a run
+  # takes longer than 30 min). Does not cancel an in-progress run --
+  # a new trigger just waits its turn instead of killing the current job.
+  group: stream-scraping
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run scrapers
+        working-directory: stream-scraping
+        run: python main.py
+
+      - name: Commit and push updated JSON
+        working-directory: stream-scraping
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # -f because json/ is gitignored (it's scraper output, not source)
+          git add -f json/*.json
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "Update live stream data [skip ci]"
+
+          # Another workflow may have pushed to this branch while the
+          # scrape was running. Rebase onto the latest remote state and
+          # retry instead of letting a plain `git push` fail on a
+          # non-fast-forward.
+          for attempt in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            if git rebase "origin/${GITHUB_REF_NAME}"; then
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                echo "Pushed successfully on attempt $attempt."
+                exit 0
+              fi
+            else
+              echo "Rebase conflict on attempt $attempt — aborting and retrying."
+              git rebase --abort || true
+            fi
+            echo "Push attempt $attempt failed, retrying in $((attempt * 5))s..."
+            sleep $((attempt * 5))
+          done
+
+          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          exit 1
