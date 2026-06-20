@@ -13,6 +13,14 @@ env:
   WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
   PYTHONUNBUFFERED: "1"
 
+# Prevent two runs of this workflow (e.g. a manual dispatch overlapping a
+# scheduled run) from both checking out main, scraping for ~40min, and then
+# racing each other on `git push` — that race is what caused the
+# "! [rejected] main -> main (fetch first)" failure.
+concurrency:
+  group: match-stats-sync
+  cancel-in-progress: false
+
 jobs:
   scrape-match-stats:
     name: "Scrape match stats"
@@ -51,4 +59,26 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -f data/
           git commit -m "chore: automated 5-hour stats sync" || echo "No new data to commit"
-          git push
+
+          # The scrape step can take 5-40+ minutes. If anything else pushed
+          # to main while this job was running, a plain `git push` gets
+          # rejected as non-fast-forward (this is what failed before — the
+          # scrape itself succeeded, only the push didn't). Rebase onto the
+          # latest main and retry instead of dying on that race.
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Pushed successfully on attempt $i."
+                exit 0
+              fi
+            else
+              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
+              git rebase --abort || true
+            fi
+            echo "Push attempt $i failed, retrying in 15s..."
+            sleep 15
+          done
+
+          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          exit 1

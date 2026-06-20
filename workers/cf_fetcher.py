@@ -231,45 +231,68 @@ def fetch_html(url: str, retries: int = 2) -> Optional[str]:
     """
     Fetch HTML from a Cloudflare-protected page using a cascade of methods.
 
-    Order:
-      1. Playwright + stealth  (best CF bypass — always tried first on CI)
-      2. curl_cffi             (fast, works locally)
-      3. curl_cffi + Webshare  (last resort)
+    Order (revised — see NOTE below):
+      1. curl_cffi             (fast, ~1-3s, works locally and is usually
+                                 what actually succeeds via the proxy too)
+      2. curl_cffi + Webshare  (the one that reliably bypasses CF in CI)
+      3. Playwright + stealth  (slow, ~20-90s; skipped on CI by default)
+
+    NOTE on ordering: Playwright used to be tried FIRST on every CI run.
+    In production it has never once solved this site's Cloudflare JS
+    challenge from GitHub Actions' datacenter IPs (100% failure rate
+    across every run we've logged) — it just burns 2 attempts x ~20-45s
+    each (~35-90s) per match before falling through to Webshare, which is
+    the method that actually works. For a 78-match run that's 30-60+
+    wasted minutes for nothing. Webshare is now tried first/second, and
+    Playwright is kept only as a last-resort fallback in case the site's
+    CF rules change later — set SKIP_PLAYWRIGHT=false to re-enable it on
+    CI if you ever see it start succeeding again.
 
     Args:
         url:     The URL to fetch.
         retries: How many times to retry the Playwright method before
-                 falling back.
+                 giving up (only used if Playwright isn't skipped).
 
     Returns:
         HTML string on success, None if all methods fail.
     """
     is_ci = os.environ.get("CI", "").lower() in ("true", "1", "yes")
 
-    # ── Try Playwright first on CI (it can actually solve JS challenges) ──
-    if is_ci:
-        for attempt in range(1, retries + 1):
-            logger.info("[fetch_html] Playwright attempt %d/%d for %s", attempt, retries, url)
-            html = _fetch_with_playwright(url)
-            if html:
-                return html
-            if attempt < retries:
-                sleep_s = 10 * attempt
-                logger.info("[fetch_html] Playwright failed — sleeping %ds before retry", sleep_s)
-                time.sleep(sleep_s)
-    else:
-        # Locally: try curl_cffi first (much faster)
-        logger.info("[fetch_html] curl_cffi attempt for %s", url)
-        html = _fetch_with_curl_cffi(url)
-        if html:
-            return html
+    # ── 1. Fast path: curl_cffi direct (no proxy) ──
+    logger.info("[fetch_html] curl_cffi attempt for %s", url)
+    html = _fetch_with_curl_cffi(url)
+    if html:
+        return html
 
-        # If curl_cffi failed locally, try Playwright
-        logger.info("[fetch_html] Falling back to Playwright for %s", url)
+    # ── 2. curl_cffi through Webshare rotating proxy ──
+    # This is empirically the method that bypasses this site's CF rules
+    # from datacenter IPs — try it before paying Playwright's time cost.
+    logger.info("[fetch_html] Trying Webshare proxy for %s", url)
+    html = _fetch_with_webshare_proxy(url)
+    if html:
+        return html
+
+    # ── 3. Last resort: Playwright + stealth ──
+    # Default-skipped on CI since it has a 0% success rate against this
+    # site in practice. Override with SKIP_PLAYWRIGHT=false to re-enable.
+    default_skip = "true" if is_ci else "false"
+    skip_playwright = os.environ.get("SKIP_PLAYWRIGHT", default_skip).lower() in ("1", "true", "yes")
+
+    if skip_playwright:
+        logger.warning(
+            "[fetch_html] curl_cffi + Webshare both failed for %s — "
+            "Playwright skipped (SKIP_PLAYWRIGHT=%s)", url, skip_playwright,
+        )
+        return None
+
+    for attempt in range(1, retries + 1):
+        logger.info("[fetch_html] Playwright attempt %d/%d for %s", attempt, retries, url)
         html = _fetch_with_playwright(url)
         if html:
             return html
+        if attempt < retries:
+            sleep_s = 10 * attempt
+            logger.info("[fetch_html] Playwright failed — sleeping %ds before retry", sleep_s)
+            time.sleep(sleep_s)
 
-    # ── Last resort: Webshare Premium Proxy ──
-    logger.info("[fetch_html] Falling back to Webshare proxy for %s", url)
-    return _fetch_with_webshare_proxy(url)
+    return None
