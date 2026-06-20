@@ -670,9 +670,15 @@ def run_competition(
         out_path = stats_match_dir / f"{match_id}.json"
 
         if out_path.exists() and not force:
-            logger.info("[%d/%d] Skip (exists): %s vs %s (%s)", i + 1, len(eligible), home_name, away_name, match_id)
-            skipped += 1
-            continue
+            # Read the existing file to see if it's already "Full Time"
+            current_status = _existing_stats_status(out_path)
+            
+            if current_status and current_status.strip().lower() in _FINAL_STATS_STATUSES:
+                logger.info("[%d/%d] Skip (already final): %s vs %s (%s)", i + 1, len(eligible), home_name, away_name, match_id)
+                skipped += 1
+                continue
+            else:
+                logger.info("[%d/%d] Re-scraping (stale status '%s'): %s vs %s (%s)", i + 1, len(eligible), current_status, home_name, away_name, match_id)
 
         # ── EXACT URL LOOKUP ──
         url = match_links.get(match_id)
