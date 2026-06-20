@@ -105,6 +105,15 @@ _ICON_MAP: dict[str, str] = {
     "icon-arrow-o-down":"subs_out",
 }
 
+# yallashoot.soccer `status` strings that mean the match is over and the
+# stats we've already scraped for it are final — safe to skip forever.
+# Anything else ("Scheduled", "Live", "Half Time", missing/unreadable, ...)
+# means the existing file is just a stale snapshot and should be re-scraped.
+_FINAL_STATS_STATUSES: set[str] = {
+    "full time", "ft", "match finished", "finished", "ended",
+    "after extra time", "aet", "penalties", "pen.",
+}
+
 # Empty stats side template
 _EMPTY_STATS: dict[str, Any] = {
     "yellow_cards":     None,
@@ -475,6 +484,28 @@ def scrape_match(url: str) -> dict | None:
         "statistics": statistics,
         "timeline":   timeline,
     }
+
+
+# ── Skip/refresh decision for already-scraped files ──────────────────────────
+
+def _existing_stats_status(path: Path) -> str | None:
+    """
+    Peek at an already-written stats JSON file and return its yallashoot
+    `status` string (e.g. "Full Time", "Scheduled", "Live"), or None if the
+    file is missing/corrupt/has no status.
+
+    Used by run_competition() to decide whether an existing file is truly
+    "done" (skip it forever) or just a stale pre-match / in-play snapshot
+    that needs to be re-scraped to pick up the real result.
+    """
+    try:
+        with open(path, encoding="utf-8") as fh:
+            envelope = json.load(fh)
+        data = envelope.get("data") if isinstance(envelope, dict) else None
+        return (data or {}).get("status")
+    except (OSError, json.JSONDecodeError) as exc:
+        logger.warning("Could not read existing stats file %s (%s) — treating as incomplete.", path, exc)
+        return None
 
 
 # ── File writer ───────────────────────────────────────────────────────────────
