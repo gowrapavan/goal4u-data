@@ -62,6 +62,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v5
         with:
@@ -80,9 +82,6 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
       # ── Step 1: Matches ───────────────────────────────────────────────────────
-      # Uses run_historical() which has a 60s timeout + monthly-chunk fallback.
-      # WC/EC: if the API returns 404 for this season, monthly chunks are tried;
-      # if those also return 0 matches, no file is written (Conditional Fallback).
       - name: Fetch matches (season ${{ matrix.season }})
         run: python workers/fetch_matches.py --season ${{ matrix.season }}
 
@@ -99,10 +98,6 @@ jobs:
         run: python workers/fetch_teams.py --season ${{ matrix.season }}
 
       # ── Step 5: Match links (YallaShoot URL map) ──────────────────────────────
-      # Requires the matches file from Step 1 to already be on disk.
-      # fetch_match_links.py --all reads the season folder via config, so we
-      # override SEASON to point it at the correct historical folder.
-      # e.g. season=2024 → SEASON=2024-2025, season=2026 → SEASON=2026-2027
       - name: Compute season folder string
         id: season_folder
         run: |
@@ -114,27 +109,32 @@ jobs:
           SEASON: ${{ steps.season_folder.outputs.folder }}
         run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_links --all
 
-      # ── Commit & push ─────────────────────────────────────────────────────────
+      # ── Commit & push (Robust Merge Strategy) ─────────────────────────────────
       - name: Commit and push season ${{ matrix.season }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
           git add -f data/
-          git diff --cached --quiet && echo "Nothing to commit for season ${{ matrix.season }}" && exit 0
+          
+          if git diff --cached --quiet; then
+            echo "Nothing to commit for season ${{ matrix.season }}"
+            exit 0
+          fi
+          
           git commit -m "chore(data): historical backfill data season ${{ matrix.season }} [skip ci]"
 
+          # Pull latest remote changes, preferring our newly generated JSON files during any conflicts
+          git pull origin main --strategy-option=ours --no-edit
+
           for i in 1 2 3 4 5; do
-            git fetch origin main
-            if git rebase origin/main; then
-              if git push origin HEAD:main; then
-                echo "Pushed season ${{ matrix.season }} on attempt $i."
-                exit 0
-              fi
-            else
-              git rebase --abort || true
+            if git push origin HEAD:main; then
+              echo "Pushed season ${{ matrix.season }} on attempt $i."
+              exit 0
             fi
-            echo "Push attempt $i failed, retrying in 10s..."
-            sleep 10
+            echo "Push attempt $i failed. Fetching and rebasing..."
+            git fetch origin main
+            git rebase origin/main -X ours || { git rebase --abort; sleep 10; continue; }
           done
 
           echo "::error::Failed to push backfill for season ${{ matrix.season }} after 5 attempts."
