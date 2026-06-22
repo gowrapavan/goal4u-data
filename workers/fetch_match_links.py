@@ -29,7 +29,7 @@ from workers.cf_fetcher import fetch_html as _cf_fetch_html
 # script updates automatically when config.py changes — no manual edit needed.
 from config import TRACKED_COMPETITIONS, get_season_paths
 
-_paths   = get_season_paths()
+_paths   = get_season_paths(os.environ.get("SEASON"))
 SEASON   = _paths["season"]          # e.g. "2025-2026"
 DATA_DIR = "data"
 
