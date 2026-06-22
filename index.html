@@ -126,7 +126,7 @@ body {
 .comp-pill.on { background: var(--mint-d); border-color: var(--mint); color: var(--mint); }
 .comp-pill-logo { width: 24px; height: 24px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.45); }
 
-/* ── OVERLAYS (DOCS & TEAM MODAL) ─────────────────────────────────────── */
+/* ── OVERLAYS (DOCS, TEAM MODAL, 404 NOT FOUND) ───────────────────────── */
 .docs-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(7,10,16,0.7); backdrop-filter: blur(10px); }
 .docs-overlay.on { display: flex; align-items: flex-start; justify-content: flex-end; }
 .docs-drawer { width: min(820px, 90vw); height: 100vh; background: var(--panel); border-left: 1px solid var(--border-s); display: flex; flex-direction: column; overflow: hidden; box-shadow: -20px 0 50px rgba(0,0,0,0.6); animation: drawer-in .25s ease; }
@@ -137,6 +137,19 @@ body {
 .docs-close-btn { background: var(--card); border: 1px solid var(--border); color: var(--sub); cursor: pointer; font-size: 16px; line-height: 1; width: 30px; height: 30px; border-radius: 8px; transition: all .15s; display: flex; align-items: center; justify-content: center; }
 .docs-close-btn:hover { color: var(--text); border-color: var(--ruby); background: var(--pink-d); }
 .docs-content { flex: 1; overflow-y: auto; padding: 28px 32px; font-size: 13px; line-height: 1.8; color: var(--sub); }
+
+/* ── 404 NOT FOUND MODAL ─────────────────────────────────────────────── */
+.nf-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(7,10,16,0.8); backdrop-filter: blur(10px); align-items: center; justify-content: center; }
+.nf-overlay.on { display: flex; animation: fade-in .2s ease; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.nf-box { background: var(--card); border: 1px solid var(--border); padding: 32px; border-radius: 20px; text-align: center; width: min(340px, 90vw); box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: scale(0.95); transition: transform 0.2s ease; }
+.nf-overlay.on .nf-box { transform: scale(1); }
+.nf-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--pink-d); color: var(--ruby); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid rgba(251,113,133,0.3); }
+.nf-icon svg { width: 28px; height: 28px; }
+.nf-title { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+.nf-desc { font-family: var(--body); font-size: 13px; color: var(--sub); line-height: 1.6; margin-bottom: 24px; }
+.nf-btn { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 10px 24px; border-radius: 8px; font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .02em; cursor: pointer; transition: all .15s; outline: none; }
+.nf-btn:hover { background: var(--pink); color: #1a0008; border-color: var(--pink); }
 
 /* ── MAIN LAYOUT ─────────────────────────────────────────────────────── */
 .page { max-width: 1600px; margin: 0 auto; padding: 16px 28px 40px; }
@@ -271,17 +284,9 @@ body {
 .match-group-hd .grp-bar { width: 3px; height: 15px; background: var(--mint); border-radius: 3px; flex-shrink: 0; }
 .match-group-hd span { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--sub); }
 
-/* ── EMPTY / ERROR STATES ────────────────────────────────────────────── */
+/* ── EMPTY / STATES ────────────────────────────────────────────── */
 .empty-state { padding: 48px 24px; text-align: center; font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
 .empty-state small { display: block; font-family: var(--mono); font-size: 9px; font-weight: 400; text-transform: none; letter-spacing: .08em; color: var(--dimmer); margin-top: 8px; line-height: 1.6; }
-
-.error-state { max-width: 480px; margin: 48px auto; padding: 34px 28px; border: 1px solid rgba(248,113,113,0.22); background: rgba(248,113,113,0.05); border-radius: 16px; text-align: center; }
-.error-state .err-icon { width: 44px; height: 44px; border-radius: 50%; background: rgba(248,113,113,0.12); border: 1px solid rgba(248,113,113,0.32); margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; color: var(--ruby); font-family: var(--mono); font-size: 18px; }
-.error-state .err-title { font-family: var(--display); font-size: 16px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: #FCA5A5; margin-bottom: 12px; }
-.error-state .err-path { font-family: var(--mono); font-size: 10px; color: var(--sub); background: var(--void); padding: 12px 14px; border-radius: 8px; border: 1px solid var(--border); text-align: left; margin-bottom: 14px; line-height: 1.8; word-break: break-all; }
-.error-state .err-path .lbl { color: var(--ruby); }
-.error-state .err-hint { font-size: 11px; color: var(--sub); line-height: 1.7; }
-.error-state code { font-family: var(--mono); font-size: 10px; color: var(--ice); background: var(--lift); padding: 2px 6px; border-radius: 5px; }
 
 /* ── LOADING VEIL ─────────────────────────────────────────────────────── */
 .veil { display: none; position: fixed; inset: 0; z-index: 800; background: rgba(7,10,16,0.82); backdrop-filter: blur(8px); align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
@@ -379,8 +384,24 @@ body {
       <button class="docs-close-btn" id="team-close-btn">&#x2715;</button>
     </div>
     <div class="docs-content" id="team-modal-content" style="padding: 24px;">
-      <!-- Populated dynamically via fetch_teams.py schema -->
+      <!-- Populated dynamically -->
     </div>
+  </div>
+</div>
+
+<!-- 404 NOT FOUND OVERLAY -->
+<div class="nf-overlay" id="nf-modal">
+  <div class="nf-box">
+    <div class="nf-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="nf-title">Data Not Found</div>
+    <div class="nf-desc">The requested data is not available for this competition in the currently selected season.</div>
+    <button class="nf-btn" id="nf-close">Understood</button>
   </div>
 </div>
 
@@ -426,6 +447,8 @@ const dashboard  = $('dashboard');
 const veil       = $('veil');
 const teamModal  = $('team-modal');
 const teamClose  = $('team-close-btn');
+const nfModal    = $('nf-modal');
+const nfClose    = $('nf-close');
 
 /* ─── APP INITIALIZATION ─────────────────────────────────────────────── */
 async function init() {
@@ -437,9 +460,6 @@ async function init() {
   const currentYear = now.getFullYear();
   const currentMonth = now.getMonth() + 1; // 1-12
 
-  // Season rollover rule: month >= 6 (June) → new season starts.
-  // Matches config.py get_current_season_string() exactly.
-  // Was >= 7 (July) before, causing June to pick the wrong season.
   const expectedCurrent = currentMonth >= 6
     ? `${currentYear}-${currentYear + 1}`
     : `${currentYear - 1}-${currentYear}`;
@@ -449,22 +469,35 @@ async function init() {
     possibleSeasons.push(`${y}-${y+1}`);
   }
 
-  // Discover which season folders actually have data.
-  // Try competitions.json first (most reliable — full pipeline ran).
-  // Fall back to any match file so historical seasons without competitions.json
-  // still appear in the season selector.
-  const validSeasons = [];
-  await Promise.all(possibleSeasons.map(async (s) => {
+  // Robustly probe every season to find ANY existing files
+  const validSeasons = (await Promise.all(possibleSeasons.map(async (s) => {
     try {
       let r = await fetch(`./data/${s}/competitions.json?t=${Date.now()}`);
-      if (r.ok) { validSeasons.push(s); return; }
-      r = await fetch(`./data/${s}/matches/PL.json?t=${Date.now()}`);
-      if (r.ok) validSeasons.push(s);
-    } catch(e) {}
-  }));
+      if (r.ok) return s;
+      
+      const codes = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL', 'EC', 'WC'];
+      const urls = codes.flatMap(c => [
+        `./data/${s}/matches/${c}.json?t=${Date.now()}`,
+        `./data/${s}/standings/${c}.json?t=${Date.now()}`,
+        `./data/${s}/scorers/${c}.json?t=${Date.now()}`
+      ]);
+      
+      try {
+          await Promise.any(urls.map(async u => {
+              const res = await fetch(u);
+              if (res.ok) return true;
+              throw new Error('Not found');
+          }));
+          return s; // Returns season string if ANY file exists
+      } catch(e) {
+          return null; // All failed
+      }
+    } catch(e) {
+       return null;
+    }
+  }))).filter(Boolean);
 
   validSeasons.sort((a, b) => b.localeCompare(a));
-
   if (validSeasons.length === 0) validSeasons.push(expectedCurrent);
 
   const selectedSeason = validSeasons.includes(expectedCurrent) ? expectedCurrent : validSeasons[0];
@@ -478,14 +511,18 @@ async function init() {
 
   if (COMPS.length > 0 && !COMPS.find(c => c.code === currentComp)) {
     currentComp = COMPS[0].code;
+  } else if (COMPS.length === 0) {
+    currentComp = null;
   }
 
   buildCompNav();
   buildLiveBar();
   load();
 }
+
+/* ─── FETCH COMPETITIONS FOR SEASON ──────────────────────────────────── */
 async function fetchCompetitions() {
-  // Step 1: try competitions.json (present when the full pipeline has run)
+  COMPS = [];
   try {
     const r = await fetch(`./data/${currentSeason}/competitions.json?t=${Date.now()}`);
     if (r.ok) {
@@ -493,12 +530,10 @@ async function fetchCompetitions() {
       COMPS = j.data || j || [];
     }
   } catch (e) {
-    console.warn("competitions.json missing for", currentSeason, "— will probe match files");
+    console.warn("competitions.json missing for", currentSeason);
   }
 
-  // Step 2: if competitions.json is missing or empty, discover available comps
-  // by probing which match files exist for this season. This handles historical
-  // seasons (backfill runs) and the current season before competitions.json is written.
+  // If no summary file, deep probe directory for available leagues
   if (!COMPS || COMPS.length === 0) {
     const ALL_CODES = ['PL','PD','BL1','SA','FL1','CL','EC','WC'];
     const META = {
@@ -511,39 +546,33 @@ async function fetchCompetitions() {
       EC:  { name:'Euros',             area:{ name:'Europe',   flag:'https://crests.football-data.org/EUR.svg'  } },
       WC:  { name:'World Cup',         area:{ name:'World',    flag:'https://crests.football-data.org/FIFA.png' } },
     };
+    
     const found = await Promise.all(ALL_CODES.map(async code => {
-      // Also probe the cup-specific season folder for WC/EC (they run every 4 years)
-      const paths = [`./data/${currentSeason}/matches/${code}.json`];
+      const paths = [
+        `./data/${currentSeason}/matches/${code}.json?t=${Date.now()}`,
+        `./data/${currentSeason}/standings/${code}.json?t=${Date.now()}`,
+        `./data/${currentSeason}/scorers/${code}.json?t=${Date.now()}`
+      ];
+      
       if (code === 'WC' || code === 'EC') {
-        // Cup tournaments span one calendar year — try the end-year folder too
         const endYear = parseInt(currentSeason.split('-')[1]);
-        paths.push(`./data/${endYear}-${endYear}/matches/${code}.json`);
+        paths.push(`./data/${endYear}-${endYear}/matches/${code}.json?t=${Date.now()}`);
       }
-      for (const p of paths) {
-        try {
-          const r = await fetch(`${p}?t=${Date.now()}`);
-          if (r.ok) return { code, ...META[code] };
-        } catch(_) {}
+      
+      try {
+        await Promise.any(paths.map(async p => {
+           const res = await fetch(p);
+           if (res.ok) return true;
+           throw new Error('Not found');
+        }));
+        return { code, ...META[code] };
+      } catch(e) {
+        return null;
       }
-      return null;
     }));
     COMPS = found.filter(Boolean);
   }
 
-  // Step 3: final hardcoded fallback — should never reach here in production
-  if (!COMPS || COMPS.length === 0) {
-    COMPS = [
-      { code:'PL',  name:'Premier League',   area:{flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿'} },
-      { code:'PD',  name:'La Liga',          area:{flag:'🇪🇸'} },
-      { code:'BL1', name:'Bundesliga',       area:{flag:'🇩🇪'} },
-      { code:'SA',  name:'Serie A',          area:{flag:'🇮🇹'} },
-      { code:'FL1', name:'Ligue 1',          area:{flag:'🇫🇷'} },
-      { code:'CL',  name:'Champions League', area:{flag:'🇪🇺'} },
-      { code:'WC',  name:'World Cup',        area:{flag:'🌍'} },
-    ];
-  }
-
-  // Sort by preferred display order
   COMPS.sort((a, b) => {
     let ia = ORDER.indexOf(a.code), ib = ORDER.indexOf(b.code);
     if (ia === -1) ia = 999;
@@ -554,12 +583,16 @@ async function fetchCompetitions() {
 
 /* ─── COMPETITION PILL NAV ───────────────────────────────────────────── */
 function buildCompNav() {
+  if (COMPS.length === 0) {
+    compNav.innerHTML = `<span style="font-size:12px;color:var(--dim);margin:auto;">No competitions available for this season</span>`;
+    return;
+  }
+  
   compNav.innerHTML = COMPS.map(c => {
     const imgUrl = c.emblem || (c.area && c.area.flag) || '';
     const iconHtml = imgUrl.length > 5
       ? `<img src="${imgUrl}" class="comp-pill-logo" alt="" onerror="this.style.display='none'">`
       : `<span class="flag">⚽</span>`;
-
     const label = CODE_MAP[c.code] || c.name || c.code;
 
     return `<button class="comp-pill${c.code === currentComp ? ' on' : ''}" data-code="${c.code}">
@@ -654,6 +687,13 @@ function renderTeamModal(team) {
 teamClose.addEventListener('click', () => teamModal.classList.remove('on'));
 teamModal.addEventListener('click', e => { if (e.target === teamModal) teamModal.classList.remove('on'); });
 
+/* ─── NOT FOUND MODAL ────────────────────────────────────────────────── */
+function showNotFoundModal() {
+  nfModal.classList.add('on');
+}
+nfClose.addEventListener('click', () => nfModal.classList.remove('on'));
+nfModal.addEventListener('click', e => { if (e.target === nfModal) nfModal.classList.remove('on'); });
+
 /* ─── LIVE / TICKER BAR ──────────────────────────────────────────────── */
 async function buildLiveBar() {
   const codes = COMPS.slice(0, 6).map(c => c.code);
@@ -666,7 +706,6 @@ async function buildLiveBar() {
       if (!r.ok) continue;
       const j = await r.json();
       const matches = j.data || [];
-      // Exclude zombie live records (IN_PLAY but score.winner already set)
       const live = matches.filter(m => (m.status === 'IN_PLAY' || m.status === 'PAUSED') && !m.score?.winner);
       const recent = matches.filter(m => m.status === 'FINISHED' && (Date.now() - new Date(m.utcDate)) < 86400000);
       liveMatches.push(...live.map(m => ({ m, code })));
@@ -719,6 +758,13 @@ async function load() {
   veil.classList.add('on');
   const code = currentComp;
 
+  if (!code) {
+    syncLbl.textContent = '–';
+    dashboard.innerHTML = `<div style="grid-column:1/-1" class="empty-state">No competitions found<small>There is no valid data populated for this season.</small></div>`;
+    veil.classList.remove('on');
+    return;
+  }
+
   const dataPath = `./data/${currentSeason}/${currentTab}/${code}.json`;
   const standingsPath = `./data/${currentSeason}/standings/${code}.json`;
 
@@ -741,8 +787,9 @@ async function load() {
 
     renderDashboard(dataJson.data || dataJson, standJson ? (standJson.data || standJson) : null, code);
   } catch(err) {
-    syncLbl.textContent = 'Error';
-    dashboard.innerHTML = errHtml(dataPath, err.message);
+    syncLbl.textContent = '–';
+    dashboard.innerHTML = `<div style="grid-column:1/-1" class="empty-state">Data Unavailable<small>The requested information has not been processed for this season or tab yet.</small></div>`;
+    showNotFoundModal();
   } finally {
     veil.classList.remove('on');
   }
@@ -977,8 +1024,6 @@ function renderMatchesDash(matches, standData, code) {
     return;
   }
 
-  // Treat IN_PLAY matches with score.winner set as FINISHED (zombie live records —
-  // audit hasn't patched them yet). The UI should show them in results, not live.
   const isReallyLive = m => (m.status==='IN_PLAY'||m.status==='PAUSED') && !m.score?.winner;
   const isReallyDone = m => m.status==='FINISHED' || ((m.status==='IN_PLAY'||m.status==='PAUSED') && !!m.score?.winner);
 
@@ -1253,12 +1298,8 @@ async function loadScorersSidebar(code) {
         }).join('')
       : `<div class="empty-state" style="padding:24px">No scorer data</div>`;
   } catch(err) {
-    el.innerHTML = `<div class="empty-state" style="padding:24px">Unavailable<small>${err.message}</small></div>`;
+    el.innerHTML = `<div class="empty-state" style="padding:24px">Unavailable</div>`;
   }
-}
-
-function errHtml(path, msg) {
-  return `<div style="padding:48px 0"><div class="error-state"><div class="err-icon">✕</div><div class="err-title">Data Not Found</div><div class="err-path"><span class="lbl">Path:</span> ${path}<br><span class="lbl">Error:</span> ${msg}</div></div></div>`;
 }
 
 /* ─── EVENT BINDINGS ─────────────────────────────────────────────────── */
@@ -1271,7 +1312,21 @@ document.querySelectorAll('.ttab').forEach(btn => {
   });
 });
 
-seasonSel.addEventListener('change', () => { currentSeason = seasonSel.value; buildLiveBar(); load(); });
+seasonSel.addEventListener('change', async () => { 
+  currentSeason = seasonSel.value; 
+  veil.classList.add('on');
+  await fetchCompetitions();
+  
+  if (COMPS.length > 0 && (!currentComp || !COMPS.find(c => c.code === currentComp))) {
+    currentComp = COMPS[0].code;
+  } else if (COMPS.length === 0) {
+    currentComp = null;
+  }
+  
+  buildCompNav();
+  buildLiveBar();
+  await load();
+});
 
 /* ─── TRIGGER INIT ───────────────────────────────────────────────────── */
 init();
