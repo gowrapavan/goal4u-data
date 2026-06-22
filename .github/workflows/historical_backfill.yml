@@ -1,0 +1,94 @@
+name: "Historical Seasons — One-Time Backfill"
+
+# MANUAL TRIGGER ONLY — this is a run-once job, not a recurring sync.
+# Fetches matches + standings + scorers + teams for each past season you list,
+# then you never need to run it again (current-season data is kept fresh by
+# the daily/weekly/monthly workflows instead).
+#
+# Replaces the old "Previous_season_matches.yml", which called
+# workers/fetch_historical_matches.py — that file no longer exists, it was
+# merged into fetch_matches.py (use --season instead).
+#
+# Seasons run SEQUENTIALLY (max-parallel: 1), each one committing and pushing
+# before the next starts. This is deliberate — running them in parallel would
+# have multiple jobs racing to push to the same data/ tree on main at once.
+#
+# NOTE: bare competition metadata (workers/fetch_competitions.py --mode
+# competitions) has no historical ?season= variant on the API, so it is
+# intentionally skipped here — only standings/scorers/teams/matches support
+# historical seasons.
+
+on:
+  workflow_dispatch:
+    inputs:
+      seasons:
+        description: "Comma-separated season start years to backfill"
+        required: true
+        default: "2023,2024,2025"
+
+jobs:
+  backfill:
+    name: "Backfill season ${{ matrix.season }}"
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 1     # sequential — avoids git push races on data/
+      fail-fast: false    # one bad season shouldn't block the others
+      matrix:
+        season: ${{ fromJSON(format('[{0}]', github.event.inputs.seasons)) }}
+
+    permissions:
+      contents: write
+
+    env:
+      FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Fetch matches (season ${{ matrix.season }})
+        run: python workers/fetch_matches.py --season ${{ matrix.season }}
+
+      - name: Fetch standings (season ${{ matrix.season }})
+        run: python workers/fetch_competitions.py --mode standings --season ${{ matrix.season }}
+
+      - name: Fetch scorers (season ${{ matrix.season }})
+        run: python workers/fetch_competitions.py --mode scorers --season ${{ matrix.season }}
+
+      - name: Fetch teams/squads (season ${{ matrix.season }})
+        run: python workers/fetch_teams.py --season ${{ matrix.season }}
+
+      - name: Commit and push season ${{ matrix.season }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f data/
+          git diff --cached --quiet && echo "Nothing to commit for season ${{ matrix.season }}" && exit 0
+          git commit -m "chore(data): historical backfill season ${{ matrix.season }} [skip ci]"
+
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Pushed season ${{ matrix.season }} on attempt $i."
+                exit 0
+              fi
+            else
+              echo "Rebase conflict on attempt $i — aborting and retrying."
+              git rebase --abort || true
+            fi
+            echo "Push attempt $i failed, retrying in 10s..."
+            sleep 10
+          done
+
+          echo "::error::Failed to push backfill for season ${{ matrix.season }} after 5 attempts."
+          exit 1

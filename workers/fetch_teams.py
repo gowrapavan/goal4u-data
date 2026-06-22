@@ -170,6 +170,7 @@ def flatten_team(raw: dict) -> dict:
 def fetch_and_write_teams_for_competition(
     code: str,
     teams_dir: str,
+    season: int | None = None,
 ) -> tuple[int, int]:
     """
     Fetch all teams for competition `code` using a single API call to:
@@ -179,15 +180,19 @@ def fetch_and_write_teams_for_competition(
     attributes) for ALL teams in the competition on all API tiers — no
     individual /teams/{id} calls needed, no 403s.
 
+    Pass `season` (e.g. 2024) to pull that historical season's squads instead
+    of the current one — the teams subresource accepts ?season=YYYY.
+
     Writes one file per team:
         {teams_dir}/{code}/{team_id}.json
 
     Returns (written_count, failed_count).
     """
-    logger.info("Fetching teams for competition %s ...", code)
+    logger.info("Fetching teams for competition %s%s ...", code, f" (season={season})" if season else "")
 
     # Single call — gets all teams + squads for this competition
-    data = fetch(f"/competitions/{code}/teams")
+    params = {"season": season} if season is not None else None
+    data = fetch(f"/competitions/{code}/teams", params=params)
 
     if data is None:
         logger.warning(
@@ -239,14 +244,29 @@ def fetch_and_write_teams_for_competition(
     return written, failed
 
 
-def run() -> None:
-    paths     = get_season_paths()
-    season    = paths["season"]
-    teams_dir = paths["teams_dir"]
+def run(season: int | None = None) -> None:
+    """
+    season = None  → current season (default, used by the daily cron)
+    season = 2024   → historical 2024/25 squads. Writes under
+                      data/2024-2025/teams/... — same folder layout the
+                      current-season path uses, no data-structure change.
+    """
+    if season is not None:
+        folder    = f"{season}-{season + 1}"
+        teams_dir = f"data/{folder}/teams"
+        api_season = season
+    else:
+        from config import get_current_season_start_year
+        paths     = get_season_paths()
+        folder    = paths["season"]
+        teams_dir = paths["teams_dir"]
+        # Always pass an explicit season — see config.get_current_season_start_year()
+        # for why this matters (API's per-competition season rollover is uneven).
+        api_season = get_current_season_start_year()
 
     logger.info(
         "=== fetch_teams started [season=%s] at %s ===",
-        season, datetime.now(timezone.utc).isoformat(),
+        folder, datetime.now(timezone.utc).isoformat(),
     )
 
     total_written = 0
@@ -254,7 +274,7 @@ def run() -> None:
     comps_ok      = 0
 
     for code in TRACKED_COMPETITIONS:
-        written, failed = fetch_and_write_teams_for_competition(code, teams_dir)
+        written, failed = fetch_and_write_teams_for_competition(code, teams_dir, season=api_season)
         total_written += written
         total_failed  += failed
         if written > 0:
@@ -263,7 +283,7 @@ def run() -> None:
     logger.info(
         "=== fetch_teams complete [season=%s]: "
         "%d files written across %d/%d competitions, %d failed ===",
-        season, total_written, comps_ok, len(TRACKED_COMPETITIONS), total_failed,
+        folder, total_written, comps_ok, len(TRACKED_COMPETITIONS), total_failed,
     )
 
     if total_written == 0:
@@ -273,4 +293,19 @@ def run() -> None:
         sys.exit(1)
 
 if __name__ == "__main__":
-    run()
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="Fetch team profiles (club info + coach + full squad)."
+    )
+    parser.add_argument(
+        "--season",
+        type=int,
+        default=None,
+        help=(
+            "Start year of a historical season to fetch squads for "
+            "(e.g. --season 2024 writes to data/2024-2025/teams/). "
+            "Omit to fetch the current season."
+        ),
+    )
+    args = parser.parse_args()
+    run(season=args.season)

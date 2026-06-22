@@ -16,18 +16,26 @@ import argparse
 import re
 import os
 import json
+import sys
 import time
 from difflib import SequenceMatcher
+
+sys.path.insert(0, ".")  # allow running as: python workers/fetch_match_links.py
 
 # Unified Cloudflare bypass fetcher (Playwright → curl_cffi → free proxy)
 from workers.cf_fetcher import fetch_html as _cf_fetch_html
 
-# Define constants locally since utils.py is path-agnostic
-SEASON = "2025-2026"
+# Pull season + competition list from the single source of truth so this
+# script updates automatically when config.py changes — no manual edit needed.
+from config import TRACKED_COMPETITIONS, get_season_paths
+
+_paths   = get_season_paths()
+SEASON   = _paths["season"]          # e.g. "2025-2026"
 DATA_DIR = "data"
 
-# List of supported competitions
-COMPETITIONS = ["PL", "PD", "SA", "FL1", "BL1", "CL", "WC"]
+# Use the same list as every other worker — no separate definition here.
+COMPETITIONS = TRACKED_COMPETITIONS
+
 
 def get_competition_url(code: str, season: str) -> str | None:
     """
@@ -36,9 +44,16 @@ def get_competition_url(code: str, season: str) -> str | None:
     """
     # World cup uses just the ending year (e.g., 2026)
     year_end = season.split("-")[-1]
-    
+
+    # League competitions use the full season slug (e.g. "2026-2027").
+    # Cup tournaments (WC, EC) happen in a single calendar year and use
+    # just the end year (e.g. "world-cup-2026", "euros-2028").
+    # If the competition runs in the second half of the season (e.g. WC 2026
+    # is in season folder "2026-2027"), year_end is the correct suffix.
+    year_start = season.split("-")[0]
     bases = {
         "WC":  f"world-cup-{year_end}",
+        "EC":  f"uefa-euro-{year_end}",          # UEFA Euros — runs every 4 years
         "PL":  f"english-premier-league-{season}",
         "PD":  f"la-liga-spain-{season}",
         "SA":  f"serie-a-italy-{season}",
@@ -46,11 +61,12 @@ def get_competition_url(code: str, season: str) -> str | None:
         "BL1": f"bundesliga-germany-{season}",
         "CL":  f"uefa-champions-league-{season}",
     }
-    
+
     if code not in bases:
         return None
-        
+
     return f"https://yallashoot.soccer/competition/{bases[code]}/"
+
 
 # ── HTTP & I/O Helpers ────────────────────────────────────────────────────────
 
@@ -70,6 +86,7 @@ def fetch_html(url: str) -> str | None:
         print(f"  ✗ All fetch methods failed for {url}")
     return html
 
+
 def load_json(path: str) -> dict | None:
     """Helper to safely load a JSON file."""
     if not os.path.exists(path):
@@ -80,10 +97,11 @@ def load_json(path: str) -> dict | None:
     except json.JSONDecodeError:
         return None
 
+
 # ── URL extraction ────────────────────────────────────────────────────────────
 
 def extract_match_urls(html: str) -> list[dict]:
-    """
+    r"""
     Extract all unique YallaShoot match URLs.
     Example: https://yallashoot.soccer/live/liverpool-bournemouth-2025-08-15/
 
@@ -116,15 +134,16 @@ def extract_match_urls(html: str) -> list[dict]:
 
     return results
 
+
 # ── Match mapping ─────────────────────────────────────────────────────────────
 
 def normalize_name(name: str) -> str:
     """Normalize team names to improve fuzzy matching accuracy."""
     if not name:
         return ""
-        
+
     name = name.lower()
-    
+
     # Normalize unicode accented characters to their ASCII equivalents
     # so slugs like "curacao" match API names like "Curaçao"
     _unicode_map = str.maketrans({
@@ -137,11 +156,11 @@ def normalize_name(name: str) -> str:
         "ñ": "n", "ß": "ss", "ø": "o", "å": "a",
     })
     name = name.translate(_unicode_map)
-    
+
     # Replace special characters with spaces
     name = re.sub(r"[^a-z0-9]", " ", name)
     name = " ".join(name.split()).strip()
-    
+
     # Map long formal API names to their short URL counterparts FIRST
     aliases = {
         "wolverhampton wanderers": "wolves",
@@ -168,20 +187,22 @@ def normalize_name(name: str) -> str:
         "ivory coast": "ivory coast",  # API: "Côte d'Ivoire" → normalized above
         "cote d ivoire": "ivory coast",
     }
-    
+
     for k, v in aliases.items():
         if name == k or k in name:
             name = name.replace(k, v)
-            
+
     # Then remove common football suffixes
     remove = [" fc", " afc", " cf", " sc", " club", " united", " city"]
     for r in remove:
         name = name.replace(r, "")
-        
+
     return " ".join(name.split()).strip()
+
 
 def similarity(a: str, b: str) -> float:
     return SequenceMatcher(None, normalize_name(a), normalize_name(b)).ratio()
+
 
 def find_best_match(ys_entry: dict, fd_matches: list[dict]) -> dict | None:
     """
@@ -203,7 +224,7 @@ def find_best_match(ys_entry: dict, fd_matches: list[dict]) -> dict | None:
         # Safely extract team names to prevent 'NoneType' crashes
         home_team = m.get("homeTeam") or {}
         away_team = m.get("awayTeam") or {}
-        
+
         home = home_team.get("name") or ""
         away = away_team.get("name") or ""
 
@@ -223,13 +244,14 @@ def find_best_match(ys_entry: dict, fd_matches: list[dict]) -> dict | None:
         return best_match
     return None
 
+
 def build_match_links(ys_entries: list[dict], fd_matches: list[dict]) -> list[dict]:
     """Merge YallaShoot URLs with football-data match metadata."""
     linked = []
 
     for i, entry in enumerate(ys_entries):
         fd = find_best_match(entry, fd_matches)
-        
+
         if fd:
             linked.append({
                 "match_id":  fd["id"],
@@ -253,36 +275,43 @@ def build_match_links(ys_entries: list[dict], fd_matches: list[dict]) -> list[di
 
     return linked
 
-def load_fd_matches(competition: str) -> list[dict]:
-    path = os.path.join(DATA_DIR, SEASON, "matches", f"{competition}.json")
+
+def load_fd_matches(competition: str, season_str: str | None = None) -> list[dict]:
+    s = season_str or SEASON
+    path = os.path.join(DATA_DIR, s, "matches", f"{competition}.json")
     data = load_json(path)
     if not data:
         return []
     return data.get("data", [])
 
-def save_match_links(competition: str, records: list[dict]):
+
+def save_match_links(competition: str, records: list[dict], season_str: str | None = None):
     """Creates the directory if it doesn't exist and safely writes the JSON file."""
-    out_path = os.path.join(DATA_DIR, SEASON, "match-links", f"{competition}.json")
-    
+    s = season_str or SEASON
+    out_path = os.path.join(DATA_DIR, s, "match-links", f"{competition}.json")
+
     # Ensure the target directory exists
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
-    
+
     # Write the data with the {"data": [...]} envelope expected by the stats scraper
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump({"data": records}, f, indent=2, ensure_ascii=False)
-        
+
     print(f"  ✓ Saved {len(records)} matches to {out_path}")
+
+
 # ── CLI entry point ───────────────────────────────────────────────────────────
 
-def process_one(competition: str):
-    url = get_competition_url(competition, SEASON)
+def process_one(competition: str, season_str: str | None = None):
+    s = season_str or SEASON
+    url = get_competition_url(competition, s)
     if not url:
         print(f"  ✗ Error: No URL configured for competition code '{competition}'")
         return
 
     print(f"\n[{competition}] Fetching live HTML from {url} ...")
     html = fetch_html(url)
-    
+
     if not html:
         print(f"  ✗ Error: Failed to download HTML for {competition}.")
         return
@@ -290,11 +319,12 @@ def process_one(competition: str):
     ys_entries = extract_match_urls(html)
     print(f"  Found {len(ys_entries)} YallaShoot URLs")
 
-    fd_matches = load_fd_matches(competition)
+    fd_matches = load_fd_matches(competition, season_str=s)
     print(f"  Loaded {len(fd_matches)} football-data matches")
 
     records = build_match_links(ys_entries, fd_matches)
-    save_match_links(competition, records)
+    save_match_links(competition, records, season_str=s)
+
 
 def main():
     parser = argparse.ArgumentParser(description="Extract & map YallaShoot match URLs dynamically")
@@ -307,9 +337,10 @@ def main():
     if args.all:
         for comp in COMPETITIONS:
             process_one(comp)
-            time.sleep(2) # Be polite to YallaShoot servers between large requests
+            time.sleep(2)  # Be polite to YallaShoot servers between large requests
     else:
         process_one(args.competition)
+
 
 if __name__ == "__main__":
     main()

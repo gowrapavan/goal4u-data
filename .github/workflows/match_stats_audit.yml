@@ -41,22 +41,36 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
       # Scans ALL competitions for FINISHED matches that have no stat file on disk.
-      # Fetches at most 50 per run (hardcoded in the script default).
+      # Fetches at most 50 per run (--limit). Existing stat files are pre-scanned
+      # and excluded so the 50-fetch budget is never wasted on skips.
       # No date filter — covers every finished match across the whole season,
       # not just the current week/month, so nothing gets permanently missed.
       # Deferred matches are picked up automatically on the next hourly run.
+      - name: Audit + scrape missing match stats
+        run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_stats --audit --all --limit 50
+
       - name: Commit and Push Data
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
           git add -f data/
-
           git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "chore(data): hourly stats audit — $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]"
 
-          git commit -m "chore: hourly stats audit — $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Pushed successfully on attempt $i."
+                exit 0
+              fi
+            else
+              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
+              git rebase --abort || true
+            fi
+            echo "Push attempt $i failed, retrying in 5s..."
+            sleep 5
+          done
 
-          # Sync with latest main
-          git pull --rebase origin main
-
-          git push origin main
+          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          exit 1

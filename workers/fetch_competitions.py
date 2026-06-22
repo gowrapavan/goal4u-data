@@ -170,11 +170,18 @@ def flatten_standings(raw_data: dict, code: str) -> dict | None:
     return result
 
 
-def fetch_all_standings(standings_dir: str) -> None:
-    """Fetch standings for every tracked competition."""
+def fetch_all_standings(standings_dir: str, season: int | None = None) -> None:
+    """
+    Fetch standings for every tracked competition.
+
+    Pass `season` (e.g. 2024) to pull a historical season's table instead of
+    the current one — the API's standings subresource accepts ?season=YYYY.
+    """
+    params = {"season": season} if season is not None else None
+
     for code in TRACKED_COMPETITIONS:
-        logger.info("Fetching standings for %s ...", code)
-        data = fetch(f"/competitions/{code}/standings")
+        logger.info("Fetching standings for %s%s ...", code, f" (season={season})" if season else "")
+        data = fetch(f"/competitions/{code}/standings", params=params)
 
         if data is None:
             logger.warning("  Standings fetch failed for %s — preserving existing file", code)
@@ -227,17 +234,23 @@ def flatten_scorer(scorer: dict) -> dict:
     }
 
 
-def fetch_all_scorers(scorers_dir: str) -> None:
+def fetch_all_scorers(scorers_dir: str, season: int | None = None) -> None:
     """
     Fetch top scorers for every tracked competition and write one file each.
     Competitions that return no scorer data (e.g. WC between tournaments)
     are skipped gracefully.
+
+    Pass `season` (e.g. 2024) to pull a historical season's scorers instead
+    of the current one.
     """
     for code in TRACKED_COMPETITIONS:
-        logger.info("Fetching scorers for %s ...", code)
+        logger.info("Fetching scorers for %s%s ...", code, f" (season={season})" if season else "")
+        params = {"limit": SCORERS_LIMIT}
+        if season is not None:
+            params["season"] = season
         data = fetch(
             f"/competitions/{code}/scorers",
-            params={"limit": SCORERS_LIMIT},
+            params=params,
         )
 
         if data is None:
@@ -249,14 +262,14 @@ def fetch_all_scorers(scorers_dir: str) -> None:
             logger.info("  No scorers data for %s — skipping", code)
             continue
 
-        season = data.get("season") or {}
+        comp_season = data.get("season") or {}
         result = {
             "competition_code": code,
             "season": {
-                "id":              season.get("id"),
-                "startDate":       season.get("startDate"),
-                "endDate":         season.get("endDate"),
-                "currentMatchday": season.get("currentMatchday"),
+                "id":              comp_season.get("id"),
+                "startDate":       comp_season.get("startDate"),
+                "endDate":         comp_season.get("endDate"),
+                "currentMatchday": comp_season.get("currentMatchday"),
             },
             "count":   len(raw_scorers),
             "scorers": [flatten_scorer(s) for s in raw_scorers],
@@ -270,7 +283,7 @@ def fetch_all_scorers(scorers_dir: str) -> None:
 
 # ── MAIN RUN ──────────────────────────────────────────────────────────────────
 
-def run(mode: str = "all") -> None:
+def run(mode: str = "all", season: int | None = None) -> None:
     """
     Execute the fetch pipeline.
 
@@ -278,34 +291,68 @@ def run(mode: str = "all") -> None:
     mode = "competitions"  → metadata only  (weekly)
     mode = "standings"     → league tables only  (hourly)
     mode = "scorers"       → top scorers only  (daily)
+
+    season = None  → current season (default, used by the scheduled crons)
+    season = 2024   → historical 2024/25 season. Writes under
+                      data/2024-2025/... using the same folder layout the
+                      current-season path uses — no UI/data-structure change.
+                      The bare competition metadata endpoint has no
+                      season-specific variant on the API, so "competitions"
+                      mode is skipped automatically when season is given;
+                      standings/scorers do support ?season=YYYY and are
+                      fetched normally.
     """
-    paths         = get_season_paths()
-    season        = paths["season"]
-    comp_file     = paths["competitions"]
-    standings_dir = paths["standings_dir"]
-    scorers_dir   = paths["scorers_dir"]
+    if season is not None:
+        folder        = f"{season}-{season + 1}"
+        comp_file     = f"data/{folder}/competitions.json"
+        standings_dir = f"data/{folder}/standings"
+        scorers_dir   = f"data/{folder}/scorers"
+        api_season    = season
+    else:
+        from config import get_current_season_start_year
+        paths         = get_season_paths()
+        folder        = paths["season"]
+        comp_file     = paths["competitions"]
+        standings_dir = paths["standings_dir"]
+        scorers_dir   = paths["scorers_dir"]
+        # IMPORTANT: always pass an explicit season to the API, even in
+        # "current season" mode. football-data.org's own current-season
+        # pointer rolls over at different times per competition (PL/FL1
+        # roll over before PD/CL do), which causes some competitions to
+        # silently return the previous season's data while others return
+        # the new one — even though no season override was requested.
+        # Forcing this value keeps every competition in sync with the
+        # folder we're about to write into.
+        api_season    = get_current_season_start_year()
 
     logger.info(
         "=== fetch_competitions [mode=%s, season=%s] started at %s ===",
-        mode, season, datetime.now(timezone.utc).isoformat(),
+        mode, folder, datetime.now(timezone.utc).isoformat(),
     )
 
     if mode in ("all", "competitions"):
-        competitions = fetch_all_competitions()
-        if not competitions:
-            logger.error("No competitions fetched — aborting write")
-            sys.exit(1)
-        safe_write(comp_file, competitions)
+        if season is not None:
+            logger.warning(
+                "  Skipping competitions metadata — the API's competition "
+                "resource has no historical ?season= variant. Use --mode "
+                "standings or --mode scorers for historical data."
+            )
+        else:
+            competitions = fetch_all_competitions()
+            if not competitions:
+                logger.error("No competitions fetched — aborting write")
+                sys.exit(1)
+            safe_write(comp_file, competitions)
 
     if mode in ("all", "standings"):
-        fetch_all_standings(standings_dir)
+        fetch_all_standings(standings_dir, season=api_season)
 
     if mode in ("all", "scorers"):
-        fetch_all_scorers(scorers_dir)
+        fetch_all_scorers(scorers_dir, season=api_season)
 
     logger.info(
         "=== fetch_competitions [mode=%s, season=%s] complete ===",
-        mode, season,
+        mode, folder,
     )
 
 
@@ -325,5 +372,16 @@ if __name__ == "__main__":
             "scorers       = top scorers only"
         ),
     )
+    parser.add_argument(
+        "--season",
+        type=int,
+        default=None,
+        help=(
+            "Start year of a historical season to fetch standings/scorers for "
+            "(e.g. --season 2024 writes to data/2024-2025/standings + scorers). "
+            "Omit to fetch the current season. Competition metadata has no "
+            "historical variant on the API and is skipped when this is set."
+        ),
+    )
     args = parser.parse_args()
-    run(mode=args.mode)
+    run(mode=args.mode, season=args.season)

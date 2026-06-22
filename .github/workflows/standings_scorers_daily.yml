@@ -1,13 +1,19 @@
-name: "Teams — Weekly Sync"
+name: "Standings & Scorers — Daily Sync"
 
-# Runs every Monday at 08:00 UTC (1hr after standings sync to avoid API overlap)
-# Uses GET /competitions/{code}/teams — one call per competition, no per-team 403s
-# Squad/coach data is stable; only needs updating during transfer windows
-# Can also be triggered manually from GitHub Actions UI during transfer windows
+# Runs every day at 03:00 UTC
+# Re-fetches full standings tables and top scorers for all 8 competitions.
+# Single API call per competition per mode — cheap and fast (16 calls total).
+#
+# Was previously weekly, but league tables and scorer rankings change after
+# every matchday (sometimes multiple times a week per competition), so a
+# 7-day-stale table defeated the point of tracking standings at all. The live
+# and recent match audits already patch standings opportunistically right
+# after a match updates — this daily run is the guaranteed catch-all so
+# nothing drifts for more than a day even if an audit run is missed.
 
 on:
   schedule:
-    - cron: "0 8 * * 1"   # Monday 08:00 UTC
+    - cron: "0 3 * * *"   # Daily 03:00 UTC
   workflow_dispatch:
 
 env:
@@ -15,8 +21,8 @@ env:
   PYTHONUNBUFFERED: "1"
 
 jobs:
-  sync-teams:
-    name: "Sync teams + squads (all competitions)"
+  sync-standings-scorers:
+    name: "Sync standings + scorers (all competitions)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -33,16 +39,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Sync teams
-        run: python workers/fetch_teams.py
+      - name: Sync standings
+        run: python workers/fetch_competitions.py --mode standings
 
-      - name: Commit updated team files
+      - name: Sync scorers
+        run: python workers/fetch_competitions.py --mode scorers
+
+      - name: Commit updated standings + scorers
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
-          git commit -m "chore(data): weekly teams sync [skip ci]"
+          git commit -m "chore(data): daily standings + scorers sync [skip ci]"
 
           for i in 1 2 3 4 5; do
             git fetch origin main

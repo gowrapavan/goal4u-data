@@ -128,8 +128,15 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
     status   = match.get("status", "")
     utc_date = _parse_utc(match.get("utcDate"))
 
-    # Always grab live matches regardless of window
+    # Always grab live matches regardless of window.
+    # Edge case: the API sometimes returns status=IN_PLAY with score.winner already set
+    # (write race — the live-audit grabbed the match a few seconds before the API
+    # updated the status to FINISHED). Detect and re-fetch these "zombie live" records.
     if status in LIVE_STATUSES:
+        score = match.get("score") or {}
+        # If winner is already decided the match is actually over — always re-fetch
+        if score.get("winner") and score.get("winner") != "DRAW":
+            return True
         return True
 
     # Skip statuses we never auto-update
@@ -343,8 +350,13 @@ def audit_competition(
         # this competition immediately so the API always returns current positions.
         # CUP competitions (CL, WC, EC) return no TOTAL league table — flatten_standings
         # returns None for those and we skip gracefully.
-        logger.info("  %s: refreshing standings after match updates ...", code)
-        standings_raw = fetch(f"/competitions/{code}/standings")
+        # Always pass the explicit season so the API doesn't default to an old season
+        # for competitions whose server-side "current season" pointer hasn't rolled
+        # over yet (same bug that affected fetch_matches.py before the season fix).
+        from config import get_current_season_start_year
+        api_season = get_current_season_start_year()
+        logger.info("  %s: refreshing standings after match updates (season=%s) ...", code, api_season)
+        standings_raw = fetch(f"/competitions/{code}/standings", params={"season": api_season})
         if standings_raw is None:
             logger.warning(
                 "  %s: standings fetch failed — existing standings file preserved", code

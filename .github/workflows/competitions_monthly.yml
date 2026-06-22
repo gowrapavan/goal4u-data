@@ -1,13 +1,21 @@
-name: "Teams — Weekly Sync"
+name: "Competition Metadata — Monthly Sync"
 
-# Runs every Monday at 08:00 UTC (1hr after standings sync to avoid API overlap)
-# Uses GET /competitions/{code}/teams — one call per competition, no per-team 403s
-# Squad/coach data is stable; only needs updating during transfer windows
-# Can also be triggered manually from GitHub Actions UI during transfer windows
+# Runs on the 1st of every month at 05:00 UTC
+# Re-fetches bare competition metadata only (name, code, emblem, area/flag,
+# currentSeason dates) for all 8 competitions — GET /competitions/{code}.
+#
+# This is split out from the daily standings/scorers job on purpose: this
+# data almost never changes (a competition's name/emblem/area is static
+# year-round), so refreshing it daily would just be wasted API calls. It only
+# really needs a refresh when a new season's currentSeason.startDate/endDate
+# rolls over — once a month is more than enough margin for that.
+#
+# NOTE: this endpoint has no historical ?season= variant on the API, so it
+# is always "current season" only — there is no --season flag to pass here.
 
 on:
   schedule:
-    - cron: "0 8 * * 1"   # Monday 08:00 UTC
+    - cron: "0 5 1 * *"   # 1st of the month, 05:00 UTC
   workflow_dispatch:
 
 env:
@@ -15,8 +23,8 @@ env:
   PYTHONUNBUFFERED: "1"
 
 jobs:
-  sync-teams:
-    name: "Sync teams + squads (all competitions)"
+  sync-competitions:
+    name: "Sync competition metadata (all competitions)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -33,16 +41,16 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Sync teams
-        run: python workers/fetch_teams.py
+      - name: Sync competition metadata
+        run: python workers/fetch_competitions.py --mode competitions
 
-      - name: Commit updated team files
+      - name: Commit updated competition metadata
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
-          git commit -m "chore(data): weekly teams sync [skip ci]"
+          git commit -m "chore(data): monthly competition metadata sync [skip ci]"
 
           for i in 1 2 3 4 5; do
             git fetch origin main

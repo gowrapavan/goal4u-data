@@ -1,8 +1,15 @@
 # config.py — single source of truth for the entire project
 # ─────────────────────────────────────────────────────────────────────────────
 # Season resolution rule (get_current_season_string):
-#   • Month >= July  →  "{year}-{year+1}"   e.g. 2025-07 → "2025-2026"
-#   • Month <  July  →  "{year-1}-{year}"   e.g. 2026-06 → "2025-2026"
+#   • Month >= June  →  "{year}-{year+1}"   e.g. 2026-06 → "2026-2027"
+#   • Month <  June  →  "{year-1}-{year}"   e.g. 2026-05 → "2025-2026"
+#
+# Rationale: European leagues (PL, La Liga, Bundesliga, Serie A, Ligue 1,
+# Champions League) all finish by late May. By June the current season is
+# over and football-data.org begins returning the NEXT season's scheduled
+# fixtures for those competitions — so June must map to the new season folder.
+# The old cutoff of July was one month too late and caused June fetches to
+# write 2026-2027 API data into the 2025-2026 folder.
 #
 # Full data directory layout per season:
 #   data/{season}/
@@ -11,12 +18,6 @@
 #     matches/{CODE}.json            ← all matches for the competition
 #     scorers/{CODE}.json            ← top scorers per competition
 #     teams/{CODE}/{team_id}.json    ← full team profile + squad
-#
-# API tier note (football-data.org free / TIER_ONE):
-#   GET /competitions/{code}/teams  → returns full team list WITH squad on
-#   all tiers for the tracked competitions below. Use this instead of
-#   individual GET /teams/{id} calls which return 403 for most teams on
-#   the free tier.
 
 from datetime import datetime, timezone
 
@@ -45,16 +46,47 @@ def get_current_season_string() -> str:
     Return the active football season as a "YYYY-YYYY" folder name.
 
     Rule:
-      - Month >= July  →  new season has started  →  "{year}-{year+1}"
-      - Month < July   →  still in the season that started last year
+      - Month >= June  →  season is over / next season scheduled
+                          →  "{year}-{year+1}"
+      - Month <  June  →  still in the season that started last year
                           →  "{year-1}-{year}"
 
-    e.g.  run on 2026-06-10  →  "2025-2026"
-          run on 2026-08-01  →  "2026-2027"
+    e.g.  run on 2026-05-31  →  "2025-2026"   (season still in progress)
+          run on 2026-06-01  →  "2026-2027"   (season over, API serves next)
+          run on 2026-08-01  →  "2026-2027"   (new season underway)
+
+    Why June and not July?
+    European leagues finish by late May. football-data.org starts returning
+    the next season's scheduled fixtures in June — so writing June data to
+    the old season folder would mix 2026-2027 matches into 2025-2026 files.
     """
     now  = datetime.now(timezone.utc)
     year = now.year
-    return f"{year}-{year + 1}" if now.month >= 7 else f"{year - 1}-{year}"
+    return f"{year}-{year + 1}" if now.month >= 6 else f"{year - 1}-{year}"
+
+
+def get_current_season_start_year() -> int:
+    """
+    Return the start-year integer for the season get_current_season_string()
+    resolves to, e.g. "2026-2027" -> 2026.
+
+    WHY THIS EXISTS:
+    football-data.org maintains its OWN internal "current season" pointer
+    per competition, and that pointer does not roll over to the new season
+    at the same moment for every competition. In June 2026, PL and FL1 had
+    already rolled to 2026-2027 (returning empty/scheduled fixtures), while
+    PD and CL had not yet rolled over (still returning finished 2025-2026
+    matches) — even though all requests were made on the same day with no
+    season param at all.
+
+    If a worker calls the API without an explicit ?season=YYYY, it gets
+    whatever season the API *thinks* is current for that specific
+    competition — which may not match the season folder we're about to
+    write into. The fix is to NEVER omit the season param: always pass
+    this value explicitly, even when fetching the "current" season, so
+    every competition is forced to return the same season we're saving to.
+    """
+    return int(get_current_season_string().split("-")[0])
 
 
 # ── SEASON-AWARE PATH FACTORY ─────────────────────────────────────────────────
@@ -65,13 +97,13 @@ def get_season_paths(season: str | None = None) -> dict[str, str]:
     Pass season=None (default) to auto-resolve from the current date.
 
     Keys returned:
-        season          – "2025-2026"
-        root            – "data/2025-2026"
-        competitions    – "data/2025-2026/competitions.json"
-        standings_dir   – "data/2025-2026/standings"
-        matches_dir     – "data/2025-2026/matches"
-        scorers_dir     – "data/2025-2026/scorers"
-        teams_dir       – "data/2025-2026/teams"
+        season          – "2026-2027"
+        root            – "data/2026-2027"
+        competitions    – "data/2026-2027/competitions.json"
+        standings_dir   – "data/2026-2027/standings"
+        matches_dir     – "data/2026-2027/matches"
+        scorers_dir     – "data/2026-2027/scorers"
+        teams_dir       – "data/2026-2027/teams"
 
     Directory creation is handled automatically by safe_write() which calls
     Path(path).parent.mkdir(parents=True, exist_ok=True) before every write.

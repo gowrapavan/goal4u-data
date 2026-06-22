@@ -48,5 +48,23 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -f data/
-          git commit -m "chore: weekly match links sync" || echo "No new data to commit"
-          git push
+          git diff --cached --quiet && echo "Nothing to commit" && exit 0
+          git commit -m "chore(data): weekly match links sync [skip ci]"
+
+          for i in 1 2 3 4 5; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                echo "Pushed successfully on attempt $i."
+                exit 0
+              fi
+            else
+              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
+              git rebase --abort || true
+            fi
+            echo "Push attempt $i failed, retrying in 5s..."
+            sleep 5
+          done
+
+          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          exit 1
