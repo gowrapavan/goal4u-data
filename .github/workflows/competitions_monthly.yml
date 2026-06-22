@@ -1,21 +1,21 @@
-name: "Competition Metadata — Monthly Sync"
+name: "Competition Metadata — Monthly Sync (Current Season)"
 
-# Runs on the 1st of every month at 05:00 UTC
-# Re-fetches bare competition metadata only (name, code, emblem, area/flag,
-# currentSeason dates) for all 8 competitions — GET /competitions/{code}.
+# Runs on the 1st of every month at 05:00 UTC.
+# Re-fetches bare competition metadata (name, code, emblem, area/flag,
+# currentSeason dates) for all tracked competitions.
 #
-# This is split out from the daily standings/scorers job on purpose: this
-# data almost never changes (a competition's name/emblem/area is static
-# year-round), so refreshing it daily would just be wasted API calls. It only
-# really needs a refresh when a new season's currentSeason.startDate/endDate
-# rolls over — once a month is more than enough margin for that.
+# SCOPE: current active season only.
+# The /competitions/{code} endpoint has no ?season= variant on the API —
+# it always returns the current season's metadata. fetch_competitions.py
+# (--mode competitions) handles this correctly.
 #
-# NOTE: this endpoint has no historical ?season= variant on the API, so it
-# is always "current season" only — there is no --season flag to pass here.
+# This data almost never changes (emblem/area/name is static year-round),
+# so monthly is more than enough. It only needs refreshing when a new
+# season's currentSeason.startDate/endDate rolls over.
 
 on:
   schedule:
-    - cron: "0 5 1 * *"   # 1st of the month, 05:00 UTC
+    - cron: "0 5 1 * *"
   workflow_dispatch:
 
 env:
@@ -24,7 +24,7 @@ env:
 
 jobs:
   sync-competitions:
-    name: "Sync competition metadata (all competitions)"
+    name: "Sync competition metadata (current season)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -60,12 +60,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

@@ -1,14 +1,21 @@
 name: "Matches — Live Audit"
 
-# Runs every 15 min between 13:00–23:45 UTC
-# Covers all European kick-off slots (14:00–23:00 UTC)
-# Only re-fetches matches that are IN_PLAY, PAUSED, or SCHEDULED with a past utcDate
+# Runs every 15 min between 12:00–23:45 UTC daily.
+# Extended to 12:00 UTC start (was 13:00) so it catches midday European KOs.
+# WC 2026 has early-afternoon UTC slots (e.g. 18:00 local / 21:00 UTC) as well
+# as Americas slots (00:00–03:00 UTC) — those are covered by matches_audit_recent.
+#
+# Only re-fetches matches that are IN_PLAY, PAUSED, or SCHEDULED with a past utcDate.
 # After any match updates, also re-fetches standings for the affected competition.
+#
+# SCOPE: current active season only — audit_matches.py reads get_season_paths()
+# which always resolves to the active folder (e.g. 2026-2027 right now).
+# It never touches historical season folders.
 
 on:
   schedule:
-    - cron: "0,15,30,45 13-23 * * *"
-  workflow_dispatch: # manual trigger from GitHub Actions UI
+    - cron: "0,15,30,45 12-23 * * *"
+  workflow_dispatch:
 
 env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
@@ -52,12 +59,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

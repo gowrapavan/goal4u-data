@@ -1,9 +1,16 @@
-name: "Teams — Weekly Sync"
+name: "Teams — Weekly Sync (Current Season)"
 
-# Runs every Monday at 08:00 UTC (1hr after standings sync to avoid API overlap)
-# Uses GET /competitions/{code}/teams — one call per competition, no per-team 403s
-# Squad/coach data is stable; only needs updating during transfer windows
-# Can also be triggered manually from GitHub Actions UI during transfer windows
+# Runs every Monday at 08:00 UTC.
+# Uses GET /competitions/{code}/teams — one call per competition, no per-team 403s.
+# Squad/coach data is stable outside transfer windows; weekly cadence is sufficient.
+#
+# SCOPE: current active season only.
+# fetch_teams.py (no --season flag) auto-resolves via config.get_season_paths().
+#
+# WC / EC note: if WC/EC is not active for this season window the API returns
+# 404, which is handled gracefully (Conditional Fallback preserves existing file).
+# During an active WC/EC tournament you can trigger this manually after squads
+# are announced to pull in the registered squad lists.
 
 on:
   schedule:
@@ -16,7 +23,7 @@ env:
 
 jobs:
   sync-teams:
-    name: "Sync teams + squads (all competitions)"
+    name: "Sync teams + squads (current season)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -52,12 +59,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

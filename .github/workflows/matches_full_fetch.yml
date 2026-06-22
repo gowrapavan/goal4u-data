@@ -1,18 +1,25 @@
-name: "Matches — Full Fetch"
+name: "Matches — Full Fetch (Current Season)"
 
-# Runs once a week (Every Sunday at 04:00 UTC)
-# Exhaustively pulls down the entire season match fixture grid across all 8 competitions.
-# This acts as a master baseline reset so the incremental live auditors have clean files to patch.
+# Runs once a week — Sunday 04:00 UTC.
+# Exhaustively re-fetches the entire season fixture grid for all active competitions.
+# Acts as a master baseline so the incremental live auditors have clean files to patch.
 #
-# NOTE: fetch_matches.py now always sends an explicit ?season= to the API even
-# in "current season" mode (see config.get_current_season_start_year()) — this
-# was the fix for PD/CL returning stale previous-season data while PL/FL1 had
-# already rolled over. No workflow-level change was needed for that fix.
+# SCOPE: current active season only.
+# fetch_matches.py (no --season flag) auto-resolves the season via
+# config.get_current_season_start_year(). It always passes an explicit
+# ?season= to the API to avoid the per-competition rollover drift bug.
+#
+# WC / EC note: if the current season folder contains WC or EC,
+# fetch_matches.py will attempt them. If the tournament hasn't started
+# yet (SCHEDULED matches only) the file will still write correctly with
+# future fixtures. If the API returns 404 for a cup competition that
+# isn't active in this season window, the Conditional Fallback kicks in
+# (preserves the existing file unchanged) — no error, no data loss.
 
 on:
   schedule:
     - cron: "0 4 * * 0"   # Sunday 04:00 UTC
-  workflow_dispatch:     # Allows manual override triggers via GitHub UI
+  workflow_dispatch:
 
 env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
@@ -20,7 +27,7 @@ env:
 
 jobs:
   fetch-matches:
-    name: "Exhaustive fetch of all season fixtures"
+    name: "Full fetch of all current-season fixtures"
     runs-on: ubuntu-latest
 
     permissions:
@@ -37,7 +44,7 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run full match fetch
+      - name: Run full match fetch (current season)
         run: python workers/fetch_matches.py
 
       - name: Commit complete match logs
@@ -46,7 +53,7 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/
           git diff --cached --quiet && echo "Nothing to commit" && exit 0
-          git commit -m "chore(data): full master match logs refreshed [skip ci]"
+          git commit -m "chore(data): weekly full match fetch — current season [skip ci]"
 
           for i in 1 2 3 4 5; do
             git fetch origin main
@@ -56,12 +63,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

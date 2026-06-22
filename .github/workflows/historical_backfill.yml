@@ -1,39 +1,54 @@
-name: "Historical Seasons — One-Time Backfill"
+name: "Historical Backfill — Data (matches, standings, scorers, teams, match-links)"
 
-# MANUAL TRIGGER ONLY — this is a run-once job, not a recurring sync.
-# Fetches matches + standings + scorers + teams for each past season you list,
-# then you never need to run it again (current-season data is kept fresh by
-# the daily/weekly/monthly workflows instead).
+# MANUAL TRIGGER ONLY — run-once job per season, not a recurring sync.
 #
-# Replaces the old "Previous_season_matches.yml", which called
-# workers/fetch_historical_matches.py — that file no longer exists, it was
-# merged into fetch_matches.py (use --season instead).
+# Fetches the full data stack for one or more past seasons:
+#   1. matches          →  data/{season}/matches/{CODE}.json
+#   2. standings        →  data/{season}/standings/{CODE}.json
+#   3. scorers          →  data/{season}/scorers/{CODE}.json
+#   4. teams / squads   →  data/{season}/teams/{CODE}/{id}.json
+#   5. match-links      →  data/{season}/match-links/{CODE}.json  (YallaShoot URL map)
 #
-# Seasons run SEQUENTIALLY (max-parallel: 1), each one committing and pushing
-# before the next starts. This is deliberate — running them in parallel would
-# have multiple jobs racing to push to the same data/ tree on main at once.
+# NOTE — what is NOT fetched here:
+#   • Competition metadata (/competitions/{code}) has no ?season= variant on the
+#     API — it always reflects the current season. Skipped intentionally.
+#   • Match stats (yallashoot scrape) are handled separately by
+#     historical_backfill_stats.yml so this job stays fast and API-only.
 #
-# NOTE: bare competition metadata (workers/fetch_competitions.py --mode
-# competitions) has no historical ?season= variant on the API, so it is
-# intentionally skipped here — only standings/scorers/teams/matches support
-# historical seasons.
+# WC / EC behaviour:
+#   • The API returns 404 for WC/EC when no tournament ran in that season window
+#     (e.g. WC at season=2025 → 404 because WC 2026 is at season=2026).
+#   • fetch_matches.py falls back to monthly chunks and still returns 0 matches
+#     (empty list, file not written — Conditional Fallback preserves any existing file).
+#   • fetch_competitions.py and fetch_teams.py handle 404s identically — skip + warn.
+#   • This is correct and expected — no fix needed in the workflows.
+#
+# Season matrix runs SEQUENTIALLY (max-parallel: 1) to avoid git push races
+# on the shared data/ tree. fail-fast: false so one bad season doesn't block the rest.
+#
+# Usage:
+#   Go to Actions → "Historical Backfill — Data" → Run workflow
+#   Enter comma-separated season start years, e.g.: 2022,2023,2024,2025
+#
+# For WC 2026 (which runs in June–July 2026, stored in data/2026-2027/):
+#   Enter: 2026   →  fetches data/2026-2027/ with api ?season=2026
 
 on:
   workflow_dispatch:
     inputs:
       seasons:
-        description: "Comma-separated season start years to backfill"
+        description: "Comma-separated season start years to backfill (e.g. 2022,2023,2024,2025)"
         required: true
-        default: "2023,2024,2025"
+        default: "2024,2025"
 
 jobs:
-  backfill:
-    name: "Backfill season ${{ matrix.season }}"
+  backfill-data:
+    name: "Backfill data — season ${{ matrix.season }}"
     runs-on: ubuntu-latest
 
     strategy:
-      max-parallel: 1     # sequential — avoids git push races on data/
-      fail-fast: false    # one bad season shouldn't block the others
+      max-parallel: 1
+      fail-fast: false
       matrix:
         season: ${{ fromJSON(format('[{0}]', github.event.inputs.seasons)) }}
 
@@ -42,6 +57,7 @@ jobs:
 
     env:
       FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+      WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
       PYTHONUNBUFFERED: "1"
 
     steps:
@@ -52,28 +68,60 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install Python dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install playwright playwright-stealth
 
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
+
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
+      # ── Step 1: Matches ───────────────────────────────────────────────────────
+      # Uses run_historical() which has a 60s timeout + monthly-chunk fallback.
+      # WC/EC: if the API returns 404 for this season, monthly chunks are tried;
+      # if those also return 0 matches, no file is written (Conditional Fallback).
       - name: Fetch matches (season ${{ matrix.season }})
         run: python workers/fetch_matches.py --season ${{ matrix.season }}
 
+      # ── Step 2: Standings ─────────────────────────────────────────────────────
       - name: Fetch standings (season ${{ matrix.season }})
         run: python workers/fetch_competitions.py --mode standings --season ${{ matrix.season }}
 
+      # ── Step 3: Scorers ───────────────────────────────────────────────────────
       - name: Fetch scorers (season ${{ matrix.season }})
         run: python workers/fetch_competitions.py --mode scorers --season ${{ matrix.season }}
 
-      - name: Fetch teams/squads (season ${{ matrix.season }})
+      # ── Step 4: Teams / squads ────────────────────────────────────────────────
+      - name: Fetch teams / squads (season ${{ matrix.season }})
         run: python workers/fetch_teams.py --season ${{ matrix.season }}
 
+      # ── Step 5: Match links (YallaShoot URL map) ──────────────────────────────
+      # Requires the matches file from Step 1 to already be on disk.
+      # fetch_match_links.py --all reads the season folder via config, so we
+      # override SEASON to point it at the correct historical folder.
+      # e.g. season=2024 → SEASON=2024-2025, season=2026 → SEASON=2026-2027
+      - name: Compute season folder string
+        id: season_folder
+        run: |
+          SEASON_END=$(( ${{ matrix.season }} + 1 ))
+          echo "folder=${{ matrix.season }}-${SEASON_END}" >> $GITHUB_OUTPUT
+
+      - name: Fetch match links (season ${{ matrix.season }})
+        env:
+          SEASON: ${{ steps.season_folder.outputs.folder }}
+        run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_links --all
+
+      # ── Commit & push ─────────────────────────────────────────────────────────
       - name: Commit and push season ${{ matrix.season }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/
           git diff --cached --quiet && echo "Nothing to commit for season ${{ matrix.season }}" && exit 0
-          git commit -m "chore(data): historical backfill season ${{ matrix.season }} [skip ci]"
+          git commit -m "chore(data): historical backfill data season ${{ matrix.season }} [skip ci]"
 
           for i in 1 2 3 4 5; do
             git fetch origin main
@@ -83,7 +131,6 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 10s..."

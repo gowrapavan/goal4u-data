@@ -1,11 +1,24 @@
-name: "Match Links — Weekly Sync"
+name: "Match Links — Weekly Sync (Current Season)"
+
+# Runs every Monday at 02:00 UTC (well before the week's first fixtures).
+# Scrapes yallashoot.soccer competition pages to extract match URLs and
+# fuzzy-maps them to football-data match IDs.
+#
+# SCOPE: current active season only.
+# fetch_match_links.py (--all) reads TRACKED_COMPETITIONS and the current
+# season folder from config automatically.
+#
+# WC 2026 note: get_competition_url() in fetch_match_links.py already handles
+# WC correctly — it uses year_end (e.g. "2026") for the URL slug:
+#   world-cup-2026  →  https://yallashoot.soccer/competition/world-cup-2026/
+# This is independent of which season folder the data lands in.
+#
+# Requires: WEBSHARE_PROXY_URL secret (rotating proxy for CF bypass).
+# Playwright + Xvfb are installed at runtime for Chromium-based CF solving.
 
 on:
   schedule:
-    # Runs every Monday at 02:00 UTC (well before the week's first fixtures)
-    - cron: "0 2 * * 1"
-
-  # Manual trigger from GitHub Actions UI
+    - cron: "0 2 * * 1"   # Monday 02:00 UTC
   workflow_dispatch:
 
 env:
@@ -15,7 +28,7 @@ env:
 
 jobs:
   sync-match-links:
-    name: "Sync match links"
+    name: "Sync match links (current season)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -40,7 +53,7 @@ jobs:
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
-      - name: Sync match links
+      - name: Sync match links (all competitions)
         run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_links --all
 
       - name: Commit and Push Data
@@ -59,12 +72,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

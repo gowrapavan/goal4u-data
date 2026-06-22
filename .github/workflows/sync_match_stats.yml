@@ -1,11 +1,23 @@
-name: "Match Stats — 5-Hour Sync"
+name: "Match Stats — 5-Hour Sync (Current Season)"
+
+# Runs at minute 0 of hours 0, 5, 10, 15, 20 UTC every day.
+# Scrapes match stats for ALL competitions, filtering to the current month
+# (--month) so the full WC tournament window is always covered regardless
+# of which matchweek we're in.
+#
+# SCOPE: current active season only.
+# --force is intentionally OMITTED — existing "Full Time" files are skipped
+# to keep the run fast. The hourly audit (match_stats_audit.yml) handles
+# catching any remaining gaps across the full season history.
+#
+# Requires: WEBSHARE_PROXY_URL secret (Cloudflare bypass).
+#
+# concurrency: prevents two runs (e.g. manual dispatch + scheduled) from
+# racing on `git push` after a ~40-minute scrape window.
 
 on:
   schedule:
-    # Runs at minute 0 of hours 0, 5, 10, 15, 20 UTC every day
     - cron: "0 0,5,10,15,20 * * *"
-
-  # Manual trigger from GitHub Actions UI
   workflow_dispatch:
 
 env:
@@ -13,17 +25,13 @@ env:
   WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
   PYTHONUNBUFFERED: "1"
 
-# Prevent two runs of this workflow (e.g. a manual dispatch overlapping a
-# scheduled run) from both checking out main, scraping for ~40min, and then
-# racing each other on `git push` — that race is what caused the
-# "! [rejected] main -> main (fetch first)" failure.
 concurrency:
-  group: match-stats-sync
+  group: match-stats-sync-current
   cancel-in-progress: false
 
 jobs:
   scrape-match-stats:
-    name: "Scrape match stats"
+    name: "Scrape match stats (current season, current month)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -48,9 +56,7 @@ jobs:
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
-      - name: Scrape match stats
-        # --month instead of --week so the full WC tournament window is always covered.
-        # --force is intentionally OMITTED — existing files are skipped to keep the run fast.
+      - name: Scrape match stats (current month)
         run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_stats --all --month
 
       - name: Commit and Push Data
@@ -58,12 +64,8 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -f data/
-          git commit -m "chore(data): automated 5-hour stats sync [skip ci]" || echo "No new data to commit"
-          # The scrape step can take 5-40+ minutes. If anything else pushed
-          # to main while this job was running, a plain `git push` gets
-          # rejected as non-fast-forward (this is what failed before — the
-          # scrape itself succeeded, only the push didn't). Rebase onto the
-          # latest main and retry instead of dying on that race.
+          git commit -m "chore(data): 5-hour stats sync — $(date -u +%Y-%m-%dT%H:%M:%SZ) [skip ci]" || echo "No new data to commit"
+
           for i in 1 2 3 4 5; do
             git fetch origin main
             if git rebase origin/main; then
@@ -72,12 +74,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 15s..."
             sleep 15
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

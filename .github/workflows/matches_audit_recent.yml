@@ -1,9 +1,17 @@
 name: "Matches — Recent Audit"
 
-# Runs every 3 hours around the clock
-# Catches matches from the last 72h that are still stale
-# (status never updated, goals missing, lineup empty, etc.)
+# Runs every 3 hours around the clock.
+# Catches matches from the last 72h that are still stale —
+# status never updated, goals missing, lineup empty, etc.
+#
+# Also catches late-night Americas WC 2026 slots (00:00–03:00 UTC)
+# that fall outside the live-audit window (12:00–23:45 UTC).
+# The 12h grace window inside audit_matches._is_stale() means a 01:00 UTC
+# kick-off is still caught by the 03:00 / 06:00 UTC recent-audit runs.
+#
 # After any match updates, also re-fetches standings for the affected competition.
+#
+# SCOPE: current active season only (same as live audit above).
 
 on:
   schedule:
@@ -52,12 +60,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

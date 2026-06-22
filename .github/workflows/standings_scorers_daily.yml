@@ -1,19 +1,23 @@
-name: "Standings & Scorers — Daily Sync"
+name: "Standings & Scorers — Daily Sync (Current Season)"
 
-# Runs every day at 03:00 UTC
-# Re-fetches full standings tables and top scorers for all 8 competitions.
-# Single API call per competition per mode — cheap and fast (16 calls total).
+# Runs every day at 03:00 UTC.
+# Re-fetches full standings tables and top scorers for all active competitions.
 #
-# Was previously weekly, but league tables and scorer rankings change after
-# every matchday (sometimes multiple times a week per competition), so a
-# 7-day-stale table defeated the point of tracking standings at all. The live
-# and recent match audits already patch standings opportunistically right
-# after a match updates — this daily run is the guaranteed catch-all so
-# nothing drifts for more than a day even if an audit run is missed.
+# SCOPE: current active season only.
+# fetch_competitions.py (no --season flag) resolves the season automatically.
+#
+# WC / EC note: the API returns 404 for standings/scorers on cup competitions
+# that are between tournaments (e.g. WC when no tournament is active in this
+# season range). fetch_competitions.py handles this gracefully via Conditional
+# Fallback — it logs a warning and preserves the existing file unchanged.
+# No special casing needed here.
+#
+# The live and recent match audits also refresh standings opportunistically
+# right after a match updates — this daily run is the guaranteed catch-all.
 
 on:
   schedule:
-    - cron: "0 3 * * *"   # Daily 03:00 UTC
+    - cron: "0 3 * * *"
   workflow_dispatch:
 
 env:
@@ -22,7 +26,7 @@ env:
 
 jobs:
   sync-standings-scorers:
-    name: "Sync standings + scorers (all competitions)"
+    name: "Sync standings + scorers (current season)"
     runs-on: ubuntu-latest
 
     permissions:
@@ -61,12 +65,11 @@ jobs:
                 exit 0
               fi
             else
-              echo "Rebase conflict on attempt $i — aborting rebase and retrying."
               git rebase --abort || true
             fi
             echo "Push attempt $i failed, retrying in 5s..."
             sleep 5
           done
 
-          echo "::error::Failed to push after 5 attempts — check for a real conflict."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

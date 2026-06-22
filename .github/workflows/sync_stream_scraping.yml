@@ -7,9 +7,6 @@ on:
   workflow_dispatch:
 
 concurrency:
-  # Prevents two runs of THIS workflow from overlapping (e.g. if a run
-  # takes longer than 30 min). Does not cancel an in-progress run --
-  # a new trigger just waits its turn instead of killing the current job.
   group: stream-scraping
   cancel-in-progress: false
 
