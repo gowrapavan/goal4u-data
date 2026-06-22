@@ -20,25 +20,21 @@ on:
         required: true
         default: "50"
 
-env:
-  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
-  WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
-  PYTHONUNBUFFERED: "1"
-
 jobs:
   backfill-match-stats:
     name: "Backfill stats — season ${{ matrix.season }}"
     runs-on: ubuntu-latest
-
     strategy:
       max-parallel: 1
       fail-fast: false
       matrix:
         season: ${{ fromJSON(format('[{0}]', github.event.inputs.seasons)) }}
-
     permissions:
       contents: write
-
+    env:
+      FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+      WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
+      PYTHONUNBUFFERED: "1"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,46 +56,32 @@ jobs:
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
-      # ── Compute Folder ────────────────────────────────────────────────────────
+      # ── Scrape Stats ──────────────────────────────────────────────────────────
       - name: Compute season folder string
         id: season_folder
         run: |
           SEASON_END=$(( ${{ matrix.season }} + 1 ))
           echo "folder=${{ matrix.season }}-${SEASON_END}" >> $GITHUB_OUTPUT
 
-      # ── Scrape Stats ──────────────────────────────────────────────────────────
-      - name: Audit + backfill missing match stats (season ${{ matrix.season }})
+      - name: Audit + backfill missing match stats
         env:
           SEASON: ${{ steps.season_folder.outputs.folder }}
         run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_stats --audit --all --limit ${{ github.event.inputs.limit }}
 
-      # ── Commit & push (Robust Merge Strategy) ─────────────────────────────────
-      - name: Commit and push season ${{ matrix.season }}
+      # ── Commit & push ────────────────────────────────────────────────────────
+      - name: Commit and Push Data
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com"
           git add -f data/
-          
-          if git diff --cached --quiet; then
-            echo "No changes for season ${{ matrix.season }}"
-            exit 0
-          fi
-          
-          git commit -m "chore(data): historical stats backfill season ${{ matrix.season }} [skip ci]"
-
-          # Pull latest remote changes, preferring our newly generated JSON files during any conflicts
-          git pull origin main --strategy-option=ours --no-edit
+          if git diff --cached --quiet; then echo "No changes"; exit 0; fi
+          git commit -m "chore(data): historical stats backfill [skip ci]"
 
           for i in 1 2 3 4 5; do
-            if git push origin HEAD:main; then
-              echo "Pushed season ${{ matrix.season }} on attempt $i."
-              exit 0
-            fi
-            echo "Push attempt $i failed. Fetching and rebasing..."
+            git pull origin main --strategy-option=ours --no-edit
+            if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
-            git rebase origin/main -X ours || { git rebase --abort; sleep 10; continue; }
+            git rebase origin/main -X ours || { git rebase --abort; sleep 10; }
           done
-
-          echo "::error::Failed to push backfill for season ${{ matrix.season }} after 5 attempts."
+          echo "::error::Failed to push after 5 attempts."
           exit 1

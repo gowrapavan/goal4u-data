@@ -33,6 +33,7 @@ name: "Historical Backfill — Data (matches, standings, scorers, teams, match-l
 # For WC 2026 (which runs in June–July 2026, stored in data/2026-2027/):
 #   Enter: 2026   →  fetches data/2026-2027/ with api ?season=2026
 
+
 on:
   workflow_dispatch:
     inputs:
@@ -45,21 +46,17 @@ jobs:
   backfill-data:
     name: "Backfill data — season ${{ matrix.season }}"
     runs-on: ubuntu-latest
-
     strategy:
       max-parallel: 1
       fail-fast: false
       matrix:
         season: ${{ fromJSON(format('[{0}]', github.event.inputs.seasons)) }}
-
     permissions:
       contents: write
-
     env:
       FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
       WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
       PYTHONUNBUFFERED: "1"
-
     steps:
       - uses: actions/checkout@v4
         with:
@@ -81,23 +78,20 @@ jobs:
       - name: Install Xvfb
         run: sudo apt-get update && sudo apt-get install -y xvfb
 
-      # ── Step 1: Matches ───────────────────────────────────────────────────────
+      # ── Steps 1-4 ─────────────────────────────────────────────────────────────
       - name: Fetch matches (season ${{ matrix.season }})
         run: python workers/fetch_matches.py --season ${{ matrix.season }}
 
-      # ── Step 2: Standings ─────────────────────────────────────────────────────
       - name: Fetch standings (season ${{ matrix.season }})
         run: python workers/fetch_competitions.py --mode standings --season ${{ matrix.season }}
 
-      # ── Step 3: Scorers ───────────────────────────────────────────────────────
       - name: Fetch scorers (season ${{ matrix.season }})
         run: python workers/fetch_competitions.py --mode scorers --season ${{ matrix.season }}
 
-      # ── Step 4: Teams / squads ────────────────────────────────────────────────
       - name: Fetch teams / squads (season ${{ matrix.season }})
         run: python workers/fetch_teams.py --season ${{ matrix.season }}
 
-      # ── Step 5: Match links (YallaShoot URL map) ──────────────────────────────
+      # ── Step 5: Match links ──────────────────────────────────────────────────
       - name: Compute season folder string
         id: season_folder
         run: |
@@ -109,33 +103,20 @@ jobs:
           SEASON: ${{ steps.season_folder.outputs.folder }}
         run: PYTHONPATH=${{ github.workspace }} xvfb-run --auto-servernum python -m workers.fetch_match_links --all
 
-      # ── Commit & push (Robust Merge Strategy) ─────────────────────────────────
+      # ── Commit & push ────────────────────────────────────────────────────────
       - name: Commit and push season ${{ matrix.season }}
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
           git add -f data/
-          
-          if git diff --cached --quiet; then
-            echo "Nothing to commit for season ${{ matrix.season }}"
-            exit 0
-          fi
-          
+          if git diff --cached --quiet; then echo "Nothing to commit for season ${{ matrix.season }}"; exit 0; fi
           git commit -m "chore(data): historical backfill data season ${{ matrix.season }} [skip ci]"
 
-          # Pull latest remote changes, preferring our newly generated JSON files during any conflicts
-          git pull origin main --strategy-option=ours --no-edit
-
           for i in 1 2 3 4 5; do
-            if git push origin HEAD:main; then
-              echo "Pushed season ${{ matrix.season }} on attempt $i."
-              exit 0
-            fi
-            echo "Push attempt $i failed. Fetching and rebasing..."
+            git pull origin main --strategy-option=ours --no-edit
+            if git push origin HEAD:main; then exit 0; fi
             git fetch origin main
-            git rebase origin/main -X ours || { git rebase --abort; sleep 10; continue; }
+            git rebase origin/main -X ours || { git rebase --abort; sleep 10; }
           done
-
           echo "::error::Failed to push backfill for season ${{ matrix.season }} after 5 attempts."
           exit 1
