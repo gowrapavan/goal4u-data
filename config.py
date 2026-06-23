@@ -1,156 +1,115 @@
 """
-config.py — single source of truth for the goal4u-data pipeline.
+config_reference.py — Reference config template.
 
-KEY CHANGE:
-WC and EC are single-year tournaments that don't fit the Aug–Jul club season model. 
-The `TOURNAMENT_YEARS` registry maps a competition code to the API season year it 
-should always use.
+This is NOT the file you run.  It documents exactly what keys / callables
+the refactored workers import from your real config.py so you can verify your
+config exports everything the new code needs.
 
-HOW TO HANDLE WC / EC IN PRACTICE:
-  • WC 2026: the current season IS 2026-2027 (June 2026 onwards). WC runs June–July 
-    2026. `get_current_season_start_year()` returns 2026, which matches perfectly.
-  • HISTORICAL backfill (--season 2025): override WC to skip / return empty 
-    (API returns 404 anyway; Conditional Fallback handles it). No data loss.
+Copy the shape below into your actual config.py (keep your existing logic,
+just make sure these names exist and have the correct types).
 """
 
 from __future__ import annotations
-
-import os
-from datetime import date, datetime, timezone
+from datetime import date
 
 
-# ── TRACKED COMPETITIONS ──────────────────────────────────────────────────────
+# ── Competition registries ────────────────────────────────────────────────────
 
-TRACKED_COMPETITIONS: list[str] = [
-    "PL",   # Premier League           (England)
-    "PD",   # La Liga                  (Spain)
-    "BL1",  # Bundesliga               (Germany)
-    "SA",   # Serie A                  (Italy)
-    "FL1",  # Ligue 1                  (France)
+# Leagues only — do NOT include WC or EC here.
+# These are the codes the league workers (fetch_competitions, fetch_teams,
+# fetch_matches, audit_matches) will iterate over.
+LEAGUE_COMPETITIONS: list[str] = [
+    "PL",   # Premier League
+    "PD",   # La Liga
+    "BL1",  # Bundesliga
+    "FL1",  # Ligue 1
+    "SA",   # Serie A
     "CL",   # UEFA Champions League
-    "EC",   # UEFA European Championship (2024, 2028 ...)
-    "WC",   # FIFA World Cup           (2022, 2026 ...)
+    "ELC",  # Championship  (as-per-season as noted in page 1)
 ]
 
-# How many top scorers to fetch per competition
-SCORERS_LIMIT: int = 20
+# TRACKED_COMPETITIONS was the old combined list.
+# Keep it for backward-compat if anything still imports it,
+# but the workers now use LEAGUE_COMPETITIONS.
+TRACKED_COMPETITIONS: list[str] = LEAGUE_COMPETITIONS  # alias
 
 
-# ── TOURNAMENT YEAR REGISTRY ──────────────────────────────────────────────────
-# Maps competition code → the calendar years when that tournament actually runs.
-# Used by get_api_season_for_competition() to decide whether to include a
-# cup competition in an API call for a given season year.
-TOURNAMENT_YEARS: dict[str, list[int]] = {
-    "WC": [2018, 2022, 2026, 2030],
-    "EC": [2016, 2020, 2024, 2028],
+# ── Tournament year registry ──────────────────────────────────────────────────
+
+# THIS is the single source of truth for tournament years.
+# workers/tournament_paths.py reads this — NEVER derives years from season strings.
+TOURNAMENT_YEARS: dict[str, int] = {
+    "WC": 2026,   # FIFA World Cup 2026
+    "EC": 2028,   # UEFA Euro 2028  (update when needed)
 }
 
 
-# ── SEASON RESOLUTION ─────────────────────────────────────────────────────────
+# ── Season resolution ─────────────────────────────────────────────────────────
 
-def get_current_season_string(ref: date | None = None) -> str:
+# The month (inclusive) from which we consider the NEW season to be "current".
+# Football seasons run roughly Aug–May.  By June the old season is finished and
+# pre-season prep for the next one begins, so June is the right switchover:
+#
+#   Jan–May  2026  →  season start year = 2025  (2025-2026 still running)
+#   Jun–Dec  2026  →  season start year = 2026  (2026-2027 is next / current)
+#
+# Set to 6 (June).  Change to 7 if you want July to still be "old season".
+_NEW_SEASON_FROM_MONTH: int = 6
+
+
+def get_current_season_start_year() -> int:
     """
-    Return the active football season as a "YYYY-YYYY" folder name.
+    Return the start year of the current (or upcoming) football season.
 
-    Rule:
-      - Month >= June  →  season is over / next season scheduled  →  "{year}-{year+1}"
-      - Month <  June  →  still in the season that started last year →  "{year-1}-{year}"
+    Examples (with _NEW_SEASON_FROM_MONTH = 6):
+        May  2026  →  2025   (2025-2026 season still active)
+        Jun  2026  →  2026   (2026-2027 is next, treat as current for data prep)
+        Aug  2026  →  2026   (2026-2027 season underway)
+
+    To fetch the *previous* completed season pass --season explicitly:
+        python main.py --season 2025   →  data/2025-2026/
     """
-    now  = ref or datetime.now(timezone.utc).date()
-    year = now.year
-    return f"{year}-{year + 1}" if now.month >= 6 else f"{year - 1}-{year}"
+    today = date.today()
+    return today.year if today.month >= _NEW_SEASON_FROM_MONTH else today.year - 1
 
 
-def get_current_season_start_year(ref: date | None = None) -> int:
+def get_season_paths() -> dict[str, str]:
     """
-    Return the start-year integer for the season get_current_season_string()
-    resolves to, e.g. "2026-2027" -> 2026.
+    Return path fragments for the current league season.
+
+    Keys:
+        season     : "2026-2027"
+        data_root  : "data/2026-2027"
     """
-    return int(get_current_season_string(ref).split("-")[0])
-
-
-def get_api_season_for_competition(code: str, ref: date | None = None) -> int | None:
-    """
-    Return the API ?season= value to use for a given competition code.
-
-    For club leagues: Returns get_current_season_start_year()
-    For cup tournaments (WC, EC): Returns the tournament year IF active in the 
-    current season window, else returns None (triggering a safe skip/404).
-    """
-    season_start = get_current_season_start_year(ref)
-    tournament_years = TOURNAMENT_YEARS.get(code)
-
-    if tournament_years is None:
-        # Club league — use standard season
-        return season_start
-
-    # Cup tournament — find the active tournament year, if any
-    for t_year in tournament_years:
-        if season_start <= t_year <= season_start + 1:
-            return t_year   # e.g. 2026 for WC, 2024 for EC
-
-    # No tournament in this season window
-    return None
-
-
-# ── SEASON-AWARE PATH FACTORY ─────────────────────────────────────────────────
-
-def get_season_paths(season: str | int | None = None) -> dict[str, str]:
-    """
-    Return every base path used by the worker scripts for the given season.
-    Accepts season as None (auto-resolves to current), an int (e.g. 2024), 
-    or a string (e.g. "2024-2025").
-    """
-    if isinstance(season, int):
-        season_str = f"{season}-{season + 1}"
-    elif isinstance(season, str):
-        season_str = season
-    else:
-        season_str = get_current_season_string()
-
-    base = os.environ.get("DATA_DIR", "data")
-    root = f"{base}/{season_str}"
-
+    start = get_current_season_start_year()
+    season = f"{start}-{start + 1}"
     return {
-        "season":          season_str,
-        "base":            base,
-        "root":            root,
-        "competitions":    f"{root}/competitions.json",
-        "standings_dir":   f"{root}/standings",
-        "matches_dir":     f"{root}/matches",
-        "scorers_dir":     f"{root}/scorers",
-        "teams_dir":       f"{root}/teams",
-        "stats_dir":       f"{root}/stats",
-        "match_links_dir": f"{root}/match-links",
+        "season":    season,
+        "data_root": f"data/{season}",
     }
 
 
-# ── FIELD STRIP LISTS ─────────────────────────────────────────────────────────
+# ── Field strip lists ─────────────────────────────────────────────────────────
+# Fields to remove from raw API dicts before persisting.
 
-# Competition-level fields to drop
 COMPETITION_STRIP_FIELDS: list[str] = [
+    "seasons",
     "lastUpdated",
-    "_links",
-    "seasons",    # long historical array — bloats competitions.json, not needed
 ]
 
-# Match-level top-level fields to drop
 MATCH_STRIP_FIELDS: list[str] = [
     "lastUpdated",
-    "_links",
 ]
 
-# Team-level fields to drop
-TEAM_STRIP_FIELDS: list[str] = [
-    "address",
-    "phone",
-    "email",
-    "lastUpdated",
-    "_links",
-]
-
-# Fields to strip from in-match person references
 PERSON_STRIP_FIELDS: list[str] = [
     "lastUpdated",
-    "_links",
 ]
+
+TEAM_STRIP_FIELDS: list[str] = [
+    "lastUpdated",
+]
+
+
+# ── Scorers limit ─────────────────────────────────────────────────────────────
+
+SCORERS_LIMIT: int = 10

@@ -1,59 +1,47 @@
 #!/usr/bin/env python3
 """
-workers/fetch_match_stats.py
+workers/fetch_match_stats.py  (FAST CONCURRENT VERSION — HTML-AWARE PARSER)
 ──────────────────────────────────────────────────────────────────────────────
-Scrapes deep match statistics (possession, shots, lineups, goals, cards,
-substitutions, player ratings, xG) from yallashoot.soccer — bypassing the
-football-data.org free-tier paywall that blocks these stats for WC matches.
+Scrapes per-match statistics from yallashoot.soccer and stores them in a
+single stats.json file per competition, indexed by str(match_id).
 
-URL syntax (derived from the live site):
-    https://yallashoot.soccer/live/{home-slug}-{away-slug}-{YYYY-MM-DD}/
+Parser strategy
+───────────────
+The page is rendered by a WordPress + AnWP Football Leagues plugin.
+All stats live in real structured HTML — NOT a text blob. We use
+BeautifulSoup with specific CSS selectors confirmed against the live HTML:
 
-Output layout (mirrors existing pipeline conventions):
-    data/{season}/stats/{match_slug}.json
+  • Scoreboard:  .match-scoreboard__club-title  (home=first, away=second)
+                 .match-scoreboard__score-number (home=first, away=second)
+                 .match-scoreboard__text-result span  (status)
+                 .match-scoreboard__footer-line  (HT score)
 
-JSON envelope format (consistent with utils.safe_write):
-    {
-      "_meta": {
-        "last_synced": "<ISO-8601 UTC>",
-        "source": "yallashoot.soccer",
-        "url":    "<scraped URL>"
-      },
-      "data": { <match stats payload — see schema below> }
-    }
+  • Stats table: .team-stats  (one div per stat)
+                 Inside each: span.team-stats__value (home=first, away=second)
+                              span.anwp-flex-none    (label)
+                 The outer div class e.g. club-stats__corners gives the key.
 
-Data schema (data key):
-    match_id        str   — internal site ID (data-id attribute on wrapper div)
-    match_slug      str   — URL slug, used as file name
-    url             str   — canonical URL scraped
-    competition     str   — "FIFA World Cup 2026"
-    matchday        str   — "Matchweek 1" (or stage name)
-    date            str   — "14/06/2026"
-    time            str   — "8:00 PM"
-    status          str   — "Full Time" | "Live" | "Half Time" | "Scheduled"
-    home            TeamBlock
-    away            TeamBlock
-    score           {home: int, away: int, ht_home: int, ht_away: int}
-    statistics      {home: StatsSide, away: StatsSide}
-    timeline        [TimelineEvent, ...]
+  • Events:      .game-timeline__item[data-tippy-content]
+                 Formats observed:
+                   "20' Goooal!: B. Mbeumo (assistant: C. Nørgaard)"
+                   "72' Goal (from penalty): E. Haaland"
+                   "88' Goal (own goal): J. Smith"
+                   "35' Red Card: "  ← second yellow (name empty in tooltip)
+                 Side:   class contains 'item-home' or 'item-away'
+                 Fallback: .match-commentary__row player names used when
+                   tooltip player is null/empty (penalty goals, 2nd-yellow reds)
 
-Sync schedule:
-    Every 5 minutes during live matches (via GitHub Actions).
-    On-demand for finished matches (manual trigger or cron at match end).
+  • Lineups:     .match-lineups__{side}-starting / -subs / -coach
+                 .match__player-name, .match__player-number,
+                 .match__player-position, .match__player-rating
 
-Usage:
-    # Scrape all matches for a competition dynamically using the link database
-    python -m workers.fetch_match_stats --competition PL
-    python -m workers.fetch_match_stats --competition WC --today
+Concurrency
+───────────
+ThreadPoolExecutor (default 8 workers) — cf_fetcher uses sync libs so we
+can't use asyncio. Each thread scrapes independently; a write_lock guards
+the stats_store dict and checkpoint saves.
 
-    # Scrape a single match
-    python -m workers.fetch_match_stats --url https://yallashoot.soccer/live/netherlands-japan-2026-06-14/
-
-    # Audit mode (replaces fetch_match_stats_audit.py) — unattended hourly run:
-    # scans ALL finished matches (no date filter), fetches up to --limit missing
-    # ones, defers the rest to the next run.
-    python -m workers.fetch_match_stats --audit --all
-    python -m workers.fetch_match_stats --audit --competition WC --limit 20
+Speed:  ~5–8 min for 380 matches with 8 workers  (vs ~63 min sequential)
 """
 
 from __future__ import annotations
@@ -64,973 +52,848 @@ import logging
 import os
 import re
 import sys
+import threading
 import time
-from datetime import datetime, timedelta, timezone
-from config import get_season_paths as _get_season_paths
+from concurrent.futures import ThreadPoolExecutor, as_completed
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
-# Unified Cloudflare bypass fetcher (Playwright → curl_cffi → free proxy)
+sys.path.insert(0, ".")
+
 from workers.cf_fetcher import fetch_html as _cf_fetch_html
-
-# ── Config ────────────────────────────────────────────────────────────────────
-
-BASE_URL  = "https://yallashoot.soccer/live/"
-BASE_DIR  = Path("data")          # repo root; override via DATA_DIR env var
-SEASON = os.environ.get("SEASON", _get_season_paths()["season"])
-
-
-# CSS class → our snake_case stat key
-_STAT_CLASS_MAP: dict[str, str] = {
-    "club-stats__yellowCards":      "yellow_cards",
-    "club-stats__corners":          "corners",
-    "club-stats__fouls":            "fouls",
-    "club-stats__offsides":         "offsides",
-    "club-stats__possession":       "possession",
-    "club-stats__shots":            "shots",
-    "club-stats__shotsOnGoals":     "shots_on_target",
-    "club-stats__goals":            "goals",
-    "club-stats__shots_off_goal":   "shots_off_goal",
-    "club-stats__blocked_shots":    "blocked_shots",
-    "club-stats__shots_insidebox":  "shots_insidebox",
-    "club-stats__shots_outsidebox": "shots_outsidebox",
-    "club-stats__goalkeeper_saves": "goalkeeper_saves",
-    "club-stats__total_passes":     "total_passes",
-    "club-stats__passes_accurate":  "passes_accurate",
-    "club-stats__xg":               "xg",
-}
-
-# SVG icon href → player event type
-_ICON_MAP: dict[str, str] = {
-    "icon-ball":        "goal",
-    "icon-card_y":      "card_y",
-    "icon-card_r":      "card_r",
-    "icon-arrow-o-up":  "subs_in",
-    "icon-arrow-o-down":"subs_out",
-}
-
-# yallashoot.soccer `status` strings that mean the match is over and the
-# stats we've already scraped for it are final — safe to skip forever.
-# Anything else ("Scheduled", "Live", "Half Time", missing/unreadable, ...)
-# means the existing file is just a stale snapshot and should be re-scraped.
-_FINAL_STATS_STATUSES: set[str] = {
-    "full time", "ft", "match finished", "finished", "ended",
-    "after extra time", "aet", "penalties", "pen.",
-}
-
-# Empty stats side template
-_EMPTY_STATS: dict[str, Any] = {
-    "yellow_cards":     None,
-    "corners":          None,
-    "fouls":            None,
-    "offsides":         None,
-    "possession":       None,
-    "shots":            None,
-    "shots_on_target":  None,
-    "goals":            None,
-    "shots_off_goal":   None,
-    "blocked_shots":    None,
-    "shots_insidebox":  None,
-    "shots_outsidebox": None,
-    "goalkeeper_saves": None,
-    "total_passes":     None,
-    "passes_accurate":  None,
-    "xg":               None,
-}
+from workers.tournament_paths import get_data_paths
+from config import TRACKED_COMPETITIONS, get_season_paths as _get_season_paths
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    datefmt="%Y-%m-%dT%H:%M:%SZ",
 )
 logger = logging.getLogger("fetch_match_stats")
 
+# ── Season ────────────────────────────────────────────────────────────────────
+SEASON = os.environ.get("SEASON", _get_season_paths()["season"])
 
-# ── Path helpers ──────────────────────────────────────────────────────────────
+# ── Concurrency defaults ──────────────────────────────────────────────────────
+DEFAULT_WORKERS       = 8
+DEFAULT_CHECKPOINT_N  = 25
+DEFAULT_RETRY_FAILED  = 2
 
-def _get_stats_dir() -> Path:
-    base   = Path(os.environ.get("DATA_DIR", str(BASE_DIR)))
-    season = os.environ.get("SEASON", SEASON)
-    path   = base / season / "stats"
-    path.mkdir(parents=True, exist_ok=True)
-    return path
+# ── Statuses that mean a match is over and stats are final ────────────────────
+_FINAL_STATUSES: frozenset[str] = frozenset({
+    "full time", "ft", "match finished", "finished", "ended",
+    "after extra time", "aet", "after penalties", "penalties", "pen.",
+    "FINISHED",
+})
 
-
-def _get_matches_dir() -> Path:
-    """
-    Directory containing the per-competition match files written by
-    fetch_matches.py, e.g. data/{season}/matches/PL.json.
-    """
-    base   = Path(os.environ.get("DATA_DIR", str(BASE_DIR)))
-    season = os.environ.get("SEASON", SEASON)
-    return base / season / "matches"
-
-
-def _get_stats_match_dir(league: str) -> Path:
-    """
-    Output directory for match-ID-keyed stats files:
-        data/{season}/stats/stats-match/{league}/
-    """
-    base   = Path(os.environ.get("DATA_DIR", str(BASE_DIR)))
-    season = os.environ.get("SEASON", SEASON)
-    path   = base / season / "stats" / "stats-match" / league
-    path.mkdir(parents=True, exist_ok=True)
-    return path
-
-
-def _slug_from_url(url: str) -> str:
-    """
-    Extract the match slug from a yallashoot URL.
-    """
-    url = url.rstrip("/")
-    return url.split("/")[-1]
-
-
-# ── HTTP ──────────────────────────────────────────────────────────────────────
-
-def _fetch_html(url: str) -> str | None:
-    """
-    Fetch the HTML of a match page using the CF bypass cascade.
-
-    Tries (in order):
-      1. Playwright + stealth  — solves the JS challenge CF issues on datacenter IPs
-      2. curl_cffi             — fast TLS impersonation (works locally)
-      3. Free rotating proxies — last-resort fallback
-
-    Returns the raw HTML string on success, None on failure.
-    """
-    logger.info("Fetching: %s", url)
-    html = _cf_fetch_html(url, retries=2)
-
-    if html is None:
-        logger.error("All fetch methods exhausted for %s", url)
-
-    return html
+# ── Stats CSS class → canonical key mapping ────────────────────────────────────
+# Maps the outer div class suffix (club-stats__X) to a clean snake_case key.
+_STAT_CLASS_MAP: dict[str, str] = {
+    "yellowCards":    "yellow_cards",
+    "yellowcards":    "yellow_cards",
+    "red_cards":      "red_cards",
+    "redCards":       "red_cards",
+    "corners":        "corners",
+    "fouls":          "fouls",
+    "offsides":       "offsides",
+    "possession":     "possession",
+    "shots":          "shots",
+    "shotsOnGoals":   "shots_on_target",
+    "shotsongoals":   "shots_on_target",
+    "shots_off_goal": "shots_off_goal",
+    "blocked_shots":  "blocked_shots",
+    "shots_insidebox":"shots_insidebox",
+    "shots_outsidebox":"shots_outsidebox",
+    "goalkeeper_saves":"goalkeeper_saves",
+    "total_passes":   "total_passes",
+    "passes_accurate":"passes_accurate",
+    "goals":          "goals",
+    "xg":             "expected_goals",
+}
 
 
-# ── Parse helpers ─────────────────────────────────────────────────────────────
+# ═══════════════════════════════════════════════════════════════════════════════
+# PARSERS  (thread-safe: read-only, no shared state)
+# ═══════════════════════════════════════════════════════════════════════════════
 
-def _txt(el: Tag | None, default: str | None = None) -> str | None:
-    """Safe .get_text(strip=True) — returns default when el is None."""
-    if el is None:
-        return default
-    return el.get_text(strip=True) or default
-
-
-def _coerce_num(val: str | None) -> int | float | None:
-    """Convert '59', '0.70', '59%' → numeric. Returns None for non-numeric."""
-    if val is None:
+def _safe_num(val: str) -> int | float | str | None:
+    """Coerce a string to int, float or keep as string (for % values)."""
+    v = val.strip()
+    if not v:
         return None
-    v = val.strip().rstrip("%")
+    if v.endswith("%"):
+        return v  # keep possession as "49%"
     try:
         return int(v)
     except ValueError:
         try:
             return float(v)
         except ValueError:
-            return None
+            return v or None
 
 
-# ── Section parsers ───────────────────────────────────────────────────────────
-
-def _parse_match_header(soup: BeautifulSoup) -> dict:
-    """Extract the scoreboard header block."""
-    wrapper = soup.select_one("[data-id]")
-    match_id = wrapper.get("data-id") if wrapper else None
-
-    comp_el  = soup.select_one(".match-scoreboard__header-line a")
-    competition = _txt(comp_el)
-
-    matchday = None
-    for span in soup.select(".match-scoreboard__header-line span.anwp-text-nowrap"):
-        t = _txt(span)
-        if t and t not in ("|",):
-            matchday = t
-            break
-
-    date_el = soup.select_one(".match__date-formatted")
-    time_el = soup.select_one(".match__time-formatted")
-    match_date = _txt(date_el)
-    match_time = _txt(time_el)
-
-    status_el = soup.select_one(".match-scoreboard__text-result span")
-    status = _txt(status_el, "Unknown")
-
-    club_wrappers = soup.select(".match-scoreboard__club-wrapper")
-    home_name = away_name = None
-    home_crest = away_crest = None
-
-    if len(club_wrappers) >= 2:
-        home_wrap = club_wrappers[0]
-        away_wrap = club_wrappers[-1]
-        home_name  = _txt(home_wrap.select_one(".match-scoreboard__club-title"))
-        away_name  = _txt(away_wrap.select_one(".match-scoreboard__club-title"))
-        home_crest = (home_wrap.select_one("img.match-scoreboard__club-logo") or {}).get("src")
-        away_crest = (away_wrap.select_one("img.match-scoreboard__club-logo") or {}).get("src")
-
-    score_nums = soup.select(".match-scoreboard__score-number")
-
-    def _parse_score(el) -> int:
-        val = _txt(el, "0").strip()
-        try:
-            return int(val)
-        except ValueError:
-            return 0  # Fallback to 0 if the site shows a dash "-" for unplayed matches
-
-    home_score = _parse_score(score_nums[0]) if len(score_nums) > 0 else 0
-    away_score = _parse_score(score_nums[1]) if len(score_nums) > 1 else 0
-
-    ht_home = ht_away = None
-    footer_el = soup.select_one(".match-scoreboard__footer-line")
-    if footer_el:
-        ht_match = re.search(r"Half Time:\s*(\d+)-(\d+)", footer_el.get_text())
-        if ht_match:
-            ht_home, ht_away = int(ht_match.group(1)), int(ht_match.group(2))
-
-    referee = None
-    if footer_el:
-        ref_match = re.search(r"Referee:\s*(.+?)(?:\s*\|)", footer_el.get_text() + "|")
-        if ref_match:
-            referee = ref_match.group(1).strip()
-
-    form_items = soup.select(".club-form__item-pro")
-    raw_form   = [_txt(f, "").upper() for f in form_items if _txt(f, "").upper() in ("W", "D", "L")]
-    home_form = raw_form[:5]
-    away_form = raw_form[5:10]
-
-    xg_els  = soup.select(".fl-game-xg--scoreboard .fl-game-xg__val")
-    home_xg = _txt(xg_els[0]) if xg_els else None
-    away_xg = _txt(xg_els[1]) if len(xg_els) > 1 else None
-
-    return {
-        "match_id":    match_id,
-        "competition": competition,
-        "matchday":    matchday,
-        "date":        match_date,
-        "time":        match_time,
-        "status":      status,
-        "referee":     referee,
-        "score": {
-            "home":    home_score,
-            "away":    away_score,
-            "ht_home": ht_home,
-            "ht_away": ht_away,
-        },
-        "home": {
-            "name":      home_name,
-            "crest_url": home_crest,
-            "form":      home_form,
-            "xg":        _coerce_num(home_xg),
-        },
-        "away": {
-            "name":      away_name,
-            "crest_url": away_crest,
-            "form":      away_form,
-            "xg":        _coerce_num(away_xg),
-        },
+def parse_header(soup: BeautifulSoup) -> dict:
+    """
+    Extract home/away teams, score, HT score, and match status.
+    Uses .match-scoreboard__* selectors confirmed on live HTML.
+    """
+    result: dict[str, Any] = {
+        "home_team": None,
+        "away_team": None,
+        "status":    None,
+        "score":     {"home": None, "away": None, "ht_home": None, "ht_away": None},
     }
 
-def _parse_statistics(soup: BeautifulSoup) -> dict:
-    home_stats: dict[str, Any] = dict(_EMPTY_STATS)
-    away_stats: dict[str, Any] = dict(_EMPTY_STATS)
+    # Team names — first and second .match-scoreboard__club-title
+    team_els = soup.select(".match-scoreboard__club-title")
+    if len(team_els) >= 1:
+        result["home_team"] = team_els[0].get_text(strip=True) or None
+    if len(team_els) >= 2:
+        result["away_team"] = team_els[1].get_text(strip=True) or None
 
-    wrapper = soup.select_one(".team-stats__modern-wrapper")
-    if not wrapper:
-        return {"home": home_stats, "away": away_stats}
+    # Score — first and second .match-scoreboard__score-number
+    score_els = soup.select(".match-scoreboard__score-number")
+    if len(score_els) >= 2:
+        try:
+            result["score"]["home"] = int(score_els[0].get_text(strip=True))
+            result["score"]["away"] = int(score_els[1].get_text(strip=True))
+        except (ValueError, TypeError):
+            pass
 
-    for row in wrapper.select(".team-stats"):
-        row_classes = row.get("class", [])
-        stat_key = next((_STAT_CLASS_MAP[cls] for cls in row_classes if cls in _STAT_CLASS_MAP), None)
-        if not stat_key:
-            continue
+    # Status — inside .match-scoreboard__text-result
+    status_el = soup.select_one(".match-scoreboard__text-result span")
+    if status_el:
+        result["status"] = status_el.get_text(strip=True).lower()
 
-        val_spans = row.select(".team-stats__value")
+    # HT score — in .match-scoreboard__footer-line text
+    for footer in soup.select(".match-scoreboard__footer-line"):
+        txt = footer.get_text(separator=" ", strip=True)
+        m = re.search(r"[Hh]alf\s*[Tt]ime[:\s]+(\d+)[-:\s]+(\d+)", txt)
+        if m:
+            result["score"]["ht_home"] = int(m.group(1))
+            result["score"]["ht_away"] = int(m.group(2))
+            break
+
+    return result
+
+
+def parse_stats(soup: BeautifulSoup) -> dict:
+    """
+    Extract the match stats table.
+
+    Each stat row is a div.team-stats with a class like club-stats__corners.
+    Inside: two span.team-stats__value (home, away) and one label span.
+
+    Returns dict like:
+        {
+            "corners":       {"home": 8,  "away": 2},
+            "possession":    {"home": "49%", "away": "51%"},
+            "shots":         {"home": 18, "away": 12},
+            "expected_goals":{"home": 1.12, "away": 1.34},
+            ...
+        }
+    """
+    stats: dict[str, dict] = {}
+
+    for row in soup.select(".team-stats"):
+        # Identify stat key from outer class  e.g. club-stats__yellowCards
+        outer_classes = row.get("class", [])
+        raw_key = None
+        for cls in outer_classes:
+            if cls.startswith("club-stats__"):
+                raw_key = cls.replace("club-stats__", "")
+                break
+
+        if raw_key is None:
+            # Fall back to label text
+            label_el = row.select_one("span.anwp-flex-none, span.anwp-text-sm")
+            if label_el:
+                raw_key = label_el.get_text(strip=True).lower()
+                raw_key = re.sub(r"[^a-z0-9]+", "_", raw_key).strip("_")
+            if not raw_key:
+                continue
+
+        # Map to canonical key
+        canonical = _STAT_CLASS_MAP.get(raw_key) or re.sub(r"[^a-z0-9]+", "_", raw_key.lower()).strip("_")
+
+        # Values — first and last span.team-stats__value
+        val_spans = row.select("span.team-stats__value")
         if len(val_spans) < 2:
             continue
 
-        home_stats[stat_key] = _coerce_num(_txt(val_spans[0]))
-        away_stats[stat_key] = _coerce_num(_txt(val_spans[-1]))
+        home_raw = val_spans[0].get_text(strip=True)
+        away_raw = val_spans[-1].get_text(strip=True)
 
-    return {"home": home_stats, "away": away_stats}
+        # For possession, append % so UI knows it's a percentage
+        label_el = row.select_one("span.anwp-flex-none, span.anwp-text-sm")
+        label_text = label_el.get_text(strip=True).lower() if label_el else ""
+        if "possession" in label_text or "possession" in canonical:
+            if home_raw and not home_raw.endswith("%"):
+                home_raw += "%"
+            if away_raw and not away_raw.endswith("%"):
+                away_raw += "%"
 
-def _parse_player_events(player_el: Tag) -> list[dict]:
-    events: list[dict] = []
-    icons   = player_el.select(".icon--lineups use")
-    minutes = player_el.select(".anwp-fl-lineups-event-minutes")
+        stats[canonical] = {
+            "home": _safe_num(home_raw),
+            "away": _safe_num(away_raw),
+        }
 
-    for i, icon in enumerate(icons):
-        href      = icon.get("xlink:href", "")
-        icon_id   = href.split("#")[-1]
-        event_type = _ICON_MAP.get(icon_id)
-        if not event_type:
-            continue
-        minute = _txt(minutes[i]) if i < len(minutes) else None
-        events.append({"type": event_type, "minute": minute})
+    return stats
 
-    return events
 
-def _parse_lineup_section(soup: BeautifulSoup, side: str) -> dict:
-    prefix  = f".match-lineups__{side}"
-    coach_el  = soup.select_one(f"{prefix}-coach .match__player-name")
-    coach_name = _txt(coach_el)
+def _build_commentary_player_map(soup: BeautifulSoup) -> dict:
+    """
+    Build a fallback map from the match commentary section.
+    Commentary renders full player names and event types even when tooltips
+    have null/empty player names (e.g. second-yellow red cards, penalty goals).
 
-    def _parse_players(selector: str) -> list[dict]:
-        players = []
-        for pw in soup.select(selector):
-            name = _txt(pw.select_one(".match__player-name"))
-            if not name:
-                continue
-            players.append({
-                "number":   _txt(pw.select_one(".match__player-number")),
-                "name":     name,
-                "position": _txt(pw.select_one(".match__player-position")),
-                "rating":   _txt(pw.select_one(".match__player-rating")),
-                "events":   _parse_player_events(pw),
-            })
-        return players
+    Returns a dict keyed by (minute: int, event_type: str, side: str | None)
+    mapping to player name string.
 
-    return {
-        "coach":       coach_name,
-        "starting_xi": _parse_players(f"{prefix}-starting .match__player-wrapper"),
-        "substitutes": _parse_players(f"{prefix}-subs .match__player-wrapper"),
-    }
-
-def _parse_timeline(soup: BeautifulSoup) -> list[dict]:
-    events: list[dict] = []
+    The commentary block structure:
+      .match-commentary__row[data-event-id]
+        |- .match-commentary__block--home or --away   → determines side
+        |   |- .match-commentary__block-header
+        |   |   |- .match-commentary__minute          → "72'"
+        |   |   |- .match-commentary__event-name      → "Goal (from penalty)", "Substitute", etc.
+        |   |- .match-commentary__block-sub-header    → player name(s)
+    """
+    fallback: dict[tuple, str] = {}
 
     for row in soup.select(".match-commentary__row"):
-        row_classes = row.get("class", [])
-
-        event_type = None
-        if "match-commentary__event--goal" in row_classes: event_type = "goal"
-        elif "match-commentary__event--card" in row_classes: event_type = "card"
-        elif "match-commentary__event--substitute" in row_classes: event_type = "substitute"
-        
-        if not event_type:
+        block = row.select_one(
+            ".match-commentary__block--home, .match-commentary__block--away"
+        )
+        if not block:
             continue
 
-        block = row.select_one(".match-commentary__block")
-        if not block: continue
-        
-        block_cls = block.get("class", [])
-        side = "home" if "match-commentary__block--home" in block_cls else "away" if "match-commentary__block--away" in block_cls else "unknown"
+        # Determine side
+        block_classes = " ".join(block.get("class", []))
+        if "block--home" in block_classes:
+            side = "home"
+        elif "block--away" in block_classes:
+            side = "away"
+        else:
+            side = None
 
-        minute = _txt(row.select_one(".match-commentary__minute"))
-        score_at_event = _txt(row.select_one(".match-commentary__scores"))
-        detail_raw  = _txt(row.select_one(".match-commentary__block-sub-header"), "")
+        # Minute
+        min_el = block.select_one(".match-commentary__minute")
+        if not min_el:
+            continue
+        min_text = min_el.get_text(strip=True).rstrip("'").strip()
+        # Handle "90+2'" style
+        min_text = re.sub(r"\+.*", "", min_text).strip()
+        try:
+            minute = int(min_text)
+        except ValueError:
+            continue
 
-        player = assist = player_in = player_out = None
+        # Event type label
+        ename_el = block.select_one(".match-commentary__event-name")
+        event_label = ename_el.get_text(strip=True).lower() if ename_el else ""
 
-        if event_type == "goal":
-            parts = re.split(r"\s*Assistant:\s*", detail_raw, maxsplit=1)
-            player = parts[0].strip() or None
-            assist = parts[1].strip() if len(parts) > 1 else None
+        # Classify to match our event types
+        if "goal" in event_label:
+            etype = "goal"
+        elif "yellow card" in event_label:
+            etype = "yellow_card"
+        elif "red card" in event_label:
+            etype = "red_card"
+        elif "substitute" in event_label:
+            etype = "substitution"
+        elif "penalty" in event_label:
+            etype = "penalty"
+        else:
+            etype = "other"
 
-        elif event_type == "card":
-            player = detail_raw.strip() or None
+        # Player name from sub-header
+        sub_el = block.select_one(".match-commentary__block-sub-header")
+        if not sub_el:
+            continue
 
-        elif event_type == "substitute":
-            in_match  = re.search(r"In:\s*(.+?)(?:Out:|$)", detail_raw)
-            out_match = re.search(r"Out:\s*(.+?)$", detail_raw)
-            player_in  = in_match.group(1).strip()  if in_match  else None
-            player_out = out_match.group(1).strip() if out_match else None
-            player = player_in
+        # For goals/cards/penalties: sub-header is just the player name
+        # For substitutions: "In: X  Out: Y"  — we want the first (player in)
+        if etype == "substitution":
+            # Pick the "In:" span
+            in_div = sub_el.select_one(".anwp-text-nowrap:first-child")
+            player_text = in_div.get_text(strip=True) if in_div else sub_el.get_text(strip=True)
+            # Strip "In:" label
+            player_text = re.sub(r"^(?:in|out)\s*:\s*", "", player_text, flags=re.I).strip()
+        else:
+            player_text = sub_el.get_text(separator=" ", strip=True).strip()
 
-        events.append({
-            "minute":     minute,
-            "side":       side,
-            "type":       event_type,
-            "score":      score_at_event,
-            "detail":     detail_raw,
-            "player":     player,
-            "assist":     assist,
-            "player_in":  player_in,
-            "player_out": player_out,
-        })
+        if player_text:
+            fallback[(minute, etype, side)] = player_text
 
+    return fallback
+
+
+def parse_events(soup: BeautifulSoup) -> list[dict]:
+    """
+    Extract timeline events from data-tippy-content attributes on
+    .game-timeline__item elements, with commentary fallback for null players.
+
+    Tooltip format variants observed on live HTML:
+      "20' Goooal!: B. Mbeumo (assistant: C. Nørgaard)"   ← standard goal
+      "72' Goal (from penalty): E. Haaland"               ← penalty goal
+      "88' Goal (own goal): J. Smith"                     ← own goal
+      "35' Yellow Card: João Gomes"
+      "35' Red Card: "                                     ← second yellow → red (name missing)
+      "65' Substitute: R. Gomes > R. Aït Nouri"
+      "90'+1' Substitute: T. Lloyd King > José Sá"
+
+    Root causes of null players fixed here:
+      1. "Goal (from penalty):" — old regex required "ooo+" and missed this variant.
+         Fixed by a unified goal regex that matches all label forms before ":".
+      2. "Red Card: " with empty player — site omits name for second-yellow reds.
+         Fixed by commentary fallback map.
+      3. goal_type field added: "normal" | "penalty" | "own_goal"
+    """
+    # Build commentary fallback before processing tooltips
+    commentary_map = _build_commentary_player_map(soup)
+
+    events: list[dict] = []
+    seen: set[str] = set()
+
+    for el in soup.select(".game-timeline__item[data-tippy-content]"):
+        tip = el.get("data-tippy-content", "").strip()
+        if not tip:
+            continue
+
+        # Deduplicate (same tooltip can appear in both 1st and 2nd half strips)
+        if tip in seen:
+            continue
+        seen.add(tip)
+
+        # Parse minute — supports "90'+1'" and "90' +2'" styles
+        m_min = re.match(r"(\d+)(?:'\s*\+?\s*\d+)?'[\s\u00a0]*(.*)", tip, re.S)
+        if not m_min:
+            continue
+
+        minute  = int(m_min.group(1))
+        content = m_min.group(2).strip()
+
+        # Determine side from element CSS class
+        el_classes = " ".join(el.get("class", []))
+        if "item-home" in el_classes:
+            side = "home"
+        elif "item-away" in el_classes:
+            side = "away"
+        else:
+            side = None
+
+        cl = content.lower()
+
+        # ── GOAL (all variants) ────────────────────────────────────────────
+        # Handles: "Goooal!: Name", "Goal: Name", "Goal (from penalty): Name",
+        #          "Goal (own goal): Name", "Goal (Penalty): Name"
+        if re.match(r"go+al", cl) or re.match(r"goal", cl):
+            etype = "goal"
+
+            # Determine goal sub-type from label
+            if re.search(r"own.?goal|own goal", cl):
+                goal_type = "own_goal"
+            elif re.search(r"penalty|from penalty", cl):
+                goal_type = "penalty"
+            else:
+                goal_type = "normal"
+
+            # Extract player name: everything after the last ":" up to "("
+            # Handles: "Goooal!: Name", "Goal (from penalty): Name"
+            pm = re.search(r":\s*([^(]+)", content)
+            if pm:
+                player = pm.group(1).strip() or None
+            else:
+                player = None
+
+            # Extract assistant
+            assist_m = re.search(r"\(assistant:\s*([^)]+)\)", content, re.I)
+            assistant = assist_m.group(1).strip() if assist_m else None
+
+            # Fallback to commentary if player still null
+            if not player:
+                player = commentary_map.get((minute, "goal", side))
+
+        # ── YELLOW CARD ────────────────────────────────────────────────────
+        elif "yellow card" in cl:
+            etype     = "yellow_card"
+            goal_type = None
+            pm        = re.match(r"[Yy]ellow [Cc]ard:?\s*(.+)", content)
+            player    = pm.group(1).strip() if pm else None
+            assistant = None
+            if not player:
+                player = commentary_map.get((minute, "yellow_card", side))
+
+        # ── RED CARD ───────────────────────────────────────────────────────
+        elif "red card" in cl:
+            etype     = "red_card"
+            goal_type = None
+            pm        = re.match(r"[Rr]ed [Cc]ard:?\s*(.+)", content)
+            player    = pm.group(1).strip() if pm else None
+            assistant = None
+            # Second-yellow red cards often have empty player in tooltip
+            if not player:
+                # Try commentary fallback; also check yellow_card key (site
+                # sometimes logs the second yellow under yellow_card in commentary)
+                player = (
+                    commentary_map.get((minute, "red_card", side))
+                    or commentary_map.get((minute, "yellow_card", side))
+                )
+
+        # ── SUBSTITUTION ───────────────────────────────────────────────────
+        elif "substitute" in cl:
+            etype     = "substitution"
+            goal_type = None
+            # "Substitute: Player In > Player Out"
+            pm = re.match(r"[Ss]ubstitute:?\s*(.+?)\s*[>→]\s*(.+)", content)
+            if pm:
+                player    = pm.group(1).strip()   # player coming IN
+                assistant = pm.group(2).strip()   # player going OUT
+            else:
+                player    = content
+                assistant = None
+            if not player:
+                player = commentary_map.get((minute, "substitution", side))
+
+        # ── STANDALONE PENALTY (missed / saved — not a goal) ──────────────
+        elif "penalty" in cl or "pen." in cl:
+            etype     = "penalty_missed"
+            goal_type = None
+            # "Penalty missed: Name" or "Penalty saved: Name"
+            pm = re.search(r":\s*(.+)", content)
+            player    = pm.group(1).strip() if pm else content.strip() or None
+            assistant = None
+
+        # ── FALLTHROUGH ────────────────────────────────────────────────────
+        else:
+            etype     = "other"
+            goal_type = None
+            player    = content or None
+            assistant = None
+
+        # Clean up any residual HTML entity artefacts in names (e.g. "O&apos;Reilly")
+        if player:
+            player = re.sub(r"&apos;", "'", player)
+            player = re.sub(r"&amp;",  "&", player)
+            player = player.strip() or None
+        if assistant:
+            assistant = re.sub(r"&apos;", "'", assistant)
+            assistant = re.sub(r"&amp;",  "&", assistant)
+            assistant = assistant.strip() or None
+
+        event: dict[str, Any] = {
+            "minute": minute,
+            "type":   etype,
+            "team":   side,
+            "player": player,
+        }
+        if etype == "goal":
+            event["goal_type"] = goal_type
+        if etype == "goal" and assistant:
+            event["assistant"] = assistant
+        if etype == "substitution" and assistant:
+            event["player_out"] = assistant
+
+        events.append(event)
+
+    events.sort(key=lambda e: e["minute"])
     return events
 
 
-# ── Top-level scraper ─────────────────────────────────────────────────────────
-
-def scrape_match(url: str) -> dict | None:
-    logger.info("Scraping: %s", url)
-    html = _fetch_html(url)
-    if not html:
-        return None
-
-    soup     = BeautifulSoup(html, "lxml")
-    slug     = _slug_from_url(url)
-
-    header     = _parse_match_header(soup)
-    statistics = _parse_statistics(soup)
-    timeline   = _parse_timeline(soup)
-
-    home_lineup = _parse_lineup_section(soup, "home")
-    away_lineup = _parse_lineup_section(soup, "away")
-
-    if statistics["home"].get("xg") is not None:
-        header["home"]["xg"] = statistics["home"]["xg"]
-        header["away"]["xg"] = statistics["away"]["xg"]
-    statistics["home"].pop("xg", None)
-    statistics["away"].pop("xg", None)
-
-    home_block = {**header.pop("home"), **home_lineup}
-    away_block = {**header.pop("away"), **away_lineup}
-
+def _parse_player(wrapper) -> dict:
+    name_el   = wrapper.select_one(".match__player-name")
+    num_el    = wrapper.select_one(".match__player-number")
+    pos_el    = wrapper.select_one(".match__player-position")
+    rating_el = wrapper.select_one(".match__player-rating")
     return {
-        "match_id":   header.pop("match_id"),
-        "match_slug": slug,
-        "url":        url,
-        **header,
-        "home":       home_block,
-        "away":       away_block,
-        "statistics": statistics,
-        "timeline":   timeline,
+        "name":     name_el.get_text(strip=True)   if name_el   else None,
+        "number":   num_el.get_text(strip=True)    if num_el    else None,
+        "position": pos_el.get_text(strip=True)    if pos_el    else None,
+        "rating":   rating_el.get_text(strip=True) if rating_el else None,
     }
 
 
-# ── Skip/refresh decision for already-scraped files ──────────────────────────
-
-def _existing_stats_status(path: Path) -> str | None:
+def parse_lineups(soup: BeautifulSoup) -> dict:
     """
-    Peek at an already-written stats JSON file and return its yallashoot
-    `status` string (e.g. "Full Time", "Scheduled", "Live"), or None if the
-    file is missing/corrupt/has no status.
+    Extract starting XI, substitutes, and coach for each side.
 
-    Used by run_competition() to decide whether an existing file is truly
-    "done" (skip it forever) or just a stale pre-match / in-play snapshot
-    that needs to be re-scraped to pick up the real result.
+    Selectors:
+      .match-lineups__home-starting .match__player-wrapper
+      .match-lineups__home-subs     .match__player-wrapper
+      .match-lineups__home-coach    .match__player-name
+      (same pattern for 'away')
     """
-    try:
-        with open(path, encoding="utf-8") as fh:
-            envelope = json.load(fh)
-        data = envelope.get("data") if isinstance(envelope, dict) else None
-        return (data or {}).get("status")
-    except (OSError, json.JSONDecodeError) as exc:
-        logger.warning("Could not read existing stats file %s (%s) — treating as incomplete.", path, exc)
+    lineups: dict[str, dict] = {
+        "home": {"formation": None, "starting": [], "subs": [], "coach": None},
+        "away": {"formation": None, "starting": [], "subs": [], "coach": None},
+    }
+
+    for side in ("home", "away"):
+        starting_wrappers = soup.select(
+            f".match-lineups__{side}-starting .match__player-wrapper"
+        )
+        lineups[side]["starting"] = [_parse_player(w) for w in starting_wrappers]
+
+        sub_wrappers = soup.select(
+            f".match-lineups__{side}-subs .match__player-wrapper"
+        )
+        lineups[side]["subs"] = [_parse_player(w) for w in sub_wrappers]
+
+        coach_el = soup.select_one(
+            f".match-lineups__{side}-coach .match__player-name"
+        )
+        lineups[side]["coach"] = coach_el.get_text(strip=True) if coach_el else None
+
+        # Formation from pitch diagram (if present)
+        # The formation string appears as the class suffix in .fl-formation-home/away
+        # but the actual text value isn't rendered — skip for now
+
+    return lineups
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# MAIN SCRAPE ENTRY POINT
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def scrape_match(url: str) -> dict | None:
+    """
+    Fetch a yallashoot match page and return parsed stats dict.
+    Returns None if the fetch fails or the match is not yet finished.
+    Thread-safe: read-only, no shared state.
+    """
+    html = _cf_fetch_html(url, retries=2)
+    if not html:
+        logger.warning("[stats] CF fetch failed for %s", url)
         return None
 
+    soup = BeautifulSoup(html, "lxml")
 
-# ── File writer ───────────────────────────────────────────────────────────────
+    header     = parse_header(soup)
+    page_status = (header.get("status") or "").lower().strip()
 
-def safe_write_stats(path: Path, data: dict, source_url: str) -> bool:
-    if data is None:
-        logger.error("safe_write_stats: data is None — not writing %s", path)
-        return False
+    # Only store stats for finished matches
+    is_final = any(fs in page_status for fs in _FINAL_STATUSES) if page_status else False
+    if page_status and not is_final:
+        logger.info("[stats] Not final (status=%r) — skipping %s", page_status, url)
+        return None
+    if not page_status:
+        logger.warning("[stats] Could not determine status for %s — treating as final", url)
 
+    return {
+        "scraped_at": datetime.now(timezone.utc).isoformat(),
+        "source_url": url,
+        "status":     header["status"],
+        "home_team":  header["home_team"],
+        "away_team":  header["away_team"],
+        "score":      header["score"],
+        "stats":      parse_stats(soup),
+        "events":     parse_events(soup),
+        "lineups":    parse_lineups(soup),
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# STATS.JSON — SINGLE-FILE STORE
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def _load_stats(stats_path: str) -> dict[str, dict]:
+    path = Path(stats_path)
+    if not path.exists():
+        return {}
+    try:
+        with open(path, encoding="utf-8") as fh:
+            return json.load(fh).get("data", {})
+    except Exception as exc:
+        logger.warning("[stats] Could not load existing stats.json: %s", exc)
+        return {}
+
+
+def _save_stats(stats_path: str, data: dict[str, dict], competition: str, season: str) -> None:
+    """Atomically write stats.json. Must be called with the write lock held."""
+    path = Path(stats_path)
     path.parent.mkdir(parents=True, exist_ok=True)
-
     payload = {
         "_meta": {
-            "last_synced": datetime.now(timezone.utc).isoformat(),
-            "source":      "yallashoot.soccer",
-            "url":         source_url,
+            "last_synced":   datetime.now(timezone.utc).isoformat(),
+            "competition":   competition,
+            "season":        season,
+            "total_entries": len(data),
         },
         "data": data,
     }
-
-    tmp = Path(str(path) + ".tmp")
-    try:
-        with open(tmp, "w", encoding="utf-8") as fh:
-            json.dump(payload, fh, ensure_ascii=False, indent=2)
-        os.replace(tmp, path)
-        logger.info("Wrote %s (%d bytes)", path, path.stat().st_size)
-        return True
-    except OSError as exc:
-        logger.error("Failed to write %s: %s", path, exc)
-        try:
-            tmp.unlink(missing_ok=True)
-        except OSError:
-            pass
-        return False
+    tmp = Path(str(stats_path) + ".tmp")
+    with open(tmp, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, ensure_ascii=False, indent=2)
+    os.replace(tmp, stats_path)
+    logger.info("[stats] Checkpoint → %s  (%d entries)", stats_path, len(data))
 
 
-# ── Orchestrator ──────────────────────────────────────────────────────────────
-
-def _load_match_links(code: str) -> dict[int, str]:
-    """
-    Load the pre-computed match URLs from data/{season}/match-links/{code}.json.
-    Returns a dictionary mapping match_id -> canonical YallaShoot URL.
-    """
-    base   = Path(os.environ.get("DATA_DIR", str(BASE_DIR)))
-    season = os.environ.get("SEASON", SEASON)
-    path   = base / season / "match-links" / f"{code}.json"
-
+def _load_match_links(links_path: str) -> dict[int, str]:
+    path = Path(links_path)
     if not path.exists():
-        logger.warning("Match links file not found: %s — run fetch_match_links.py first", path)
         return {}
-
     try:
         with open(path, encoding="utf-8") as fh:
-            envelope = json.load(fh)
-        
-        # Support both {"_meta": {...}, "data": [...]} and [...]
-        records = envelope.get("data", []) if isinstance(envelope, dict) else envelope
-        
-        # match_id can be None in the JSON if it was unmatched, so we filter those out
+            records = json.load(fh).get("data", [])
         return {
-            rec["match_id"]: rec["url"] 
-            for rec in records 
+            rec["match_id"]: rec["url"]
+            for rec in records
             if rec.get("match_id") and rec.get("url")
         }
-    except (OSError, json.JSONDecodeError) as exc:
-        logger.error("Failed to read %s: %s", path, exc)
+    except Exception as exc:
+        logger.warning("[stats] Could not load match_stats_links.json: %s", exc)
         return {}
 
 
-def _load_competition_matches(code: str) -> list[dict]:
-    matches_dir = _get_matches_dir()
-    path = matches_dir / f"{code}.json"
-
+def _load_competition_matches(matches_path: str) -> list[dict]:
+    path = Path(matches_path)
     if not path.exists():
-        logger.warning("Match file not found: %s — run fetch_matches.py first", path)
         return []
-
     try:
         with open(path, encoding="utf-8") as fh:
-            envelope = json.load(fh)
-        return envelope.get("data", [])
-    except (OSError, json.JSONDecodeError) as exc:
-        logger.error("Failed to read %s: %s", path, exc)
+            return json.load(fh).get("data", [])
+    except Exception as exc:
+        logger.warning("[stats] Could not load matches.json: %s", exc)
         return []
 
 
-def _utc_date(match: dict) -> datetime | None:
-    raw = match.get("utcDate")
-    if not raw: return None
-    try:
-        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
-    except ValueError:
-        return None
+# ═══════════════════════════════════════════════════════════════════════════════
+# WORKER TASK  (runs in a thread)
+# ═══════════════════════════════════════════════════════════════════════════════
 
-
-def _filter_matches_by_period(matches: list[dict], period: str | None) -> list[dict]:
-    if period is None: return matches
-    now = datetime.now(timezone.utc)
-
-    if period == "today":
-        target_date = now.date()
-        return [m for m in matches if (dt := _utc_date(m)) and dt.date() == target_date]
-    if period == "week":
-        week_start = (now - timedelta(days=now.weekday())).replace(hour=0, minute=0, second=0, microsecond=0)
-        week_end = week_start + timedelta(days=7)
-        return [m for m in matches if (dt := _utc_date(m)) and week_start <= dt < week_end]
-    if period == "month":
-        return [m for m in matches if (dt := _utc_date(m)) and dt.year == now.year and dt.month == now.month]
-    if period == "year":
-        return [m for m in matches if (dt := _utc_date(m)) and dt.year == now.year]
-
-    return matches
-
-
-def _discover_competition_codes() -> list[str]:
-    matches_dir = _get_matches_dir()
-    if not matches_dir.exists():
-        logger.error("Matches directory not found: %s", matches_dir)
-        return []
-    codes = sorted(p.stem for p in matches_dir.glob("*.json"))
-    logger.info("Discovered %d competition(s): %s", len(codes), ", ".join(codes))
-    return codes
-
-
-def run_competition(
-    code: str,
-    period: str | None = None,
-    force: bool = False,
-    delay: float = 3.0,
-    statuses: tuple[str, ...] = ("FINISHED", "IN_PLAY", "PAUSED", "LIVE", "TIMED", "SCHEDULED"),
-) -> tuple[int, int, int]:
-    
-    matches = _load_competition_matches(code)
-    if not matches: return 0, 0, 0
-
-    eligible = [m for m in matches if m.get("status") in statuses]
-    if period: eligible = _filter_matches_by_period(eligible, period)
-
-    if not eligible:
-        logger.info("%s: nothing to scrape — returning", code)
-        return 0, 0, 0
-
-    # ── Load Exact URLs from our Database ──
-    match_links = _load_match_links(code)
-    if not match_links:
-        logger.warning("%s: match-links JSON missing or empty. Skipping.", code)
-        return 0, 0, len(eligible)
-
-    stats_match_dir = _get_stats_match_dir(code)
-    ok = failed = skipped = 0
-
-    for i, match in enumerate(eligible):
-        match_id   = match.get("id")
-        home_name  = (match.get("homeTeam") or {}).get("name", "?")
-        away_name  = (match.get("awayTeam") or {}).get("name", "?")
-        match_date = match.get("utcDate", "")[:10]
-
-        if not match_id:
-            skipped += 1
-            continue
-
-        out_path = stats_match_dir / f"{match_id}.json"
-
-        if out_path.exists() and not force:
-            # Read the existing file to see if it's already "Full Time"
-            current_status = _existing_stats_status(out_path)
-            
-            if current_status and current_status.strip().lower() in _FINAL_STATS_STATUSES:
-                logger.info("[%d/%d] Skip (already final): %s vs %s (%s)", i + 1, len(eligible), home_name, away_name, match_id)
-                skipped += 1
-                continue
+def _scrape_task(match: dict, url: str, code: str) -> tuple[dict, dict | None]:
+    mid = match["id"]
+    for attempt in range(1, DEFAULT_RETRY_FAILED + 2):
+        try:
+            data = scrape_match(url)
+            if data is not None:
+                data["match_id"]            = mid
+                data["fd_competition_code"] = code
+                return match, data
+            return match, None
+        except Exception as exc:
+            if attempt <= DEFAULT_RETRY_FAILED:
+                wait = 3 * attempt
+                logger.warning(
+                    "[stats] match %s attempt %d/%d failed (%s) — retrying in %ds",
+                    mid, attempt, DEFAULT_RETRY_FAILED + 1, exc, wait,
+                )
+                time.sleep(wait)
             else:
-                logger.info("[%d/%d] Re-scraping (stale status '%s'): %s vs %s (%s)", i + 1, len(eligible), current_status, home_name, away_name, match_id)
-
-        # ── EXACT URL LOOKUP ──
-        url = match_links.get(match_id)
-        if not url:
-            logger.warning("[%d/%d] Skip (no URL mapping): %s vs %s (%s)", i + 1, len(eligible), home_name, away_name, match_id)
-            skipped += 1
-            continue
-
-        logger.info("[%d/%d] %s | %s vs %s  (%s)", i + 1, len(eligible), code, home_name, away_name, match_date)
-
-        if i > 0 and (ok + failed) > 0: time.sleep(delay)
-
-        data = scrape_match(url)
-
-        # Skip on 404/Missing Data so GitHub Actions stay green
-        if data is None:
-            logger.warning("  Stats not available yet (404) or scrape failed for match %s. Skipping.", match_id)
-            skipped += 1
-            continue
-
-        data["fd_match_id"]          = match_id
-        data["fd_competition_code"]  = code
-
-        if safe_write_stats(out_path, data, url):
-            ok += 1
-        else:
-            failed += 1
-
-    logger.info("%s complete: %d OK / %d failed / %d skipped (of %d eligible)", code, ok, failed, skipped, len(eligible))
-    return ok, failed, skipped
+                logger.error("[stats] match %s all retries exhausted: %s", mid, exc)
+    return match, None
 
 
-def run_all_competitions(period: str | None = None, force: bool = False, delay: float = 3.0) -> None:
-    codes = _discover_competition_codes()
-    if not codes: sys.exit(1)
-
-    total_ok = total_failed = total_skipped = 0
-    for code in codes:
-        ok, failed, skipped = run_competition(code, period=period, force=force, delay=delay)
-        total_ok += ok; total_failed += failed; total_skipped += skipped
-
-    logger.info("=== run_all_competitions complete: %d OK / %d failed / %d skipped ===", total_ok, total_failed, total_skipped)
-
-
-# ── Audit mode (merged from fetch_match_stats_audit.py) ───────────────────────
-#
-# Audit mode scans ALL finished matches regardless of date (no period filter)
-# and enforces a per-run fetch budget (--limit, default 50) so it's safe to
-# run unattended/hourly via GitHub Actions. Existing stat files are always
-# pre-scanned and skipped before the budget is counted, so --limit only caps
-# real HTTP requests, never wasted on skips.
-#
-# Triggered via: python -m workers.fetch_match_stats --audit --all
-#                python -m workers.fetch_match_stats --audit --competition WC --limit 20
+# ═══════════════════════════════════════════════════════════════════════════════
+# CONCURRENT AUDIT RUNNER
+# ═══════════════════════════════════════════════════════════════════════════════
 
 def run_competition_audit(
     code: str,
+    season_str: str | None = None,
     force: bool = False,
-    delay: float = 3.0,
     limit: int | None = None,
-    statuses: tuple[str, ...] = ("FINISHED",),  # audit: finished matches only
+    workers: int = DEFAULT_WORKERS,
+    checkpoint_n: int = DEFAULT_CHECKPOINT_N,
 ) -> tuple[int, int, int, int]:
     """
-    Audit one competition for missing FINISHED-match stats.
-
+    Concurrent audit for one competition.
     Returns (ok, failed, skipped, pending).
-      ok       — files successfully written this run
-      failed   — scrape attempts that errored
-      skipped  — matches skipped because a stat file already exists or no URL mapping
-      pending  — matches that still need fetching but were deferred because the
-                 per-run --limit cap was reached (will be picked up on the next run)
     """
-    matches = _load_competition_matches(code)
-    if not matches: return 0, 0, 0, 0
+    s = season_str or SEASON
+    paths       = get_data_paths(code, season=s)
+    matches     = _load_competition_matches(paths["matches"])
+    match_links = _load_match_links(paths["match_stats_links"])
+    stats_store = _load_stats(paths["stats"])
 
-    # Audit mode: scan ALL finished matches regardless of date.
-    # No period filter — a match finished in week 1 still needs its stats
-    # even when run_competition_audit is called in week 4.
-    eligible = [m for m in matches if m.get("status") in statuses]
+    write_lock  = threading.Lock()
+    dirty_count = 0
 
+    eligible = [m for m in matches if m.get("status") == "FINISHED"]
     if not eligible:
-        logger.info("%s: no FINISHED matches found — nothing to audit", code)
+        logger.info("[stats] %s: no FINISHED matches found", code)
         return 0, 0, 0, 0
 
-    # ── Load Exact URLs from our Database ──
-    match_links = _load_match_links(code)
-    if not match_links:
-        logger.warning("%s: match-links JSON missing or empty. Skipping.", code)
-        return 0, 0, len(eligible), 0
-
-    stats_match_dir = _get_stats_match_dir(code)
-
-    # ── Pre-scan: separate matches that genuinely need a fetch from those already done.
-    # This means --limit counts only *real HTTP requests*, not skips, so the cap is
-    # always meaningful regardless of how many files are already on disk.
-    needs_fetch: list[dict] = []
-    already_done: int = 0
+    needs_fetch: list[tuple[dict, str]] = []
+    skipped = 0
 
     for match in eligible:
         mid = match.get("id")
         if not mid:
-            already_done += 1
-            continue
-        out_path = stats_match_dir / f"{mid}.json"
-        if out_path.exists() and not force:
-            already_done += 1
-            continue
-        if not match_links.get(mid):
-            logger.warning("Skip (no URL mapping): %s vs %s (%s)",
-                           (match.get("homeTeam") or {}).get("name", "?"),
-                           (match.get("awayTeam") or {}).get("name", "?"), mid)
-            already_done += 1
-            continue
-        needs_fetch.append(match)
-
-    skipped = already_done
-    ok = failed = pending = 0
-
-    if not needs_fetch:
-        logger.info("%s: all %d eligible matches already have stats — nothing to fetch", code, len(eligible))
-        return 0, 0, skipped, 0
-
-    cap_msg = f", capped at {limit} this run" if (limit and limit < len(needs_fetch)) else ""
-    logger.info(
-        "%s: %d match(es) need stats%s  |  %d already on disk",
-        code, len(needs_fetch), cap_msg, skipped,
-    )
-
-    for fetch_idx, match in enumerate(needs_fetch):
-
-        # ── Enforce the per-run fetch cap ──────────────────────────────────────
-        if limit is not None and (ok + failed) >= limit:
-            remaining = len(needs_fetch) - fetch_idx
-            logger.info(
-                "%s: fetch limit of %d reached — %d match(es) deferred to next run",
-                code, limit, remaining,
-            )
-            pending += remaining
-            break
-        # ───────────────────────────────────────────────────────────────────────
-
-        match_id   = match.get("id")
-        home_name  = (match.get("homeTeam") or {}).get("name", "?")
-        away_name  = (match.get("awayTeam") or {}).get("name", "?")
-        match_date = match.get("utcDate", "")[:10]
-        out_path   = stats_match_dir / f"{match_id}.json"
-        url        = match_links.get(match_id)
-
-        logger.info(
-            "[%d/%d need-fetch] %s | %s vs %s  (%s)",
-            fetch_idx + 1, len(needs_fetch), code, home_name, away_name, match_date,
-        )
-
-        if fetch_idx > 0 and (ok + failed) > 0:
-            time.sleep(delay)
-
-        data = scrape_match(url)
-
-        if data is None:
-            logger.warning(
-                "  Stats not available yet or scrape failed for match %s. Skipping.", match_id
-            )
             skipped += 1
             continue
+        if str(mid) in stats_store and not force:
+            skipped += 1
+            continue
+        if mid not in match_links:
+            logger.debug("[stats] %s: no link for match %s — skipping", code, mid)
+            skipped += 1
+            continue
+        needs_fetch.append((match, match_links[mid]))
 
-        data["fd_match_id"]         = match_id
-        data["fd_competition_code"] = code
-
-        if safe_write_stats(out_path, data, url):
-            ok += 1
-        else:
-            failed += 1
+    total_to_fetch = len(needs_fetch)
+    if limit is not None and total_to_fetch > limit:
+        pending_before = total_to_fetch - limit
+        needs_fetch    = needs_fetch[:limit]
+    else:
+        pending_before = 0
 
     logger.info(
-        "%s done: %d fetched / %d failed / %d skipped (exists|no-url) / %d pending next run",
-        code, ok, failed, skipped, pending,
+        "[stats] %s: %d to fetch  |  %d skipped  |  %d workers  |  checkpoint every %d",
+        code, len(needs_fetch), skipped, workers, checkpoint_n,
     )
-    return ok, failed, skipped, pending
+
+    if not needs_fetch:
+        return 0, 0, skipped, pending_before
+
+    ok = failed = 0
+    t0 = time.monotonic()
+
+    with ThreadPoolExecutor(max_workers=workers, thread_name_prefix="scraper") as pool:
+        futures = {
+            pool.submit(_scrape_task, match, url, code): match
+            for match, url in needs_fetch
+        }
+
+        completed_count = 0
+        for future in as_completed(futures):
+            completed_count += 1
+            match, data = future.result()
+            mid = match["id"]
+
+            with write_lock:
+                if data is not None:
+                    stats_store[str(mid)] = data
+                    ok          += 1
+                    dirty_count += 1
+
+                    elapsed   = time.monotonic() - t0
+                    rate      = ok / elapsed if elapsed > 0 else 0
+                    remaining = len(needs_fetch) - completed_count
+                    eta_s     = int(remaining / rate) if rate > 0 else 0
+                    logger.info(
+                        "[stats] %s  ✓ %d/%d  |  %.1f/s  |  ETA ~%dm%02ds  (match %s)",
+                        code, ok, len(needs_fetch),
+                        rate, eta_s // 60, eta_s % 60, mid,
+                    )
+
+                    if dirty_count >= checkpoint_n:
+                        _save_stats(paths["stats"], stats_store, code, s)
+                        dirty_count = 0
+                else:
+                    failed += 1
+                    logger.warning("[stats] %s  ✗ %d/%d  (match %s failed)",
+                                   code, ok + failed, len(needs_fetch), mid)
+
+    with write_lock:
+        if dirty_count > 0:
+            _save_stats(paths["stats"], stats_store, code, s)
+
+    elapsed = time.monotonic() - t0
+    logger.info(
+        "[stats] %s done in %.0fs — ok=%d  failed=%d  skipped=%d  pending=%d  "
+        "(avg %.2fs/match with %d workers)",
+        code, elapsed, ok, failed, skipped, pending_before,
+        elapsed / ok if ok else 0, workers,
+    )
+    return ok, failed, skipped, pending_before
 
 
 def run_all_competitions_audit(
     force: bool = False,
-    delay: float = 3.0,
-    limit: int = 50,
+    limit: int | None = None,
+    season_str: str | None = None,
+    workers: int = 8,
+    checkpoint_n: int = 25,
 ) -> None:
     """
-    Audit all competitions for missing FINISHED-match stats and fetch up to
-    `limit` of them (default 50).
-
-    The 50-fetch budget is shared across all competitions in discovery order.
-    Deferred matches are picked up automatically on the next hourly run —
-    the pre-scan skips any match that already has a stat file on disk, so
-    the budget is never wasted on re-fetching.
+    Run concurrent audit across all tracked competitions, respecting a
+    total match budget. Each competition runs sequentially; parallelism
+    is within a competition (across matches).
     """
-    codes = _discover_competition_codes()
-    if not codes: sys.exit(1)
-
-    total_ok = total_failed = total_skipped = total_pending = 0
-    budget_remaining = limit  # shared across all competitions
-
-    for code in codes:
-        if budget_remaining <= 0:
-            logger.info("Global fetch budget of %d exhausted — deferring: %s", limit, code)
-            total_pending += 1
-            continue
-
+    budget = limit
+    for code in TRACKED_COMPETITIONS:
+        # FIX: Check if budget is not None before doing the <= 0 check
+        if budget is not None and budget <= 0:
+            logger.info("[stats] Budget exhausted — stopping")
+            break
+            
         ok, failed, skipped, pending = run_competition_audit(
             code,
+            season_str=season_str,
             force=force,
-            delay=delay,
-            limit=budget_remaining,
+            limit=budget,
+            workers=workers,
+            checkpoint_n=checkpoint_n,
         )
-        total_ok      += ok
-        total_failed  += failed
-        total_skipped += skipped
-        total_pending += pending
+        
+        # FIX: Only subtract from budget if it is not None
+        if budget is not None:
+            budget -= (ok + failed)
 
-        budget_remaining -= (ok + failed)
+            
 
-    logger.info(
-        "=== audit complete: %d fetched / %d failed / %d skipped / %d pending next run ===",
-        total_ok, total_failed, total_skipped, total_pending,
-    )
+# ═══════════════════════════════════════════════════════════════════════════════
+# CLI
+# ═══════════════════════════════════════════════════════════════════════════════
 
-
-# ── Legacy URL builder (preserved for --match CLI usage) ──────────────────────
-
-_TEAM_SLUG_OVERRIDES: dict[str, str] = {
-    "manchester united fc": "manchester-united", "manchester city fc": "manchester-city",
-    "arsenal fc": "arsenal", "chelsea fc": "chelsea", "liverpool fc": "liverpool",
-    "tottenham hotspur fc": "tottenham-hotspur", "newcastle united fc": "newcastle-united",
-    "aston villa fc": "aston-villa", "brighton & hove albion fc": "brighton-hove-albion",
-    "west ham united fc": "west-ham-united", "wolverhampton wanderers fc": "wolverhampton-wanderers",
-    "nottingham forest fc": "nottingham-forest", "brentford fc": "brentford", "fulham fc": "fulham",
-    "crystal palace fc": "crystal-palace", "everton fc": "everton", "afc bournemouth": "bournemouth",
-    "leicester city fc": "leicester-city", "leeds united fc": "leeds-united",
-    "ipswich town fc": "ipswich-town", "southampton fc": "southampton",
-    "real madrid cf": "real-madrid", "fc barcelona": "barcelona", "atletico madrid": "atletico-madrid",
-    "ssc napoli": "napoli", "ac milan": "ac-milan", "juventus fc": "juventus",
-    "fc bayern münchen": "bayern-munich", "borussia dortmund": "borussia-dortmund",
-    "paris saint-germain fc": "paris-saint-germain", "olympique de marseille": "marseille",
-}
-
-def _slugify_team(name: str) -> str:
-    key = name.strip().lower()
-    if key in _TEAM_SLUG_OVERRIDES: return _TEAM_SLUG_OVERRIDES[key]
-    for pat in [r"\bafc\b", r"\bfc\b", r"\bsc\b", r"\bcf\b", r"\bbc\b", r"\bssc\b", r"\bas\b", r"\bss\b"]:
-        key = re.sub(pat, " ", key)
-    for src, dst in [("ü", "ue"), ("ö", "oe"), ("ä", "ae"), ("ß", "ss"), ("é", "e"), ("ñ", "n"), ("&", ""), ("'", "")]:
-        key = key.replace(src, dst)
-    return re.sub(r"[\s\-_]+", "-", key).strip("-")
-
-def build_url(home: str, away: str, date: str) -> str:
-    return f"{BASE_URL}{_slugify_team(home)}-{_slugify_team(away)}-{date}/"
-
-def run_single(url: str) -> bool:
-    slug = _slug_from_url(url)
-    out_path = _get_stats_dir() / f"{slug}.json"
-    data = scrape_match(url)
-    return False if data is None else safe_write_stats(out_path, data, url)
-
-def run_batch(urls: list[str], delay: float = 3.0) -> tuple[int, int]:
-    ok = fail = 0
-    for i, url in enumerate(urls):
-        if i > 0: time.sleep(delay)
-        if run_single(url): ok += 1
-        else: fail += 1
-    return ok, fail
-
-
-# ── CLI ───────────────────────────────────────────────────────────────────────
-
-def _main() -> None:
+def main() -> None:
     parser = argparse.ArgumentParser(
         description=(
-            "Scrape match stats from yallashoot.soccer. "
-            "Pass --audit to run in unattended audit mode: scans ALL finished "
-            "matches (no date filter) and fetches up to --limit of the missing "
-            "ones, deferring the rest to the next run — safe for an hourly cron."
-        )
-    )
-
-    group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument("--url", "-u", help="Single match URL to scrape.")
-    group.add_argument("--file", "-f", help="Path to a text file containing one match URL per line.")
-    group.add_argument("--match", "-m", nargs=3, metavar=("HOME", "AWAY", "DATE"), help="Build URL from team names and date.")
-    group.add_argument("--competition", "-c", metavar="CODE", help="Scrape all eligible matches for one competition.")
-    group.add_argument("--all", "-a", action="store_true", dest="all_competitions", help="Scrape all discovered competitions.")
-
-    parser.add_argument("--delay", type=float, default=3.0, help="Seconds between requests.")
-    parser.add_argument("--force", action="store_true", help="Re-scrape even when the output file already exists.")
-
-    parser.add_argument(
-        "--audit", action="store_true",
-        help=(
-            "Run in audit mode (replaces the old fetch_match_stats_audit.py): "
-            "only FINISHED matches, no date filter, budgeted via --limit. "
-            "Use with --all or --competition."
+            "Scrape match statistics from yallashoot concurrently and store in stats.json.\n"
+            "Default: 8 parallel workers → ~6–8 min for 380 matches (vs ~60 min sequential)."
         ),
-    )
-    parser.add_argument(
-        "--limit", type=int, default=50, metavar="N",
-        help=(
-            "Audit mode only. Max HTTP fetches this run across all competitions "
-            "(default: 50). Existing stat files are pre-scanned and excluded so "
-            "the budget is never wasted on skips."
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Examples:\n"
+            "  python fetch_match_stats.py --competition PL\n"
+            "  python fetch_match_stats.py --competition PL --workers 12\n"
+            "  python fetch_match_stats.py --all --limit 200\n"
+            "  python fetch_match_stats.py --competition WC --force\n"
         ),
     )
 
-    date_group = parser.add_mutually_exclusive_group()
-    date_group.add_argument("--today", action="store_true", help="Only process matches scheduled for today.")
-    date_group.add_argument("--week", action="store_true", help="Only process matches in the current week.")
-    date_group.add_argument("--month", action="store_true", help="Only process matches in the current month.")
-    date_group.add_argument("--year", action="store_true", help="Only process matches in the current year.")
+    grp = parser.add_mutually_exclusive_group(required=True)
+    grp.add_argument("--competition", "-c", help="Competition code e.g. PL, WC")
+    grp.add_argument(
+        "--all", action="store_true", dest="all_competitions",
+        help="Process all tracked competitions",
+    )
+
+    parser.add_argument("--season", "-s",
+                        help="Season string e.g. 2025-2026 (overrides env SEASON)")
+    parser.add_argument("--workers", "-w", type=int, default=DEFAULT_WORKERS, metavar="N",
+                        help=f"Parallel scrape threads (default: {DEFAULT_WORKERS})")
+    parser.add_argument("--limit", type=int, default=None, metavar="N",
+                        help="Max matches to scrape per run. Omit to scrape all pending.")
+    parser.add_argument("--checkpoint", type=int, default=DEFAULT_CHECKPOINT_N, metavar="N",
+                        help=f"Save every N successful scrapes (default: {DEFAULT_CHECKPOINT_N})")
+    parser.add_argument("--force", action="store_true",
+                        help="Re-scrape even if stats already exist in stats.json.")
 
     args = parser.parse_args()
+    season_override = args.season or os.environ.get("SEASON") or None
 
-    period = "today" if args.today else "week" if args.week else "month" if args.month else "year" if args.year else None
+    if args.all_competitions:
+        run_all_competitions_audit(
+            force=args.force,
+            limit=args.limit or 200,
+            season_str=season_override,
+            workers=args.workers,
+            checkpoint_n=args.checkpoint,
+        )
+    else:
+        run_competition_audit(
+            args.competition,
+            season_str=season_override,
+            force=args.force,
+            limit=args.limit,
+            workers=args.workers,
+            checkpoint_n=args.checkpoint,
+        )
 
-    # ── Audit mode: only --all / --competition apply, no period/date filters ──
-    if args.audit:
-        if args.all_competitions:
-            run_all_competitions_audit(force=args.force, delay=args.delay, limit=args.limit)
-            sys.exit(0)
-        elif args.competition:
-            ok, failed, skipped, pending = run_competition_audit(
-                args.competition, force=args.force, delay=args.delay, limit=args.limit,
-            )
-            sys.exit(0 if failed == 0 else 1)
-        else:
-            parser.error("--audit requires --all or --competition")
-
-    if args.url:
-        sys.exit(0 if run_single(args.url) else 1)
-    elif args.file:
-        urls = [line.strip() for line in Path(args.file).read_text().splitlines() if line.strip() and not line.startswith("#")]
-        ok, fail = run_batch(urls, delay=args.delay)
-        sys.exit(0 if fail == 0 else 1)
-    elif args.match:
-        sys.exit(0 if run_single(build_url(*args.match)) else 1)
-    elif args.competition:
-        ok, failed, skipped = run_competition(args.competition, period=period, force=args.force, delay=args.delay)
-        sys.exit(0 if failed == 0 else 1)
-    elif args.all_competitions:
-        run_all_competitions(period=period, force=args.force, delay=args.delay)
-        sys.exit(0)
 
 if __name__ == "__main__":
-    _main()
+    main()

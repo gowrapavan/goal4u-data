@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goal4u — Football Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════════
+   GOAL4U — Redesign "Pitchside"
+   Deep midnight navy base · single vivid green primary · clean elevation
+═══════════════════════════════════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --void:    #070A10;
+  --panel:   #0C111B;
+  --card:    #111824;
+  --lift:    #18202E;
+  --raise:   #1F2937;
+  --border:  rgba(148,163,184,0.10);
+  --border-s:rgba(148,163,184,0.16);
+  --bsoft:   rgba(148,163,184,0.06);
+  --mint:    #4ADE80;
+  --mint-d:  rgba(74,222,128,0.12);
+  --mint-g:  rgba(74,222,128,0.05);
+  --pink:    #FB7185;
+  --pink-d:  rgba(251,113,133,0.14);
+  --gold:    #FBBF24;
+  --gold-d:  rgba(251,191,36,0.12);
+  --ice:     #38BDF8;
+  --ice-d:   rgba(56,189,248,0.12);
+  --violet:  #A78BFA;
+  --emerald: #34D399;
+  --ruby:    #F87171;
+  --text:    #F1F5F9;
+  --sub:     #9FB0C3;
+  --dim:     #5B6A7E;
+  --dimmer:  #38424F;
+  --mono:    'DM Mono', monospace;
+  --display: 'Syne', sans-serif;
+  --body:    'Inter', sans-serif;
+  --shadow:  0 10px 30px -12px rgba(0,0,0,0.6);
+}
+
+html { scroll-behavior: smooth; background: var(--void); }
+body {
+  background:
+    radial-gradient(900px 500px at 100% -5%, rgba(74,222,128,0.06), transparent 60%),
+    radial-gradient(700px 500px at -5% 0%, rgba(56,189,248,0.05), transparent 55%),
+    var(--void);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--body);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-s); border-radius: 6px; }
+::-webkit-scrollbar-thumb:hover { background: var(--dim); }
+
+/* ── INTERACTIVE ELEMENTS ────────────────────────────────────────────── */
+.team-link { cursor: pointer; transition: opacity .15s, transform .15s; display: flex; align-items: center; border-radius: 6px; }
+.team-link:hover { opacity: .85; transform: translateX(2px); }
+.team-link-inline { cursor: pointer; transition: opacity .15s, color .15s; }
+.team-link-inline:hover { opacity: .9; color: var(--mint) !important; }
+
+/* ── TOPBAR ─────────────────────────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(7,10,16,0.78);
+  backdrop-filter: blur(20px) saturate(150%);
+  border-bottom: 1px solid var(--border);
+  height: 60px; display: flex; align-items: center;
+}
+.topbar-inner { max-width: 1600px; margin: 0 auto; padding: 0 28px; width: 100%; display: flex; align-items: center; gap: 24px; }
+.brand { display: flex; align-items: center; gap: 11px; flex-shrink: 0; }
+.brand-mark {
+  width: 34px; height: 34px;
+  background: linear-gradient(150deg, var(--mint), #22C55E);
+  border-radius: 10px; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px -2px rgba(74,222,128,0.5);
+}
+.brand-mark svg { width: 20px; height: 20px; }
+.brand-name { font-family: var(--display); font-size: 19px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); }
+.brand-name b { color: var(--mint); font-weight: 800; }
+.brand-pill { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .14em; color: var(--dim); background: var(--lift); border: 1px solid var(--border); padding: 3px 8px; border-radius: 5px; }
+
+.topbar-tabs { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: center; background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 4px; max-width: 420px; }
+.ttab { display: flex; align-items: center; justify-content: center; gap: 7px; flex: 1; padding: 8px 14px; font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); background: none; border: none; cursor: pointer; border-radius: 8px; transition: color .15s, background .15s; white-space: nowrap; }
+.ttab svg { width: 13px; height: 13px; }
+.ttab:hover { color: var(--text); }
+.ttab.on { color: var(--void); background: var(--mint); box-shadow: 0 4px 12px -4px rgba(74,222,128,0.6); }
+
+.topbar-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.sel { background: var(--lift); border: 1px solid var(--border-s); border-radius: 9px; padding: 7px 28px 7px 12px; font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--text); cursor: pointer; outline: none; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235B6A7E'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; transition: border-color .15s; }
+.sel:hover, .sel:focus { border-color: var(--mint); }
+
+.sync-badge { display: flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: .07em; background: var(--panel); border: 1px solid var(--border); padding: 6px 10px; border-radius: 9px; }
+.sync-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 8px var(--emerald); animation: pulse-dot 2.4s ease-in-out infinite; }
+@keyframes pulse-dot { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.65); } }
+
+/* ── LIVE BAR ────────────────────────────────────────────────────────── */
+.live-bar { background: var(--panel); border-bottom: 1px solid var(--border); height: 38px; overflow: hidden; display: flex; align-items: center; }
+.live-tag { background: var(--pink); color: #1a0008; font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .2em; padding: 0 16px; height: 100%; display: flex; align-items: center; flex-shrink: 0; clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 50%, calc(100% - 8px) 100%, 0 100%); padding-right: 22px; }
+.live-scroll-wrap { overflow: hidden; flex: 1; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.live-scroll-track { display: flex; align-items: center; animation: live-scroll 40s linear infinite; white-space: nowrap; will-change: transform; }
+.live-scroll-track:hover { animation-play-state: paused; }
+@keyframes live-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.live-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 22px; font-family: var(--mono); font-size: 10px; font-weight: 500; color: var(--sub); border-right: 1px solid var(--border); }
+.live-item .comp-tag { font-size: 8px; letter-spacing: .1em; color: var(--mint); font-weight: 500; }
+.live-item .score { font-weight: 500; color: var(--text); font-size: 11px; }
+.live-item .live-pip { width: 6px; height: 6px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 7px var(--pink); animation: pulse-dot 1s ease-in-out infinite; flex-shrink: 0; }
+.live-item .rank-tag { font-size: 8px; letter-spacing: .06em; color: var(--gold); font-weight: 500; }
+.live-item .goals-tag { font-size: 11px; font-weight: 500; color: var(--gold); }
+
+/* ── COMPETITION PILL NAV ─────────────────────────────────────────────── */
+.comp-nav { max-width: 1600px; margin: 0 auto; padding: 16px 28px 4px; display: flex; align-items: center; gap: 10px; overflow-x: auto; scrollbar-width: none; }
+.comp-nav::-webkit-scrollbar { display: none; }
+.comp-pill { display: flex; align-items: center; gap: 9px; padding: 7px 16px 7px 8px; background: var(--card); border: 1px solid var(--border); border-radius: 999px; font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .01em; color: var(--sub); cursor: pointer; flex-shrink: 0; transition: all .18s; }
+.comp-pill:hover { border-color: var(--border-s); color: var(--text); transform: translateY(-1px); }
+.comp-pill.on { background: var(--mint-d); border-color: var(--mint); color: var(--mint); }
+.comp-pill-logo { width: 24px; height: 24px; object-fit: contain; background: #fff; border-radius: 50%; padding: 3px; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.45); }
+
+/* ── OVERLAYS (DOCS, TEAM MODAL, 404 NOT FOUND) ───────────────────────── */
+.docs-overlay { display: none; position: fixed; inset: 0; z-index: 500; background: rgba(7,10,16,0.7); backdrop-filter: blur(10px); }
+.docs-overlay.on { display: flex; align-items: flex-start; justify-content: flex-end; }
+.docs-drawer { width: min(820px, 90vw); height: 100vh; background: var(--panel); border-left: 1px solid var(--border-s); display: flex; flex-direction: column; overflow: hidden; box-shadow: -20px 0 50px rgba(0,0,0,0.6); animation: drawer-in .25s ease; }
+@keyframes drawer-in { from { transform: translateX(24px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+.docs-drawer-top { display: flex; align-items: center; justify-content: space-between; padding: 18px 22px; border-bottom: 1px solid var(--border); background: var(--lift); flex-shrink: 0; }
+.docs-drawer-title { font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--ice); display: flex; align-items: center; gap: 9px; }
+.docs-drawer-title svg { width: 15px; height: 15px; }
+.docs-close-btn { background: var(--card); border: 1px solid var(--border); color: var(--sub); cursor: pointer; font-size: 16px; line-height: 1; width: 30px; height: 30px; border-radius: 8px; transition: all .15s; display: flex; align-items: center; justify-content: center; }
+.docs-close-btn:hover { color: var(--text); border-color: var(--ruby); background: var(--pink-d); }
+.docs-content { flex: 1; overflow-y: auto; padding: 28px 32px; font-size: 13px; line-height: 1.8; color: var(--sub); }
+
+/* ── 404 NOT FOUND MODAL ─────────────────────────────────────────────── */
+.nf-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(7,10,16,0.8); backdrop-filter: blur(10px); align-items: center; justify-content: center; }
+.nf-overlay.on { display: flex; animation: fade-in .2s ease; }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.nf-box { background: var(--card); border: 1px solid var(--border); padding: 32px; border-radius: 20px; text-align: center; width: min(340px, 90vw); box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: scale(0.95); transition: transform 0.2s ease; }
+.nf-overlay.on .nf-box { transform: scale(1); }
+.nf-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--pink-d); color: var(--ruby); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; border: 1px solid rgba(251,113,133,0.3); }
+.nf-icon svg { width: 28px; height: 28px; }
+.nf-title { font-family: var(--display); font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 8px; letter-spacing: -0.01em; }
+.nf-desc { font-family: var(--body); font-size: 13px; color: var(--sub); line-height: 1.6; margin-bottom: 24px; }
+.nf-btn { background: var(--panel); border: 1px solid var(--border); color: var(--text); padding: 10px 24px; border-radius: 8px; font-family: var(--display); font-size: 13px; font-weight: 700; letter-spacing: .02em; cursor: pointer; transition: all .15s; outline: none; }
+.nf-btn:hover { background: var(--pink); color: #1a0008; border-color: var(--pink); }
+
+/* ── MAIN LAYOUT ─────────────────────────────────────────────────────── */
+.page { max-width: 1600px; margin: 0 auto; padding: 16px 28px 40px; }
+.dashboard { display: grid; grid-template-columns: 1fr 1fr 340px; grid-template-rows: auto; gap: 18px; align-items: start; }
+.widget-scorers { grid-column: 3; grid-row: 1 / 4; position: sticky; top: 76px; }
+.widget-standings, .widget-matches, .widget-statbar { grid-column: 1 / 3; }
+
+/* ── WIDGET SHELL ─────────────────────────────────────────────────────── */
+.widget { background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow); }
+.widget-head { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; border-bottom: 1px solid var(--border); background: linear-gradient(180deg, var(--lift), transparent); gap: 10px; }
+.widget-title { display: flex; align-items: center; gap: 9px; font-family: var(--display); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text); }
+.widget-title svg { width: 14px; height: 14px; }
+.widget-accent svg { color: var(--mint); }
+.widget-accent-gold svg { color: var(--gold); }
+.widget-accent-ice svg { color: var(--ice); }
+.widget-meta { font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: .1em; background: var(--panel); border: 1px solid var(--border); padding: 4px 9px; border-radius: 6px; }
+
+/* ── STAT BAR WIDGET ──────────────────────────────────────────────────── */
+.statbar-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; }
+.stat-tile { padding: 18px; border-right: 1px solid var(--border); position: relative; transition: background .15s; }
+.stat-tile::before { content: ''; position: absolute; top: 0; left: 18px; width: 22px; height: 2px; border-radius: 2px; background: var(--dimmer); }
+.stat-tile:nth-child(1)::before { background: var(--mint); }
+.stat-tile:nth-child(2)::before { background: var(--gold); }
+.stat-tile:nth-child(3)::before { background: var(--ice); }
+.stat-tile:nth-child(4)::before { background: var(--sub); }
+.stat-tile:nth-child(5)::before { background: var(--pink); }
+.stat-tile:last-child { border-right: none; }
+.stat-tile:hover { background: var(--bsoft); }
+.stat-tile-label { font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--dim); margin-bottom: 8px; }
+.stat-tile-value { font-family: var(--display); font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: var(--text); line-height: 1; }
+.stat-tile-value.mint { color: var(--mint); }
+.stat-tile-value.gold { color: var(--gold); }
+.stat-tile-value.ice { color: var(--ice); }
+.stat-tile-value.pink { color: var(--pink); }
+.stat-tile-sub { font-family: var(--mono); font-size: 9px; color: var(--dim); margin-top: 6px; }
+
+/* ── STANDINGS WIDGET ─────────────────────────────────────────────────── */
+.standings-tab-bar { display: flex; align-items: center; border-bottom: 1px solid var(--border); background: var(--card); padding: 8px 14px; gap: 6px; }
+.stab { padding: 7px 14px; font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); background: var(--panel); border: 1px solid var(--border); cursor: pointer; border-radius: 8px; transition: all .15s; }
+.stab:hover { color: var(--text); border-color: var(--border-s); }
+.stab.on { color: var(--mint); border-color: var(--mint); background: var(--mint-d); }
+
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl-h th { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--dim); background: var(--panel); padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.tbl-h th:nth-child(2) { text-align: left; }
+.tbl-h th.col-pts { color: var(--mint); }
+
+.tbl-body tr { border-bottom: 1px solid var(--bsoft); transition: background .12s; }
+.tbl-body tr:last-child { border-bottom: none; }
+.tbl-body tr:hover { background: var(--mint-g); }
+.tbl-body tr.group-header-row:hover { background: var(--lift); }
+
+.tbl-body td { padding: 11px 12px; text-align: center; font-family: var(--mono); font-size: 11px; color: var(--sub); background: transparent; }
+.tbl-body td:nth-child(2) { text-align: left; font-family: var(--body); }
+
+.pos-cell { display: flex; align-items: center; gap: 9px; justify-content: center; }
+.pos-bar { width: 3px; height: 18px; border-radius: 3px; flex-shrink: 0; }
+.pos-bar.cl { background: var(--ice); box-shadow: 0 0 8px var(--ice-d); }
+.pos-bar.euro { background: var(--violet); }
+.pos-bar.rel { background: var(--ruby); }
+.pos-bar.plain { background: var(--dimmer); }
+.pos-num { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--sub); }
+
+.club-cell { display: flex; align-items: center; gap: 11px; }
+.club-crest { width: 22px; height: 22px; object-fit: contain; flex-shrink: 0; }
+.club-crest-fb { width: 22px; height: 22px; background: var(--lift); border: 1px solid var(--border); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 7px; color: var(--dim); flex-shrink: 0; }
+.club-name { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+
+.pts-val { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--mint); }
+.gd-p { color: var(--emerald); }
+.gd-n { color: var(--ruby); }
+.gd-z { color: var(--dim); }
+
+.form-row { display: flex; align-items: center; justify-content: center; gap: 3px; }
+.fp { width: 17px; height: 17px; border-radius: 4px; font-family: var(--mono); font-size: 8px; display: flex; align-items: center; justify-content: center; font-weight: 500; }
+.fp.W { background: rgba(52,211,153,0.16); color: var(--emerald); }
+.fp.D { background: var(--lift); color: var(--sub); }
+.fp.L { background: rgba(248,113,113,0.14); color: var(--ruby); }
+
+/* ── MATCH WIDGET GRID ────────────────────────────────────────────────── */
+.match-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; padding: 14px; background: transparent; }
+.mcard { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; transition: border-color .15s, transform .15s, background .15s; position: relative; overflow: hidden; }
+.mcard::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px; background: transparent; transition: background .2s; }
+.mcard:hover { background: var(--lift); border-color: var(--border-s); transform: translateY(-2px); }
+.mcard.is-live::before { background: var(--pink); }
+.mcard.is-live { background: var(--pink-d); border-color: rgba(251,113,133,0.3); }
+
+.mcard-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 13px; }
+.mcard-date { font-family: var(--mono); font-size: 9px; color: var(--dim); letter-spacing: .06em; }
+.chip { font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; padding: 3px 8px; border-radius: 5px; }
+.chip-live { background: var(--pink); color: #1a0008; }
+.chip-ft { background: var(--lift); color: var(--sub); border: 1px solid var(--border); }
+.chip-sched { background: transparent; color: var(--dim); border: 1px solid var(--border); }
+
+.mcard-fixture { display: flex; flex-direction: column; gap: 8px; }
+.mcard-team { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mcard-team-l { display: flex; align-items: center; gap: 9px; flex: 1; overflow: hidden; }
+.mcard-crest { width: 20px; height: 20px; object-fit: contain; flex-shrink: 0; }
+.mcard-name { font-size: 12px; font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.01em; }
+.mcard-name.faded { color: var(--sub); font-weight: 400; }
+.mcard-score { font-family: var(--mono); font-size: 16px; font-weight: 500; color: var(--text); min-width: 18px; text-align: right; flex-shrink: 0; }
+.mcard-score.live { color: var(--pink); }
+.mcard-score.faded { color: var(--dim); font-weight: 400; }
+
+.mcard-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; font-family: var(--mono); font-size: 9px; color: var(--dimmer); letter-spacing: .06em; text-transform: uppercase; }
+.mcard-formation { font-family: var(--mono); font-size: 9px; color: var(--sub); background: var(--lift); padding: 2px 6px; border-radius: 5px; }
+
+/* ── SCORERS WIDGET (SIDEBAR) ─────────────────────────────────────────── */
+.scorer-list-head { display: flex; align-items: center; justify-content: space-between; padding: 10px 16px; font-family: var(--mono); font-size: 8px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--dim); border-bottom: 1px solid var(--border); background: var(--panel); }
+.scorer-item { display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; border-bottom: 1px solid var(--bsoft); gap: 12px; transition: background .12s; }
+.scorer-item:last-child { border-bottom: none; }
+.scorer-item:hover { background: var(--mint-g); }
+.scorer-left { display: flex; align-items: center; gap: 11px; flex: 1; overflow: hidden; }
+.rank-chip { width: 28px; height: 28px; border-radius: 8px; font-family: var(--display); font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.rank-1 { background: linear-gradient(150deg, var(--gold), #F59E0B); color: #2b1a00; }
+.rank-2 { background: linear-gradient(150deg, #CBD5E1, #94A3B8); color: #11151c; }
+.rank-3 { background: linear-gradient(150deg, #B45309, #92400E); color: #fff; }
+.rank-n { background: var(--lift); color: var(--dim); border: 1px solid var(--border); font-size: 11px; }
+
+.scorer-info { overflow: hidden; }
+.scorer-name { font-size: 12px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.scorer-club { font-family: var(--mono); font-size: 9px; color: var(--dim); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.scorer-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.stat-col { text-align: right; }
+.stat-n { font-family: var(--mono); font-size: 16px; font-weight: 500; line-height: 1; }
+.stat-n.goals { color: var(--mint); }
+.stat-n.assists { color: var(--sub); font-size: 13px; }
+.stat-lbl { font-family: var(--mono); font-size: 7px; color: var(--dim); letter-spacing: .1em; text-transform: uppercase; margin-top: 3px; }
+
+/* Match group header */
+.match-group-hd { display: flex; align-items: center; gap: 10px; padding: 13px 18px; background: var(--panel); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.match-group-hd .grp-bar { width: 3px; height: 15px; background: var(--mint); border-radius: 3px; flex-shrink: 0; }
+.match-group-hd span { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--sub); }
+
+/* ── EMPTY / STATES ────────────────────────────────────────────── */
+.empty-state { padding: 48px 24px; text-align: center; font-family: var(--display); font-size: 14px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--dim); }
+.empty-state small { display: block; font-family: var(--mono); font-size: 9px; font-weight: 400; text-transform: none; letter-spacing: .08em; color: var(--dimmer); margin-top: 8px; line-height: 1.6; }
+
+/* ── LOADING VEIL ─────────────────────────────────────────────────────── */
+.veil { display: none; position: fixed; inset: 0; z-index: 800; background: rgba(7,10,16,0.82); backdrop-filter: blur(8px); align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+.veil.on { display: flex; }
+.spin { width: 38px; height: 38px; border: 2px solid var(--border-s); border-top-color: var(--mint); border-radius: 50%; animation: spin .6s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin-label { font-family: var(--mono); font-size: 9px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--mint); }
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .dashboard { grid-template-columns: 1fr 1fr; }
+  .widget-scorers, .widget-standings, .widget-matches, .widget-statbar { grid-column: 1 / 3; }
+  .widget-scorers { grid-row: auto; position: static; }
+}
+@media (max-width: 768px) {
+  .topbar-inner { padding: 0 16px; gap: 12px; }
+  .topbar-tabs { gap: 2px; }
+  .ttab { padding: 8px 10px; font-size: 11px; }
+  .ttab span { display: none; }
+  .comp-nav { padding: 14px 16px 4px; }
+  .page { padding: 12px 16px 32px; }
+  .dashboard { grid-template-columns: 1fr; }
+  .widget-scorers, .widget-standings, .widget-matches, .widget-statbar { grid-column: 1; }
+  .statbar-grid { grid-template-columns: repeat(2, 1fr); }
+  .stat-tile:nth-child(odd) { border-right: 1px solid var(--border); }
+  .stat-tile { border-bottom: 1px solid var(--border); }
+  .brand-pill { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .live-scroll-track, .sync-dot, .live-pip, .spin, .docs-drawer { animation: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#06210F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 2a10 10 0 0 1 6.3 2.2L12 8 5.7 4.2A10 10 0 0 1 12 2z"/>
+          <path d="M2.3 14.5 7 12l-1-5.8M21.7 14.5 17 12l1-5.8M8 22l2-6h4l2 6"/>
+        </svg>
+      </div>
+      <span class="brand-name">Goal<b>4u</b></span>
+      <span class="brand-pill">v2 · API</span>
+    </div>
+
+    <div class="topbar-tabs">
+      <button class="ttab on" data-tab="standings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        <span>Table</span>
+      </button>
+      <button class="ttab" data-tab="matches">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <span>Fixtures</span>
+      </button>
+      <button class="ttab" data-tab="scorers">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        <span>Scorers</span>
+      </button>
+    </div>
+
+    <div class="topbar-right">
+      <div class="sync-badge">
+        <div class="sync-dot"></div>
+        <span id="sync-lbl">–</span>
+      </div>
+      <select class="sel" id="season-sel"></select>
+    </div>
+  </div>
+</nav>
+
+<!-- LIVE / CONTEXT BAR -->
+<div class="live-bar">
+  <div class="live-tag">LIVE</div>
+  <div class="live-scroll-wrap">
+    <div class="live-scroll-track" id="live-track"><!-- JS --></div>
+  </div>
+</div>
+
+<!-- COMPETITION PILL NAV -->
+<div class="comp-nav" id="comp-nav"><!-- Dynamic from JSON --></div>
+
+<!-- TEAM DETAILS MODAL OVERLAY -->
+<div class="docs-overlay" id="team-modal">
+  <div class="docs-drawer" style="width: min(560px, 95vw); margin-left: auto;">
+    <div class="docs-drawer-top">
+      <div class="docs-drawer-title" style="color:var(--text);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span id="team-modal-title">Team Profile</span>
+      </div>
+      <button class="docs-close-btn" id="team-close-btn">&#x2715;</button>
+    </div>
+    <div class="docs-content" id="team-modal-content" style="padding: 24px;">
+      <!-- Populated dynamically -->
+    </div>
+  </div>
+</div>
+
+<!-- 404 NOT FOUND OVERLAY -->
+<div class="nf-overlay" id="nf-modal">
+  <div class="nf-box">
+    <div class="nf-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="nf-title">Data Not Found</div>
+    <div class="nf-desc">The requested data is not available for this competition in the currently selected season.</div>
+    <button class="nf-btn" id="nf-close">Understood</button>
+  </div>
+</div>
+
+<!-- LOADING VEIL -->
+<div class="veil" id="veil">
+  <div class="spin"></div>
+  <div class="spin-label">Loading</div>
+</div>
+
+<!-- MAIN PAGE -->
+<div class="page">
+  <div class="dashboard" id="dashboard"><!-- JS renders widgets --></div>
+</div>
+
+<script>
+(() => {
+/* ─── STATE ──────────────────────────────────────────────────────────── */
+let COMPS = [];
+let currentComp = 'PL';
+let currentTab  = 'standings';
+let currentSeason = '';
+
+const CODE_MAP = {
+  'PL': 'Premier League',
+  'PD': 'La Liga',
+  'BL1': 'Bundesliga',
+  'SA': 'Serie A',
+  'FL1': 'Ligue 1',
+  'CL': 'Champions League',
+  'EC': 'Euros',
+  'WC': 'World Cup'
+};
+
+const ORDER = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL', 'EC', 'WC'];
+
+/* ─── DOM ────────────────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const seasonSel  = $('season-sel');
+const syncLbl    = $('sync-lbl');
+const liveTrack  = $('live-track');
+const compNav    = $('comp-nav');
+const dashboard  = $('dashboard');
+const veil       = $('veil');
+const teamModal  = $('team-modal');
+const teamClose  = $('team-close-btn');
+const nfModal    = $('nf-modal');
+const nfClose    = $('nf-close');
+
+/* ─── APP INITIALIZATION ─────────────────────────────────────────────── */
+async function init() {
+  veil.classList.add('on');
+  const spinLabel = document.querySelector('.spin-label');
+  if (spinLabel) spinLabel.textContent = 'Checking Database...';
+
+  const now = new Date();
+  const currentYear = now.getFullYear();
+  const currentMonth = now.getMonth() + 1; // 1-12
+
+  const expectedCurrent = currentMonth >= 6
+    ? `${currentYear}-${currentYear + 1}`
+    : `${currentYear - 1}-${currentYear}`;
+
+  const possibleSeasons = [];
+  for (let y = currentYear - 5; y <= currentYear + 1; y++) {
+    possibleSeasons.push(`${y}-${y+1}`);
+  }
+
+  // Robustly probe every season to find ANY existing files
+  const validSeasons = (await Promise.all(possibleSeasons.map(async (s) => {
+    try {
+      let r = await fetch(`./data/${s}/competitions.json?t=${Date.now()}`);
+      if (r.ok) return s;
+      
+      const codes = ['PL', 'PD', 'BL1', 'SA', 'FL1', 'CL', 'EC', 'WC'];
+      const urls = codes.flatMap(c => [
+        `./data/${s}/matches/${c}.json?t=${Date.now()}`,
+        `./data/${s}/standings/${c}.json?t=${Date.now()}`,
+        `./data/${s}/scorers/${c}.json?t=${Date.now()}`
+      ]);
+      
+      try {
+          await Promise.any(urls.map(async u => {
+              const res = await fetch(u);
+              if (res.ok) return true;
+              throw new Error('Not found');
+          }));
+          return s; // Returns season string if ANY file exists
+      } catch(e) {
+          return null; // All failed
+      }
+    } catch(e) {
+       return null;
+    }
+  }))).filter(Boolean);
+
+  validSeasons.sort((a, b) => b.localeCompare(a));
+  if (validSeasons.length === 0) validSeasons.push(expectedCurrent);
+
+  const selectedSeason = validSeasons.includes(expectedCurrent) ? expectedCurrent : validSeasons[0];
+
+  seasonSel.innerHTML = validSeasons.map(s => `<option value="${s}" ${s === selectedSeason ? 'selected' : ''}>${s}</option>`).join('');
+  currentSeason = seasonSel.value;
+
+  if (spinLabel) spinLabel.textContent = 'Loading';
+
+  await fetchCompetitions();
+
+  if (COMPS.length > 0 && !COMPS.find(c => c.code === currentComp)) {
+    currentComp = COMPS[0].code;
+  } else if (COMPS.length === 0) {
+    currentComp = null;
+  }
+
+  buildCompNav();
+  buildLiveBar();
+  load();
+}
+
+/* ─── FETCH COMPETITIONS FOR SEASON ──────────────────────────────────── */
+async function fetchCompetitions() {
+  COMPS = [];
+  try {
+    const r = await fetch(`./data/${currentSeason}/competitions.json?t=${Date.now()}`);
+    if (r.ok) {
+      const j = await r.json();
+      COMPS = j.data || j || [];
+    }
+  } catch (e) {
+    console.warn("competitions.json missing for", currentSeason);
+  }
+
+  // If no summary file, deep probe directory for available leagues
+  if (!COMPS || COMPS.length === 0) {
+    const ALL_CODES = ['PL','PD','BL1','SA','FL1','CL','EC','WC'];
+    const META = {
+      PL:  { name:'Premier League',    area:{ name:'England',  flag:'https://crests.football-data.org/770.svg' } },
+      PD:  { name:'La Liga',           area:{ name:'Spain',    flag:'https://crests.football-data.org/760.svg' } },
+      BL1: { name:'Bundesliga',        area:{ name:'Germany',  flag:'https://crests.football-data.org/759.svg' } },
+      SA:  { name:'Serie A',           area:{ name:'Italy',    flag:'https://crests.football-data.org/784.svg' } },
+      FL1: { name:'Ligue 1',           area:{ name:'France',   flag:'https://crests.football-data.org/773.svg' } },
+      CL:  { name:'Champions League',  area:{ name:'Europe',   flag:'https://crests.football-data.org/EUR.svg'  } },
+      EC:  { name:'Euros',             area:{ name:'Europe',   flag:'https://crests.football-data.org/EUR.svg'  } },
+      WC:  { name:'World Cup',         area:{ name:'World',    flag:'https://crests.football-data.org/FIFA.png' } },
+    };
+    
+    const found = await Promise.all(ALL_CODES.map(async code => {
+      const paths = [
+        `./data/${currentSeason}/matches/${code}.json?t=${Date.now()}`,
+        `./data/${currentSeason}/standings/${code}.json?t=${Date.now()}`,
+        `./data/${currentSeason}/scorers/${code}.json?t=${Date.now()}`
+      ];
+      
+      if (code === 'WC' || code === 'EC') {
+        const endYear = parseInt(currentSeason.split('-')[1]);
+        paths.push(`./data/${endYear}-${endYear}/matches/${code}.json?t=${Date.now()}`);
+      }
+      
+      try {
+        await Promise.any(paths.map(async p => {
+           const res = await fetch(p);
+           if (res.ok) return true;
+           throw new Error('Not found');
+        }));
+        return { code, ...META[code] };
+      } catch(e) {
+        return null;
+      }
+    }));
+    COMPS = found.filter(Boolean);
+  }
+
+  COMPS.sort((a, b) => {
+    let ia = ORDER.indexOf(a.code), ib = ORDER.indexOf(b.code);
+    if (ia === -1) ia = 999;
+    if (ib === -1) ib = 999;
+    return ia - ib;
+  });
+}
+
+/* ─── COMPETITION PILL NAV ───────────────────────────────────────────── */
+function buildCompNav() {
+  if (COMPS.length === 0) {
+    compNav.innerHTML = `<span style="font-size:12px;color:var(--dim);margin:auto;">No competitions available for this season</span>`;
+    return;
+  }
+  
+  compNav.innerHTML = COMPS.map(c => {
+    const imgUrl = c.emblem || (c.area && c.area.flag) || '';
+    const iconHtml = imgUrl.length > 5
+      ? `<img src="${imgUrl}" class="comp-pill-logo" alt="" onerror="this.style.display='none'">`
+      : `<span class="flag">⚽</span>`;
+    const label = CODE_MAP[c.code] || c.name || c.code;
+
+    return `<button class="comp-pill${c.code === currentComp ? ' on' : ''}" data-code="${c.code}">
+      ${iconHtml}${label}
+    </button>`;
+  }).join('');
+
+  compNav.querySelectorAll('.comp-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentComp = btn.dataset.code;
+      compNav.querySelectorAll('.comp-pill').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      load();
+    });
+  });
+}
+
+/* ─── TEAM PROFILE MODAL ─────────────────────────────────────────────── */
+window.openTeamModal = async function(teamId) {
+  teamModal.classList.add('on');
+  $('team-modal-content').innerHTML = `
+    <div style="display:flex;justify-content:center;padding:48px 0;">
+      <div class="spin"></div>
+    </div>`;
+
+  try {
+    const r = await fetch(`./data/${currentSeason}/teams/${currentComp}/${teamId}.json?t=${Date.now()}`);
+    if (!r.ok) throw new Error("Team details unavailable");
+    const j = await r.json();
+    const team = j.data || j;
+    renderTeamModal(team);
+  } catch(e) {
+    $('team-modal-content').innerHTML = `
+      <div class="empty-state">
+        Team Data Missing
+        <small>The pipeline has not fetched this team yet, or it's unavailable on this tier.<br><br>${e.message}</small>
+      </div>`;
+  }
+};
+
+function renderTeamModal(team) {
+  $('team-modal-title').textContent = team.name || 'Club Profile';
+  const crest = team.crest
+    ? `<img src="${team.crest}" style="width:72px;height:72px;object-fit:contain;margin-right:20px;border-radius:50%;background:#fff;padding:8px;box-shadow:0 2px 8px rgba(0,0,0,0.5);">`
+    : `<div class="club-crest-fb" style="width:72px;height:72px;font-size:18px;margin-right:20px;">${(team.tla||'?')}</div>`;
+
+  const coachHtml = team.coach && team.coach.name
+    ? `<div style="font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:12px;">Manager: <span style="color:var(--text);font-weight:500;">${team.coach.name}</span></div>`
+    : '';
+
+  let squadHtml = '';
+  if (team.squad && team.squad.length > 0) {
+    squadHtml = `
+      <table class="tbl" style="margin-top:24px;">
+        <thead class="tbl-h">
+          <tr>
+            <th style="width:40px">#</th>
+            <th style="text-align:left">Player</th>
+            <th>Pos</th>
+            <th>Nat</th>
+          </tr>
+        </thead>
+        <tbody class="tbl-body">
+          ${team.squad.map(p => `
+            <tr>
+              <td style="color:var(--dim)">${p.shirtNumber || '–'}</td>
+              <td style="text-align:left;color:var(--text);font-weight:500;">${p.name || '–'}</td>
+              <td style="font-size:10px;">${p.position || '–'}</td>
+              <td style="font-size:10px;">${p.nationality || '–'}</td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>`;
+  } else {
+    squadHtml = `<div class="empty-state" style="padding:24px;">No squad data populated</div>`;
+  }
+
+  $('team-modal-content').innerHTML = `
+    <div style="display:flex;align-items:center;padding-bottom:24px;border-bottom:1px solid var(--border);">
+      ${crest}
+      <div>
+        <div style="font-family:var(--display);font-size:24px;font-weight:800;color:var(--text);margin-bottom:4px;letter-spacing:-0.02em;">${team.shortName || team.name}</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--sub)">${team.venue || ''} ${team.founded ? `· Est. ${team.founded}` : ''}</div>
+        ${coachHtml}
+      </div>
+    </div>
+    <h3 style="font-family:var(--display);font-size:13px;color:var(--mint);text-transform:uppercase;letter-spacing:0.06em;margin-top:24px;">First Team Squad</h3>
+    ${squadHtml}
+  `;
+}
+
+teamClose.addEventListener('click', () => teamModal.classList.remove('on'));
+teamModal.addEventListener('click', e => { if (e.target === teamModal) teamModal.classList.remove('on'); });
+
+/* ─── NOT FOUND MODAL ────────────────────────────────────────────────── */
+function showNotFoundModal() {
+  nfModal.classList.add('on');
+}
+nfClose.addEventListener('click', () => nfModal.classList.remove('on'));
+nfModal.addEventListener('click', e => { if (e.target === nfModal) nfModal.classList.remove('on'); });
+
+/* ─── LIVE / TICKER BAR ──────────────────────────────────────────────── */
+async function buildLiveBar() {
+  const codes = COMPS.slice(0, 6).map(c => c.code);
+  let liveMatches = [];
+  let recentResults = [];
+
+  for (const code of codes) {
+    try {
+      const r = await fetch(`./data/${currentSeason}/matches/${code}.json?t=${Date.now()}`);
+      if (!r.ok) continue;
+      const j = await r.json();
+      const matches = j.data || [];
+      const live = matches.filter(m => (m.status === 'IN_PLAY' || m.status === 'PAUSED') && !m.score?.winner);
+      const recent = matches.filter(m => m.status === 'FINISHED' && (Date.now() - new Date(m.utcDate)) < 86400000);
+      liveMatches.push(...live.map(m => ({ m, code })));
+      recentResults.push(...recent.slice(0, 3).map(m => ({ m, code })));
+    } catch(_) {}
+  }
+
+  if (liveMatches.length > 0) {
+    const itemHtml = liveMatches.map(({ m, code }) => {
+      const h = (m.homeTeam||{}).shortName || (m.homeTeam||{}).tla || 'Home';
+      const a = (m.awayTeam||{}).shortName || (m.awayTeam||{}).tla || 'Away';
+      const hs = m.score?.fullTime?.home ?? 0;
+      const as_ = m.score?.fullTime?.away ?? 0;
+      const min = m.minute ? `${m.minute}'` : 'LIVE';
+      return `<div class="live-item"><div class="live-pip"></div><span class="comp-tag">${code}</span><span>${h}</span><span class="score">${hs}–${as_}</span><span>${a}</span><span class="mcard-formation">${min}</span></div>`;
+    }).join('');
+    liveTrack.innerHTML = itemHtml + itemHtml;
+    return;
+  }
+
+  try {
+    const r = await fetch(`./data/${currentSeason}/scorers/${currentComp}.json?t=${Date.now()}`);
+    if (r.ok) {
+      const j = await r.json();
+      const scorers = (j.data || {}).scorers || [];
+      if (scorers.length > 0) {
+        const itemHtml = scorers.slice(0, 10).map((s, i) => `<div class="live-item"><span class="rank-tag">#${i+1}</span><span>${(s.player||{}).name || '—'}</span><span class="goals-tag">${s.goals ?? 0}⚽</span><span style="color:var(--sub);font-size:9px">${(s.team||{}).tla || ''}</span></div>`).join('');
+        liveTrack.innerHTML = itemHtml + itemHtml;
+        return;
+      }
+    }
+  } catch(_) {}
+
+  if (recentResults.length > 0) {
+    const itemHtml = recentResults.map(({ m, code }) => {
+      const h = (m.homeTeam||{}).tla || (m.homeTeam||{}).shortName || 'HME';
+      const a = (m.awayTeam||{}).tla || (m.awayTeam||{}).shortName || 'AWY';
+      return `<div class="live-item"><span class="comp-tag">${code}</span><span>${h}</span><span class="score">${m.score?.fullTime?.home ?? '?'}–${m.score?.fullTime?.away ?? '?'}</span><span>${a}</span><span style="color:var(--dim);font-size:8px">FT</span></div>`;
+    }).join('');
+    liveTrack.innerHTML = itemHtml + itemHtml;
+    return;
+  }
+
+  const staticHtml = COMPS.slice(0, 5).map(c => `<div class="live-item"><span class="comp-tag">${c.code}</span><span>${c.name}</span></div>`).join('');
+  liveTrack.innerHTML = staticHtml + staticHtml;
+}
+
+/* ─── DATA FETCHER ───────────────────────────────────────────────────── */
+async function load() {
+  veil.classList.add('on');
+  const code = currentComp;
+
+  if (!code) {
+    syncLbl.textContent = '–';
+    dashboard.innerHTML = `<div style="grid-column:1/-1" class="empty-state">No competitions found<small>There is no valid data populated for this season.</small></div>`;
+    veil.classList.remove('on');
+    return;
+  }
+
+  const dataPath = `./data/${currentSeason}/${currentTab}/${code}.json`;
+  const standingsPath = `./data/${currentSeason}/standings/${code}.json`;
+
+  try {
+    const [dataRes, standRes] = await Promise.all([
+      fetch(`${dataPath}?t=${Date.now()}`),
+      fetch(`${standingsPath}?t=${Date.now()}`).catch(() => null),
+    ]);
+
+    if (!dataRes.ok) throw new Error(`HTTP ${dataRes.status}`);
+    const dataJson  = await dataRes.json();
+    const standJson = standRes && standRes.ok ? await standRes.json() : null;
+
+    if (dataJson._meta?.last_synced) {
+      const d = new Date(dataJson._meta.last_synced);
+      syncLbl.textContent = `${d.toLocaleDateString()} ${d.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}`;
+    } else {
+      syncLbl.textContent = 'No sync data';
+    }
+
+    renderDashboard(dataJson.data || dataJson, standJson ? (standJson.data || standJson) : null, code);
+  } catch(err) {
+    syncLbl.textContent = '–';
+    dashboard.innerHTML = `<div style="grid-column:1/-1" class="empty-state">Data Unavailable<small>The requested information has not been processed for this season or tab yet.</small></div>`;
+    showNotFoundModal();
+  } finally {
+    veil.classList.remove('on');
+  }
+}
+
+/* ─── RENDER DASHBOARD ───────────────────────────────────────────────── */
+function renderDashboard(data, standData, code) {
+  if (currentTab === 'standings') renderStandingsDash(data, code);
+  else if (currentTab === 'matches') renderMatchesDash(data, standData, code);
+  else if (currentTab === 'scorers') renderScorersDash(data, code);
+}
+
+/* ─── STANDINGS DASHBOARD ────────────────────────────────────────────── */
+function renderStandingsDash(data, code) {
+  let groups = [];
+  if (data && Array.isArray(data.standings)) groups = data.standings;
+  else if (Array.isArray(data)) groups = data;
+  else if (data) groups = [data];
+
+  if (!groups.length || !groups[0]) {
+    dashboard.innerHTML = `<div class="widget widget-standings"><div class="empty-state">No standings data<small>Check data path: ./data/${currentSeason}/standings/${code}.json</small></div></div>`;
+    return;
+  }
+
+  const isGroupStage = groups.some(g => g.group);
+
+  let allRows = [];
+  if (isGroupStage) {
+    allRows = groups.flatMap(g => g.table || []);
+  } else {
+    const totalGroup = groups.find(g => g.type === 'TOTAL') || groups[0];
+    allRows = totalGroup.table || [];
+  }
+
+  const totalGoals = allRows.reduce((s,r) => s + (r.goalsFor || 0), 0);
+  const totalMatches = allRows.reduce((s,r) => s + (r.playedGames || 0), 0) / 2;
+  const avgGoals = totalMatches > 0 ? (totalGoals / totalMatches).toFixed(2) : '0.00';
+
+  const sorted = [...allRows].sort((a,b) => (b.points||0) - (a.points||0) || (b.goalDifference||0) - (a.goalDifference||0));
+  const leader = sorted[0] || {};
+  const leaderName = (leader.team?.tla || leader.team?.shortName || '–');
+  const leaderPts = leader.points ?? '0';
+
+  let relegatedLabel = 'Danger Zone';
+  let relegatedSub = 'relegation candidates';
+  let relegatedStr = '–';
+
+  if (isGroupStage) {
+    relegatedLabel = 'Total Teams';
+    relegatedSub = 'in tournament';
+    relegatedStr = `${allRows.length}`;
+  } else if (allRows.length > 6) {
+    relegatedStr = allRows.filter((_,i) => i >= allRows.length - 3).map(r => r.team?.tla || '').join(' · ') || '–';
+  }
+
+  const compObj = COMPS.find(c => c.code === code) || {};
+  const compName = CODE_MAP[code] || compObj.name || code;
+
+  const statBarHtml = `
+  <div class="widget widget-statbar">
+    <div class="widget-head">
+      <div class="widget-title widget-accent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        League Pulse · ${compName}
+      </div>
+      <span class="widget-meta">${currentSeason}</span>
+    </div>
+    <div class="statbar-grid">
+      <div class="stat-tile">
+        <div class="stat-tile-label">Leader</div>
+        <div class="stat-tile-value mint">${leaderName}</div>
+        <div class="stat-tile-sub">${leaderPts} pts</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">Total Goals</div>
+        <div class="stat-tile-value gold">${totalGoals}</div>
+        <div class="stat-tile-sub">this season</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">Avg / Match</div>
+        <div class="stat-tile-value ice">${avgGoals}</div>
+        <div class="stat-tile-sub">goals per game</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">Matches Played</div>
+        <div class="stat-tile-value">${Math.round(totalMatches)}</div>
+        <div class="stat-tile-sub">across ${allRows.length} clubs</div>
+      </div>
+      <div class="stat-tile">
+        <div class="stat-tile-label">${relegatedLabel}</div>
+        <div class="stat-tile-value pink" style="font-size:16px">${relegatedStr}</div>
+        <div class="stat-tile-sub">${relegatedSub}</div>
+      </div>
+    </div>
+  </div>`;
+
+  const renderRows = (rows, isGrp) => {
+    return rows.map(row => {
+      const pos  = row.position ?? 0;
+      const team = row.team || {};
+      const gd   = row.goalDifference ?? 0;
+
+      const formStr = row.form || '';
+      const form = formStr.includes(',') ? formStr.split(',').filter(Boolean) : formStr.split('').filter(Boolean);
+
+      let barCls = 'plain';
+      if (isGrp) {
+        if (pos <= 2) barCls = 'cl';
+      } else {
+        if (pos <= 4) barCls = 'cl';
+        else if (pos <= 6) barCls = 'euro';
+        else if (rows.length > 6 && pos >= rows.length - 2) barCls = 'rel';
+      }
+
+      const crestHtml = team.crest
+        ? `<img class="club-crest" src="${team.crest}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<div class=\\'club-crest-fb\\'>${(team.tla||'?').slice(0,3)}</div>'">`
+        : `<div class="club-crest-fb">${(team.tla||team.shortName||'?').slice(0,3).toUpperCase()}</div>`;
+
+      const gdCls = gd > 0 ? 'gd-p' : gd < 0 ? 'gd-n' : 'gd-z';
+      const gdStr = gd > 0 ? `+${gd}` : String(gd);
+      const formHtml = form.slice(-5).map(f => `<div class="fp ${f}">${f}</div>`).join('');
+
+      return `<tr>
+        <td><div class="pos-cell"><div class="pos-bar ${barCls}"></div><span class="pos-num">${pos}</span></div></td>
+        <td>
+          <div class="club-cell team-link" onclick="openTeamModal(${team.id})">
+            ${crestHtml}<span class="club-name">${team.shortName||team.name||'–'}</span>
+          </div>
+        </td>
+        <td>${row.playedGames??0}</td>
+        <td><span class="pts-val">${row.points??0}</span></td>
+        <td>${row.won??0}</td>
+        <td>${row.draw??0}</td>
+        <td>${row.lost??0}</td>
+        <td>${row.goalsFor??0}</td>
+        <td>${row.goalsAgainst??0}</td>
+        <td class="${gdCls}" style="font-weight:500">${gdStr}</td>
+        <td><div class="form-row">${formHtml||'<span style="color:var(--dimmer)">–</span>'}</div></td>
+      </tr>`;
+    }).join('');
+  };
+
+  let tableHtml = '';
+  if (isGroupStage) {
+    groups.forEach(g => {
+      tableHtml += `
+        <tr class="group-header-row" style="background: var(--lift);">
+          <td colspan="11" style="padding: 12px 16px; border-bottom: 1px solid var(--border); text-align: left;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <div style="width: 3px; height: 16px; background: var(--mint); border-radius: 2px;"></div>
+              <span style="font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sub);">${(g.group||'Group').replace(/_/g,' ')}</span>
+            </div>
+          </td>
+        </tr>`;
+      tableHtml += renderRows(g.table || [], true);
+    });
+  } else {
+    const tgt = groups.find(g => g.type === 'TOTAL') || groups[0];
+    tableHtml += renderRows(tgt.table || [], false);
+  }
+
+  let tabBarHtml = '';
+  if (!isGroupStage && groups.length > 1) {
+    tabBarHtml = `
+    <div class="standings-tab-bar" id="std-tab-bar">
+      ${groups.map((g,i) => `<button class="stab${i===0?' on':''}" data-gi="${i}">${g.type||g.stage||'Group'}</button>`).join('')}
+    </div>`;
+  }
+
+  const standingsWidgetHtml = `
+  <div class="widget widget-standings">
+    <div class="widget-head">
+      <div class="widget-title widget-accent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        League Table
+      </div>
+      <div class="widget-meta" id="std-type-meta">${currentSeason}</div>
+    </div>
+    ${tabBarHtml}
+    <div id="std-tables-wrap" style="overflow-x:auto">
+      <table class="tbl" style="border-collapse: collapse;">
+        <thead class="tbl-h">
+          <tr>
+            <th style="width:40px">Pos</th>
+            <th style="text-align:left">Club</th>
+            <th title="Played">MP</th>
+            <th class="col-pts" title="Points">PTS</th>
+            <th title="Won">W</th><th title="Drawn">D</th><th title="Lost">L</th>
+            <th title="Goals For">GF</th><th title="Goals Against">GA</th>
+            <th title="Goal Difference">GD</th>
+            <th title="Last 5 matches">Form</th>
+          </tr>
+        </thead>
+        <tbody class="tbl-body" id="std-tbody">${tableHtml}</tbody>
+      </table>
+    </div>
+  </div>`;
+
+  const scorersSidebarHtml = `<div class="widget widget-scorers" id="scorers-sidebar-widget">
+    <div class="widget-head">
+      <div class="widget-title widget-accent-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Golden Boot
+      </div>
+      <span class="widget-meta">${compObj.code||code}</span>
+    </div>
+    <div class="scorer-list-head"><span>Player</span><span>Ast &nbsp; Goals</span></div>
+    <div id="scorers-sidebar-body"><div class="empty-state" style="padding:24px">Loading…</div></div>
+  </div>`;
+
+  dashboard.innerHTML = statBarHtml + standingsWidgetHtml + scorersSidebarHtml;
+
+  if (!isGroupStage && groups.length > 1) {
+    const tabs = document.querySelectorAll('#std-tab-bar .stab');
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+        const g = groups[btn.dataset.gi];
+        document.getElementById('std-tbody').innerHTML = renderRows(g.table || [], false);
+      });
+    });
+  }
+
+  loadScorersSidebar(code);
+}
+
+/* ─── MATCHES DASHBOARD ─────────────────────────────────────────────── */
+function renderMatchesDash(matches, standData, code) {
+  if (!Array.isArray(matches) || !matches.length) {
+    dashboard.innerHTML = `<div class="widget widget-matches"><div class="empty-state">No match data<small>./data/${currentSeason}/matches/${code}.json</small></div></div>`;
+    return;
+  }
+
+  const isReallyLive = m => (m.status==='IN_PLAY'||m.status==='PAUSED') && !m.score?.winner;
+  const isReallyDone = m => m.status==='FINISHED' || ((m.status==='IN_PLAY'||m.status==='PAUSED') && !!m.score?.winner);
+
+  const live    = matches.filter(isReallyLive);
+  const upcoming= matches.filter(m => m.status==='SCHEDULED'||m.status==='TIMED').slice(0, 40);
+  const finished= matches.filter(isReallyDone).slice(-30).reverse();
+
+  const totalMatches = matches.length;
+  const finishedCount= matches.filter(m=>m.status==='FINISHED').length;
+  const scheduledCount= upcoming.length;
+  const totalGoals = matches.filter(m=>m.status==='FINISHED').reduce((s,m) => s + (m.score?.fullTime?.home??0) + (m.score?.fullTime?.away??0), 0);
+  const avgGoals = finishedCount > 0 ? (totalGoals / finishedCount).toFixed(2) : '0.00';
+
+  const compObj = COMPS.find(c => c.code === code) || {};
+  const compName = CODE_MAP[code] || compObj.name || code;
+
+  const statBarHtml = `
+  <div class="widget widget-statbar">
+    <div class="widget-head">
+      <div class="widget-title widget-accent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Season Stats · ${compName}
+      </div>
+      <span class="widget-meta">${currentSeason}</span>
+    </div>
+    <div class="statbar-grid">
+      <div class="stat-tile"><div class="stat-tile-label">Total Matches</div><div class="stat-tile-value">${totalMatches}</div><div class="stat-tile-sub">all scheduled</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Played</div><div class="stat-tile-value mint">${finishedCount}</div><div class="stat-tile-sub">complete</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Remaining</div><div class="stat-tile-value ice">${scheduledCount}</div><div class="stat-tile-sub">upcoming</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Goals Scored</div><div class="stat-tile-value gold">${totalGoals}</div><div class="stat-tile-sub">season total</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Goals / Match</div><div class="stat-tile-value pink">${avgGoals}</div><div class="stat-tile-sub">avg per game</div></div>
+    </div>
+  </div>`;
+
+  let sectionsHtml = '';
+  const renderSection = (title, arr) => {
+    if (!arr.length) return '';
+    return `
+      <div class="match-group-hd"><div class="grp-bar"></div><span>${title}</span><span style="color:var(--dim);font-size:9px;margin-left:auto">${arr.length} match${arr.length!==1?'es':''}</span></div>
+      <div class="match-grid">${arr.map(matchCardHtml).join('')}</div>`;
+  };
+
+  sectionsHtml += renderSection('🔴 LIVE NOW', live);
+  sectionsHtml += renderSection('Upcoming Fixtures', upcoming);
+  sectionsHtml += renderSection('Recent Results', finished);
+
+  const matchesWidgetHtml = `
+  <div class="widget widget-matches">
+    <div class="widget-head">
+      <div class="widget-title widget-accent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Fixtures &amp; Results
+      </div>
+      <span class="widget-meta">${compName}</span>
+    </div>
+    ${sectionsHtml || `<div class="empty-state">No fixture data</div>`}
+  </div>`;
+
+  const scorersSidebarHtml = `<div class="widget widget-scorers" id="scorers-sidebar-widget">
+    <div class="widget-head">
+      <div class="widget-title widget-accent-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Top Scorers
+      </div>
+      <span class="widget-meta">${compObj.code||code}</span>
+    </div>
+    <div class="scorer-list-head"><span>Player</span><span>Ast &nbsp; Gls</span></div>
+    <div id="scorers-sidebar-body"><div class="empty-state" style="padding:24px">Loading…</div></div>
+  </div>`;
+
+  dashboard.innerHTML = statBarHtml + matchesWidgetHtml + scorersSidebarHtml;
+  loadScorersSidebar(code);
+}
+
+/* ─── MATCH CARD HTML ───────────────────────────────────────────────── */
+function matchCardHtml(match) {
+  const home   = match.homeTeam || {};
+  const away   = match.awayTeam || {};
+  const status = match.status || 'UNKNOWN';
+  const isLive = status === 'IN_PLAY' || status === 'PAUSED';
+  const isDone = status === 'FINISHED';
+
+  const hs  = match.score?.fullTime?.home;
+  const as_ = match.score?.fullTime?.away;
+  const hasScore = hs != null && as_ != null;
+  const homeWon = hasScore && hs > as_;
+  const awayWon = hasScore && as_ > hs;
+
+  let dateStr = '–';
+  if (match.utcDate) {
+    const d = new Date(match.utcDate);
+    dateStr = d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' }) + ' ' + d.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', hour12:false });
+  }
+
+  let chipHtml;
+  if (isLive) {
+    const min = match.minute ? `${match.minute}'${match.injuryTime ? `+${match.injuryTime}` : ''}` : 'LIVE';
+    chipHtml = `<span class="chip chip-live">${min}</span>`;
+  } else if (isDone) chipHtml = `<span class="chip chip-ft">FT</span>`;
+  else chipHtml = `<span class="chip chip-sched">${status.replace(/_/g,' ')}</span>`;
+
+  const crestImg = (team) => team.crest ? `<img class="mcard-crest" src="${team.crest}" alt="" loading="lazy" onerror="this.style.display='none'">` : '';
+  const hScoreCls = `mcard-score${isLive?' live':''}${isDone&&!homeWon?' faded':''}`;
+  const aScoreCls = `mcard-score${isLive?' live':''}${isDone&&!awayWon?' faded':''}`;
+
+  const goals = match.goals || [];
+  let goalsSummary = '';
+  if (isDone && goals.length > 0) {
+    const homeGoals = goals.filter(g => {
+      const isHomeTeam = g.team?.id === home.id || g.team?.name === home.name;
+      return g.type === 'OWN_GOAL' ? !isHomeTeam : isHomeTeam;
+    });
+    const awayGoals = goals.filter(g => {
+      const isAwayTeam = g.team?.id === away.id || g.team?.name === away.name;
+      return g.type === 'OWN_GOAL' ? !isAwayTeam : isAwayTeam;
+    });
+
+    const goalLine = (gs) => gs.map(g => {
+      const name = (g.scorer?.name||'').split(' ').pop();
+      const min = g.minute ? `${g.minute}'` : '';
+      const typeStr = g.type === 'PENALTY' ? ' (P)' : g.type === 'OWN_GOAL' ? ' (OG)' : '';
+      return `${name}${typeStr} ${min}`;
+    }).join(', ');
+
+    if (homeGoals.length) goalsSummary += `<div style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-top:3px;line-height:1.4">${goalLine(homeGoals)}</div>`;
+    if (awayGoals.length) goalsSummary += `<div style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-top:1px;line-height:1.4;text-align:right">${goalLine(awayGoals)}</div>`;
+  }
+
+  const homeFm = home.formation ? `<span class="mcard-formation">${home.formation}</span>` : '';
+  const awayFm = away.formation ? `<span class="mcard-formation">${away.formation}</span>` : '';
+  const rankBadge = (team) => team.leagueRank ? `<span style="font-family:var(--mono);font-size:8px;color:var(--dim);margin-left:3px">#${team.leagueRank}</span>` : '';
+
+  return `
+  <div class="mcard${isLive?' is-live':''}">
+    <div class="mcard-top"><span class="mcard-date">${dateStr}</span>${chipHtml}</div>
+    <div class="mcard-fixture">
+      <div class="mcard-team">
+        <div class="mcard-team-l team-link" onclick="openTeamModal(${home.id})">
+          ${crestImg(home)}
+          <span class="mcard-name${isDone&&!homeWon?' faded':''}">${home.shortName||home.tla||'Home'}</span>
+          ${rankBadge(home)}
+        </div>
+        ${homeFm}
+        <span class="${hScoreCls}">${hasScore||isLive?(hs??0):'–'}</span>
+      </div>
+      <div class="mcard-team">
+        <div class="mcard-team-l team-link" onclick="openTeamModal(${away.id})">
+          ${crestImg(away)}
+          <span class="mcard-name${isDone&&!awayWon?' faded':''}">${away.shortName||away.tla||'Away'}</span>
+          ${rankBadge(away)}
+        </div>
+        ${awayFm}
+        <span class="${aScoreCls}">${hasScore||isLive?(as_??0):'–'}</span>
+      </div>
+    </div>
+    ${goalsSummary}
+    <div class="mcard-foot">
+      <span>${match.matchday ? 'MD '+match.matchday : (match.stage||'').replace(/_/g,' ')}</span>
+      ${match.venue ? `<span style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${match.venue}</span>` : ''}
+    </div>
+  </div>`;
+}
+
+/* ─── SCORERS DASHBOARD ─────────────────────────────────────────────── */
+function renderScorersDash(payload, code) {
+  const scorers = (payload.scorers || (Array.isArray(payload) ? payload : []));
+  if (!scorers.length) {
+    dashboard.innerHTML = `<div class="widget widget-standings"><div class="empty-state">No scorer data<small>./data/${currentSeason}/scorers/${code}.json</small></div></div>`;
+    return;
+  }
+
+  const topGoals   = scorers[0]?.goals ?? 0;
+  const topScorer  = scorers[0]?.player?.name || '–';
+  const totalGoals = scorers.reduce((s,sc) => s + (sc.goals||0), 0);
+  const totalAst   = scorers.reduce((s,sc) => s + (sc.assists||0), 0);
+  const totalPen   = scorers.reduce((s,sc) => s + (sc.penalties||0), 0);
+
+  const compObj = COMPS.find(c => c.code === code) || {};
+  const compName = CODE_MAP[code] || compObj.name || code;
+
+  const statBarHtml = `
+  <div class="widget widget-statbar">
+    <div class="widget-head">
+      <div class="widget-title widget-accent-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Golden Boot Stats · ${compName}
+      </div>
+      <span class="widget-meta">${currentSeason}</span>
+    </div>
+    <div class="statbar-grid">
+      <div class="stat-tile"><div class="stat-tile-label">Top Scorer</div><div class="stat-tile-value gold" style="font-size:16px">${topScorer.split(' ').pop()}</div><div class="stat-tile-sub">${topGoals} goals</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Total Goals</div><div class="stat-tile-value mint">${totalGoals}</div><div class="stat-tile-sub">by top ${scorers.length} players</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Total Assists</div><div class="stat-tile-value ice">${totalAst}</div><div class="stat-tile-sub">by top ${scorers.length}</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Penalties</div><div class="stat-tile-value pink">${totalPen}</div><div class="stat-tile-sub">scored</div></div>
+      <div class="stat-tile"><div class="stat-tile-label">Players Tracked</div><div class="stat-tile-value">${scorers.length}</div><div class="stat-tile-sub">in ranking</div></div>
+    </div>
+  </div>`;
+
+  let rowsHtml = '';
+  scorers.forEach((s, i) => {
+    const player  = s.player || {};
+    const team    = s.team   || {};
+    const goals   = s.goals  ?? 0;
+    const assists = s.assists ?? 0;
+    const pens    = s.penalties ?? 0;
+    const played  = s.playedMatches ?? 0;
+    const gpg     = played > 0 ? (goals / played).toFixed(2) : '0.00';
+    const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+    const crestHtml = team.crest ? `<img style="width:16px;height:16px;object-fit:contain;flex-shrink:0;margin-right:6px" src="${team.crest}" alt="" loading="lazy">` : '';
+
+    rowsHtml += `<tr>
+      <td style="text-align:center"><div class="rank-chip ${rankCls}" style="margin:0 auto">${i+1}</div></td>
+      <td style="text-align:left">
+        <div style="font-size:12px;font-weight:600;color:var(--text)">${player.name||'–'}</div>
+        <div style="font-family:var(--mono);font-size:9px;color:var(--dim);margin-top:1px">${player.position||''} ${player.nationality?'· '+player.nationality:''}</div>
+      </td>
+      <td style="text-align:left">
+        <div class="team-link team-link-inline" style="display:inline-flex;align-items:center;" onclick="openTeamModal(${team.id})">
+          ${crestHtml}<span style="font-size:11px;color:var(--sub)">${team.shortName||team.tla||'–'}</span>
+        </div>
+      </td>
+      <td style="font-weight:500;color:var(--mint);font-size:15px">${goals}</td>
+      <td style="color:var(--sub)">${assists}</td>
+      <td style="color:var(--dim)">${pens}</td>
+      <td style="color:var(--dim)">${played}</td>
+      <td style="color:var(--sub)">${gpg}</td>
+    </tr>`;
+  });
+
+  const scorersWidgetHtml = `
+  <div class="widget widget-standings">
+    <div class="widget-head">
+      <div class="widget-title widget-accent-gold">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Top Scorers
+      </div>
+      <span class="widget-meta">${compName} · ${currentSeason}</span>
+    </div>
+    <div style="overflow-x:auto">
+      <table class="tbl"><thead class="tbl-h"><tr><th style="width:40px">#</th><th style="text-align:left">Player</th><th style="text-align:left">Club</th><th class="col-pts" title="Goals">G</th><th title="Assists">A</th><th title="Penalties">Pen</th><th title="Matches Played">MP</th><th title="Goals per game">G/M</th></tr></thead><tbody class="tbl-body">${rowsHtml}</tbody></table>
+    </div>
+  </div>`;
+
+  dashboard.innerHTML = statBarHtml + scorersWidgetHtml;
+}
+
+/* ─── SIDEBAR HELPERS ────────────────────────────────────────────────── */
+async function loadScorersSidebar(code) {
+  const el = $('scorers-sidebar-body');
+  if (!el) return;
+  try {
+    const r = await fetch(`./data/${currentSeason}/scorers/${code}.json?t=${Date.now()}`);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    const j = await r.json();
+    const scorers = (j.data || {}).scorers || [];
+    el.innerHTML = scorers.length
+      ? scorers.slice(0, 20).map((s, i) => {
+          const rankCls = i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'rank-n';
+          return `<div class="scorer-item">
+            <div class="scorer-left">
+              <div class="rank-chip ${rankCls}">${i+1}</div>
+              <div class="scorer-info">
+                <div class="scorer-name">${(s.player||{}).name||'–'}</div>
+                <div class="scorer-club team-link team-link-inline" style="display:inline-block;" onclick="openTeamModal(${s.team?.id})">${s.team?.tla||s.team?.shortName||'–'} ${(s.player||{}).nationality?`· ${(s.player||{}).nationality}`:''}</div>
+              </div>
+            </div>
+            <div class="scorer-right">
+              <div class="stat-col"><div class="stat-n assists">${s.assists??0}</div><div class="stat-lbl">Ast</div></div>
+              <div class="stat-col"><div class="stat-n goals">${s.goals??0}</div><div class="stat-lbl">Gls</div></div>
+            </div>
+          </div>`;
+        }).join('')
+      : `<div class="empty-state" style="padding:24px">No scorer data</div>`;
+  } catch(err) {
+    el.innerHTML = `<div class="empty-state" style="padding:24px">Unavailable</div>`;
+  }
+}
+
+/* ─── EVENT BINDINGS ─────────────────────────────────────────────────── */
+document.querySelectorAll('.ttab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.ttab').forEach(b => b.classList.remove('on'));
+    btn.classList.add('on');
+    currentTab = btn.dataset.tab;
+    load();
+  });
+});
+
+seasonSel.addEventListener('change', async () => { 
+  currentSeason = seasonSel.value; 
+  veil.classList.add('on');
+  await fetchCompetitions();
+  
+  if (COMPS.length > 0 && (!currentComp || !COMPS.find(c => c.code === currentComp))) {
+    currentComp = COMPS[0].code;
+  } else if (COMPS.length === 0) {
+    currentComp = null;
+  }
+  
+  buildCompNav();
+  buildLiveBar();
+  await load();
+});
+
+/* ─── TRIGGER INIT ───────────────────────────────────────────────────── */
+init();
+
+})();
+</script>
+</body>
+</html>

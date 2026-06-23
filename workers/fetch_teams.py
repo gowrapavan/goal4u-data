@@ -1,81 +1,54 @@
 #!/usr/bin/env python3
 """
-workers/fetch_teams.py
-──────────────────────────────────────────────────────────────────────────────
-Fetches complete team profiles (club info + coach + full squad) for every
-team in every tracked competition.
+workers/fetch_teams.py — Fetch teams + squads for league competitions.
 
-WHY THIS APPROACH (important — read before modifying):
-───────────────────────────────────────────────────────
-The previous version called GET /teams/{id}?squad=true for every team.
-On the free tier (TIER_ONE) this returns HTTP 403 for most teams — only a
-handful of "featured" teams are accessible via that endpoint on the free plan.
+Writes a single teams.json per competition folder:
+    data/{season}/{CODE}/teams.json       ← leagues
+    data/world-cup/world-cup-{year}/teams.json  ← called from fetch_worldCup.py
 
-The CORRECT approach for the free tier is:
-    GET /competitions/{code}/teams
+Audit note: teams should be refreshed at most once every ~2 months per plan.
+The GitHub Actions audit will enforce the schedule; this script always writes
+when called directly.
 
-This endpoint returns ALL teams in the competition with full squad data
-(coach, players with dateOfBirth/nationality/shirtNumber/marketValue/contract)
-in a single API call, and it works on all tiers.
-
-The previous run logged: "119 written, 85 failed" — every single 403 failure
-was a victim of calling /teams/{id} directly. This script eliminates all 403s
-by using the competition-scoped teams endpoint instead.
-
-Output layout
-─────────────
-    data/{season}/teams/{COMP_CODE}/{team_id}.json
-
-Examples:
-    data/2025-2026/teams/PL/57.json      ← Arsenal FC (full squad)
-    data/2025-2026/teams/PL/65.json      ← Manchester City FC
-    data/2025-2026/teams/CL/86.json      ← Real Madrid CF
-    data/2025-2026/teams/WC/762.json     ← Argentina
-
-Sync schedule: daily at 06:00 UTC via GitHub Actions.
+Usage:
+    python -m workers.fetch_teams                        # current season, all leagues
+    python -m workers.fetch_teams --season 2024          # historical
+    python -m workers.fetch_teams --competition PL       # one competition
 """
+
+from __future__ import annotations
 
 import logging
 import sys
-from datetime import datetime, timezone
+from typing import Optional
 
 sys.path.insert(0, ".")
 
-from config import TEAM_STRIP_FIELDS, TRACKED_COMPETITIONS, get_season_paths
+from config import (  # type: ignore[import]
+    LEAGUE_COMPETITIONS,
+    TEAM_STRIP_FIELDS,
+    get_current_season_start_year,
+    get_season_paths,
+)
+from workers.tournament_paths import get_data_paths, is_tournament
 from workers.utils import fetch, safe_write, strip_fields
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-    datefmt="%Y-%m-%dT%H:%M:%SZ",
 )
 logger = logging.getLogger("fetch_teams")
 
 
-# ── FLATTEN ───────────────────────────────────────────────────────────────────
+# ── Flatten helpers ───────────────────────────────────────────────────────────
 
 def flatten_player(player: dict) -> dict:
-    """
-    Normalise one squad member from the API response.
-
-    The competition/teams endpoint returns players with:
-        id, name, firstName, lastName, position, dateOfBirth,
-        nationality, shirtNumber, marketValue, contract
-
-    We keep ALL of these. Missing keys default to None.
-    Extra keys from future API versions are passed through unchanged.
-    """
-    # Keys we always want to guarantee are present
     GUARANTEED = [
-        "id", "name", "firstName", "lastName",
-        "position", "dateOfBirth", "nationality",
-        "shirtNumber", "marketValue", "contract",
+        "id", "name", "firstName", "lastName", "position",
+        "dateOfBirth", "nationality", "shirtNumber", "marketValue", "contract",
     ]
-    out = {}
-    # First pass: guaranteed keys with None fallback
-    for key in GUARANTEED:
-        out[key] = player.get(key)
-    # Second pass: pass through any extra keys the API adds
+    out = {key: player.get(key) for key in GUARANTEED}
+    # carry forward any extra keys the API adds
     for k, v in player.items():
         if k not in out:
             out[k] = v
@@ -83,10 +56,6 @@ def flatten_player(player: dict) -> dict:
 
 
 def flatten_coach(coach: dict | None) -> dict | None:
-    """
-    Normalise the coach sub-object.
-    Keeps: id, firstName, lastName, name, nationality, dateOfBirth, contract.
-    """
     if not coach:
         return None
     return {
@@ -101,211 +70,148 @@ def flatten_coach(coach: dict | None) -> dict | None:
 
 
 def flatten_team(raw: dict) -> dict:
-    """
-    Full flatten pipeline for one team object.
-
-    Strips only the fields listed in TEAM_STRIP_FIELDS (address, phone, email,
-    lastUpdated, _links). Everything else — crest, website, founded, clubColors,
-    marketValue, activeCompetitions, runningCompetitions, staff — is retained.
-
-    Squad members and coach are normalised through their own flatten functions.
-    Any top-level keys not explicitly handled are passed through unchanged so
-    future API additions are never silently dropped.
-    """
-    # Work on a shallow copy to avoid mutating the original response dict
-    raw = dict(raw)
+    raw  = dict(raw)
     strip_fields(raw, TEAM_STRIP_FIELDS)
-
-    area  = raw.pop("area", None) or {}
+    area  = raw.pop("area",  None) or {}
     coach = raw.pop("coach", None)
     squad = raw.pop("squad", None) or []
-
-    team: dict = {
-        # Identity
-        "id":        raw.pop("id", None),
-        "name":      raw.pop("name", None),
-        "shortName": raw.pop("shortName", None),
-        "tla":       raw.pop("tla", None),
-
-        # Branding / info — ALL retained
-        "crest":       raw.pop("crest", None),      # logo URL
-        "website":     raw.pop("website", None),
-        "founded":     raw.pop("founded", None),
-        "clubColors":  raw.pop("clubColors", None),
-        "venue":       raw.pop("venue", None),
-
-        # Geography — full area object + convenience shortcut
+    return {
+        "id":                 raw.pop("id",                 None),
+        "name":               raw.pop("name",               None),
+        "shortName":          raw.pop("shortName",          None),
+        "tla":                raw.pop("tla",                None),
+        "crest":              raw.pop("crest",              None),
+        "website":            raw.pop("website",            None),
+        "founded":            raw.pop("founded",            None),
+        "clubColors":         raw.pop("clubColors",         None),
+        "venue":              raw.pop("venue",              None),
         "area": {
             "id":   area.get("id"),
             "name": area.get("name"),
             "code": area.get("code"),
             "flag": area.get("flag"),
         },
-        "area_code": area.get("code"),   # shortcut for the FastAPI router
-
-        # Competition membership (retained — shows which comps team is in)
-        "activeCompetitions":  raw.pop("activeCompetitions", None),
+        "area_code":           area.get("code"),
+        "activeCompetitions":  raw.pop("activeCompetitions",  None),
         "runningCompetitions": raw.pop("runningCompetitions", None),
-
-        # Squad value
-        "marketValue": raw.pop("marketValue", None),
-
-        # People
-        "coach": flatten_coach(coach),
-        "squad": [flatten_player(p) for p in squad],
-        "staff": raw.pop("staff", []),
+        "marketValue":         raw.pop("marketValue",         None),
+        "coach":  flatten_coach(coach),
+        "squad":  [flatten_player(p) for p in squad],
+        "staff":  raw.pop("staff", []),
+        # carry forward any remaining keys
+        **{k: v for k, v in raw.items()},
     }
 
-    # Pass through any remaining keys not explicitly handled above
-    # (future-proofing against API additions)
-    for k, v in raw.items():
-        if k not in team:
-            team[k] = v
 
-    return team
+# ── Core fetch ────────────────────────────────────────────────────────────────
 
-
-# ── FETCH PIPELINE ────────────────────────────────────────────────────────────
-
-def fetch_and_write_teams_for_competition(
+def fetch_teams_for_competition(
     code: str,
-    teams_dir: str,
-    season: int | None = None,
-) -> tuple[int, int]:
+    *,
+    api_season: Optional[int] = None,
+    season_str: Optional[str] = None,
+    paths: Optional[dict] = None,
+) -> int:
     """
-    Fetch all teams for competition `code` using a single API call to:
-        GET /competitions/{code}/teams
+    Fetch all teams for `code` and write teams.json.
 
-    This endpoint returns the full team roster (coach + squad with player
-    attributes) for ALL teams in the competition on all API tiers — no
-    individual /teams/{id} calls needed, no 403s.
+    `paths` can be pre-computed (used by fetch_worldCup / fetch_Euro so they
+    control the output location).  If omitted, paths are derived from
+    `season_str` via get_data_paths().
 
-    Pass `season` (e.g. 2024) to pull that historical season's squads instead
-    of the current one — the teams subresource accepts ?season=YYYY.
-
-    Writes one file per team:
-        {teams_dir}/{code}/{team_id}.json
-
-    Returns (written_count, failed_count).
+    Returns the number of teams written (0 on failure).
     """
-    logger.info("Fetching teams for competition %s%s ...", code, f" (season={season})" if season else "")
+    params = {"season": api_season} if api_season is not None else None
+    raw    = fetch(f"/competitions/{code}/teams", params=params)
+    if not raw:
+        logger.warning("%s: no team data returned", code)
+        return 0
 
-    # Single call — gets all teams + squads for this competition
-    params = {"season": season} if season is not None else None
-    data = fetch(f"/competitions/{code}/teams", params=params)
-
-    if data is None:
-        logger.warning(
-            "  Teams fetch failed for %s — preserving any existing files", code
-        )
-        return 0, 0
-
-    raw_teams = data.get("teams", [])
-    logger.info("  %d teams returned for %s", len(raw_teams), code)
-
+    raw_teams = raw.get("teams", [])
     if not raw_teams:
-        logger.warning("  Empty teams list for %s — nothing to write", code)
-        return 0, 0
+        logger.warning("%s: empty teams list", code)
+        return 0
 
-    written  = 0
-    failed   = 0
-    seen_ids: set[int] = set()
+    if paths is None:
+        paths = get_data_paths(code, season=season_str)
 
-    for raw in raw_teams:
-        team_id = raw.get("id")
-        if not team_id or team_id in seen_ids:
+    teams = []
+    seen: set[int] = set()
+    for team_raw in raw_teams:
+        tid = team_raw.get("id")
+        if not tid or tid in seen:
             continue
-        seen_ids.add(team_id)
-
-        team_name = raw.get("name", "unknown")
-
+        seen.add(tid)
         try:
-            flattened = flatten_team(raw)
+            teams.append(flatten_team(team_raw))
         except Exception as exc:
-            logger.warning(
-                "  flatten_team failed for team %s (%s): %s — skipping",
-                team_id, team_name, exc,
-            )
-            failed += 1
-            continue
+            logger.warning("%s: skipping team %s due to error: %s", code, tid, exc)
 
-        # data/{season}/teams/{CODE}/{team_id}.json
-        out_path = f"{teams_dir}/{code}/{team_id}.json"
+    if teams:
+        safe_write(paths["teams"], teams)
+        logger.info("%s: wrote %d teams → %s", code, len(teams), paths["teams"])
 
-        if safe_write(out_path, flattened):
-            written += 1
-        else:
-            failed += 1
-
-    logger.info(
-        "  %s: %d written, %d failed (of %d total)",
-        code, written, failed, len(raw_teams),
-    )
-    return written, failed
+    return len(teams)
 
 
-def run(season: int | None = None) -> None:
+# ── Batch runner ──────────────────────────────────────────────────────────────
+
+def run(
+    season: Optional[int] = None,
+    competition: Optional[str] = None,
+) -> None:
     """
-    season = None  → current season (default, used by the daily cron)
-    season = 2024   → historical 2024/25 squads. Writes under
-                      data/2024-2025/teams/... — same folder layout the
-                      current-season path uses, no data-structure change.
+    Fetch teams for all (or one) league competition(s).
+
+    season      : API season start year. None → current season.
+    competition : Single competition code. None → all LEAGUE_COMPETITIONS.
     """
     if season is not None:
-        folder    = f"{season}-{season + 1}"
-        teams_dir = f"data/{folder}/teams"
+        season_str = f"{season}-{season + 1}"
         api_season = season
     else:
-        from config import get_current_season_start_year
-        paths     = get_season_paths()
-        folder    = paths["season"]
-        teams_dir = paths["teams_dir"]
-        # Always pass an explicit season — see config.get_current_season_start_year()
-        # for why this matters (API's per-competition season rollover is uneven).
+        paths      = get_season_paths()
+        season_str = paths["season"]
         api_season = get_current_season_start_year()
 
-    logger.info(
-        "=== fetch_teams started [season=%s] at %s ===",
-        folder, datetime.now(timezone.utc).isoformat(),
-    )
+    if competition:
+        code_upper = competition.upper()
+        if is_tournament(code_upper):
+            logger.error(
+                "%s is a tournament code — use fetch_worldCup.py / fetch_Euro.py.",
+                code_upper,
+            )
+            return
+        codes = [code_upper]
+    else:
+        codes = [c for c in LEAGUE_COMPETITIONS if not is_tournament(c)]
 
-    total_written = 0
-    total_failed  = 0
-    comps_ok      = 0
-
-    for code in TRACKED_COMPETITIONS:
-        written, failed = fetch_and_write_teams_for_competition(code, teams_dir, season=api_season)
-        total_written += written
-        total_failed  += failed
-        if written > 0:
-            comps_ok += 1
-
-    logger.info(
-        "=== fetch_teams complete [season=%s]: "
-        "%d files written across %d/%d competitions, %d failed ===",
-        folder, total_written, comps_ok, len(TRACKED_COMPETITIONS), total_failed,
-    )
-
-    if total_written == 0:
-        logger.error(
-            "Zero team files written — check FOOTBALL_DATA_API_KEY"
+    for code in codes:
+        fetch_teams_for_competition(
+            code,
+            api_season=api_season,
+            season_str=season_str,
         )
-        sys.exit(1)
+
+
+# ── CLI ───────────────────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(
-        description="Fetch team profiles (club info + coach + full squad)."
-    )
+
+    parser = argparse.ArgumentParser(description="Fetch teams + squads for leagues.")
     parser.add_argument(
         "--season",
         type=int,
         default=None,
-        help=(
-            "Start year of a historical season to fetch squads for "
-            "(e.g. --season 2024 writes to data/2024-2025/teams/). "
-            "Omit to fetch the current season."
-        ),
+        help="Season start year (e.g. 2024 → 2024-2025). Default: current.",
+    )
+    parser.add_argument(
+        "--competition",
+        type=str,
+        default=None,
+        metavar="CODE",
+        help="Fetch only this competition code, e.g. PL, BL1.",
     )
     args = parser.parse_args()
-    run(season=args.season)
+    run(season=args.season, competition=args.competition)
