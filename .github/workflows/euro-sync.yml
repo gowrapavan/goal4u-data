@@ -1,0 +1,53 @@
+name: Euro Sync
+
+on:
+  workflow_dispatch:
+
+  # Uncomment during active Euro
+   schedule:
+     - cron: "0 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: euro-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Euro Pipeline
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: |
+          python main.py --only euro
+
+      - name: Commit Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add data/
+
+          git diff --cached --quiet && exit 0
+
+          git commit -m "chore(euro): update tournament data"
+          git push
