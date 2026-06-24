@@ -1,92 +1,93 @@
 name: World Cup Sync
 
 on:
-workflow_dispatch:
+  workflow_dispatch:
 
-schedule:
-- cron: "0 */6 * * *"
+  schedule:
+    - cron: "0 */6 * * *"
 
 permissions:
-contents: write
+  contents: write
 
 concurrency:
-group: worldcup-sync
-cancel-in-progress: true
+  group: worldcup-sync
+  cancel-in-progress: true
 
 env:
-FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
-WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
-PYTHONUNBUFFERED: "1"
+  FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+  WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
+  PYTHONUNBUFFERED: "1"
 
 jobs:
-sync:
-runs-on: ubuntu-latest
-timeout-minutes: 60
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
 
-```
-steps:
-  - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-  - uses: actions/setup-python@v5
-    with:
-      python-version: "3.12"
-      cache: pip
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
 
-  - name: Install Dependencies
-    run: |
-      python -m pip install --upgrade pip
-      pip install -r requirements.txt
-      pip install playwright playwright-stealth
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install playwright playwright-stealth
 
-  - name: Install Playwright Chromium
-    run: playwright install chromium --with-deps
+      - name: Install Playwright Chromium
+        run: playwright install chromium --with-deps
 
-  - name: Install Xvfb
-    run: sudo apt-get update && sudo apt-get install -y xvfb
+      - name: Install Xvfb
+        run: sudo apt-get update && sudo apt-get install -y xvfb
 
-  - name: Audit World Cup Matches
-    run: |
-      python -m workers.fetch_worldCup \
-        --mode audit \
-        --lookback 168
+      - name: Audit World Cup Matches
+        run: |
+          python -m workers.fetch_worldCup \
+            --mode audit \
+            --lookback 168
 
-  - name: Build Match Links
-    run: |
-      PYTHONPATH=${{ github.workspace }} \
-      xvfb-run --auto-servernum \
-      python main.py --only match_links --competition WC
+      - name: Build Match Links
+        run: |
+          PYTHONPATH=${{ github.workspace }} \
+          xvfb-run --auto-servernum \
+          python main.py --only match_links --competition WC
 
-  - name: Fetch Match Stats
-    run: |
-      PYTHONPATH=${{ github.workspace }} \
-      xvfb-run --auto-servernum \
-      python main.py \
-        --only match_stats \
-        --competition WC \
-        --workers 8 \
-        --checkpoint 25
+      - name: Fetch Match Stats
+        run: |
+          PYTHONPATH=${{ github.workspace }} \
+          xvfb-run --auto-servernum \
+          python main.py \
+            --only match_stats \
+            --competition WC \
+            --workers 8 \
+            --checkpoint 25
 
-  - name: Commit Changes
-    run: |
-      git config user.name "github-actions[bot]"
-      git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: Commit Changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-      git add data/
+          git add data/
 
-      git diff --cached --quiet && exit 0
+          git diff --cached --quiet && exit 0
 
-      git commit -m "chore(worldcup): audit tournament data"
+          git commit -m "chore(worldcup): audit tournament data"
 
-      for i in 1 2 3 4 5; do
-        git fetch origin main
-        if git rebase origin/main; then
-          if git push origin HEAD:main; then
-            exit 0
-          fi
-        else
-          git rebase --abort || true
-        fi
-        sleep 10
-      done
+          for i in 1 2 3 4 5; do
+            git fetch origin main
 
-      exit 1
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+
+            sleep 10
+          done
+
+          exit 1
