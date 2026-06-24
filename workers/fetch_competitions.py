@@ -121,6 +121,138 @@ def flatten_standings(raw_data: dict, code: str) -> dict | None:
     }
 
 
+# ── Tournament-specific standings helpers ─────────────────────────────────────
+
+def _build_team_group_map(matches_path: str) -> dict[int, str]:
+    """
+    Read matches.json and return {team_id: group_label} for GROUP_STAGE matches.
+    Returns empty dict if the file is missing or has no group info.
+    """
+    import json as _json
+    try:
+        with open(matches_path, encoding="utf-8") as fh:
+            payload = _json.load(fh)
+        matches: list[dict] = payload.get("data", [])
+    except (FileNotFoundError, _json.JSONDecodeError):
+        return {}
+
+    team_to_group: dict[int, str] = {}
+    for match in matches:
+        if match.get("stage") != "GROUP_STAGE":
+            continue
+        group = match.get("group")
+        if not group:
+            continue
+        home_id = (match.get("homeTeam") or {}).get("id")
+        away_id = (match.get("awayTeam") or {}).get("id")
+        if home_id:
+            team_to_group[home_id] = group
+        if away_id:
+            team_to_group[away_id] = group
+
+    return team_to_group
+
+
+def _split_by_group(
+    flat_table: list[dict],
+    team_group_map: dict[int, str],
+) -> dict[str, list[dict]]:
+    """
+    Split a flat standings table into a {group_label: [rows]} dict.
+    Rows with no group mapping are put under "UNKNOWN".
+    Within each group, rows are re-numbered 1..N by their original position order.
+    """
+    groups: dict[str, list[dict]] = {}
+    for row in flat_table:
+        team_id = (row.get("team") or {}).get("id")
+        group   = team_group_map.get(team_id, "UNKNOWN") if team_id else "UNKNOWN"
+        groups.setdefault(group, []).append(row)
+
+    # Re-number positions within each group
+    for rows in groups.values():
+        rows.sort(key=lambda r: r.get("position") or 9999)
+        for i, row in enumerate(rows, 1):
+            row = dict(row)
+            row["position"] = i
+            rows[i - 1] = row
+
+    return groups
+
+
+def flatten_tournament_standings(
+    raw_data: dict,
+    code: str,
+    matches_path: str,
+) -> dict | None:
+    """
+    Like flatten_standings() but splits the flat GROUP_STAGE table into
+    per-group entries using the team→group mapping derived from matches.json.
+
+    The output standings list has one entry per group (GROUP_A … GROUP_L)
+    instead of one flat entry with group=null.
+
+    Falls back to flatten_standings() if the matches file is unavailable
+    or contains no group info (e.g. before the tournament starts).
+    """
+    standings_list = raw_data.get("standings", [])
+    if not standings_list:
+        return None
+
+    season = raw_data.get("season") or {}
+
+    # Build the team→group map from matches.json
+    team_group_map = _build_team_group_map(matches_path)
+
+    # Find the TOTAL GROUP_STAGE entry (the one we want to split)
+    total_entry = next(
+        (s for s in standings_list if s.get("stage") == "GROUP_STAGE" and s.get("type") == "TOTAL"),
+        None,
+    )
+
+    if not total_entry or not team_group_map:
+        # Fallback: use the original flatten_standings
+        return flatten_standings(raw_data, code)
+
+    flat_table   = total_entry.get("table", [])
+    flat_rows    = [flatten_standing_row(r) for r in flat_table]
+    groups_split = _split_by_group(flat_rows, team_group_map)
+
+    # Sort group keys alphabetically (GROUP_A, GROUP_B, …)
+    sorted_groups = sorted(groups_split.keys())
+
+    per_group_standings = [
+        {
+            "stage": "GROUP_STAGE",
+            "type":  "TOTAL",
+            "group": group_label,
+            "table": groups_split[group_label],
+        }
+        for group_label in sorted_groups
+        if group_label != "UNKNOWN"
+    ]
+
+    # Append UNKNOWN at the end if any teams couldn't be mapped
+    if "UNKNOWN" in groups_split:
+        per_group_standings.append({
+            "stage": "GROUP_STAGE",
+            "type":  "TOTAL",
+            "group": "UNKNOWN",
+            "table": groups_split["UNKNOWN"],
+        })
+
+    return {
+        "competition_code": code,
+        "display_title":    get_display_title(code),
+        "season": {
+            "id":              season.get("id"),
+            "startDate":       season.get("startDate"),
+            "endDate":         season.get("endDate"),
+            "currentMatchday": season.get("currentMatchday"),
+        },
+        "standings": per_group_standings,
+    }
+
+
 def flatten_scorer(scorer: dict) -> dict:
     player = scorer.get("player") or {}
     team   = scorer.get("team")   or {}

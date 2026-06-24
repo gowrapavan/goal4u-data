@@ -32,7 +32,7 @@ sys.path.insert(0, ".")
 from config import SCORERS_LIMIT  # type: ignore[import]
 from workers.fetch_competitions import (
     flatten_competition_info,
-    flatten_standings,
+    flatten_tournament_standings,
     flatten_scorers,
 )
 from workers.fetch_matches import fetch_matches_for_competition
@@ -76,7 +76,7 @@ def fetch_euro_standing(year: int, paths: dict) -> None:
     if not raw:
         logger.warning("Euro %d: no standings data", year)
         return
-    flattened = flatten_standings(raw, CODE)
+    flattened = flatten_tournament_standings(raw, CODE, paths["matches"])
     if flattened:
         flattened["display_title"] = get_display_title(CODE, year)
         safe_write(paths["standing"], flattened)
