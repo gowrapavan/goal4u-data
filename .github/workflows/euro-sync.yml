@@ -3,9 +3,8 @@ name: Euro Sync
 on:
   workflow_dispatch:
 
-  # Uncomment during active Euro
-   schedule:
-     - cron: "0 */6 * * *"
+  schedule:
+    - cron: "0 */6 * * *"
 
 permissions:
   contents: write
@@ -21,11 +20,9 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -34,11 +31,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run Euro Pipeline
+      - name: Audit Euro Matches
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: |
-          python main.py --only euro
+          python -m workers.fetch_Euro \
+            --mode audit \
+            --lookback 168
+
+      - name: Build Match Links
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: |
+          python main.py --only match_links --competition EC
+
+      - name: Fetch Match Stats
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: |
+          python main.py \
+            --only match_stats \
+            --competition EC \
+            --workers 8 \
+            --checkpoint 25
 
       - name: Commit Changes
         run: |
@@ -49,5 +64,5 @@ jobs:
 
           git diff --cached --quiet && exit 0
 
-          git commit -m "chore(euro): update tournament data"
+          git commit -m "chore(euro): audit tournament data"
           git push

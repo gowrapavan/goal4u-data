@@ -160,6 +160,77 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
 
 # ── Match audit for one competition ──────────────────────────────────────────
 
+def audit_matches_for_tournament(
+    code: str,
+    paths: dict,
+    lookback_hours: int = 168,
+) -> tuple[int, int, int]:
+    """
+    Incremental match audit for a tournament (WC, EC).
+
+    Accepts a pre-built `paths` dict (from get_data_paths) so the caller
+    controls the output directory — no league season string needed.
+
+    Returns (stale_count, updated_count, skipped_count).
+    """
+    path = paths["matches"]
+    now  = datetime.now(timezone.utc)
+
+    try:
+        with open(path, encoding="utf-8") as fh:
+            payload = json.load(fh)
+        matches: list[dict] = payload.get("data", [])
+    except (FileNotFoundError, json.JSONDecodeError):
+        matches = []
+
+    if not matches:
+        logger.info("%s: no existing matches.json — skipping audit (run full fetch first)", code)
+        return 0, 0, 0
+
+    id_to_idx = {m.get("id"): i for i, m in enumerate(matches) if m.get("id")}
+    stale     = [m for m in matches if _is_stale(m, now, lookback_hours)]
+
+    if not stale:
+        logger.info("%s: %d matches checked, none stale", code, len(matches))
+        return 0, 0, len(matches)
+
+    logger.info(
+        "%s: %d / %d matches are stale — re-fetching individually",
+        code, len(stale), len(matches),
+    )
+
+    updated = 0
+    skipped = 0
+
+    for match in stale:
+        match_id = match.get("id")
+        raw      = fetch(f"/matches/{match_id}")
+        if not raw:
+            skipped += 1
+            continue
+
+        match_data = raw if raw.get("id") else raw.get("match") or raw
+        if not match_data.get("id"):
+            skipped += 1
+            continue
+
+        flattened = flatten_match(match_data, code)
+        idx       = id_to_idx.get(match_id)
+        if idx is not None:
+            matches[idx] = flattened
+        else:
+            matches.append(flattened)
+            id_to_idx[match_id] = len(matches) - 1
+        updated += 1
+
+    if updated > 0:
+        matches.sort(key=lambda m: m.get("utcDate") or "")
+        safe_write(path, matches)
+        logger.info("%s: audit updated %d matches", code, updated)
+
+    return len(stale), updated, skipped
+
+
 def audit_matches_for_competition(
     code: str,
     season_str: str,

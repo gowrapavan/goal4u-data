@@ -3,7 +3,6 @@ name: World Cup Sync
 on:
   workflow_dispatch:
 
-  # Uncomment during active World Cup
   schedule:
     - cron: "0 */6 * * *"
 
@@ -21,11 +20,9 @@ jobs:
     timeout-minutes: 60
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
@@ -34,11 +31,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run World Cup Pipeline
+      - name: Audit World Cup Matches
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: |
-          python main.py --only worldcup
+          python -m workers.fetch_worldCup \
+            --mode audit \
+            --lookback 168
+
+      - name: Build Match Links
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: |
+          python main.py --only match_links --competition WC
+
+      - name: Fetch Match Stats
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: |
+          python main.py \
+            --only match_stats \
+            --competition WC \
+            --workers 8 \
+            --checkpoint 25
 
       - name: Commit Changes
         run: |
@@ -49,5 +64,5 @@ jobs:
 
           git diff --cached --quiet && exit 0
 
-          git commit -m "chore(worldcup): update tournament data"
+          git commit -m "chore(worldcup): audit tournament data"
           git push
