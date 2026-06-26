@@ -29,15 +29,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Install Playwright browser (Cloudflare fallback)
+        run: |
+          pip install playwright --break-system-packages 2>/dev/null || pip install playwright
+          python -m playwright install --with-deps chromium
+
       - name: Run TM scraper (full refresh, current season, all leagues)
         env:
           SEASON: ""                 # empty -> current season, auto-resolved
           LEAGUES: ""                # empty -> all leagues
           FULLSCRAPE: "true"         # always force re-fetch on the yearly run
           SCAN_ALL_SEASONS: "false"  # yearly run only touches the current season
-          # Add any credentials cf_fetcher.py needs to get past Cloudflare, e.g.:
-          # PROXY_URL: ${{ secrets.PROXY_URL }}
-          # CF_CLEARANCE_COOKIE: ${{ secrets.CF_CLEARANCE_COOKIE }}
+          WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
+          SKIP_PLAYWRIGHT: "false"   # CI has no local .env — allow the Playwright fallback
         run: bash scripts/run_tm_scraper.sh
 
       - name: Commit and push updated data
