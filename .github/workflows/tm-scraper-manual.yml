@@ -1,0 +1,67 @@
+name: TM Scraper - Manual Run
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: >
+          Season start year, e.g. 2024 for 2024-2025. Leave EMPTY to
+          re-scrape every season folder already present under data/
+          (pattern YYYY-YYYY).
+        required: false
+        default: ""
+      leagues:
+        description: >
+          Comma-separated league codes (PL, PD, SA, BL1, FL1).
+          Leave EMPTY to run all leagues.
+        required: false
+        default: ""
+      fullscrape:
+        description: "Force re-fetch all JSON data, even if already present"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: write   # needed to commit refreshed data back to the repo
+
+jobs:
+  tm-manual-scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run TM scraper
+        env:
+          SEASON: ${{ inputs.season }}
+          LEAGUES: ${{ inputs.leagues }}
+          FULLSCRAPE: ${{ inputs.fullscrape }}
+          SCAN_ALL_SEASONS: "true"   # if SEASON is empty, scan data/ for all seasons
+          # Add any credentials cf_fetcher.py needs to get past Cloudflare, e.g.:
+          # PROXY_URL: ${{ secrets.PROXY_URL }}
+          # CF_CLEARANCE_COOKIE: ${{ secrets.CF_CLEARANCE_COOKIE }}
+        run: bash scripts/run_tm_scraper.sh
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "tm-scraper-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/ public/assets/
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore(tm-scraper): manual run season=${{ inputs.season || 'all-found' }} leagues=${{ inputs.leagues || 'ALL' }}"
+            git push
+          fi

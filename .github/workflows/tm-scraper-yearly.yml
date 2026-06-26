@@ -1,0 +1,53 @@
+name: TM Scraper - Yearly Full Refresh
+
+# Runs automatically once a year in July (new-season squads + market values
+# are live on Transfermarkt by then), and can also be triggered manually
+# from the Actions tab to test it without waiting for the cron.
+on:
+  schedule:
+    - cron: "0 3 1 7 *"   # 03:00 UTC, July 1st, every year
+  workflow_dispatch: {}
+
+permissions:
+  contents: write   # needed to commit refreshed data back to the repo
+
+jobs:
+  tm-fullscrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run TM scraper (full refresh, current season, all leagues)
+        env:
+          SEASON: ""                 # empty -> current season, auto-resolved
+          LEAGUES: ""                # empty -> all leagues
+          FULLSCRAPE: "true"         # always force re-fetch on the yearly run
+          SCAN_ALL_SEASONS: "false"  # yearly run only touches the current season
+          # Add any credentials cf_fetcher.py needs to get past Cloudflare, e.g.:
+          # PROXY_URL: ${{ secrets.PROXY_URL }}
+          # CF_CLEARANCE_COOKIE: ${{ secrets.CF_CLEARANCE_COOKIE }}
+        run: bash scripts/run_tm_scraper.sh
+
+      - name: Commit and push updated data
+        run: |
+          git config user.name "tm-scraper-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/ public/assets/
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+          else
+            git commit -m "chore(tm-scraper): yearly full refresh $(date -u +'%Y-%m-%d')"
+            git push
+          fi

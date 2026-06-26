@@ -3,17 +3,23 @@
 main.py — Single-command full data pipeline for goal4u-data.
 
 Two separate flows (as designed in architecture notes):
-  League flow    : competitions → teams → matches → match_links
+  League flow    : competitions → teams → tm_scraper → matches → match_links
   Tournament flow: worldcup | euro  (each is all-in-one, then match_links)
 
 Step order
 ──────────
   1. competitions   league competition info + standings + scorers
   2. teams          club squads (per competition)
-  3. matches        fixtures + results  (postpone-aware)
-  4. match_links    yallashoot URL index  (requires matches to exist first)
-  5. worldcup       World Cup all-in-one  (independent of league season)
-  6. euro           UEFA Euro all-in-one  (independent of league season)
+  3. tm_scraper     Transfermarkt league info, market values, player profiles
+  4. matches        fixtures + results  (postpone-aware)
+  5. match_links    yallashoot URL index  (requires matches to exist first)
+  6. match_stats    detailed per-match stats from yallashoot
+  7. worldcup       World Cup all-in-one  (independent of league season)
+  8. euro           UEFA Euro all-in-one  (independent of league season)
+
+  tm_scraper runs after teams so that teams.json is on disk for player ID
+  enrichment.  It writes to data/league_info/, data/team_informations/, and
+  data/player_information/.
 
   match_stats scrapes one yallashoot page per match using N parallel workers
   (default 8).  It is wired into the pipeline but also safe to run standalone.
@@ -24,6 +30,7 @@ Season behaviour
   --season 2024       → historical 2024-2025  (league steps only)
   --only worldcup     → fetch only WC data (year from config.TOURNAMENT_YEARS)
   --only euro         → fetch only Euro data
+  --only tm_scraper   → Transfermarkt scrape only (all leagues, current season)
   --competition PL    → restrict league steps to one competition
 
   Tournament steps (worldcup, euro) are always independent of --season
@@ -39,11 +46,19 @@ match_stats concurrency flags  (only affect the match_stats step)
   --checkpoint N   save stats.json every N successes (default 25)
   --force          re-scrape matches already in stats.json
 
+tm_scraper flags  (only affect the tm_scraper step)
+────────────────
+  --fullscrape     re-fetch and overwrite all TM JSON data even if it exists
+                   (image assets on disk are always skipped)
+
 Usage
 ─────
   python main.py                                          # full pipeline, current season
   python main.py --season 2024                            # historical 2024-2025 leagues
   python main.py --only matches match_links               # matches + links only
+  python main.py --only tm_scraper                        # TM scrape only, all leagues
+  python main.py --only tm_scraper --competition PL       # TM scrape, PL only
+  python main.py --only tm_scraper --fullscrape           # re-fetch all TM data
   python main.py --only worldcup                          # World Cup only
   python main.py --only worldcup euro                     # both tournaments
   python main.py --skip teams worldcup euro               # leagues, no teams, no tournaments
@@ -196,6 +211,53 @@ def _run_euro(
     run(mode=mode)
 
 
+def _run_tm_scraper(
+    season: Optional[int]  = None,
+    competition: Optional[str] = None,
+    fullscrape: bool = False,
+    **_,
+) -> None:
+    """
+    Run the Transfermarkt scraper (tm_scraper.runner) for one or all leagues.
+
+    Derives the season string from --season (e.g. 2024 → "2024-2025") or
+    falls back to the current season from config.get_season_paths().
+
+    --competition restricts to a single league code (PL, PD, SA, BL1, FL1).
+    --fullscrape is forwarded as force=True to re-fetch all JSON data files.
+    Images on disk are always skipped regardless of fullscrape.
+
+    Soft dependency: teams.json must already exist on disk for the requested
+    season/league (written by the 'teams' step) so player IDs can be resolved.
+    """
+    from config import get_season_paths
+    from tm_scraper.runner import run_season
+    from tm_scraper.config_tm import LEAGUE_MAPPING
+
+    if season is not None:
+        season_str = f"{season}-{season + 1}"
+    else:
+        season_str = get_season_paths()["season"]
+
+    if competition:
+        code = competition.upper()
+        if code not in LEAGUE_MAPPING:
+            logger.error(
+                "[tm_scraper] Unknown league code: %s (valid: %s)",
+                code, list(LEAGUE_MAPPING),
+            )
+            return
+        logger.info("[tm_scraper] Running for league=%s  season=%s  fullscrape=%s",
+                    code, season_str, fullscrape)
+        run_season(code, season_str, force=fullscrape)
+    else:
+        leagues = list(LEAGUE_MAPPING.keys())
+        logger.info("[tm_scraper] Running for all leagues=%s  season=%s  fullscrape=%s",
+                    leagues, season_str, fullscrape)
+        for code in leagues:
+            run_season(code, season_str, force=fullscrape)
+
+
 # ── Step registry ─────────────────────────────────────────────────────────────
 # Tuple: (name, short description, callable, [hard-dependency names])
 
@@ -211,6 +273,12 @@ STEPS = [
         "Club info + full squads",
         _run_teams,
         [],
+    ),
+    (
+        "tm_scraper",
+        "Transfermarkt league info, market values, player profiles",
+        _run_tm_scraper,
+        ["teams"],   # needs teams.json on disk for player ID enrichment
     ),
     (
         "matches",
@@ -245,7 +313,7 @@ STEPS = [
 ]
 
 STEP_NAMES: list[str]  = [s[0] for s in STEPS]
-LEAGUE_STEPS           = {"competitions", "teams", "matches", "match_links"}
+LEAGUE_STEPS           = {"competitions", "teams", "tm_scraper", "matches", "match_links"}
 TOURNAMENT_STEPS       = {"worldcup", "euro"}
 
 
@@ -261,6 +329,7 @@ def run_pipeline(
     limit: Optional[int]      = None,
     checkpoint: int           = 25,
     force: bool               = False,
+    fullscrape: bool          = False,
 ) -> int:
     """
     Run the pipeline and return exit code (0 = success, 1 = any failure).
@@ -270,6 +339,10 @@ def run_pipeline(
 
     `workers`, `limit`, `checkpoint`, `force` are forwarded exclusively to the
     match_stats step and have no effect on any other step.
+
+    `fullscrape` is forwarded exclusively to the tm_scraper step — when True it
+    re-fetches all Transfermarkt JSON data files even if they already have data.
+    Image assets on disk are always skipped regardless of this flag.
     """
     from config import get_season_paths  # type: ignore[import]
 
@@ -288,6 +361,7 @@ def run_pipeline(
         "  match_stats: workers=%d  limit=%s  checkpoint=%d  force=%s",
         workers, limit if limit is not None else "all", checkpoint, force,
     )
+    logger.info("  tm_scraper:  fullscrape=%s", fullscrape)
     logger.info("=" * 72)
 
     # Resolve active steps
@@ -345,6 +419,7 @@ def run_pipeline(
                 limit=limit,
                 checkpoint=checkpoint,
                 force=force,
+                fullscrape=fullscrape,
             )
             completed.add(name)
         except SystemExit as exc:
@@ -514,6 +589,20 @@ def main() -> None:
         help="Re-scrape matches that already have an entry in stats.json.",
     )
 
+    # ── tm_scraper flags ──────────────────────────────────────────────────────
+    tm_group = parser.add_argument_group(
+        "tm_scraper options",
+        "These flags are forwarded only to the tm_scraper step.",
+    )
+    tm_group.add_argument(
+        "--fullscrape",
+        action="store_true",
+        help=(
+            "Re-fetch and overwrite all Transfermarkt JSON data files even if "
+            "they already have data. Image assets on disk are always skipped."
+        ),
+    )
+
     args = parser.parse_args()
     code = run_pipeline(
         only=args.only,
@@ -525,6 +614,7 @@ def main() -> None:
         limit=args.limit,
         checkpoint=args.checkpoint,
         force=args.force,
+        fullscrape=args.fullscrape,
     )
     sys.exit(code)
 

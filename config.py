@@ -40,7 +40,7 @@ TRACKED_COMPETITIONS: list[str] = LEAGUE_COMPETITIONS  # alias
 # workers/tournament_paths.py reads this — NEVER derives years from season strings.
 TOURNAMENT_YEARS: dict[str, int] = {
     "WC": 2026,   # FIFA World Cup 2026
-    "EC": 2028,   # UEFA Euro 2028  (update when needed)
+    "EC": 2024,   # UEFA Euro 2028  (update when needed)
 }
 
 
