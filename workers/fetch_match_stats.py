@@ -690,6 +690,34 @@ def _scrape_task(match: dict, url: str, code: str) -> tuple[dict, dict | None]:
 # CONCURRENT AUDIT RUNNER
 # ═══════════════════════════════════════════════════════════════════════════════
 
+def _is_entry_empty(entry: dict) -> bool:
+    """
+    Return True if a stats_store entry was saved but contains no useful data.
+
+    This happens when the scraper fetched the page successfully but the match
+    page hadn't rendered its data yet (e.g. the match just finished, or the
+    yallashoot page was still loading). We detect this by checking whether ALL
+    of the key fields are None/empty — if so, we should re-fetch on the next run.
+
+    An entry is considered empty when ALL of these are true:
+      • home_team is None
+      • away_team is None
+      • score.home is None
+      • stats dict is empty  {}
+      • events list is empty []
+    """
+    if not entry:
+        return True
+    score = entry.get("score") or {}
+    return (
+        entry.get("home_team") is None
+        and entry.get("away_team") is None
+        and score.get("home") is None
+        and not entry.get("stats")       # {} is falsy
+        and not entry.get("events")      # [] is falsy
+    )
+
+
 def run_competition_audit(
     code: str,
     season_str: str | None = None,
@@ -724,7 +752,8 @@ def run_competition_audit(
         if not mid:
             skipped += 1
             continue
-        if str(mid) in stats_store and not force:
+        existing = stats_store.get(str(mid))
+        if existing is not None and not force and not _is_entry_empty(existing):
             skipped += 1
             continue
         if mid not in match_links:
