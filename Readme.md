@@ -98,7 +98,7 @@ public/
 ## Quick Start
 
 ```bash
-git clone https://github.com/gowrapava/goal4u-data.git
+git clone https://github.com/gowrapavan/goal4u-data.git
 cd goal4u-data
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
@@ -141,7 +141,7 @@ python main.py --only worldcup
 
 | Document | What's in it |
 |---|---|
-| [`docs/data-reference.md`](docs/data-reference.md) | Every JSON file explained with full example payloads, field tables, and UI gotchas |
+| [`docs/frontend-guide.md`](docs/frontend-guide.md) | Every JSON file explained with full example payloads, field tables, and UI gotchas |
 | [`docs/transfermarkt-guide.md`](docs/transfermarkt-guide.md) | Transfermarkt scraper output: all files, image paths, player profile shape, how to look up by player ID |
 
 ---
