@@ -711,32 +711,60 @@ def _scrape_task(match: dict, url: str, code: str) -> tuple[dict, dict | None]:
 # CONCURRENT AUDIT RUNNER
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def _is_entry_empty(entry: dict) -> bool:
+def _is_entry_incomplete(entry: dict) -> bool:
     """
-    Return True if a stats_store entry was saved but contains no useful data.
+    Return True if a stats_store entry is missing any of the four fields that
+    matter and should be re-fetched. Everything else (ht_score, ratings, coach,
+    formations, etc.) is genuinely optional and will never cause a re-fetch.
 
-    This happens when the scraper fetched the page successfully but the match
-    page hadn't rendered its data yet (e.g. the match just finished, or the
-    yallashoot page was still loading). We detect this by checking whether ALL
-    of the key fields are None/empty — if so, we should re-fetch on the next run.
+    The four required fields:
 
-    An entry is considered empty when ALL of these are true:
-      • home_team is None
-      • away_team is None
-      • score.home is None
-      • stats dict is empty  {}
-      • events list is empty []
+    1. Score  -- score.home and score.away must both be present (not None).
+
+    2. Stats  -- the stats dict must be non-empty. Every finished match on
+                 yallashoot has at least possession / shots etc.
+
+    3. Lineups -- both starting XIs must be non-empty lists. If the site
+                  hasn't published the lineup yet it stays empty -- we retry.
+
+    4. Goal scorers -- only checked when total goals > 0.  If goals were
+                       scored there must be at least one "goal" event in the
+                       events list. A 0-0 draw has no goals so this is skipped.
+
+    Anything else (ht_score null, rating null, coach null, etc.) is allowed
+    to be null -- re-fetching 100 times won't change those values.
     """
     if not entry:
         return True
-    score = entry.get("score") or {}
-    return (
-        entry.get("home_team") is None
-        and entry.get("away_team") is None
-        and score.get("home") is None
-        and not entry.get("stats")       # {} is falsy
-        and not entry.get("events")      # [] is falsy
-    )
+
+    score      = entry.get("score") or {}
+    home_goals = score.get("home")
+    away_goals = score.get("away")
+
+    # 1. Score must be present
+    if home_goals is None or away_goals is None:
+        return True
+
+    # 2. Stats must be non-empty
+    if not entry.get("stats"):
+        return True
+
+    # 3. Both starting lineups must be non-empty
+    lineups  = entry.get("lineups") or {}
+    home_xi  = (lineups.get("home") or {}).get("starting") or []
+    away_xi  = (lineups.get("away") or {}).get("starting") or []
+    if not home_xi or not away_xi:
+        return True
+
+    # 4. If goals were scored, at least one goal event must name a scorer
+    total_goals = (home_goals or 0) + (away_goals or 0)
+    if total_goals > 0:
+        events      = entry.get("events") or []
+        goal_events = [e for e in events if e.get("type") == "goal" and e.get("player")]
+        if not goal_events:
+            return True
+
+    return False
 
 
 def run_competition_audit(
@@ -766,22 +794,26 @@ def run_competition_audit(
         return 0, 0, 0, 0
 
     needs_fetch: list[tuple[dict, str]] = []
-    skipped = 0
+    skipped_complete  = 0   # already has good data
+    skipped_no_link   = 0   # no yallashoot URL in match_stats_links
+    skipped_no_id     = 0   # match record has no ID
 
     for match in eligible:
         mid = match.get("id")
         if not mid:
-            skipped += 1
+            skipped_no_id += 1
             continue
         existing = stats_store.get(str(mid))
-        if existing is not None and not force and not _is_entry_empty(existing):
-            skipped += 1
+        if existing is not None and not force and not _is_entry_incomplete(existing):
+            skipped_complete += 1
             continue
         if mid not in match_links:
-            logger.debug("[stats] %s: no link for match %s — skipping", code, mid)
-            skipped += 1
+            logger.debug("[stats] %s: no yallashoot link for match %s — skipping", code, mid)
+            skipped_no_link += 1
             continue
         needs_fetch.append((match, match_links[mid]))
+
+    skipped = skipped_complete + skipped_no_link + skipped_no_id
 
     total_to_fetch = len(needs_fetch)
     if limit is not None and total_to_fetch > limit:
@@ -791,8 +823,10 @@ def run_competition_audit(
         pending_before = 0
 
     logger.info(
-        "[stats] %s: %d to fetch  |  %d skipped  |  %d workers  |  checkpoint every %d",
-        code, len(needs_fetch), skipped, workers, checkpoint_n,
+        "[stats] %s: %d to fetch  |  skipped %d (complete=%d no_link=%d no_id=%d)  |  %d workers  |  checkpoint every %d",
+        code, len(needs_fetch),
+        skipped, skipped_complete, skipped_no_link, skipped_no_id,
+        workers, checkpoint_n,
     )
 
     if not needs_fetch:
@@ -843,9 +877,11 @@ def run_competition_audit(
 
     elapsed = time.monotonic() - t0
     logger.info(
-        "[stats] %s done in %.0fs — ok=%d  failed=%d  skipped=%d  pending=%d  "
+        "[stats] %s done in %.0fs — ok=%d  failed=%d  skipped=%d (complete=%d no_link=%d no_id=%d)  pending=%d  "
         "(avg %.2fs/match with %d workers)",
-        code, elapsed, ok, failed, skipped, pending_before,
+        code, elapsed, ok, failed,
+        skipped, skipped_complete, skipped_no_link, skipped_no_id,
+        pending_before,
         elapsed / ok if ok else 0, workers,
     )
     return ok, failed, skipped, pending_before
