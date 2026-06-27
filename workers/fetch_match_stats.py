@@ -579,6 +579,15 @@ def scrape_match(url: str) -> dict | None:
         logger.info("[stats] Not final (status=%r) — skipping %s", page_status, url)
         return None
     if not page_status:
+        # Page loaded but scoreboard didn't render — check if we got ANY useful
+        # data at all (team names are the most reliable signal). If not, the page
+        # was a CF challenge response or an incomplete render; return None so the
+        # caller retries rather than writing a hollow entry to stats.json.
+        if not header.get("home_team") and not header.get("away_team"):
+            logger.warning(
+                "[stats] Empty page (no status, no team names) for %s — will retry", url
+            )
+            return None
         logger.warning("[stats] Could not determine status for %s — treating as final", url)
 
     return {
@@ -665,14 +674,26 @@ def _load_competition_matches(matches_path: str) -> list[dict]:
 
 def _scrape_task(match: dict, url: str, code: str) -> tuple[dict, dict | None]:
     mid = match["id"]
-    for attempt in range(1, DEFAULT_RETRY_FAILED + 2):
+    max_attempts = DEFAULT_RETRY_FAILED + 1
+    for attempt in range(1, max_attempts + 1):
         try:
             data = scrape_match(url)
             if data is not None:
                 data["match_id"]            = mid
                 data["fd_competition_code"] = code
                 return match, data
-            return match, None
+            # scrape_match returned None — page empty or not final.
+            # Retry unless this is the last attempt.
+            if attempt < max_attempts:
+                wait = 3 * attempt
+                logger.warning(
+                    "[stats] match %s attempt %d/%d returned no data — retrying in %ds",
+                    mid, attempt, max_attempts, wait,
+                )
+                time.sleep(wait)
+            else:
+                logger.error("[stats] match %s all %d attempts returned no data", mid, max_attempts)
+            continue
         except Exception as exc:
             if attempt <= DEFAULT_RETRY_FAILED:
                 wait = 3 * attempt
