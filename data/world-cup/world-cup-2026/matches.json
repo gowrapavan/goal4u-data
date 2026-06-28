@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-28T13:30:58.920005+00:00",
+    "last_synced": "2026-06-28T19:16:00.439018+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9014,7 +9014,7 @@
         "winner": null
       },
       "utcDate": "2026-06-28T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -9023,11 +9023,11 @@
       "attendance": null,
       "venue": null,
       "homeTeam": {
-        "id": null,
-        "name": null,
-        "shortName": null,
-        "tla": null,
-        "crest": null,
+        "id": 774,
+        "name": "South Africa",
+        "shortName": "South Africa",
+        "tla": "RSA",
+        "crest": "https://crests.football-data.org/9396.svg",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -9035,11 +9035,11 @@
         "bench": []
       },
       "awayTeam": {
-        "id": null,
-        "name": null,
-        "shortName": null,
-        "tla": null,
-        "crest": null,
+        "id": 828,
+        "name": "Canada",
+        "shortName": "Canada",
+        "tla": "CAN",
+        "crest": "https://crests.football-data.org/canada.svg",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -9047,11 +9047,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -9101,7 +9101,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 38806,
+          "name": "João Pinheiro",
+          "type": "REFEREE",
+          "nationality": "Portugal"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
