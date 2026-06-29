@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-29T15:42:26.379709+00:00",
+    "last_synced": "2026-06-29T19:54:52.588039+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9139,7 +9139,7 @@
         "winner": null
       },
       "utcDate": "2026-06-29T17:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -9172,15 +9172,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -9285,11 +9285,11 @@
         "bench": []
       },
       "awayTeam": {
-        "id": null,
-        "name": null,
-        "shortName": null,
-        "tla": null,
-        "crest": null,
+        "id": 761,
+        "name": "Paraguay",
+        "shortName": "Paraguay",
+        "tla": "PAR",
+        "crest": "https://crests.football-data.org/761.svg",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -9351,7 +9351,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 289426,
+          "name": "Jalal Jayed",
+          "type": "REFEREE",
+          "nationality": "Morocco"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
