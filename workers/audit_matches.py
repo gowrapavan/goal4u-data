@@ -94,6 +94,10 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
       • status is IN_PLAY or PAUSED (live right now)
       • status is POSTPONED (rescheduled date unknown until re-fetched)
       • status is SCHEDULED/TIMED and kick-off is within 2 hours
+      • status is SCHEDULED/TIMED, in the future, teams are still null
+        (knockout-stage TBD slot — e.g. Round of 16 before Round of 32
+        finishes), AND lookback_hours >= 72 (skipped in --mode live so
+        we don't re-check every 30 min)
       • status is FINISHED but score or detail data is missing
     Not stale when:
       • utcDate is before the lookback window (too old to bother)
@@ -119,8 +123,26 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
     if status == POSTPONED_STATUS:
         return True
 
-    # Future match close to kick-off
+    # Future match
     if utc_date > now:
+        # Knockout-stage TBD slot: in tournaments (WC, EC, CL) the bracket
+        # exists before the teams are known — Round of 32/16, QF, SF, Final
+        # all start out with homeTeam/awayTeam = null until the prior round
+        # finishes. The API fills these in as teams qualify, but our old
+        # logic only re-checked future matches within 2h of kickoff, so a
+        # slot could sit with null teams for days after the real-world
+        # result was already known.
+        #
+        # Re-check those slots once we're in the "recent" (72h) or "all"
+        # (168h) lookback window — NOT in "live" mode (12h), since that job
+        # runs every 30 min and these slots don't change that fast.
+        if status in SCHEDULED_STATUSES and lookback_hours >= 72:
+            home_id = (match.get("homeTeam") or {}).get("id")
+            away_id = (match.get("awayTeam") or {}).get("id")
+            if home_id is None or away_id is None:
+                return True
+
+        # Otherwise: only stale if kick-off is imminent
         return (
             status in SCHEDULED_STATUSES
             and (utc_date - now) < timedelta(hours=2)
