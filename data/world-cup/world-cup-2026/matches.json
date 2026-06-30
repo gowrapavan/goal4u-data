@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-29T19:54:52.588039+00:00",
+    "last_synced": "2026-06-30T02:56:23.786751+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9264,7 +9264,7 @@
         "winner": null
       },
       "utcDate": "2026-06-29T20:30:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -9298,26 +9298,26 @@
       },
       "score": {
         "winner": null,
-        "duration": "REGULAR",
+        "duration": "PENALTY_SHOOTOUT",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 5
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "extraTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "penalties": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 4
         }
       },
       "statistics": {
@@ -9389,7 +9389,7 @@
         "winner": null
       },
       "utcDate": "2026-06-30T01:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -9398,11 +9398,11 @@
       "attendance": null,
       "venue": null,
       "homeTeam": {
-        "id": null,
-        "name": null,
-        "shortName": null,
-        "tla": null,
-        "crest": null,
+        "id": 8601,
+        "name": "Netherlands",
+        "shortName": "Netherlands",
+        "tla": "NED",
+        "crest": "https://crests.football-data.org/8601.svg",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -9410,11 +9410,11 @@
         "bench": []
       },
       "awayTeam": {
-        "id": null,
-        "name": null,
-        "shortName": null,
-        "tla": null,
-        "crest": null,
+        "id": 815,
+        "name": "Morocco",
+        "shortName": "Morocco",
+        "tla": "MAR",
+        "crest": "https://crests.football-data.org/morocco.svg",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -9422,15 +9422,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -9476,7 +9476,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11412,
+          "name": "Wilton Sampaio",
+          "type": "REFEREE",
+          "nationality": "Brazil"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
