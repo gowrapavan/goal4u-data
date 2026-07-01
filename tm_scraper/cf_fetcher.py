@@ -64,13 +64,15 @@ def _fetch_with_playwright(url: str) -> Optional[str]:
             logger.debug("playwright-stealth not installed — running without stealth patch")
 
         with sync_playwright() as p:
-            # Use headless=False on CI via Xvfb (set in GHA workflow) so CF
-            # can't detect headless via navigator.webdriver. On newer Playwright
-            # you can also pass channel="chrome" but chromium works fine.
-            is_ci = os.environ.get("CI", "").lower() in ("true", "1", "yes")
-
+            # NOTE: headless=False used to be tried on CI on the assumption
+            # that Xvfb was providing a virtual display there. It isn't (no
+            # workflow step starts Xvfb), so headed launches on GitHub
+            # Actions always crashed with "Missing X server or $DISPLAY"
+            # before even reaching the page. Since this method is already
+            # last-resort (see fetch_html()'s ordering) and has a 0%
+            # documented success rate on CI anyway, always run headless.
             browser = p.chromium.launch(
-                headless=not is_ci,   # headless=False on CI (Xvfb handles display)
+                headless=True,
                 args=[
                     "--no-sandbox",
                     "--disable-blink-features=AutomationControlled",
