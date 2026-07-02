@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-01T19:52:29.979256+00:00",
+    "last_synced": "2026-07-02T02:53:27.806327+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -10014,7 +10014,7 @@
         "winner": null
       },
       "utcDate": "2026-07-01T20:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -10047,23 +10047,23 @@
         "bench": []
       },
       "score": {
-        "winner": null,
-        "duration": "REGULAR",
+        "winner": "HOME_TEAM",
+        "duration": "EXTRA_TIME",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
           "away": null
         },
         "extraTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "penalties": {
           "home": null,
@@ -10139,7 +10139,7 @@
         "winner": null
       },
       "utcDate": "2026-07-02T00:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -10172,15 +10172,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10226,7 +10226,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11260,
+          "name": "Raphael Claus",
+          "type": "REFEREE",
+          "nationality": "Brazil"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
