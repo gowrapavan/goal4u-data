@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-02T19:22:27.181069+00:00",
+    "last_synced": "2026-07-03T02:36:03.150019+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -10264,7 +10264,7 @@
         "winner": null
       },
       "utcDate": "2026-07-02T19:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -10297,15 +10297,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10389,7 +10389,7 @@
         "winner": null
       },
       "utcDate": "2026-07-02T23:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -10422,15 +10422,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10476,7 +10476,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 215543,
+          "name": "Espen Eskås",
+          "type": "REFEREE",
+          "nationality": "Norway"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -10594,7 +10601,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57435,
+          "name": "Yael Falcón",
+          "type": "REFEREE",
+          "nationality": "Argentina"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
