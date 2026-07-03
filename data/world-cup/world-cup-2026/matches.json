@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-03T13:57:21.340994+00:00",
+    "last_synced": "2026-07-03T19:16:52.034236+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -10639,7 +10639,7 @@
         "winner": null
       },
       "utcDate": "2026-07-03T18:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "LAST_32",
       "group": null,
@@ -10672,15 +10672,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -10726,7 +10726,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 260120,
+          "name": "Gustavo Tejera",
+          "type": "REFEREE",
+          "nationality": "Uruguay"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
