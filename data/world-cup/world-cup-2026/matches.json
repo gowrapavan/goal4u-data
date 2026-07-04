@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-04T13:17:53.564137+00:00",
+    "last_synced": "2026-07-04T19:07:27.065357+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11014,7 +11014,7 @@
         "winner": null
       },
       "utcDate": "2026-07-04T17:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -11047,15 +11047,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11101,7 +11101,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11605,
+          "name": "Michael Oliver",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -11219,7 +11226,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 236055,
+          "name": "Il'giz Tantashev",
+          "type": "REFEREE",
+          "nationality": "Uzbekistan"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
