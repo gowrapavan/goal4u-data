@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-04T19:07:40.774615+00:00",
+    "last_synced": "2026-07-05T02:42:03.180642+00:00",
     "source": "football-data.org v4"
   },
   "data": {
@@ -14,6 +14,29 @@
     },
     "count": 10,
     "scorers": [
+      {
+        "player": {
+          "id": 3374,
+          "name": "Kylian Mbappé",
+          "firstName": "Kylian",
+          "lastName": "Mbappé",
+          "dateOfBirth": "1998-12-20",
+          "nationality": "France",
+          "position": null,
+          "shirtNumber": null
+        },
+        "team": {
+          "id": 773,
+          "name": "France",
+          "shortName": "France",
+          "tla": "FRA",
+          "crest": "https://crests.football-data.org/773.svg"
+        },
+        "playedMatches": 5,
+        "goals": 7,
+        "assists": 2,
+        "penalties": 1
+      },
       {
         "player": {
           "id": 3218,
@@ -35,29 +58,6 @@
         "playedMatches": 4,
         "goals": 7,
         "assists": null,
-        "penalties": null
-      },
-      {
-        "player": {
-          "id": 3374,
-          "name": "Kylian Mbappé",
-          "firstName": "Kylian",
-          "lastName": "Mbappé",
-          "dateOfBirth": "1998-12-20",
-          "nationality": "France",
-          "position": null,
-          "shirtNumber": null
-        },
-        "team": {
-          "id": 773,
-          "name": "France",
-          "shortName": "France",
-          "tla": "FRA",
-          "crest": "https://crests.football-data.org/773.svg"
-        },
-        "playedMatches": 4,
-        "goals": 6,
-        "assists": 2,
         "penalties": null
       },
       {
@@ -170,7 +170,7 @@
           "tla": "FRA",
           "crest": "https://crests.football-data.org/773.svg"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 4,
         "assists": 2,
         "penalties": null
