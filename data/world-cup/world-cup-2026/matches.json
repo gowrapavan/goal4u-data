@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-06T15:25:03.737590+00:00",
+    "last_synced": "2026-07-06T19:52:33.943695+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11514,7 +11514,7 @@
         "winner": null
       },
       "utcDate": "2026-07-06T19:00:00Z",
-      "status": "TIMED",
+      "status": "LIVE",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -11547,11 +11547,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -11601,7 +11601,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11580,
+          "name": "Anthony Taylor",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
