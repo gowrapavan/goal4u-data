@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-05T19:13:04.165168+00:00",
+    "last_synced": "2026-07-06T02:46:45.218190+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11264,7 +11264,7 @@
         "winner": null
       },
       "utcDate": "2026-07-05T20:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -11297,15 +11297,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11388,8 +11388,8 @@
         "currentMatchday": 3,
         "winner": null
       },
-      "utcDate": "2026-07-06T00:00:00Z",
-      "status": "TIMED",
+      "utcDate": "2026-07-06T01:00:00Z",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -11422,15 +11422,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 3
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -11476,7 +11476,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 55970,
+          "name": "Alireza Faghani",
+          "type": "REFEREE",
+          "nationality": "Iran"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
