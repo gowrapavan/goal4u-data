@@ -1,9 +1,9 @@
 {
   "_meta": {
-    "last_synced": "2026-07-06T02:48:03.435883+00:00",
+    "last_synced": "2026-07-06T10:13:23.010343+00:00",
     "competition": "WC",
     "season": "2026-2027",
-    "total_entries": 88
+    "total_entries": 89
   },
   "data": {
     "537327": {
@@ -44791,6 +44791,565 @@
         }
       },
       "match_id": 537377,
+      "fd_competition_code": "WC"
+    },
+    "537378": {
+      "scraped_at": "2026-07-06T10:13:22.714466+00:00",
+      "source_url": "https://yallashoot.soccer/live/mexico-england-2026-07-06/",
+      "status": "full time",
+      "home_team": "Mexico",
+      "away_team": "England",
+      "score": {
+        "home": 2,
+        "away": 3,
+        "ht_home": 1,
+        "ht_away": 2
+      },
+      "stats": {
+        "yellow_cards": {
+          "home": 2,
+          "away": 4
+        },
+        "red_cards": {
+          "home": 0,
+          "away": 1
+        },
+        "corners": {
+          "home": 10,
+          "away": 2
+        },
+        "fouls": {
+          "home": 14,
+          "away": 7
+        },
+        "offsides": {
+          "home": 1,
+          "away": 0
+        },
+        "possession": {
+          "home": "66%",
+          "away": "34%"
+        },
+        "shots": {
+          "home": 18,
+          "away": 6
+        },
+        "shots_on_target": {
+          "home": 5,
+          "away": 5
+        },
+        "goals": {
+          "home": 2,
+          "away": 3
+        },
+        "shots_off_goal": {
+          "home": 7,
+          "away": 1
+        },
+        "blocked_shots": {
+          "home": 6,
+          "away": 0
+        },
+        "shots_insidebox": {
+          "home": 10,
+          "away": 4
+        },
+        "shots_outsidebox": {
+          "home": 8,
+          "away": 2
+        },
+        "goalkeeper_saves": {
+          "home": 2,
+          "away": 3
+        },
+        "total_passes": {
+          "home": 440,
+          "away": 241
+        },
+        "passes_accurate": {
+          "home": 407,
+          "away": 194
+        },
+        "expected_goals": {
+          "home": 1.87,
+          "away": 1.55
+        }
+      },
+      "events": [
+        {
+          "minute": 1,
+          "type": "yellow_card",
+          "team": "away",
+          "player": "D. Rice"
+        },
+        {
+          "minute": 36,
+          "type": "goal",
+          "team": "away",
+          "player": "J. Bellingham",
+          "goal_type": "normal",
+          "assistant": "B. Saka"
+        },
+        {
+          "minute": 38,
+          "type": "goal",
+          "team": "away",
+          "player": "J. Bellingham",
+          "goal_type": "normal",
+          "assistant": "H. Kane"
+        },
+        {
+          "minute": 42,
+          "type": "goal",
+          "team": "home",
+          "player": "J. Quiñones",
+          "goal_type": "normal"
+        },
+        {
+          "minute": 46,
+          "type": "substitution",
+          "team": "home",
+          "player": "E. Álvarez",
+          "player_out": "C. Montes Castro"
+        },
+        {
+          "minute": 54,
+          "type": "red_card",
+          "team": "away",
+          "player": "J. Amorin Quansah"
+        },
+        {
+          "minute": 57,
+          "type": "substitution",
+          "team": "away",
+          "player": "J. Stones",
+          "player_out": "B. Saka"
+        },
+        {
+          "minute": 60,
+          "type": "goal",
+          "team": "away",
+          "player": "H. Kane",
+          "goal_type": "penalty"
+        },
+        {
+          "minute": 61,
+          "type": "substitution",
+          "team": "home",
+          "player": "S. Giménez",
+          "player_out": "Gilberto Mora"
+        },
+        {
+          "minute": 61,
+          "type": "substitution",
+          "team": "home",
+          "player": "B. Gutiérrez",
+          "player_out": "L. Romo"
+        },
+        {
+          "minute": 68,
+          "type": "yellow_card",
+          "team": "away",
+          "player": "A. Guéhi"
+        },
+        {
+          "minute": 69,
+          "type": "goal",
+          "team": "home",
+          "player": "R. Jiménez",
+          "goal_type": "penalty"
+        },
+        {
+          "minute": 71,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "J. Sánchez Ramos"
+        },
+        {
+          "minute": 72,
+          "type": "yellow_card",
+          "team": "away",
+          "player": "N. O'Reilly"
+        },
+        {
+          "minute": 74,
+          "type": "substitution",
+          "team": "away",
+          "player": "D. Djed-Hotep Spence",
+          "player_out": "N. O'Reilly"
+        },
+        {
+          "minute": 75,
+          "type": "substitution",
+          "team": "away",
+          "player": "D. Burn",
+          "player_out": "E. Anderson"
+        },
+        {
+          "minute": 79,
+          "type": "substitution",
+          "team": "home",
+          "player": "Álvaro Fidalgo",
+          "player_out": "J. Sánchez Ramos"
+        },
+        {
+          "minute": 81,
+          "type": "substitution",
+          "team": "home",
+          "player": "G. Martínez",
+          "player_out": "J. Quiñones"
+        },
+        {
+          "minute": 90,
+          "type": "substitution",
+          "team": "away",
+          "player": "M. Rogers",
+          "player_out": "H. Kane"
+        },
+        {
+          "minute": 90,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "J. Vásquez Ibarra"
+        },
+        {
+          "minute": 90,
+          "type": "yellow_card",
+          "team": "away",
+          "player": "J. Henderson"
+        }
+      ],
+      "lineups": {
+        "home": {
+          "formation": null,
+          "starting": [
+            {
+              "name": "J. Rangel",
+              "number": "1",
+              "position": "g",
+              "rating": "6"
+            },
+            {
+              "name": "J. Sánchez Ramos",
+              "number": "2",
+              "position": "d",
+              "rating": "5.9"
+            },
+            {
+              "name": "C. Montes Castro",
+              "number": "3",
+              "position": "d",
+              "rating": "6.2"
+            },
+            {
+              "name": "J. Vásquez Ibarra",
+              "number": "5",
+              "position": "d",
+              "rating": "6.9"
+            },
+            {
+              "name": "J. Gallardo",
+              "number": "23",
+              "position": "d",
+              "rating": "6.3"
+            },
+            {
+              "name": "Gilberto Mora",
+              "number": "19",
+              "position": "m",
+              "rating": "5.6"
+            },
+            {
+              "name": "É. Lira",
+              "number": "6",
+              "position": "m",
+              "rating": "7.3"
+            },
+            {
+              "name": "L. Romo",
+              "number": "7",
+              "position": "m",
+              "rating": "6.3"
+            },
+            {
+              "name": "R. Alvarado",
+              "number": "25",
+              "position": "f",
+              "rating": "7.5"
+            },
+            {
+              "name": "R. Jiménez",
+              "number": "9",
+              "position": "f",
+              "rating": "7.3"
+            },
+            {
+              "name": "J. Quiñones",
+              "number": "16",
+              "position": "m",
+              "rating": "7.9"
+            }
+          ],
+          "subs": [
+            {
+              "name": "E. Álvarez",
+              "number": "4",
+              "position": "d",
+              "rating": "7.3"
+            },
+            {
+              "name": "B. Gutiérrez",
+              "number": "26",
+              "position": "m",
+              "rating": "6.9"
+            },
+            {
+              "name": "S. Giménez",
+              "number": "11",
+              "position": "f",
+              "rating": "6.2"
+            },
+            {
+              "name": "C. Acevedo",
+              "number": "12",
+              "position": "g",
+              "rating": null
+            },
+            {
+              "name": "G. Ochoa",
+              "number": "13",
+              "position": "g",
+              "rating": null
+            },
+            {
+              "name": "I. Reyes Romero",
+              "number": "15",
+              "position": "d",
+              "rating": null
+            },
+            {
+              "name": "M. Chávez",
+              "number": "20",
+              "position": "d",
+              "rating": null
+            },
+            {
+              "name": "Álvaro Fidalgo",
+              "number": "8",
+              "position": "m",
+              "rating": "6.9"
+            },
+            {
+              "name": "O. Pineda Alvarado",
+              "number": "17",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "O. Vargas",
+              "number": "18",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "L. Chávez",
+              "number": "24",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "A. Vega",
+              "number": "10",
+              "position": "f",
+              "rating": null
+            },
+            {
+              "name": "C. Huerta",
+              "number": "21",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "A. González",
+              "number": "14",
+              "position": "f",
+              "rating": null
+            },
+            {
+              "name": "G. Martínez",
+              "number": "22",
+              "position": "f",
+              "rating": "6.5"
+            }
+          ],
+          "coach": "Javier Aguirre"
+        },
+        "away": {
+          "formation": null,
+          "starting": [
+            {
+              "name": "J. Pickford",
+              "number": "1",
+              "position": "g",
+              "rating": "7.2"
+            },
+            {
+              "name": "J. Amorin Quansah",
+              "number": "26",
+              "position": "d",
+              "rating": "5.3"
+            },
+            {
+              "name": "E. Konsa Ngoyo",
+              "number": "2",
+              "position": "d",
+              "rating": "6.2"
+            },
+            {
+              "name": "A. Guéhi",
+              "number": "6",
+              "position": "d",
+              "rating": "6.3"
+            },
+            {
+              "name": "N. O&apos;Reilly",
+              "number": "3",
+              "position": "d",
+              "rating": "6.2"
+            },
+            {
+              "name": "D. Rice",
+              "number": "4",
+              "position": "m",
+              "rating": "6.5"
+            },
+            {
+              "name": "E. Anderson",
+              "number": "8",
+              "position": "m",
+              "rating": "7.3"
+            },
+            {
+              "name": "B. Saka",
+              "number": "7",
+              "position": "f",
+              "rating": "7.3"
+            },
+            {
+              "name": "J. Bellingham",
+              "number": "10",
+              "position": "m",
+              "rating": "9.2"
+            },
+            {
+              "name": "A. Gordon",
+              "number": "18",
+              "position": "m",
+              "rating": "7.3"
+            },
+            {
+              "name": "H. Kane",
+              "number": "9",
+              "position": "f",
+              "rating": "7.3"
+            }
+          ],
+          "subs": [
+            {
+              "name": "J. Stones",
+              "number": "5",
+              "position": "d",
+              "rating": "6.3"
+            },
+            {
+              "name": "D. Henderson",
+              "number": "13",
+              "position": "g",
+              "rating": null
+            },
+            {
+              "name": "J. Trafford",
+              "number": "23",
+              "position": "g",
+              "rating": null
+            },
+            {
+              "name": "T. Chalobah",
+              "number": "12",
+              "position": "d",
+              "rating": null
+            },
+            {
+              "name": "D. Burn",
+              "number": "15",
+              "position": "d",
+              "rating": "6.6"
+            },
+            {
+              "name": "R. James",
+              "number": "24",
+              "position": "d",
+              "rating": null
+            },
+            {
+              "name": "D. Djed-Hotep Spence",
+              "number": "25",
+              "position": "d",
+              "rating": "6.6"
+            },
+            {
+              "name": "J. Henderson",
+              "number": "14",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "K. Mainoo",
+              "number": "16",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "M. Rogers",
+              "number": "17",
+              "position": "m",
+              "rating": "6.5"
+            },
+            {
+              "name": "E. Eze",
+              "number": "21",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "M. Rashford",
+              "number": "11",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "O. Watkins",
+              "number": "19",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "C. Madueke",
+              "number": "20",
+              "position": "m",
+              "rating": null
+            },
+            {
+              "name": "I. Toney",
+              "number": "22",
+              "position": "f",
+              "rating": null
+            }
+          ],
+          "coach": "T. Tuchel"
+        }
+      },
+      "match_id": 537378,
       "fd_competition_code": "WC"
     }
   }
