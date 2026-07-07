@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-06T19:52:33.943695+00:00",
+    "last_synced": "2026-07-07T02:42:38.419743+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11514,7 +11514,7 @@
         "winner": null
       },
       "utcDate": "2026-07-06T19:00:00Z",
-      "status": "LIVE",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -11547,15 +11547,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
           "home": 0,
-          "away": 0
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11639,7 +11639,7 @@
         "winner": null
       },
       "utcDate": "2026-07-07T00:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -11672,15 +11672,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 4
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -11726,7 +11726,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 129250,
+          "name": "Adham Makhadmeh",
+          "type": "REFEREE",
+          "nationality": "Jordan"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
