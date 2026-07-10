@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-10T14:14:04.552017+00:00",
+    "last_synced": "2026-07-10T19:23:13.190127+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -12139,7 +12139,7 @@
         "winner": null
       },
       "utcDate": "2026-07-10T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": null,
@@ -12172,11 +12172,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -12226,7 +12226,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11605,
+          "name": "Michael Oliver",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
