@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-11T18:56:26.712525+00:00",
+    "last_synced": "2026-07-12T02:15:59.962998+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11389,7 +11389,7 @@
         "winner": null
       },
       "utcDate": "2026-07-06T01:00:00Z",
-      "status": "FINISHED",
+      "status": "2026-07-06 01:00:00Z",
       "matchday": null,
       "stage": "LAST_16",
       "group": null,
@@ -12264,7 +12264,7 @@
         "winner": null
       },
       "utcDate": "2026-07-11T21:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": null,
@@ -12297,23 +12297,23 @@
         "bench": []
       },
       "score": {
-        "winner": null,
-        "duration": "REGULAR",
+        "winner": "AWAY_TEAM",
+        "duration": "EXTRA_TIME",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
           "away": null
         },
         "extraTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "penalties": {
           "home": null,
@@ -12351,7 +12351,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 9374,
+          "name": "Clément Turpin",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12382,7 +12389,7 @@
         "winner": null
       },
       "utcDate": "2026-07-12T01:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "QUARTER_FINALS",
       "group": null,
@@ -12415,15 +12422,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -12469,7 +12476,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 38806,
+          "name": "João Pinheiro",
+          "type": "REFEREE",
+          "nationality": "Portugal"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
