@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-14T13:24:29.679116+00:00",
+    "last_synced": "2026-07-14T19:13:20.418725+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -12514,7 +12514,7 @@
         "winner": null
       },
       "utcDate": "2026-07-14T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": null,
       "stage": "SEMI_FINALS",
       "group": null,
@@ -12547,11 +12547,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -12601,7 +12601,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 190010,
+          "name": "Ivan Barton",
+          "type": "REFEREE",
+          "nationality": null
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
