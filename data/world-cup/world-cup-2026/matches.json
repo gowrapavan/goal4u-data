@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-07-18T18:57:38.431462+00:00",
+    "last_synced": "2026-07-19T02:12:55.432369+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -12764,7 +12764,7 @@
         "winner": null
       },
       "utcDate": "2026-07-18T21:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": null,
       "stage": "THIRD_PLACE",
       "group": null,
@@ -12797,15 +12797,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 6
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 4
         },
         "regularTime": {
           "home": null,
@@ -12851,7 +12851,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 28805,
+          "name": "Jesús Valenzuela",
+          "type": "REFEREE",
+          "nationality": "Venezuela"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
