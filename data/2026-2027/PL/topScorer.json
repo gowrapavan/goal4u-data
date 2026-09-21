@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-09-14T09:29:16.410703+00:00",
+    "last_synced": "2026-09-21T09:31:33.891541+00:00",
     "source": "football-data.org v4"
   },
   "data": {
@@ -10,7 +10,7 @@
       "id": 2502,
       "startDate": "2026-08-21",
       "endDate": "2027-05-30",
-      "currentMatchday": 4
+      "currentMatchday": 5
     },
     "count": 10,
     "scorers": [
@@ -32,7 +32,30 @@
           "tla": "MCI",
           "crest": "https://crests.football-data.org/65.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
+        "goals": 5,
+        "assists": null,
+        "penalties": null
+      },
+      {
+        "player": {
+          "id": 6486,
+          "name": "Alexander Isak",
+          "firstName": "Alexander",
+          "lastName": "Isak",
+          "dateOfBirth": "1999-09-21",
+          "nationality": "Sweden",
+          "position": null,
+          "shirtNumber": null
+        },
+        "team": {
+          "id": 64,
+          "name": "Liverpool FC",
+          "shortName": "Liverpool",
+          "tla": "LIV",
+          "crest": "https://crests.football-data.org/64.png"
+        },
+        "playedMatches": 5,
         "goals": 4,
         "assists": null,
         "penalties": null
@@ -55,7 +78,7 @@
           "tla": "ARS",
           "crest": "https://crests.football-data.org/57.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 3,
         "assists": null,
         "penalties": 1
@@ -78,7 +101,7 @@
           "tla": "BOU",
           "crest": "https://crests.football-data.org/bournemouth.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 3,
         "assists": null,
         "penalties": null
@@ -124,33 +147,56 @@
           "tla": "CHE",
           "crest": "https://crests.football-data.org/61.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 3,
         "assists": 1,
         "penalties": null
       },
       {
         "player": {
-          "id": 6486,
-          "name": "Alexander Isak",
-          "firstName": "Alexander",
-          "lastName": "Isak",
-          "dateOfBirth": "1999-09-21",
-          "nationality": "Sweden",
+          "id": 133242,
+          "name": "Rayan Cherki",
+          "firstName": "Rayan",
+          "lastName": "Cherki",
+          "dateOfBirth": "2003-08-17",
+          "nationality": "France",
+          "position": null,
+          "shirtNumber": 18
+        },
+        "team": {
+          "id": 65,
+          "name": "Manchester City FC",
+          "shortName": "Man City",
+          "tla": "MCI",
+          "crest": "https://crests.football-data.org/65.png"
+        },
+        "playedMatches": 5,
+        "goals": 3,
+        "assists": 2,
+        "penalties": null
+      },
+      {
+        "player": {
+          "id": 8273,
+          "name": "Pascal Groß",
+          "firstName": "Pascal",
+          "lastName": "Groß",
+          "dateOfBirth": "1991-06-15",
+          "nationality": "Germany",
           "position": null,
           "shirtNumber": null
         },
         "team": {
-          "id": 64,
-          "name": "Liverpool FC",
-          "shortName": "Liverpool",
-          "tla": "LIV",
-          "crest": "https://crests.football-data.org/64.png"
+          "id": 397,
+          "name": "Brighton & Hove Albion FC",
+          "shortName": "Brighton Hove",
+          "tla": "BHA",
+          "crest": "https://crests.football-data.org/397.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 3,
-        "assists": null,
-        "penalties": null
+        "assists": 3,
+        "penalties": 1
       },
       {
         "player": {
@@ -170,7 +216,7 @@
           "tla": "BRE",
           "crest": "https://crests.football-data.org/402.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 3,
         "assists": null,
         "penalties": null
@@ -193,56 +239,10 @@
           "tla": "MUN",
           "crest": "https://crests.football-data.org/66.png"
         },
-        "playedMatches": 4,
+        "playedMatches": 5,
         "goals": 3,
         "assists": 1,
         "penalties": 1
-      },
-      {
-        "player": {
-          "id": 171,
-          "name": "Kai Havertz",
-          "firstName": "Kai",
-          "lastName": "Havertz",
-          "dateOfBirth": "1999-06-11",
-          "nationality": "Germany",
-          "position": null,
-          "shirtNumber": null
-        },
-        "team": {
-          "id": 57,
-          "name": "Arsenal FC",
-          "shortName": "Arsenal",
-          "tla": "ARS",
-          "crest": "https://crests.football-data.org/57.png"
-        },
-        "playedMatches": 4,
-        "goals": 2,
-        "assists": null,
-        "penalties": null
-      },
-      {
-        "player": {
-          "id": 7427,
-          "name": "Martin Ødegaard",
-          "firstName": "Martin",
-          "lastName": "Ødegaard",
-          "dateOfBirth": "1998-12-17",
-          "nationality": "Norway",
-          "position": null,
-          "shirtNumber": null
-        },
-        "team": {
-          "id": 57,
-          "name": "Arsenal FC",
-          "shortName": "Arsenal",
-          "tla": "ARS",
-          "crest": "https://crests.football-data.org/57.png"
-        },
-        "playedMatches": 4,
-        "goals": 2,
-        "assists": null,
-        "penalties": null
       }
     ]
   }
