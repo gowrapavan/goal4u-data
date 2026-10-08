@@ -1,8 +1,9 @@
 name: Teams Sync
 
-# Fetches teams + squads + coach for all leagues into
-# data/<season>/<CODE>/teams.json (7 API calls, ~1 minute).
-#   - weekly (Mondays) during transfer windows: Jul-Sep and Jan
+# Fetches teams + squads + coach (teams.json) and competition metadata
+# (competitionInfo.json) for all leagues into data/<season>/<CODE>/.
+# About 14 API calls, ~2 minutes.
+#   - weekly (Mondays) during transfer windows: Jan and Jul-Sep
 #   - monthly (1st) the rest of the year
 # Run it manually once to create the 2026-2027 files.
 on:
@@ -38,6 +39,11 @@ jobs:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: python -m workers.fetch_teams
 
+      - name: Fetch competition info (all leagues)
+        env:
+          FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
+        run: python -m workers.fetch_competitions --mode info
+
       - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
@@ -45,7 +51,7 @@ jobs:
 
           git add data
           git diff --cached --quiet && exit 0
-          git commit -m "teams sync"
+          git commit -m "teams + competition info sync"
 
           for i in 1 2 3 4 5; do
             git fetch origin "${GITHUB_REF_NAME}"
