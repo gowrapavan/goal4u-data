@@ -53,5 +53,16 @@ jobs:
             echo "No data changes to commit."
           else
             git commit -m "chore(tm-scraper): yearly full refresh $(date -u +'%Y-%m-%d')"
-            git push
+            for i in 1 2 3 4 5; do
+              git fetch origin "${GITHUB_REF_NAME}"
+              if git rebase "origin/${GITHUB_REF_NAME}"; then
+                if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                  exit 0
+                fi
+              else
+                git rebase --abort || true
+              fi
+              sleep $((i * 5))
+            done
+            exit 1
           fi

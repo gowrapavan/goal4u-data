@@ -1,8 +1,9 @@
-name: Match Stats Sync
+name: Match Stats Sync (DISABLED)
 
+# DISABLED: the stats source website is down. The schedule was removed so it
+# stops burning up to 180 min per run on timeouts. Delete this file when you
+# remove the stats code entirely.
 on:
-  schedule:
-    - cron: "0 2,14 * * *"
   workflow_dispatch:
 
 permissions:
@@ -14,37 +15,7 @@ concurrency:
 
 jobs:
   stats:
+    if: ${{ false }}   # never runs, even when dispatched manually
     runs-on: ubuntu-latest
-
-    timeout-minutes: 180
-
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
-
-      - run: |
-          pip install -r requirements.txt
-
-      - run: |
-          playwright install chromium
-
-      - name: Scrape missing stats
-        env:
-          WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
-        run: |
-          python main.py \
-            --only match_stats \
-            --workers 8 \
-            --checkpoint 25
-
-      - name: Commit changes
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-
-          git add data
-          git diff --cached --quiet || git commit -m "match stats sync"
-          git push
+      - run: echo "disabled"

@@ -8,13 +8,16 @@ on:
 permissions:
   contents: write
 
+# Shared group: live audit, recent audit and full sync all rewrite matches.json,
+# so they must never run at the same time (would cause rebase conflicts).
 concurrency:
-  group: matches-live-audit
-  cancel-in-progress: true
+  group: matches-data
+  cancel-in-progress: false
 
 jobs:
   audit:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
@@ -22,6 +25,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
 
       - run: pip install -r requirements.txt
 
@@ -29,15 +33,26 @@ jobs:
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
         run: |
-          python -m workers.audit_matches \
-            --tag matches \
-            --mode live
+          python -m workers.audit_matches --tag matches --mode live
 
       - name: Commit changes
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add data
-          git diff --cached --quiet || git commit -m "live audit"
-          git push
+          git diff --cached --quiet && exit 0
+          git commit -m "live audit"
+
+          for i in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            if git rebase "origin/${GITHUB_REF_NAME}"; then
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            sleep $((i * 5))
+          done
+          exit 1

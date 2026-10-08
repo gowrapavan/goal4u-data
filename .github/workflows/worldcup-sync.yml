@@ -2,7 +2,6 @@ name: World Cup Sync
 
 on:
   workflow_dispatch:
-
   schedule:
     - cron: "0 */6 * * *"
 
@@ -11,17 +10,16 @@ permissions:
 
 concurrency:
   group: worldcup-sync
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 env:
   FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
-  WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
   PYTHONUNBUFFERED: "1"
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 30
 
     steps:
       - uses: actions/checkout@v4
@@ -31,63 +29,31 @@ jobs:
           python-version: "3.12"
           cache: pip
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install playwright playwright-stealth
+      - run: pip install -r requirements.txt
 
-      - name: Install Playwright Chromium
-        run: playwright install chromium --with-deps
+      # Stats scraping (match_links / match_stats / Playwright) removed:
+      # the stats source is down. Match data only.
+      - name: Audit World Cup matches
+        run: python -m workers.fetch_worldCup --mode audit --lookback 168
 
-      - name: Install Xvfb
-        run: sudo apt-get update && sudo apt-get install -y xvfb
-
-      - name: Audit World Cup Matches
-        run: |
-          python -m workers.fetch_worldCup \
-            --mode audit \
-            --lookback 168
-
-      - name: Build Match Links
-        run: |
-          PYTHONPATH=${{ github.workspace }} \
-          xvfb-run --auto-servernum \
-          python main.py --only match_links --competition WC
-
-      - name: Fetch Match Stats
-        run: |
-          PYTHONPATH=${{ github.workspace }} \
-          xvfb-run --auto-servernum \
-          python main.py \
-            --only match_stats \
-            --competition WC \
-            --workers 8 \
-            --checkpoint 25
-
-      - name: Commit Changes
+      - name: Commit changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add data/
-
           git diff --cached --quiet && exit 0
-
           git commit -m "chore(worldcup): audit tournament data"
 
           for i in 1 2 3 4 5; do
-            git fetch origin main
-
-            if git rebase origin/main; then
-              if git push origin HEAD:main; then
+            git fetch origin "${GITHUB_REF_NAME}"
+            if git rebase "origin/${GITHUB_REF_NAME}"; then
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
                 exit 0
               fi
             else
               git rebase --abort || true
             fi
-
-            sleep 10
+            sleep $((i * 5))
           done
-
           exit 1

@@ -1,21 +1,23 @@
-name: Matches Recent Audit
+name: Matches Full Sync
 
+# One API call per competition returns the whole season, so this is cheap
+# (7 calls) and is what creates data/<season>/<CODE>/matches.json the first
+# time, and picks up reschedules / kickoff-time changes afterwards.
+# Run it manually once (Actions -> Matches Full Sync -> Run workflow).
 on:
   schedule:
-    - cron: "0 */6 * * *"
+    - cron: "30 3 * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
 
-# Shared group: live audit, recent audit and full sync all rewrite matches.json,
-# so they must never run at the same time (would cause rebase conflicts).
 concurrency:
   group: matches-data
   cancel-in-progress: false
 
 jobs:
-  audit:
+  sync:
     runs-on: ubuntu-latest
     timeout-minutes: 30
 
@@ -29,11 +31,10 @@ jobs:
 
       - run: pip install -r requirements.txt
 
-      - name: Audit recent matches
+      - name: Full season fetch (all leagues)
         env:
           FOOTBALL_DATA_API_KEY: ${{ secrets.FOOTBALL_DATA_API_KEY }}
-        run: |
-          python -m workers.audit_matches --tag matches --mode recent
+        run: python -m workers.fetch_matches
 
       - name: Commit changes
         run: |
@@ -42,7 +43,7 @@ jobs:
 
           git add data
           git diff --cached --quiet && exit 0
-          git commit -m "recent audit"
+          git commit -m "matches full sync"
 
           for i in 1 2 3 4 5; do
             git fetch origin "${GITHUB_REF_NAME}"

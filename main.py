@@ -74,6 +74,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -316,6 +317,14 @@ STEP_NAMES: list[str]  = [s[0] for s in STEPS]
 LEAGUE_STEPS           = {"competitions", "teams", "tm_scraper", "matches", "match_links"}
 TOURNAMENT_STEPS       = {"worldcup", "euro"}
 
+# ── Stats scraping switch ─────────────────────────────────────────────────────
+# The stats source (yallashoot) is down, so match_links + match_stats are
+# DISABLED by default. They are removed from the run even if named in --only.
+# To re-enable:   set ENABLE_STATS=1   (PowerShell: $env:ENABLE_STATS="1")
+# When stats are gone for good, delete these two steps + this block.
+STATS_STEPS  = {"match_links", "match_stats"}
+ENABLE_STATS = os.environ.get("ENABLE_STATS", "0") == "1"
+
 
 # ── Pipeline runner ───────────────────────────────────────────────────────────
 
@@ -367,6 +376,16 @@ def run_pipeline(
     # Resolve active steps
     active: list[str] = only if only else STEP_NAMES
     active = [n for n in active if n not in (skip or [])]
+
+    # Stats scraping switched off (see ENABLE_STATS above)
+    if not ENABLE_STATS:
+        dropped = [n for n in active if n in STATS_STEPS]
+        if dropped:
+            logger.warning(
+                "Stats steps disabled (ENABLE_STATS != 1) — skipping: %s",
+                ", ".join(dropped),
+            )
+        active = [n for n in active if n not in STATS_STEPS]
 
     # Warn if --season is combined with tournament steps (season is ignored there)
     if season is not None and any(s in active for s in TOURNAMENT_STEPS):

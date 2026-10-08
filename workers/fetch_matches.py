@@ -363,10 +363,10 @@ def fetch_matches_for_competition(
     (A full competition dump from the API always contains the latest status.)
     """
     data = fetch(f"/competitions/{code}/matches", params={"season": api_season})
-    if not data:
-        logger.warning("%s: no match data returned", code)
+    if not data or not data.get("matches"):
+        logger.warning("%s: API returned 0 matches for season %s — keeping existing file",
+                       code, api_season)
         return []
-
     matches = [flatten_match(m, code) for m in data.get("matches", [])]
     matches.sort(key=lambda m: m.get("utcDate") or "")
 

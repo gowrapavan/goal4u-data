@@ -49,7 +49,7 @@ from workers.fetch_competitions import (
     fetch_standing,
     fetch_scorers,
 )
-from workers.fetch_matches import flatten_match
+from workers.fetch_matches import flatten_match, fetch_matches_for_competition
 from workers.tournament_paths import get_data_paths, is_tournament
 from workers.utils import fetch, safe_write
 
@@ -72,6 +72,11 @@ LIVE_STATUSES      = {"IN_PLAY", "PAUSED"}
 SCHEDULED_STATUSES = {"TIMED", "SCHEDULED"}
 FINISHED_STATUS    = "FINISHED"
 POSTPONED_STATUS   = "POSTPONED"
+
+# football-data.org free tier returns no lineups. With True, every recently
+# finished match is re-fetched on every audit run, forever. Keep False unless
+# your plan includes lineup data.
+REQUIRE_LINEUPS = False
 SKIP_STATUSES      = {"CANCELLED", "AWARDED", "WALKOVER", "SUSPENDED"}
 
 
@@ -110,18 +115,15 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
     if status in LIVE_STATUSES:
         return True
 
-    # Permanently skip
     if status in SKIP_STATUSES or utc_date is None:
         return False
 
-    # Outside the lookback window → not stale
+    if status == POSTPONED_STATUS:      # <- moved up, before the cutoff
+        return True
+
     cutoff = now - timedelta(hours=max(lookback_hours, 12))
     if utc_date < cutoff:
         return False
-
-    # Postponed → always stale (need the new date)
-    if status == POSTPONED_STATUS:
-        return True
 
     # Future match
     if utc_date > now:
@@ -167,7 +169,7 @@ def _is_stale(match: dict, now: datetime, lookback_hours: int) -> bool:
 
         home_team = match.get("homeTeam") or {}
         away_team = match.get("awayTeam") or {}
-        if (
+        if REQUIRE_LINEUPS and (
             not home_team.get("lineup")
             and not home_team.get("bench")
             and not away_team.get("lineup")
@@ -276,8 +278,11 @@ def audit_matches_for_competition(
         matches = []
 
     if not matches:
-        logger.info("%s: no existing match file — skipping audit", code)
-        return 0, 0, 0
+        logger.info("%s: no matches.json — doing full season fetch", code)
+        full = fetch_matches_for_competition(
+            code, get_current_season_start_year(), paths=paths
+        )
+        return len(full), len(full), 0
 
     id_to_idx    = {m.get("id"): i for i, m in enumerate(matches) if m.get("id")}
     stale        = [m for m in matches if _is_stale(m, now, lookback_hours)]
