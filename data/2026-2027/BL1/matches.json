@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-10T11:36:38.355575+00:00",
+    "last_synced": "2026-10-10T14:54:20.616721+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -4659,7 +4659,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T13:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 5,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -4692,15 +4692,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 3
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -4784,7 +4784,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T13:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 5,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -4817,15 +4817,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -4909,7 +4909,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T13:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 5,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -4942,15 +4942,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -5034,7 +5034,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T13:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 5,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -5067,15 +5067,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -5159,7 +5159,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T13:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 5,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -5192,15 +5192,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -5371,7 +5371,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15408,
+          "name": "Daniel Siebert",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-10T11:36:02.174475+00:00",
+    "last_synced": "2026-10-10T14:53:44.648770+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -8659,7 +8659,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T12:00:00Z",
-      "status": "TIMED",
+      "status": "CANCELLED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -8692,11 +8692,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -8784,7 +8784,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:15:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -8817,11 +8817,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -8871,7 +8871,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 214410,
+          "name": "Alejandro Quintero González",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -8989,7 +8996,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 206211,
+          "name": "Jesús Gil Manzano",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

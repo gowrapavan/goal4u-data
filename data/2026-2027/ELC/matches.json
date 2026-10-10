@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-10T11:37:14.059387+00:00",
+    "last_synced": "2026-10-10T14:55:38.004094+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11832,7 +11832,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T11:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11865,15 +11865,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
           "home": 0,
-          "away": 0
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -11957,7 +11957,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T11:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11990,15 +11990,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
-          "away": 0
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -12082,7 +12082,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T11:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12118,12 +12118,12 @@
         "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
-          "away": 0
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -12207,7 +12207,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12240,15 +12240,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -12294,7 +12294,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 14701,
+          "name": "Joshua Smith",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12325,7 +12332,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12358,11 +12365,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 3
         },
         "halfTime": {
           "home": null,
@@ -12412,7 +12419,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11423,
+          "name": "Andy Madley",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12443,7 +12457,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12476,15 +12490,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -12530,7 +12544,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11626,
+          "name": "Matt Donohue",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12561,7 +12582,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12594,15 +12615,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -12648,7 +12669,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11561,
+          "name": "Tom Nield",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12679,7 +12707,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12712,11 +12740,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -12766,7 +12794,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 214210,
+          "name": "Thomas Kirk",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12797,7 +12832,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12830,15 +12865,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -12884,7 +12919,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 213621,
+          "name": "Benjamin Speedie",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -12915,7 +12957,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12948,15 +12990,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -13002,7 +13044,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 210717,
+          "name": "Farai Hallam",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
