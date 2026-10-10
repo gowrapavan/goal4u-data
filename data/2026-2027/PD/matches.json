@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-10T16:37:16.777197+00:00",
+    "last_synced": "2026-10-10T19:02:29.250707+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -8909,7 +8909,7 @@
         "winner": null
       },
       "utcDate": "2026-10-10T16:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -8942,15 +8942,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
+          "home": 3,
           "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -9121,7 +9121,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57930,
+          "name": "Isidro Díaz de Mera",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
