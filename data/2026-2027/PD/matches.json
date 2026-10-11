@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-11T11:50:30.062762+00:00",
+    "last_synced": "2026-10-11T14:14:55.415456+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9159,7 +9159,7 @@
         "winner": null
       },
       "utcDate": "2026-10-11T12:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9192,11 +9192,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -9371,7 +9371,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 214573,
+          "name": "Miguel Sesma Espinosa",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

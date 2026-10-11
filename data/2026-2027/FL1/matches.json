@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-11T11:52:00.228592+00:00",
+    "last_synced": "2026-10-11T14:15:19.451550+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -6403,7 +6403,7 @@
         "winner": null
       },
       "utcDate": "2026-10-11T13:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -6436,15 +6436,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -6615,7 +6615,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57042,
+          "name": "Willy Delajod",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
