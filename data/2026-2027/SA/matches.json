@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-12T13:58:32.050945+00:00",
+    "last_synced": "2026-10-12T19:29:12.591054+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -7278,7 +7278,7 @@
         "winner": null
       },
       "utcDate": "2026-10-12T16:30:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7311,15 +7311,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -7365,7 +7365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 97887,
+          "name": "Paride Tremolada",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -7396,7 +7403,7 @@
         "winner": null
       },
       "utcDate": "2026-10-12T18:45:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 6,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7429,11 +7436,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -7483,7 +7490,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 159361,
+          "name": "Valerio Crezzini",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
