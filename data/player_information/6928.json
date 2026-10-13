@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-26T05:23:44.690150+00:00",
+    "last_synced": "2026-10-13T14:18:27.119136+00:00",
     "source": "football-data.org v4"
   },
   "data": {
@@ -9,11 +9,16 @@
     "tm_url": "https://www.transfermarkt.co.in/deniz-undav/profil/spieler/339314",
     "image_path": "/assets/player_images/6928.jpg",
     "details": {
-      "market_value": "₹ 176 Cr",
+      "market_value": "₹ 242 Cr",
       "mv_last_update": "27/05/2026",
       "shirt_number": "26",
-      "is_captain": false,
+      "is_captain": true,
       "achievements": [
+        {
+          "trophy": "VDV-Newcomer of the season",
+          "count": "1",
+          "img_url": "data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=="
+        },
         {
           "trophy": "Top goal scorer",
           "count": "2",
@@ -22,15 +27,15 @@
         {
           "trophy": "German cup winner",
           "count": "1",
-          "img_url": "https://tmssl.akamaized.net//images/erfolge/header/27.png?lm=1520606999"
+          "img_url": "https://img.a.transfermarkt.technology/erfolge/header/27.png?lm=1791356647"
         },
         {
           "trophy": "Belgian Second League Champion",
           "count": "1",
-          "img_url": "https://tmssl.akamaized.net//images/erfolge/header/786.png?lm=1636051073"
+          "img_url": "https://img.a.transfermarkt.technology/erfolge/header/786.png?lm=1791356640"
         }
       ],
-      "date_of_birth_age": "19/07/1996 (29)",
+      "date_of_birth_age": "19/07/1996 (30)",
       "place_of_birth": "Varel",
       "height": "1,79 m",
       "citizenship": [
@@ -50,10 +55,8 @@
         "http://www.facebook.com/profile.php?id=61566118257183",
         "http://www.instagram.com/denizundav/?hl=de"
       ],
-      "national_caps": "12",
+      "national_caps": "13",
       "national_goals": "9",
-      "national_team_name": "Germany",
-      "national_team_url": "/deutschland/startseite/verein/3262",
       "other_positions": [
         "Second Striker"
       ],
@@ -66,25 +69,32 @@
     },
     "trophies": [
       {
+        "name": "VDV-Newcomer of the season",
+        "safe_name": "vdv_newcomer_of_the_season",
+        "count": "1",
+        "local_path": "/assets/trophies/vdv_newcomer_of_the_season.jpg",
+        "source_url": "https://img.a.transfermarkt.technology/titel/medium/1231.png"
+      },
+      {
         "name": "Top goal scorer",
         "safe_name": "top_goal_scorer",
         "count": "2",
         "local_path": "/assets/trophies/top_goal_scorer.jpg",
-        "source_url": "https://tmssl.akamaized.net//images/titel/medium/5.png"
+        "source_url": "https://img.a.transfermarkt.technology/titel/medium/5.png"
       },
       {
         "name": "German cup winner",
         "safe_name": "german_cup_winner",
         "count": "1",
         "local_path": "/assets/trophies/german_cup_winner.jpg",
-        "source_url": "https://tmssl.akamaized.net//images/erfolge/medium/27.png"
+        "source_url": "https://img.a.transfermarkt.technology/erfolge/medium/27.png"
       },
       {
         "name": "Belgian Second League Champion",
         "safe_name": "belgian_second_league_champion",
         "count": "1",
         "local_path": "/assets/trophies/belgian_second_league_champion.jpg",
-        "source_url": "https://tmssl.akamaized.net//images/erfolge/medium/786.png"
+        "source_url": "https://img.a.transfermarkt.technology/erfolge/medium/786.png"
       }
     ]
   }

@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-06-25T15:53:28.991310+00:00",
+    "last_synced": "2026-10-13T13:15:49.801219+00:00",
     "source": "football-data.org v4"
   },
   "data": {
@@ -9,16 +9,28 @@
     "tm_url": "https://www.transfermarkt.co.in/leif-davis/profil/spieler/596446",
     "image_path": "/assets/player_images/99120.jpg",
     "details": {
-      "market_value": "₹160 Cr Last update: 28/05/2026",
+      "market_value": "₹ 275 Cr",
+      "mv_last_update": "07/10/2026",
       "shirt_number": "3",
+      "is_captain": false,
+      "achievements": [
+        {
+          "trophy": "English 2nd tier champion",
+          "count": "1",
+          "img_url": "https://img.a.transfermarkt.technology/erfolge/header/869.png?lm=1791356701"
+        }
+      ],
       "date_of_birth_age": "31/12/1999 (26)",
       "place_of_birth": "Newcastle",
       "height": "1,82 m",
-      "citizenship": "England",
-      "position": "Defender - Left-Back",
+      "citizenship": [
+        "England"
+      ],
+      "position": "Left-Back",
       "foot": "left",
       "player_agent": "Two Touch Agency",
-      "current_club": "Ipswich Town",
+      "current_club_name": "",
+      "current_club_url": "/ipswich-town/startseite/verein/677",
       "joined": "25/07/2022",
       "contract_expires": "30/06/2029",
       "contract_option": "club option 1 year",
@@ -26,12 +38,23 @@
       "social_media": [
         "http://www.instagram.com/leifdavis40/"
       ],
+      "other_positions": [
+        "Left Midfield"
+      ],
       "youth_clubs": "Wallsend Boys Club (2015–2016), Morecambe FC (2016–2018)",
       "transfer_component_metadata": {
         "player-id": "596446",
         "translations": "{\"headline\":\"Transfer history \",\"infotext\":\"This is the transfer history of Leif Davis. The flag next to each club indicates the country of the club's league.\",\"transferHistory\":\"Transfer history\",\"upcomingTransfers\":\"Upcoming transfer\",\"feesum\":\"Total transfer fees\",\"season\":\"Season\",\"date\":\"Date\",\"clubFrom\":\"Left\",\"clubTo\":\"Joined\",\"marketValue\":\"MV\",\"transferFee\":\"Fee\",\"transferMapLinkText\":\"Explore the transfer history on a map\",\"loan\":\"loan transfer\"}"
       }
     },
-    "trophies": []
+    "trophies": [
+      {
+        "name": "English 2nd tier champion",
+        "safe_name": "english_2nd_tier_champion",
+        "count": "1",
+        "local_path": "/assets/trophies/english_2nd_tier_champion.jpg",
+        "source_url": "https://img.a.transfermarkt.technology/erfolge/medium/869.png"
+      }
+    ]
   }
 }
