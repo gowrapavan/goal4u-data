@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-13T16:33:23.431452+00:00",
+    "last_synced": "2026-10-13T18:33:49.498110+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -2278,7 +2278,7 @@
         "winner": null
       },
       "utcDate": "2026-10-13T16:45:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 2,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -2311,15 +2311,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -2403,7 +2403,7 @@
         "winner": null
       },
       "utcDate": "2026-10-13T16:45:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 2,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -2436,15 +2436,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -2615,7 +2615,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 44921,
+          "name": "Rohit Saggi",
+          "type": "REFEREE",
+          "nationality": "Norway"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -2733,7 +2740,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11079,
+          "name": "Marco Guida",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -2851,7 +2865,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 30960,
+          "name": "Glenn Nyberg",
+          "type": "REFEREE",
+          "nationality": "Sweden"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -2969,7 +2990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 43878,
+          "name": "Felix Zwayer",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -3087,7 +3115,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15654,
+          "name": "Georgi Kabakov",
+          "type": "REFEREE",
+          "nationality": "Bulgaria"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -3205,7 +3240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15510,
+          "name": "Nick Walsh",
+          "type": "REFEREE",
+          "nationality": "Scotland"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -3323,7 +3365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15408,
+          "name": "Daniel Siebert",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
