@@ -11,8 +11,6 @@ League:
         standing.json
         topScorer.json
         teams.json
-        match_stats_links.json   ← yallashoot URLs mapped to fd match IDs
-        stats.json               ← all match stats in one file, keyed by match_id
 
 Tournament (World Cup):
     data/world-cup/world-cup-{year}/
@@ -21,8 +19,6 @@ Tournament (World Cup):
         teams.json
         standing.json
         scorers.json
-        match_stats_links.json
-        stats.json
 
 Tournament (Euros):
     data/euros/euro-{year}/
@@ -36,10 +32,6 @@ Key design decisions
   is self-contained and can be fetched / audited independently.
 • All path keys are strings (not Path objects) so callers can pass them straight
   to safe_write() and open() without conversion.
-• match_stats_links replaces the old match_links key — same flat-file-at-root
-  pattern, renamed for clarity.
-• stats replaces the old stats_dir — a single JSON file instead of a folder of
-  per-match files, so the frontend can load everything in one request.
 """
 
 from __future__ import annotations
@@ -74,23 +66,6 @@ _TOURNAMENT_SLUG: dict[str, str] = {
     "EC": "euro-{year}",
 }
 
-# YallaShoot URL slugs — {year} substituted at runtime
-YALLASHOOT_SLUGS: dict[str, str] = {
-    "WC": "world-cup-{year}",
-    "EC": "uefa-euro-{year}",
-}
-
-# YallaShoot league base slugs — season suffix appended at runtime
-_LEAGUE_SLUGS: dict[str, str] = {
-    "PL":  "english-premier-league",
-    "PD":  "la-liga-spain",
-    "SA":  "serie-a-italy",
-    "FL1": "ligue-1-france",
-    "BL1": "bundesliga-germany",
-    "CL":  "uefa-champions-league",
-}
-
-
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def is_tournament(code: str) -> bool:
@@ -110,36 +85,6 @@ def get_display_title(code: str, tournament_year: Optional[int] = None) -> str:
     if is_tournament(code) and tournament_year is not None:
         return f"{base} {tournament_year}"
     return base
-
-
-def get_yallashoot_slug(code: str, year: int) -> str:
-    """
-    Return the YallaShoot slug for a given tournament code + year.
-
-    For leagues use get_league_yallashoot_slug() instead.
-
-    Examples:
-        get_yallashoot_slug("WC", 2026) → "world-cup-2026"
-        get_yallashoot_slug("EC", 2028) → "uefa-euro-2028"
-    """
-    code = code.upper()
-    if code not in YALLASHOOT_SLUGS:
-        raise ValueError(f"No YallaShoot slug pattern for tournament code {code!r}")
-    return YALLASHOOT_SLUGS[code].format(year=year)
-
-
-def get_league_yallashoot_slug(code: str, season: str) -> Optional[str]:
-    """
-    Return the YallaShoot slug for a league competition + season string.
-
-    Example:
-        get_league_yallashoot_slug("PL", "2025-2026") → "english-premier-league-2025-2026"
-    """
-    code = code.upper()
-    base = _LEAGUE_SLUGS.get(code)
-    if not base:
-        return None
-    return f"{base}-{season}"
 
 
 def get_tournament_year(code: str) -> int:
@@ -186,8 +131,6 @@ def get_data_paths(
     standing            standing.json
     scorers             topScorer.json (league) / scorers.json (tournament)
     teams               teams.json  — ONE file for the full squad list
-    match_stats_links   match_stats_links.json — yallashoot URL index
-    stats               stats.json — all match stats, keyed by str(match_id)
 
     All paths are relative to the project root (no leading slash).
     """
@@ -208,8 +151,6 @@ def get_data_paths(
             "standing":           f"{root}/standing.json",
             "scorers":            f"{root}/scorers.json",
             "teams":              f"{root}/teams.json",
-            "match_stats_links":  f"{root}/match_stats_links.json",
-            "stats":              f"{root}/stats.json",
         }
 
     else:
@@ -229,6 +170,4 @@ def get_data_paths(
             "standing":           f"{root}/standing.json",
             "scorers":            f"{root}/topScorer.json",   # leagues use topScorer
             "teams":              f"{root}/teams.json",
-            "match_stats_links":  f"{root}/match_stats_links.json",
-            "stats":              f"{root}/stats.json",
         }

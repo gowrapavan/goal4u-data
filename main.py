@@ -3,8 +3,8 @@
 main.py — Single-command full data pipeline for goal4u-data.
 
 Two separate flows (as designed in architecture notes):
-  League flow    : competitions → teams → tm_scraper → matches → match_links
-  Tournament flow: worldcup | euro  (each is all-in-one, then match_links)
+  League flow    : competitions → teams → tm_scraper → matches
+  Tournament flow: worldcup | euro  (each is all-in-one)
 
 Step order
 ──────────
@@ -12,17 +12,12 @@ Step order
   2. teams          club squads (per competition)
   3. tm_scraper     Transfermarkt league info, market values, player profiles
   4. matches        fixtures + results  (postpone-aware)
-  5. match_links    yallashoot URL index  (requires matches to exist first)
-  6. match_stats    detailed per-match stats from yallashoot
-  7. worldcup       World Cup all-in-one  (independent of league season)
-  8. euro           UEFA Euro all-in-one  (independent of league season)
+  5. worldcup       World Cup all-in-one  (independent of league season)
+  6. euro           UEFA Euro all-in-one  (independent of league season)
 
   tm_scraper runs after teams so that teams.json is on disk for player ID
   enrichment.  It writes to data/league_info/, data/team_informations/, and
   data/player_information/.
-
-  match_stats scrapes one yallashoot page per match using N parallel workers
-  (default 8).  It is wired into the pipeline but also safe to run standalone.
 
 Season behaviour
 ────────────────
@@ -36,16 +31,6 @@ Season behaviour
   Tournament steps (worldcup, euro) are always independent of --season
   because tournaments have their own year in config.TOURNAMENT_YEARS.
 
-  match_links runs after matches (league) or after worldcup/euro (tournaments).
-  It reads the matches.json that was just written so IDs are always fresh.
-
-match_stats concurrency flags  (only affect the match_stats step)
-─────────────────────────────
-  --workers N      parallel scrape threads (default 8, safe range 4–12)
-  --limit N        max matches to scrape this run (default: all pending)
-  --checkpoint N   save stats.json every N successes (default 25)
-  --force          re-scrape matches already in stats.json
-
 tm_scraper flags  (only affect the tm_scraper step)
 ────────────────
   --fullscrape     re-fetch and overwrite all TM JSON data even if it exists
@@ -55,7 +40,7 @@ Usage
 ─────
   python main.py                                          # full pipeline, current season
   python main.py --season 2024                            # historical 2024-2025 leagues
-  python main.py --only matches match_links               # matches + links only
+  python main.py --only matches                           # matches only
   python main.py --only tm_scraper                        # TM scrape only, all leagues
   python main.py --only tm_scraper --competition PL       # TM scrape, PL only
   python main.py --only tm_scraper --fullscrape           # re-fetch all TM data
@@ -64,17 +49,12 @@ Usage
   python main.py --skip teams worldcup euro               # leagues, no teams, no tournaments
   python main.py --competition PL --only matches          # PL matches only
   python main.py --only worldcup --mode standings         # WC standings only
-  python main.py --only match_stats --workers 12          # fast stats scrape, 12 threads
-  python main.py --only match_stats --competition PL      # stats for PL only
-  python main.py --only match_stats --limit 100           # scrape up to 100 matches
-  python main.py --only match_stats --force               # re-scrape everything
 """
 
 from __future__ import annotations
 
 import argparse
 import logging
-import os
 import sys
 import time
 from datetime import datetime, timezone
@@ -123,79 +103,6 @@ def _run_matches(
         run(competition=competition)
 
 
-def _run_match_links(
-    season: Optional[int],
-    competition: Optional[str],
-    **_,
-) -> None:
-    """
-    Fetch yallashoot match-page URLs and cross-reference them against
-    matches.json to produce match_stats_links.json.
-
-    Runs for leagues (using the current / specified season) and tournaments
-    (WC, EC — year always from config.TOURNAMENT_YEARS, season arg ignored).
-
-    When --competition is set only that code is processed.
-    When no --competition is set, all LEAGUE_COMPETITIONS are processed plus
-    any tournament codes that have their own fetch already wired in
-    (WC if worldcup ran, EC if euro ran).  To keep this simple we only process
-    league codes here; tournament match_links are triggered by --only match_links
-    combined with --competition WC|EC when you want them explicitly.
-    """
-    from workers.fetch_match_links import process_one
-    from config import LEAGUE_COMPETITIONS, get_season_paths
-    from workers.tournament_paths import is_tournament
-
-    if season is not None:
-        season_str = f"{season}-{season + 1}"
-    else:
-        season_str = get_season_paths()["season"]
-
-    if competition:
-        # Single competition — works for both leagues and tournaments
-        process_one(competition.upper(), season_str=season_str)
-    else:
-        # All league competitions (tournaments handled via --competition WC/EC)
-        codes = [c for c in LEAGUE_COMPETITIONS if not is_tournament(c)]
-        for code in codes:
-            process_one(code, season_str=season_str)
-            time.sleep(2)   # polite gap between yallashoot page scrapes
-
-def _run_match_stats(
-    season: Optional[int],
-    competition: Optional[str],
-    mode: str = "all",
-    workers: int = 8,
-    limit: Optional[int] = None,
-    checkpoint: int = 25,
-    force: bool = False,
-    **_,
-) -> None:
-    from workers.fetch_match_stats import run_competition_audit, run_all_competitions_audit
-    from config import get_season_paths
-
-    season_str = f"{season}-{season + 1}" if season else get_season_paths()["season"]
-
-    if competition:
-        run_competition_audit(
-            code=competition.upper(),
-            season_str=season_str,
-            workers=workers,
-            limit=limit,
-            checkpoint_n=checkpoint,
-            force=force,
-        )
-    else:
-        run_all_competitions_audit(
-            season_str=season_str,
-            workers=workers,
-            limit=limit,
-            checkpoint_n=checkpoint,
-            force=force,
-        )
-
-
-        
 def _run_worldcup(
     mode: str = "all",
     **_,               # absorbs season / competition kwargs so callers are uniform
@@ -288,18 +195,6 @@ STEPS = [
         [],
     ),
     (
-        "match_links",
-        "Yallashoot URL index per competition  (uses matches.json)",
-        _run_match_links,
-        [],   # soft dependency on matches — we warn but don't hard-block
-    ),
-    (
-        "match_stats",
-        "Scrape detailed stats from yallashoot",
-        _run_match_stats,
-        ["match_links"], # Depends on match_links being finished first
-    ),
-    (
         "worldcup",
         "World Cup all-in-one  (year from config.TOURNAMENT_YEARS['WC'])",
         _run_worldcup,
@@ -314,16 +209,8 @@ STEPS = [
 ]
 
 STEP_NAMES: list[str]  = [s[0] for s in STEPS]
-LEAGUE_STEPS           = {"competitions", "teams", "tm_scraper", "matches", "match_links"}
+LEAGUE_STEPS           = {"competitions", "teams", "tm_scraper", "matches"}
 TOURNAMENT_STEPS       = {"worldcup", "euro"}
-
-# ── Stats scraping switch ─────────────────────────────────────────────────────
-# The stats source (yallashoot) is down, so match_links + match_stats are
-# DISABLED by default. They are removed from the run even if named in --only.
-# To re-enable:   set ENABLE_STATS=1   (PowerShell: $env:ENABLE_STATS="1")
-# When stats are gone for good, delete these two steps + this block.
-STATS_STEPS  = {"match_links", "match_stats"}
-ENABLE_STATS = os.environ.get("ENABLE_STATS", "0") == "1"
 
 
 # ── Pipeline runner ───────────────────────────────────────────────────────────
@@ -334,10 +221,6 @@ def run_pipeline(
     season: Optional[int]     = None,
     competition: Optional[str]= None,
     mode: str                 = "all",
-    workers: int              = 8,
-    limit: Optional[int]      = None,
-    checkpoint: int           = 25,
-    force: bool               = False,
     fullscrape: bool          = False,
 ) -> int:
     """
@@ -345,9 +228,6 @@ def run_pipeline(
 
     `mode` is forwarded to competition + tournament steps (e.g. "standings" to
     refresh only standings without re-downloading matches).
-
-    `workers`, `limit`, `checkpoint`, `force` are forwarded exclusively to the
-    match_stats step and have no effect on any other step.
 
     `fullscrape` is forwarded exclusively to the tm_scraper step — when True it
     re-fetches all Transfermarkt JSON data files even if they already have data.
@@ -366,10 +246,6 @@ def run_pipeline(
     logger.info("main.py pipeline started  |  season: %s", season_label)
     if competition:
         logger.info("  competition filter: %s", competition)
-    logger.info(
-        "  match_stats: workers=%d  limit=%s  checkpoint=%d  force=%s",
-        workers, limit if limit is not None else "all", checkpoint, force,
-    )
     logger.info("  tm_scraper:  fullscrape=%s", fullscrape)
     logger.info("=" * 72)
 
@@ -377,29 +253,11 @@ def run_pipeline(
     active: list[str] = only if only else STEP_NAMES
     active = [n for n in active if n not in (skip or [])]
 
-    # Stats scraping switched off (see ENABLE_STATS above)
-    if not ENABLE_STATS:
-        dropped = [n for n in active if n in STATS_STEPS]
-        if dropped:
-            logger.warning(
-                "Stats steps disabled (ENABLE_STATS != 1) — skipping: %s",
-                ", ".join(dropped),
-            )
-        active = [n for n in active if n not in STATS_STEPS]
-
     # Warn if --season is combined with tournament steps (season is ignored there)
     if season is not None and any(s in active for s in TOURNAMENT_STEPS):
         logger.warning(
             "--season is ignored for tournament steps (worldcup, euro). "
             "Tournament years come from config.TOURNAMENT_YEARS."
-        )
-
-    # Soft-warn if match_links is active but matches isn't
-    if "match_links" in active and "matches" not in active:
-        logger.warning(
-            "match_links step is active but matches step is not — "
-            "match_stats_links.json will be cross-referenced against whatever "
-            "matches.json is already on disk (may be stale)."
         )
 
     completed: set[str] = set()
@@ -434,10 +292,6 @@ def run_pipeline(
                 season=season,
                 competition=competition,
                 mode=mode,
-                workers=workers,
-                limit=limit,
-                checkpoint=checkpoint,
-                force=force,
                 fullscrape=fullscrape,
             )
             completed.add(name)
@@ -505,13 +359,7 @@ def main() -> None:
             "  python main.py --only worldcup --mode matches              # WC matches only\n"
             "  python main.py --skip worldcup euro                        # leagues only\n"
             "  python main.py --competition PL --only matches             # PL matches\n"
-            "  python main.py --only match_links --competition WC         # WC links only\n"
-            "  python main.py --skip match_links                          # skip link scraping\n"
-            "  python main.py --only match_stats --workers 12             # fast stats, 12 threads\n"
-            "  python main.py --only match_stats --competition PL         # PL stats only\n"
-            "  python main.py --only match_stats --limit 100              # cap at 100 matches\n"
-            "  python main.py --only match_stats --force                  # re-scrape all\n"
-            "  python main.py --only match_stats --workers 8 --checkpoint 50  # checkpoint every 50\n"
+            "  python main.py --only tm_scraper --fullscrape              # re-fetch all TM data\n"
         ),
     )
 
@@ -550,7 +398,6 @@ def main() -> None:
         metavar="CODE",
         help=(
             "Restrict league steps to one competition code, e.g. PL or BL1. "
-            "For match_links this also works with tournament codes: --competition WC. "
             "Has no effect on worldcup / euro steps."
         ),
     )
@@ -565,47 +412,6 @@ def main() -> None:
             "Values: all | info | standings | scorers | teams | matches. "
             "Default: all."
         ),
-    )
-
-    # ── match_stats concurrency flags ─────────────────────────────────────────
-    stats_group = parser.add_argument_group(
-        "match_stats options",
-        "These flags are forwarded only to the match_stats step.",
-    )
-    stats_group.add_argument(
-        "--workers",
-        type=int,
-        default=8,
-        metavar="N",
-        help=(
-            "Parallel scrape threads for match_stats (default: 8). "
-            "Safe range: 4–12 with a Webshare rotating proxy."
-        ),
-    )
-    stats_group.add_argument(
-        "--limit",
-        type=int,
-        default=None,
-        metavar="N",
-        help=(
-            "Max matches to scrape per match_stats run. "
-            "Omit to scrape all pending matches (no cap)."
-        ),
-    )
-    stats_group.add_argument(
-        "--checkpoint",
-        type=int,
-        default=25,
-        metavar="N",
-        help=(
-            "Save stats.json every N successful scrapes (default: 25). "
-            "Protects against data loss if a run is interrupted."
-        ),
-    )
-    stats_group.add_argument(
-        "--force",
-        action="store_true",
-        help="Re-scrape matches that already have an entry in stats.json.",
     )
 
     # ── tm_scraper flags ──────────────────────────────────────────────────────
@@ -629,10 +435,6 @@ def main() -> None:
         season=args.season,
         competition=args.competition,
         mode=args.mode,
-        workers=args.workers,
-        limit=args.limit,
-        checkpoint=args.checkpoint,
-        force=args.force,
         fullscrape=args.fullscrape,
     )
     sys.exit(code)
