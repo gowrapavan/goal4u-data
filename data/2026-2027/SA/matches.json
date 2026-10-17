@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-17T16:02:01.727209+00:00",
+    "last_synced": "2026-10-17T18:39:12.725571+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -7649,7 +7649,7 @@
         "id": 2494,
         "startDate": "2026-08-23",
         "endDate": "2027-05-30",
-        "currentMatchday": 7,
+        "currentMatchday": 6,
         "winner": null
       },
       "utcDate": "2026-10-17T13:00:00Z",
@@ -7778,7 +7778,7 @@
         "winner": null
       },
       "utcDate": "2026-10-17T16:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 7,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7811,15 +7811,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 3
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -7990,7 +7990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11006,
+          "name": "Rosario Abisso",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

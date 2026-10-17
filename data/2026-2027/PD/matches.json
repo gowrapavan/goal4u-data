@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-17T16:01:07.696733+00:00",
+    "last_synced": "2026-10-17T18:38:06.727888+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -10034,7 +10034,7 @@
         "winner": null
       },
       "utcDate": "2026-10-17T14:15:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -10159,7 +10159,7 @@
         "winner": null
       },
       "utcDate": "2026-10-17T16:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -10192,15 +10192,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 5
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -10371,7 +10371,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 206205,
+          "name": "Adrián Cordero Vega",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
