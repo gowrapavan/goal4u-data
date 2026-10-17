@@ -166,6 +166,14 @@ def _run_tm_scraper(
             run_season(code, season_str, force=fullscrape)
 
 
+# NOTE: the stream scraper is a separate project with its own main.py in
+# stream-scraping/ (its own core/ and scrapers/ too). It can be run on its own:
+#     cd stream-scraping && python main.py
+# This step just launches that same main.py in a subprocess, so running
+# `python main.py --only stream_scraper` from here does the same thing.
+# Output goes to stream-data/ next to this file. Set HTTPS_PROXY first if the
+# source sites are not reachable directly from your network.
+
 # ── Step registry ─────────────────────────────────────────────────────────────
 # Tuple: (name, short description, callable, [hard-dependency names])
 
