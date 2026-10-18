@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-18T08:13:44.261123+00:00",
+    "last_synced": "2026-10-18T10:08:53.306456+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -7524,11 +7524,11 @@
         "id": 2494,
         "startDate": "2026-08-23",
         "endDate": "2027-05-30",
-        "currentMatchday": 7,
+        "currentMatchday": 6,
         "winner": null
       },
       "utcDate": "2026-10-16T18:45:00Z",
-      "status": "FINISHED",
+      "status": "TIMED",
       "matchday": 7,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7561,15 +7561,15 @@
         "bench": []
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": null,
         "duration": "REGULAR",
         "fullTime": {
-          "home": 4,
-          "away": 2
+          "home": null,
+          "away": null
         },
         "halfTime": {
-          "home": 3,
-          "away": 2
+          "home": null,
+          "away": null
         },
         "regularTime": {
           "home": null,
@@ -8115,7 +8115,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11079,
+          "name": "Marco Guida",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
