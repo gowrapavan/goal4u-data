@@ -1,0 +1,115 @@
+# .github/workflows/stats365.yml
+#
+# Keeps data/{season}/{CODE}/stats.json, match_map.json, player_map_365.json and
+# public/headshot/*.png up to date.  It only READS matches.json / teams.json, so it can run
+# alongside your existing fetch workflows (it never touches the files they write).
+#
+# A run can take 30+ minutes (every match = 2 requests, 2 s apart = ~4 s per match).  So:
+#   * scheduled runs are hourly and stop themselves after 50 minutes (progress is committed,
+#     the next run continues where this one stopped);
+#   * only ONE run is active at a time (concurrency) - a newer run waits, it never overlaps;
+#   * idle runs (nothing new) take about a minute and commit nothing.
+
+name: stats365
+
+on:
+  schedule:
+    - cron: "0 11-23 * * *"        # match hours (UTC): hourly
+    - cron: "30 0-10/3 * * *"      # night / morning catch-up: every 3 hours
+  workflow_dispatch:
+    inputs:
+      competition:
+        description: "League code, e.g. PL (blank = all leagues)"
+        required: false
+        default: ""
+      mode:
+        description: "What to run"
+        type: choice
+        default: all
+        options: [all, map, stats, images, remap]
+      max_minutes:
+        description: "Stop gracefully after N minutes (progress is committed; run again to continue)"
+        required: false
+        default: "120"
+      rebuild:
+        description: "Re-fetch matches already stored as full time (one-off)"
+        type: boolean
+        default: false
+      split_details:
+        description: "Heavy per-player data -> match_details/{id}.json"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write                   # needed to push the data commit
+
+concurrency:
+  group: stats365                   # one run at a time; a new run waits instead of cancelling
+  cancel-in-progress: false
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    # scheduled slices: 50 min of work inside a 75 min limit; manual runs: up to 340 (GitHub's cap is 360)
+    timeout-minutes: ${{ github.event_name == 'schedule' && 75 || 340 }}
+    env:
+      PYTHONUNBUFFERED: "1"
+      # 365scores can block GitHub's data-centre IPs; the script falls back to this proxy on retries
+      WEBSHARE_PROXY_URL: ${{ secrets.WEBSHARE_PROXY_URL }}
+      # optional repository variables (Settings > Secrets and variables > Actions > Variables):
+      #   STATS365_ARGS          e.g. "--split-details"   (applied to scheduled runs)
+      #   STATS365_MIN_INTERVAL  seconds between requests, default 2.0 (1.0 ~ halves the run time)
+      DEFAULT_ARGS: ${{ vars.STATS365_ARGS }}
+      STATS365_MIN_INTERVAL: ${{ vars.STATS365_MIN_INTERVAL || '2.0' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests curl_cffi
+
+      - name: Run stats365
+        env:
+          IN_COMP: ${{ inputs.competition }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_MAX: ${{ inputs.max_minutes }}
+          IN_REBUILD: ${{ inputs.rebuild }}
+          IN_SPLIT: ${{ inputs.split_details }}
+        run: |
+          # scheduled runs: 50 minute slices; manual runs: whatever you typed
+          ARGS="--strict --max-minutes ${IN_MAX:-50}"
+          [ -n "$IN_COMP" ]            && ARGS="$ARGS --competition $IN_COMP"
+          [ -n "$IN_MODE" ]            && ARGS="$ARGS --mode $IN_MODE"
+          [ "$IN_REBUILD" = "true" ]   && ARGS="$ARGS --rebuild"
+          [ "$IN_SPLIT" = "true" ]     && ARGS="$ARGS --split-details"
+          [ -z "$IN_MODE" ]            && ARGS="$ARGS $DEFAULT_ARGS"      # scheduled runs only
+          echo "python -m workers.stats365 $ARGS"
+          python -m workers.stats365 $ARGS
+
+      # Runs even if the step above failed or hit its time budget: the script checkpoints as it goes,
+      # so partial progress (stats, player map, headshots) is never lost.
+      - name: Commit and push
+        if: always()
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- data ':(exclude)**/*.tmp'
+          [ -d public/headshot ] && git add -A -- public/headshot ':(exclude)**/*.tmp' || true
+          if git diff --cached --quiet; then
+            echo "nothing to commit"
+            exit 0
+          fi
+          git commit -m "stats365: update $(date -u +'%Y-%m-%d %H:%M') UTC"
+          for i in 1 2 3 4; do
+            # other workflows may have pushed meanwhile; our files win if the same file was touched
+            if git pull --rebase -X theirs origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME"; then
+              exit 0
+            fi
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          echo "::error::could not push after 4 attempts"
+          exit 1
