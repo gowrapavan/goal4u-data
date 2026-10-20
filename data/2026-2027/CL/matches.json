@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-20T16:05:06.932005+00:00",
+    "last_synced": "2026-10-20T19:25:48.831591+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -4528,7 +4528,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T16:45:00Z",
-      "status": "2026-10-20 15:45:00Z",
+      "status": "FINISHED",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -4561,15 +4561,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -4653,7 +4653,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T16:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -4686,15 +4686,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -4778,7 +4778,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -4811,11 +4811,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -4865,7 +4865,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57042,
+          "name": "Willy Delajod",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -4896,7 +4903,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -4929,11 +4936,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -4983,7 +4990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 43858,
+          "name": "Serdar Gözübüyük",
+          "type": "REFEREE",
+          "nationality": "Netherlands"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -5014,7 +5028,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -5047,11 +5061,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "halfTime": {
           "home": null,
@@ -5101,7 +5115,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 43888,
+          "name": "Szymon Marciniak",
+          "type": "REFEREE",
+          "nationality": "Poland"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -5219,7 +5240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 31823,
+          "name": "Sandro Schärer",
+          "type": "REFEREE",
+          "nationality": "Switzerland"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -5250,7 +5278,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -5283,11 +5311,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -5337,7 +5365,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15408,
+          "name": "Daniel Siebert",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -5368,7 +5403,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -5401,11 +5436,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -5455,7 +5490,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 207080,
+          "name": "José Sánchez Martínez",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -5486,7 +5528,7 @@
         "winner": null
       },
       "utcDate": "2026-10-20T19:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 3,
       "stage": "LEAGUE_STAGE",
       "group": null,
@@ -5519,11 +5561,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -5573,7 +5615,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11605,
+          "name": "Michael Oliver",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
