@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-24T20:00:21.125581+00:00",
+    "last_synced": "2026-10-25T05:03:19.151084+00:00",
     "competition": "SA",
     "season": "2026-2027",
     "total_entries": 75
@@ -198913,14 +198913,14 @@
       ]
     },
     "558560": {
-      "scraped_at": "2026-10-24T14:11:47.923191+00:00",
+      "scraped_at": "2026-10-25T05:03:15.018014+00:00",
       "source_url": "https://www.koora-l.live/game/4732669",
-      "status": "live",
+      "status": "full time",
       "home_team": "Cagliari",
       "away_team": "Bologna",
       "score": {
         "home": 0,
-        "away": 0,
+        "away": 2,
         "ht_home": 0,
         "ht_away": 0
       },
@@ -198950,6 +198950,10 @@
           "away": 5
         },
         "shots_on_target": {
+          "home": 0,
+          "away": 2
+        },
+        "goals": {
           "home": 0,
           "away": 2
         },
@@ -199024,6 +199028,130 @@
           "player_s365_id": 6387,
           "player_out_id": 7999,
           "player_out_s365_id": 1664
+        },
+        {
+          "minute": 55,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "Roberto Gagliardini",
+          "player_id": 2006,
+          "player_s365_id": 6387
+        },
+        {
+          "minute": 57,
+          "type": "goal",
+          "team": "away",
+          "player": "Nicolo Casale",
+          "goal_type": "normal",
+          "assistant": "Juan Miranda",
+          "player_id": 56645,
+          "player_s365_id": 49535,
+          "assistant_id": 32491,
+          "assistant_s365_id": 51013
+        },
+        {
+          "minute": 67,
+          "type": "substitution",
+          "team": "home",
+          "player": "Kevin Carlos",
+          "player_out": "Daniel Maldini",
+          "player_id": 180180,
+          "player_s365_id": 100756,
+          "player_out_id": 136113,
+          "player_out_s365_id": 72298
+        },
+        {
+          "minute": 75,
+          "type": "substitution",
+          "team": "home",
+          "player": "Alieu Fadera",
+          "player_out": "Alessandro Romano",
+          "player_id": 192659,
+          "player_s365_id": 78570,
+          "player_out_id": 274076,
+          "player_out_s365_id": 195500
+        },
+        {
+          "minute": 75,
+          "type": "substitution",
+          "team": "away",
+          "player": "Rahim Alhassane",
+          "player_out": "Juan Miranda",
+          "player_id": 226037,
+          "player_s365_id": 129411,
+          "player_out_id": 32491,
+          "player_out_s365_id": 51013
+        },
+        {
+          "minute": 75,
+          "type": "substitution",
+          "team": "away",
+          "player": "Mikel Amondarain",
+          "player_out": "Jens Odgaard",
+          "player_id": 261839,
+          "player_s365_id": 174865,
+          "player_out_id": 2017,
+          "player_out_s365_id": 49646
+        },
+        {
+          "minute": 75,
+          "type": "substitution",
+          "team": "away",
+          "player": "Marco Libra",
+          "player_out": "Nadir Zortea",
+          "player_s365_id": 226054,
+          "player_out_id": 127143,
+          "player_out_s365_id": 70254
+        },
+        {
+          "minute": 77,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "Deiola",
+          "player_id": 1914,
+          "player_s365_id": 42627
+        },
+        {
+          "minute": 80,
+          "type": "goal",
+          "team": "away",
+          "player": "Federico Bernardeschi",
+          "goal_type": "penalty",
+          "player_id": 2040,
+          "player_s365_id": 6193
+        },
+        {
+          "minute": 85,
+          "type": "substitution",
+          "team": "away",
+          "player": "Martin Vitik",
+          "player_out": "Matteo Darmian",
+          "player_id": 152702,
+          "player_s365_id": 83534,
+          "player_out_id": 7900,
+          "player_out_s365_id": 347
+        },
+        {
+          "minute": 86,
+          "type": "substitution",
+          "team": "home",
+          "player": "Giuseppe Aurelio",
+          "player_out": "Yanis Massolin",
+          "player_id": 145309,
+          "player_s365_id": 126095,
+          "player_out_id": 185011,
+          "player_out_s365_id": 121207
+        },
+        {
+          "minute": 89,
+          "type": "substitution",
+          "team": "away",
+          "player": "S. Mbangula",
+          "player_out": "Federico Bernardeschi",
+          "player_id": 217678,
+          "player_s365_id": 177603,
+          "player_out_id": 2040,
+          "player_out_s365_id": 6193
         }
       ],
       "lineups": {
@@ -199034,7 +199162,7 @@
               "name": "Elia Caprile",
               "number": "1",
               "position": "g",
-              "rating": "6.9",
+              "rating": "6.3",
               "id": 82004,
               "s365_id": 64005,
               "position_detail": "Goalkeeper",
@@ -199043,36 +199171,42 @@
                 "depth": 0,
                 "side": 50
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
-                "saves": 2,
-                "passes_final_third": 2,
+                "saves": 3,
+                "penalties_saved": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
+                "goals_conceded": 2,
+                "passes_final_third": 3,
                 "passes": {
-                  "made": 14,
-                  "total": 17,
-                  "pct": 82
+                  "made": 22,
+                  "total": 27,
+                  "pct": 81
                 },
                 "long_passes": {
-                  "made": 1,
-                  "total": 4,
-                  "pct": 25
+                  "made": 3,
+                  "total": 8,
+                  "pct": 38
                 },
-                "touches": 24,
-                "xgot_faced": 0.28,
-                "goals_prevented": 0.28,
-                "possession_lost": 3,
+                "touches": 41,
+                "xgot_faced": 2,
+                "goals_prevented": -0.02,
+                "possession_lost": 5,
                 "defensive_actions": 2,
                 "stat_57": 1,
-                "clearances": 2,
-                "recoveries": 2
+                "clearances": 3,
+                "recoveries": 9
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0X033i03R0336633x03T03z00%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0X033i03R0336633x03T03g03T0%26dir%3drtl"
             },
             {
               "name": "Adam Obert",
               "number": "33",
               "position": "d",
-              "rating": "6.8",
+              "rating": "6.1",
               "id": 170374,
               "s365_id": 104609,
               "position_detail": "Left Back",
@@ -199081,27 +199215,35 @@
                 "depth": 25,
                 "side": 0
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
+                "offsides": 1,
                 "xa": 0.03,
-                "passes_final_third": 6,
-                "back_passes": 7,
+                "passes_final_third": 8,
+                "back_passes": 14,
                 "passes": {
-                  "made": 26,
-                  "total": 30,
+                  "made": 48,
+                  "total": 55,
                   "pct": 87
                 },
-                "crosses": {
+                "long_passes": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 45,
+                "crosses": {
+                  "made": 1,
+                  "total": 3,
+                  "pct": 33
+                },
+                "touches": 84,
                 "fouls_won": 2,
-                "possession_lost": 8,
-                "clearances": 3,
+                "fouls_committed": 1,
+                "possession_lost": 15,
+                "dribbled_past": 2,
+                "clearances": 4,
                 "interceptions": 1,
-                "recoveries": 3
+                "recoveries": 5
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d003003T0633003Q09063303S03Q0303z0z0z0R0%26dir%3drtl"
             },
@@ -199109,7 +199251,7 @@
               "name": "Juan Rodriguez",
               "number": "15",
               "position": "d",
-              "rating": "6.5",
+              "rating": "5.5",
               "id": 260246,
               "s365_id": 155321,
               "position_detail": "Centre Back",
@@ -199118,31 +199260,43 @@
                 "depth": 25,
                 "side": 33
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
                 "xa": 0.01,
-                "passes_final_third": 6,
-                "back_passes": 3,
+                "passes_final_third": 7,
+                "back_passes": 4,
                 "passes": {
-                  "made": 52,
-                  "total": 58,
-                  "pct": 90
+                  "made": 80,
+                  "total": 90,
+                  "pct": 89
                 },
                 "long_passes": {
-                  "made": 3,
-                  "total": 8,
-                  "pct": 38
+                  "made": 6,
+                  "total": 12,
+                  "pct": 50
                 },
-                "touches": 63,
-                "fouls_committed": 3,
-                "possession_lost": 6,
-                "clearances": 2,
-                "interceptions": 1,
-                "recoveries": 4,
+                "touches": 102,
+                "fouls_won": 1,
+                "penalties_conceded": 1,
+                "fouls_committed": 5,
+                "possession_lost": 11,
+                "clearances": 4,
+                "interceptions": 2,
+                "recoveries": 5,
                 "tackles_won": {
-                  "made": 1,
-                  "total": 1,
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
+                },
+                "aerial_duels_won": {
+                  "made": 2,
+                  "total": 3,
+                  "pct": 67
+                },
+                "ground_duels_won": {
+                  "made": 3,
+                  "total": 7,
+                  "pct": 43
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dp02R05292P0202202K04F02002P02z0z0i0%26dir%3drtl"
@@ -199151,7 +199305,7 @@
               "name": "Deiola",
               "number": "14",
               "position": "m",
-              "rating": "6.6",
+              "rating": "5.8",
               "id": 1914,
               "s365_id": 42627,
               "position_detail": "Central Midfield",
@@ -199160,18 +199314,27 @@
                 "depth": 25,
                 "side": 66
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
+                "xa": 0.01,
+                "passes_final_third": 4,
                 "back_passes": 1,
                 "passes": {
-                  "made": 42,
-                  "total": 46,
-                  "pct": 91
+                  "made": 70,
+                  "total": 75,
+                  "pct": 93
                 },
-                "touches": 48,
-                "fouls_committed": 1,
-                "possession_lost": 4,
-                "clearances": 2,
+                "long_passes": {
+                  "made": 3,
+                  "total": 5,
+                  "pct": 60
+                },
+                "touches": 80,
+                "fouls_won": 1,
+                "fouls_committed": 2,
+                "possession_lost": 5,
+                "dribbled_past": 2,
+                "clearances": 3,
                 "recoveries": 3
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0K033T033R03V093N03T03z00%26dir%3drtl"
@@ -199180,7 +199343,7 @@
               "name": "Ze Pedro",
               "number": "2",
               "position": "d",
-              "rating": "6",
+              "rating": "5.6",
               "id": 52950,
               "s365_id": 105549,
               "position_detail": "Centre Back",
@@ -199212,7 +199375,7 @@
               "name": "Michel Adopo",
               "number": "8",
               "position": "m",
-              "rating": "6.8",
+              "rating": "6.6",
               "id": 185019,
               "s365_id": 74138,
               "position_detail": "Central Midfield",
@@ -199221,33 +199384,34 @@
                 "depth": 50,
                 "side": 20
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
-                "xa": 0.08,
-                "chances_created": 1,
-                "passes_final_third": 1,
-                "back_passes": 6,
+                "xa": 0.16,
+                "chances_created": 2,
+                "passes_final_third": 3,
+                "back_passes": 8,
                 "passes": {
-                  "made": 19,
-                  "total": 20,
-                  "pct": 95
+                  "made": 32,
+                  "total": 37,
+                  "pct": 86
                 },
                 "long_passes": {
                   "made": 1,
-                  "total": 1,
-                  "pct": 100
+                  "total": 2,
+                  "pct": 50
                 },
                 "crosses": {
-                  "made": 1,
-                  "total": 1,
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
                 },
-                "touches": 28,
-                "fouls_won": 1,
-                "fouls_committed": 1,
-                "possession_lost": 2,
+                "touches": 50,
+                "fouls_won": 2,
+                "fouls_committed": 4,
+                "possession_lost": 7,
                 "clearances": 1,
-                "recoveries": 1
+                "interceptions": 1,
+                "recoveries": 4
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255e09R044W04h04Q04z0z0f0%26dir%3drtl"
             },
@@ -199255,7 +199419,7 @@
               "name": "Harry Winks",
               "number": "6",
               "position": "m",
-              "rating": "6.6",
+              "rating": "6.3",
               "id": 7999,
               "s365_id": 1664,
               "position_detail": "Midfielder",
@@ -199291,7 +199455,7 @@
               "name": "Alessandro Romano",
               "number": "4",
               "position": "m",
-              "rating": "6.7",
+              "rating": "6.3",
               "id": 274076,
               "s365_id": 195500,
               "position_detail": "Midfielder",
@@ -199300,25 +199464,27 @@
                 "depth": 50,
                 "side": 80
               },
-              "minutes": 53,
+              "minutes": 74,
               "stats": {
-                "passes_final_third": 6,
-                "back_passes": 8,
+                "xa": 0.01,
+                "passes_final_third": 8,
+                "back_passes": 9,
                 "passes": {
-                  "made": 16,
-                  "total": 23,
-                  "pct": 70
+                  "made": 28,
+                  "total": 38,
+                  "pct": 74
                 },
                 "dribbles": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 33,
+                "touches": 52,
                 "fouls_committed": 2,
-                "possession_lost": 10,
+                "possession_lost": 15,
                 "clearances": 2,
                 "interceptions": 1,
+                "recoveries": 1,
                 "aerial_duels_won": {
                   "made": 1,
                   "total": 2,
@@ -199326,17 +199492,18 @@
                 },
                 "ground_duels_won": {
                   "made": 1,
-                  "total": 4,
-                  "pct": 25
+                  "total": 5,
+                  "pct": 20
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3da04S04f04l04b04E04z0004O0404E04Z0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3da04S04f04l04b04E04z0004O0404E04Z0%26dir%3drtl",
+              "sub_off": 75
             },
             {
               "name": "Daniel Maldini",
               "number": "70",
               "position": "m",
-              "rating": "6.5",
+              "rating": "6.4",
               "id": 136113,
               "s365_id": 72298,
               "position_detail": "Attacking Midfield",
@@ -199345,26 +199512,29 @@
                 "depth": 75,
                 "side": 20
               },
-              "minutes": 53,
+              "minutes": 66,
               "stats": {
+                "xa": 0.01,
                 "back_passes": 8,
                 "passes": {
-                  "made": 13,
-                  "total": 15,
-                  "pct": 87
+                  "made": 14,
+                  "total": 17,
+                  "pct": 82
                 },
                 "dribbles": {
                   "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "total": 3,
+                  "pct": 33
                 },
-                "touches": 22,
+                "touches": 26,
                 "fouls_won": 1,
-                "possession_lost": 7,
+                "final_third_possession": 1,
+                "possession_lost": 9,
                 "dribbled_past": 1,
-                "recoveries": 1
+                "recoveries": 3
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dT04G04E04004O04S04I04N04H04T04z0z0o0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dT04G04E04004O04S04I04N04H04T04z0z0o0%26dir%3drtl",
+              "sub_off": 67
             },
             {
               "name": "Yanis Massolin",
@@ -199379,37 +199549,41 @@
                 "depth": 75,
                 "side": 80
               },
-              "minutes": 53,
+              "minutes": 85,
               "stats": {
-                "passes_final_third": 2,
-                "back_passes": 11,
+                "xa": 0.01,
+                "passes_final_third": 5,
+                "back_passes": 14,
                 "passes": {
-                  "made": 20,
-                  "total": 23,
-                  "pct": 87
+                  "made": 31,
+                  "total": 35,
+                  "pct": 89
                 },
                 "long_passes": {
                   "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "total": 3,
+                  "pct": 33
                 },
                 "dribbles": {
-                  "made": 2,
-                  "total": 2,
-                  "pct": 100
+                  "made": 3,
+                  "total": 4,
+                  "pct": 75
                 },
-                "touches": 33,
-                "fouls_won": 2,
-                "possession_lost": 6,
-                "recoveries": 2
+                "touches": 52,
+                "fouls_won": 3,
+                "fouls_committed": 1,
+                "possession_lost": 8,
+                "clearances": 1,
+                "recoveries": 4
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0N04e04z00040404O04F04R0904O04004004O04F04R04H0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0N04e04z00040404O04F04R0904O04004004O04F04R04H0%26dir%3drtl",
+              "sub_off": 86
             },
             {
               "name": "Paul Mendy",
               "number": "31",
               "position": "f",
-              "rating": "6.6",
+              "rating": "6.3",
               "id": 292394,
               "s365_id": 232996,
               "position_detail": "Centre Forward",
@@ -199418,29 +199592,31 @@
                 "depth": 100,
                 "side": 50
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
-                "xg": 0.13,
-                "shots": 1,
-                "shots_off_target": 1,
+                "xg": 0.39,
+                "shots": 4,
+                "shots_on_target": 1,
+                "xgot": 0.83,
+                "shots_off_target": 3,
                 "offsides": 1,
                 "xa": 0.01,
                 "passes_final_third": 1,
-                "back_passes": 5,
+                "back_passes": 9,
                 "passes": {
-                  "made": 7,
-                  "total": 12,
-                  "pct": 58
+                  "made": 11,
+                  "total": 18,
+                  "pct": 61
                 },
                 "dribbles": {
                   "made": 1,
                   "total": 3,
                   "pct": 33
                 },
-                "touches": 28,
+                "touches": 40,
                 "fouls_won": 1,
-                "fouls_committed": 1,
-                "possession_lost": 12,
+                "fouls_committed": 3,
+                "possession_lost": 18,
                 "clearances": 2,
                 "tackles_won": {
                   "made": 1,
@@ -199448,15 +199624,16 @@
                   "pct": 100
                 },
                 "aerial_duels_won": {
-                  "made": 3,
-                  "total": 6,
-                  "pct": 50
+                  "made": 7,
+                  "total": 10,
+                  "pct": 70
                 },
                 "ground_duels_won": {
                   "made": 3,
-                  "total": 6,
-                  "pct": 50
-                }
+                  "total": 9,
+                  "pct": 33
+                },
+                "blocks": 1
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH04V044004P0D4z0V04z0D09z0I04W0%26dir%3drtl",
               "has_shot_chart": true
@@ -199467,45 +199644,134 @@
               "name": "Yukinari Sugawara",
               "number": "28",
               "position": "d",
-              "rating": null,
+              "rating": "5.9",
               "id": 48670,
               "s365_id": 66964,
               "position_detail": "Right Back",
-              "minutes": 8,
+              "minutes": 45,
               "stats": {
+                "xa": 0.23,
+                "chances_created": 1,
+                "passes_final_third": 7,
+                "back_passes": 5,
                 "passes": {
-                  "made": 1,
-                  "total": 1,
-                  "pct": 100
+                  "made": 23,
+                  "total": 27,
+                  "pct": 85
                 },
-                "touches": 1
+                "long_passes": {
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
+                },
+                "crosses": {
+                  "made": 2,
+                  "total": 5,
+                  "pct": 40
+                },
+                "touches": 39,
+                "fouls_committed": 1,
+                "possession_lost": 9,
+                "clearances": 1,
+                "recoveries": 1,
+                "tackles_won": {
+                  "made": 2,
+                  "total": 2,
+                  "pct": 100
+                }
               },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0a02m02%25600%26dir%3drtl",
               "sub_on": 46
+            },
+            {
+              "name": "Giuseppe Aurelio",
+              "number": "24",
+              "position": "d",
+              "rating": null,
+              "id": 145309,
+              "s365_id": 126095,
+              "position_detail": "Left Back",
+              "minutes": 5,
+              "stats": {},
+              "sub_on": 86
             },
             {
               "name": "Roberto Gagliardini",
               "number": "21",
               "position": "m",
-              "rating": null,
+              "rating": "5.4",
               "id": 2006,
               "s365_id": 6387,
               "position_detail": "Central Midfield",
-              "minutes": 8,
+              "minutes": 45,
+              "stats": {
+                "xa": 0.01,
+                "passes_final_third": 4,
+                "back_passes": 4,
+                "passes": {
+                  "made": 19,
+                  "total": 25,
+                  "pct": 76
+                },
+                "touches": 30,
+                "fouls_committed": 2,
+                "possession_lost": 9,
+                "dribbled_past": 1,
+                "clearances": 1,
+                "recoveries": 1,
+                "blocks": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0J02002z002V02j02h02p0%26dir%3drtl",
+              "sub_on": 46
+            },
+            {
+              "name": "Alieu Fadera",
+              "number": "39",
+              "position": "f",
+              "rating": "6.1",
+              "id": 192659,
+              "s365_id": 78570,
+              "position_detail": "Left Forward",
+              "minutes": 16,
               "stats": {
                 "back_passes": 1,
                 "passes": {
-                  "made": 3,
-                  "total": 3,
-                  "pct": 100
+                  "made": 5,
+                  "total": 6,
+                  "pct": 83
                 },
-                "touches": 5,
+                "touches": 10,
+                "fouls_won": 1,
                 "fouls_committed": 1,
                 "possession_lost": 1,
                 "dribbled_past": 1,
-                "clearances": 1,
+                "interceptions": 1,
                 "recoveries": 1
               },
-              "sub_on": 46
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ02z0z0z0z0S02H0%26dir%3drtl",
+              "sub_on": 75
+            },
+            {
+              "name": "Kevin Carlos",
+              "number": "9",
+              "position": "f",
+              "rating": "6",
+              "id": 180180,
+              "s365_id": 100756,
+              "position_detail": "Centre Forward",
+              "minutes": 24,
+              "stats": {
+                "back_passes": 3,
+                "passes": {
+                  "made": 3,
+                  "total": 7,
+                  "pct": 43
+                },
+                "touches": 10,
+                "possession_lost": 7
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0_0202z0%255d02S022z0%255c0%26dir%3drtl",
+              "sub_on": 67
             },
             {
               "name": "Boris Radunovic",
@@ -199544,15 +199810,6 @@
               "position_detail": "Centre Back"
             },
             {
-              "name": "Giuseppe Aurelio",
-              "number": "24",
-              "position": "d",
-              "rating": null,
-              "id": 145309,
-              "s365_id": 126095,
-              "position_detail": "Left Back"
-            },
-            {
               "name": "Jacopo Fazzini",
               "number": "10",
               "position": "m",
@@ -199589,30 +199846,12 @@
               "position_detail": "Left Forward"
             },
             {
-              "name": "Alieu Fadera",
-              "number": "39",
-              "position": "f",
-              "rating": null,
-              "id": 192659,
-              "s365_id": 78570,
-              "position_detail": "Left Forward"
-            },
-            {
               "name": "Nzola",
               "number": "18",
               "position": "f",
               "rating": null,
               "id": 3011,
               "s365_id": 52219,
-              "position_detail": "Centre Forward"
-            },
-            {
-              "name": "Kevin Carlos",
-              "number": "9",
-              "position": "f",
-              "rating": null,
-              "id": 180180,
-              "s365_id": 100756,
               "position_detail": "Centre Forward"
             },
             {
@@ -199670,7 +199909,7 @@
               "name": "Lukasz Skorupski",
               "number": "1",
               "position": "g",
-              "rating": "6.5",
+              "rating": "7.5",
               "id": 1797,
               "s365_id": 6128,
               "position_detail": "Goalkeeper",
@@ -199679,22 +199918,27 @@
                 "depth": 0,
                 "side": 50
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
-                "passes_final_third": 1,
+                "saves": 1,
+                "passes_final_third": 6,
                 "passes": {
-                  "made": 12,
-                  "total": 14,
-                  "pct": 86
+                  "made": 14,
+                  "total": 24,
+                  "pct": 58
                 },
                 "long_passes": {
-                  "made": 2,
-                  "total": 3,
-                  "pct": 67
+                  "made": 3,
+                  "total": 12,
+                  "pct": 25
                 },
-                "touches": 15,
-                "possession_lost": 2,
-                "recoveries": 5
+                "touches": 29,
+                "xgot_faced": 0.83,
+                "goals_prevented": 0.83,
+                "possession_lost": 10,
+                "punches": 2,
+                "clearances": 2,
+                "recoveries": 6
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0n06V03P090303P03z0z0F0%26dir%3dltr"
             },
@@ -199702,7 +199946,7 @@
               "name": "Arthur Theate",
               "number": "3",
               "position": "d",
-              "rating": "6.7",
+              "rating": "6.9",
               "id": 145893,
               "s365_id": 79569,
               "position_detail": "Centre Back",
@@ -199711,25 +199955,25 @@
                 "depth": 33,
                 "side": 25
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
                 "xa": 0.01,
-                "passes_final_third": 9,
-                "back_passes": 3,
+                "passes_final_third": 12,
+                "back_passes": 6,
                 "passes": {
-                  "made": 46,
-                  "total": 50,
-                  "pct": 92
+                  "made": 56,
+                  "total": 62,
+                  "pct": 90
                 },
                 "long_passes": {
                   "made": 1,
-                  "total": 3,
-                  "pct": 33
+                  "total": 4,
+                  "pct": 25
                 },
-                "touches": 57,
+                "touches": 70,
                 "fouls_committed": 2,
-                "possession_lost": 4,
-                "clearances": 1,
+                "possession_lost": 6,
+                "clearances": 2,
                 "interceptions": 2,
                 "recoveries": 1
               },
@@ -199739,7 +199983,7 @@
               "name": "Nicolo Casale",
               "number": "16",
               "position": "d",
-              "rating": "6.8",
+              "rating": "8.8",
               "id": 56645,
               "s365_id": 49535,
               "position_detail": "Centre Back",
@@ -199748,50 +199992,57 @@
                 "depth": 33,
                 "side": 50
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
+                "goals": 1,
+                "xg": 0.14,
+                "shots": 1,
+                "shots_on_target": 1,
+                "xgot": 0.71,
                 "passes_final_third": 3,
                 "back_passes": 1,
                 "passes": {
-                  "made": 30,
-                  "total": 32,
-                  "pct": 94
+                  "made": 35,
+                  "total": 39,
+                  "pct": 90
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 3,
                   "pct": 33
                 },
-                "touches": 40,
-                "fouls_won": 1,
-                "possession_lost": 2,
+                "touches": 55,
+                "fouls_won": 2,
+                "possession_lost": 4,
                 "dribbled_past": 1,
-                "clearances": 4,
-                "interceptions": 1,
-                "recoveries": 1,
+                "clearances": 5,
+                "interceptions": 4,
+                "recoveries": 3,
                 "tackles_won": {
-                  "made": 1,
-                  "total": 1,
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
                 },
                 "aerial_duels_won": {
                   "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "total": 5,
+                  "pct": 20
                 },
                 "ground_duels_won": {
-                  "made": 2,
-                  "total": 3,
-                  "pct": 67
-                }
+                  "made": 4,
+                  "total": 5,
+                  "pct": 80
+                },
+                "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dW04m04g0D4O04e04W0404z0f0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dW04m04g0D4O04e04W0404z0f0%26dir%3dltr",
+              "has_shot_chart": true
             },
             {
               "name": "Matteo Darmian",
               "number": "36",
               "position": "d",
-              "rating": "6.8",
+              "rating": "7.2",
               "id": 7900,
               "s365_id": 347,
               "position_detail": "Right Back",
@@ -199800,26 +200051,28 @@
                 "depth": 33,
                 "side": 75
               },
-              "minutes": 53,
+              "minutes": 84,
               "stats": {
                 "xg": 0.08,
                 "shots": 1,
                 "shots_off_target": 1,
-                "passes_final_third": 3,
+                "passes_final_third": 5,
                 "back_passes": 1,
                 "passes": {
-                  "made": 22,
-                  "total": 27,
-                  "pct": 81
+                  "made": 26,
+                  "total": 31,
+                  "pct": 84
                 },
                 "long_passes": {
-                  "made": 1,
-                  "total": 3,
-                  "pct": 33
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
                 },
-                "touches": 38,
-                "possession_lost": 6,
-                "clearances": 3,
+                "touches": 47,
+                "possession_lost": 7,
+                "clearances": 5,
+                "interceptions": 1,
+                "recoveries": 1,
                 "tackles_won": {
                   "made": 1,
                   "total": 2,
@@ -199827,8 +200080,8 @@
                 },
                 "aerial_duels_won": {
                   "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "total": 3,
+                  "pct": 33
                 },
                 "ground_duels_won": {
                   "made": 2,
@@ -199837,13 +200090,14 @@
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0H04X04g0D404N0944T04D044U04V044G0%26dir%3dltr",
-              "has_shot_chart": true
+              "has_shot_chart": true,
+              "sub_off": 85
             },
             {
               "name": "Juan Miranda",
               "number": "33",
               "position": "d",
-              "rating": "6.6",
+              "rating": "7.8",
               "id": 32491,
               "s365_id": 51013,
               "position_detail": "Left Back",
@@ -199852,22 +200106,32 @@
                 "depth": 66,
                 "side": 0
               },
-              "minutes": 53,
+              "minutes": 74,
               "stats": {
-                "xa": 0.01,
-                "back_passes": 7,
+                "assists": 1,
+                "xa": 0.12,
+                "chances_created": 2,
+                "dangerous_chances": 2,
+                "passes_final_third": 3,
+                "back_passes": 10,
                 "passes": {
-                  "made": 11,
-                  "total": 18,
-                  "pct": 61
+                  "made": 19,
+                  "total": 27,
+                  "pct": 70
                 },
-                "touches": 38,
-                "fouls_won": 1,
-                "possession_lost": 13,
-                "clearances": 1,
+                "crosses": {
+                  "made": 2,
+                  "total": 8,
+                  "pct": 25
+                },
+                "touches": 55,
+                "fouls_won": 2,
+                "possession_lost": 16,
+                "clearances": 3,
                 "recoveries": 2
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN04494z0z0z0z0d0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN04494z0z0z0z0d0%26dir%3dltr",
+              "sub_off": 75
             },
             {
               "name": "Tommaso Pobega",
@@ -199882,29 +200146,31 @@
                 "depth": 66,
                 "side": 33
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
                 "xg": 0.21,
                 "shots": 1,
                 "shots_off_target": 1,
                 "big_chances_missed": 1,
-                "passes_final_third": 4,
-                "back_passes": 4,
+                "xa": 0.01,
+                "passes_final_third": 7,
+                "back_passes": 7,
                 "passes": {
-                  "made": 15,
-                  "total": 19,
-                  "pct": 79
+                  "made": 28,
+                  "total": 35,
+                  "pct": 80
                 },
                 "long_passes": {
-                  "made": 2,
-                  "total": 5,
-                  "pct": 40
+                  "made": 4,
+                  "total": 8,
+                  "pct": 50
                 },
-                "touches": 24,
-                "possession_lost": 4,
+                "touches": 43,
+                "fouls_won": 1,
+                "possession_lost": 7,
                 "dribbled_past": 1,
                 "clearances": 1,
-                "recoveries": 2,
+                "recoveries": 5,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
@@ -199912,13 +200178,13 @@
                 },
                 "aerial_duels_won": {
                   "made": 2,
-                  "total": 3,
-                  "pct": 67
+                  "total": 4,
+                  "pct": 50
                 },
                 "ground_duels_won": {
-                  "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "made": 2,
+                  "total": 3,
+                  "pct": 67
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dv04N090904Q04D04R04k04z0z0M0%26dir%3dltr",
@@ -199928,7 +200194,7 @@
               "name": "Lewis Ferguson",
               "number": "19",
               "position": "m",
-              "rating": "6.8",
+              "rating": "6.9",
               "id": 34638,
               "s365_id": 52697,
               "position_detail": "Central Midfield",
@@ -199937,36 +200203,37 @@
                 "depth": 66,
                 "side": 66
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
-                "xa": 0.02,
+                "xa": 0.03,
                 "chances_created": 1,
-                "passes_final_third": 5,
-                "back_passes": 3,
+                "passes_final_third": 8,
+                "back_passes": 10,
                 "passes": {
-                  "made": 34,
-                  "total": 38,
-                  "pct": 89
+                  "made": 55,
+                  "total": 66,
+                  "pct": 83
                 },
                 "long_passes": {
-                  "made": 1,
-                  "total": 1,
-                  "pct": 100
+                  "made": 3,
+                  "total": 5,
+                  "pct": 60
                 },
                 "dribbles": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 49,
-                "fouls_committed": 2,
-                "possession_lost": 7,
-                "clearances": 4,
-                "recoveries": 5,
+                "touches": 88,
+                "fouls_won": 2,
+                "fouls_committed": 4,
+                "possession_lost": 14,
+                "clearances": 5,
+                "recoveries": 6,
                 "tackles_won": {
-                  "made": 2,
-                  "total": 2,
-                  "pct": 100
+                  "made": 3,
+                  "total": 4,
+                  "pct": 75
                 },
                 "aerial_duels_won": {
                   "made": 1,
@@ -199974,9 +200241,9 @@
                   "pct": 50
                 },
                 "ground_duels_won": {
-                  "made": 3,
-                  "total": 6,
-                  "pct": 50
+                  "made": 7,
+                  "total": 12,
+                  "pct": 58
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0w094004Q04V04Q0404U04%255d0%26dir%3dltr"
@@ -199994,17 +200261,17 @@
                 "depth": 66,
                 "side": 100
               },
-              "minutes": 53,
+              "minutes": 74,
               "stats": {
                 "xg": 0.04,
                 "shots": 1,
-                "xa": 0.01,
+                "xa": 0.02,
                 "passes_final_third": 2,
                 "back_passes": 8,
                 "passes": {
-                  "made": 15,
-                  "total": 17,
-                  "pct": 88
+                  "made": 18,
+                  "total": 21,
+                  "pct": 86
                 },
                 "long_passes": {
                   "made": 1,
@@ -200016,22 +200283,28 @@
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 25,
+                "touches": 37,
                 "fouls_committed": 1,
-                "possession_lost": 4,
+                "possession_lost": 7,
                 "dribbled_past": 1,
                 "shots_blocked": 1,
                 "clearances": 1,
-                "recoveries": 1
+                "recoveries": 4,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 3,
+                  "pct": 33.3
+                }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0a04G04004S04O04E04I04D090404D04G0%26dir%3dltr",
-              "has_shot_chart": true
+              "has_shot_chart": true,
+              "sub_off": 75
             },
             {
               "name": "Nicolo Cambiaghi",
               "number": "28",
               "position": "f",
-              "rating": "6.7",
+              "rating": "7",
               "id": 185016,
               "s365_id": 81489,
               "position_detail": "Left Forward",
@@ -200040,26 +200313,34 @@
                 "depth": 99,
                 "side": 0
               },
-              "minutes": 53,
+              "minutes": 90,
               "stats": {
-                "xa": 0.01,
-                "back_passes": 7,
+                "xa": 0.02,
+                "passes_final_third": 1,
+                "back_passes": 10,
                 "passes": {
-                  "made": 13,
-                  "total": 15,
+                  "made": 20,
+                  "total": 23,
                   "pct": 87
                 },
                 "dribbles": {
-                  "made": 1,
-                  "total": 3,
-                  "pct": 33
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
                 },
-                "touches": 32,
-                "fouls_won": 5,
+                "touches": 58,
+                "fouls_won": 9,
+                "fouls_committed": 1,
                 "final_third_possession": 3,
-                "possession_lost": 9,
+                "possession_lost": 16,
                 "dribbled_past": 1,
-                "recoveries": 3
+                "interceptions": 1,
+                "recoveries": 5,
+                "tackles_won": {
+                  "made": 2,
+                  "total": 3,
+                  "pct": 66.7
+                }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN04O04E09M04F04O04z0z0z0j0%26dir%3dltr"
             },
@@ -200076,7 +200357,7 @@
                 "depth": 99,
                 "side": 50
               },
-              "minutes": 53,
+              "minutes": 74,
               "stats": {
                 "xg": 0.02,
                 "shots": 1,
@@ -200085,30 +200366,42 @@
                 "xa": 0.01,
                 "passes_final_third": 1,
                 "passes": {
-                  "made": 6,
-                  "total": 7,
-                  "pct": 86
+                  "made": 7,
+                  "total": 9,
+                  "pct": 78
                 },
                 "dribbles": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 18,
-                "fouls_won": 1,
+                "touches": 24,
+                "fouls_won": 2,
                 "fouls_committed": 1,
-                "possession_lost": 8,
-                "dribbled_past": 1,
-                "recoveries": 1
+                "final_third_possession": 1,
+                "possession_lost": 10,
+                "dribbled_past": 2,
+                "recoveries": 2,
+                "aerial_duels_won": {
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
+                },
+                "ground_duels_won": {
+                  "made": 3,
+                  "total": 5,
+                  "pct": 60
+                }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0V03M03D03M033D03U03z0H03L03z0L0%26dir%3dltr",
-              "has_shot_chart": true
+              "has_shot_chart": true,
+              "sub_off": 75
             },
             {
               "name": "Federico Bernardeschi",
               "number": "10",
               "position": "f",
-              "rating": "6.9",
+              "rating": "7.4",
               "id": 2040,
               "s365_id": 6193,
               "position_detail": "Right Forward",
@@ -200117,22 +200410,24 @@
                 "depth": 99,
                 "side": 100
               },
-              "minutes": 53,
+              "minutes": 87,
               "stats": {
-                "xg": 0.04,
-                "shots": 1,
-                "shots_on_target": 1,
-                "xgot": 0.15,
+                "goals": 1,
+                "penalty_goals": 1,
+                "xg": 1.1,
+                "shots": 4,
+                "shots_on_target": 2,
+                "xgot": 1.04,
                 "offsides": 1,
                 "xa": 0.03,
-                "chances_created": 2,
+                "chances_created": 1,
                 "dangerous_chances": 1,
                 "passes_final_third": 2,
-                "back_passes": 3,
+                "back_passes": 6,
                 "passes": {
-                  "made": 10,
-                  "total": 13,
-                  "pct": 77
+                  "made": 18,
+                  "total": 21,
+                  "pct": 86
                 },
                 "long_passes": {
                   "made": 2,
@@ -200141,20 +200436,172 @@
                 },
                 "crosses": {
                   "made": 1,
-                  "total": 5,
-                  "pct": 20
+                  "total": 6,
+                  "pct": 17
                 },
-                "touches": 28,
-                "fouls_won": 4,
-                "fouls_committed": 2,
-                "possession_lost": 9,
-                "recoveries": 2
+                "dribbles": {
+                  "made": 3,
+                  "total": 5,
+                  "pct": 60
+                },
+                "touches": 55,
+                "fouls_won": 5,
+                "fouls_committed": 3,
+                "possession_lost": 16,
+                "shots_blocked": 2,
+                "clearances": 1,
+                "recoveries": 4,
+                "big_chances_scored": 1
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN044z0004V04v04004g04T04Q04S04%25600%26dir%3dltr",
-              "has_shot_chart": true
+              "has_shot_chart": true,
+              "sub_off": 88
             }
           ],
           "subs": [
+            {
+              "name": "Martin Vitik",
+              "number": "41",
+              "position": "d",
+              "rating": null,
+              "id": 152702,
+              "s365_id": 83534,
+              "position_detail": "Centre Back",
+              "minutes": 6,
+              "stats": {
+                "back_passes": 1,
+                "passes": {
+                  "made": 2,
+                  "total": 2,
+                  "pct": 100
+                },
+                "touches": 3,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0e02z0P0%26dir%3dltr",
+              "sub_on": 85
+            },
+            {
+              "name": "Rahim Alhassane",
+              "number": "23",
+              "position": "d",
+              "rating": "6.6",
+              "id": 226037,
+              "s365_id": 129411,
+              "position_detail": "Left Back",
+              "minutes": 16,
+              "stats": {
+                "back_passes": 2,
+                "passes": {
+                  "made": 7,
+                  "total": 7,
+                  "pct": 100
+                },
+                "touches": 9,
+                "clearances": 1,
+                "recoveries": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH02D02z0z0z0z0i0%26dir%3dltr",
+              "sub_on": 75
+            },
+            {
+              "name": "Mikel Amondarain",
+              "number": "8",
+              "position": "m",
+              "rating": "6.6",
+              "id": 261839,
+              "s365_id": 174865,
+              "position_detail": "Central Midfield",
+              "minutes": 16,
+              "stats": {
+                "xa": 0.01,
+                "passes_final_third": 1,
+                "back_passes": 2,
+                "passes": {
+                  "made": 6,
+                  "total": 7,
+                  "pct": 86
+                },
+                "touches": 11,
+                "fouls_won": 1,
+                "fouls_committed": 1,
+                "possession_lost": 3,
+                "interceptions": 1,
+                "recoveries": 2
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0f0207M0%26dir%3dltr",
+              "sub_on": 75
+            },
+            {
+              "name": "Marco Libra",
+              "number": "18",
+              "position": "m",
+              "rating": "7",
+              "id": null,
+              "s365_id": 226054,
+              "position_detail": "Attacking Midfield",
+              "minutes": 16,
+              "stats": {
+                "xg": 0.03,
+                "shots": 1,
+                "shots_on_target": 1,
+                "xgot": 0.1,
+                "xa": 0.01,
+                "chances_created": 1,
+                "passes_final_third": 1,
+                "passes": {
+                  "made": 5,
+                  "total": 5,
+                  "pct": 100
+                },
+                "dribbles": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "touches": 10,
+                "recoveries": 1,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0X02T02h02Z0%26dir%3dltr",
+              "has_shot_chart": true,
+              "sub_on": 75
+            },
+            {
+              "name": "S. Mbangula",
+              "number": "11",
+              "position": "f",
+              "rating": null,
+              "id": 217678,
+              "s365_id": 177603,
+              "position_detail": "Left Forward",
+              "minutes": 3,
+              "stats": {
+                "chances_created": 1,
+                "passes": {
+                  "made": 3,
+                  "total": 3,
+                  "pct": 100
+                },
+                "touches": 5,
+                "recoveries": 1,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM02w02z0z0z0j0%26dir%3dltr",
+              "sub_on": 88
+            },
             {
               "name": "Ukko Happonen",
               "number": "72",
@@ -200192,15 +200639,6 @@
               "position_detail": "Centre Back"
             },
             {
-              "name": "Martin Vitik",
-              "number": "41",
-              "position": "d",
-              "rating": null,
-              "id": 152702,
-              "s365_id": 83534,
-              "position_detail": "Centre Back"
-            },
-            {
               "name": "Lorenzo de Silvestri",
               "number": "29",
               "position": "d",
@@ -200208,15 +200646,6 @@
               "id": 2292,
               "s365_id": 6274,
               "position_detail": "Right Back"
-            },
-            {
-              "name": "Rahim Alhassane",
-              "number": "23",
-              "position": "d",
-              "rating": null,
-              "id": 226037,
-              "s365_id": 129411,
-              "position_detail": "Left Back"
             },
             {
               "name": "Oussama el Azzouzi",
@@ -200235,33 +200664,6 @@
               "id": 23135,
               "s365_id": 38402,
               "position_detail": "Midfielder"
-            },
-            {
-              "name": "Mikel Amondarain",
-              "number": "8",
-              "position": "m",
-              "rating": null,
-              "id": 261839,
-              "s365_id": 174865,
-              "position_detail": "Central Midfield"
-            },
-            {
-              "name": "Marco Libra",
-              "number": "18",
-              "position": "m",
-              "rating": null,
-              "id": null,
-              "s365_id": 226054,
-              "position_detail": "Attacking Midfield"
-            },
-            {
-              "name": "S. Mbangula",
-              "number": "11",
-              "position": "f",
-              "rating": null,
-              "id": 217678,
-              "s365_id": 177603,
-              "position_detail": "Left Forward"
             },
             {
               "name": "Artem Dovbyk",
@@ -200334,7 +200736,7 @@
       "match_id": 558560,
       "fd_competition_code": "SA",
       "s365_id": 4732669,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
@@ -200645,16 +201047,16 @@
       },
       "referee": "Kevin Bonacina",
       "player_of_the_match": {
-        "team": "home",
-        "id": 82004,
-        "s365_id": 64005,
-        "name": "Elia Caprile",
-        "rating": "6.9"
+        "team": "away",
+        "id": 56645,
+        "s365_id": 49535,
+        "name": "Nicolo Casale",
+        "rating": "8.8"
       },
       "play_time": {
-        "effective": "33:49",
-        "total": "51:06",
-        "effective_pct": 66.2
+        "effective": "56:40",
+        "total": "93:03",
+        "effective_pct": 60.9
       },
       "predictions": {
         "result": {
@@ -200677,8 +201079,9 @@
             "s365_id": 232996,
             "name": "Paul Mendy",
             "stats": {
-              "xg": 0.13,
-              "minutes": 53
+              "xg": 0.39,
+              "shots_on_target": 1,
+              "minutes": 90
             }
           },
           "away": {
@@ -200686,27 +201089,27 @@
             "s365_id": 6193,
             "name": "Federico Bernardeschi",
             "stats": {
-              "xg": 0.04,
-              "shots_on_target": 1,
-              "minutes": 53
+              "xg": 1.1,
+              "shots_on_target": 2,
+              "minutes": 87
             }
           }
         },
         "midfield": {
           "home": {
-            "id": 185019,
-            "s365_id": 74138,
-            "name": "Michel Adopo",
+            "id": 185011,
+            "s365_id": 121207,
+            "name": "Yanis Massolin",
             "stats": {
-              "minutes": 53
+              "minutes": 85
             }
           },
           "away": {
-            "id": 34638,
-            "s365_id": 52697,
-            "name": "Lewis Ferguson",
+            "id": 32491,
+            "s365_id": 51013,
+            "name": "Juan Miranda",
             "stats": {
-              "minutes": 53
+              "minutes": 74
             }
           }
         },
@@ -200717,7 +201120,7 @@
             "name": "Adam Obert",
             "stats": {
               "interceptions": 1,
-              "minutes": 53
+              "minutes": 90
             }
           },
           "away": {
@@ -200725,8 +201128,8 @@
             "s365_id": 49535,
             "name": "Nicolo Casale",
             "stats": {
-              "interceptions": 1,
-              "minutes": 53
+              "interceptions": 4,
+              "minutes": 90
             }
           }
         }
@@ -200839,17 +201242,162 @@
             "y": 51.9,
             "z": 95.8
           }
+        },
+        {
+          "minute": 50,
+          "team": "home",
+          "player": "Paul Mendy",
+          "player_id": 292394,
+          "player_s365_id": 232996,
+          "xg": 0.02,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "head",
+          "situation": "subtype_1",
+          "x": 86.8,
+          "y": 48.9,
+          "end": {
+            "y": 65.7,
+            "z": 13.9
+          }
+        },
+        {
+          "minute": 57,
+          "team": "away",
+          "player": "Nicolo Casale",
+          "player_id": 56645,
+          "player_s365_id": 49535,
+          "xg": 0.14,
+          "xgot": 0.71,
+          "outcome": "goal",
+          "body_part": "head",
+          "situation": "assisted",
+          "x": 93.2,
+          "y": 51.8,
+          "end": {
+            "y": 53.8,
+            "z": 12.0
+          }
+        },
+        {
+          "minute": 71,
+          "team": "home",
+          "player": "Paul Mendy",
+          "player_id": 292394,
+          "player_s365_id": 232996,
+          "xg": 0.13,
+          "xgot": 0.83,
+          "outcome": "saved",
+          "body_part": "right_foot",
+          "situation": "assisted",
+          "x": 86.8,
+          "y": 49.9,
+          "end": {
+            "y": 54.7,
+            "z": 27.9
+          }
+        },
+        {
+          "minute": 78,
+          "team": "away",
+          "player": "Federico Bernardeschi",
+          "player_id": 2040,
+          "player_s365_id": 6193,
+          "xg": 0.1,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "left_foot",
+          "situation": "open_play",
+          "x": 79.9,
+          "y": 52.3,
+          "end": {
+            "x": 88.4,
+            "y": 52.5
+          }
+        },
+        {
+          "minute": 80,
+          "team": "away",
+          "player": "Federico Bernardeschi",
+          "player_id": 2040,
+          "player_s365_id": 6193,
+          "xg": 0.79,
+          "xgot": 0.88,
+          "outcome": "goal",
+          "body_part": "left_foot",
+          "situation": "penalty",
+          "x": 88.5,
+          "y": 50.0,
+          "end": {
+            "y": 46.1,
+            "z": 1.3
+          }
+        },
+        {
+          "minute": 84,
+          "team": "away",
+          "player": "Federico Bernardeschi",
+          "player_id": 2040,
+          "player_s365_id": 6193,
+          "xg": 0.19,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "left_foot",
+          "situation": "subtype_3",
+          "x": 82.2,
+          "y": 48.9,
+          "end": {
+            "x": 93.2,
+            "y": 49.5
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 1,
+          "team": "away",
+          "player": "Marco Libra",
+          "player_s365_id": 226054,
+          "xg": 0.03,
+          "xgot": 0.1,
+          "outcome": "saved",
+          "body_part": "right_foot",
+          "situation": "open_play",
+          "x": 74.0,
+          "y": 43.0,
+          "end": {
+            "y": 53.1,
+            "z": 2.5
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 3,
+          "team": "home",
+          "player": "Paul Mendy",
+          "player_id": 292394,
+          "player_s365_id": 232996,
+          "xg": 0.11,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "head",
+          "situation": "assisted",
+          "x": 93.0,
+          "y": 51.3,
+          "end": {
+            "y": 65.9,
+            "z": 52.8
+          }
         }
       ]
     },
     "558561": {
-      "scraped_at": "2026-10-24T14:11:51.921078+00:00",
+      "scraped_at": "2026-10-25T05:03:19.148193+00:00",
       "source_url": "https://www.koora-l.live/game/4732668",
-      "status": "live",
+      "status": "full time",
       "home_team": "Como",
       "away_team": "Sassuolo",
       "score": {
-        "home": 1,
+        "home": 2,
         "away": 0,
         "ht_home": 0,
         "ht_away": 0
@@ -200880,7 +201428,7 @@
           "away": 0
         },
         "goals": {
-          "home": 1,
+          "home": 2,
           "away": 0
         },
         "shots_off_goal": {
@@ -200961,6 +201509,128 @@
           "player_s365_id": 78176,
           "assistant_id": 101350,
           "assistant_s365_id": 68795
+        },
+        {
+          "minute": 60,
+          "type": "goal",
+          "team": "home",
+          "player": "Anastasios Douvikas",
+          "goal_type": "normal",
+          "assistant": "Kaiki Bruno da Silva",
+          "player_id": 43285,
+          "player_s365_id": 78176,
+          "assistant_id": 169670,
+          "assistant_s365_id": 119903
+        },
+        {
+          "minute": 62,
+          "type": "substitution",
+          "team": "away",
+          "player": "Josh Doig",
+          "player_out": "Rafael Obrador",
+          "player_id": 122407,
+          "player_s365_id": 79300,
+          "player_out_id": 265154,
+          "player_out_s365_id": 177312
+        },
+        {
+          "minute": 62,
+          "type": "substitution",
+          "team": "away",
+          "player": "Armand Lauriente",
+          "player_out": "Benja Dominguez",
+          "player_id": 8822,
+          "player_s365_id": 66861,
+          "player_out_id": 191379,
+          "player_out_s365_id": 108674
+        },
+        {
+          "minute": 62,
+          "type": "substitution",
+          "team": "away",
+          "player": "Luca Lipani",
+          "player_out": "Nemanja Matic",
+          "player_id": 189844,
+          "player_s365_id": 123262,
+          "player_out_id": 3438,
+          "player_out_s365_id": 1441
+        },
+        {
+          "minute": 63,
+          "type": "yellow_card",
+          "team": "away",
+          "player": "Domenico Berardi",
+          "player_id": 2202,
+          "player_s365_id": 6363
+        },
+        {
+          "minute": 65,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "Yan Couto",
+          "player_id": 144283,
+          "player_s365_id": 72058
+        },
+        {
+          "minute": 67,
+          "type": "substitution",
+          "team": "home",
+          "player": "Ivan Smolcic",
+          "player_out": "Yan Couto",
+          "player_id": 114212,
+          "player_s365_id": 108391,
+          "player_out_id": 144283,
+          "player_out_s365_id": 72058
+        },
+        {
+          "minute": 74,
+          "type": "substitution",
+          "team": "away",
+          "player": "Cristian Volpato",
+          "player_out": "Domenico Berardi",
+          "player_id": 191190,
+          "player_s365_id": 104463,
+          "player_out_id": 2202,
+          "player_out_s365_id": 6363
+        },
+        {
+          "minute": 86,
+          "type": "substitution",
+          "team": "away",
+          "player": "Sebastiano Esposito",
+          "player_out": "Vasilije Adzic",
+          "player_id": 114054,
+          "player_s365_id": 68401,
+          "player_out_id": 183018,
+          "player_out_s365_id": 134052
+        },
+        {
+          "minute": 87,
+          "type": "yellow_card",
+          "team": "away",
+          "player": "Ignace van der Brempt",
+          "player_id": 126768,
+          "player_s365_id": 81581
+        },
+        {
+          "minute": 89,
+          "type": "substitution",
+          "team": "home",
+          "player": "Adrian Lahdo",
+          "player_out": "Lucas da Cunha",
+          "player_id": 250600,
+          "player_s365_id": 187629,
+          "player_out_id": 124620,
+          "player_out_s365_id": 72838
+        },
+        {
+          "minute": 90,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "Luis Milla",
+          "player_id": 32449,
+          "player_s365_id": 55450,
+          "added_time": 1
         }
       ],
       "lineups": {
@@ -200971,7 +201641,7 @@
               "name": "Jean Butez",
               "number": "1",
               "position": "g",
-              "rating": "6.5",
+              "rating": "7",
               "id": 9186,
               "s365_id": 9697,
               "position_detail": "Goalkeeper",
@@ -200980,22 +201650,22 @@
                 "depth": 0,
                 "side": 50
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "passes_final_third": 2,
+                "passes_final_third": 5,
                 "passes": {
-                  "made": 20,
-                  "total": 22,
-                  "pct": 91
+                  "made": 34,
+                  "total": 40,
+                  "pct": 85
                 },
                 "long_passes": {
-                  "made": 2,
-                  "total": 4,
-                  "pct": 50
+                  "made": 10,
+                  "total": 16,
+                  "pct": 62
                 },
-                "touches": 23,
-                "possession_lost": 2,
-                "recoveries": 2
+                "touches": 42,
+                "possession_lost": 6,
+                "recoveries": 6
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0m04S04904R049R04z0z0F0%26dir%3drtl"
             },
@@ -201003,7 +201673,7 @@
               "name": "Kaiki Bruno da Silva",
               "number": "16",
               "position": "d",
-              "rating": "6.8",
+              "rating": "8.4",
               "id": 169670,
               "s365_id": 119903,
               "position_detail": "Left Back",
@@ -201012,20 +201682,42 @@
                 "depth": 25,
                 "side": 0
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "xa": 0.01,
+                "assists": 1,
+                "xa": 0.25,
+                "chances_created": 2,
+                "dangerous_chances": 1,
                 "passes_final_third": 1,
-                "back_passes": 6,
+                "back_passes": 11,
                 "passes": {
-                  "made": 14,
-                  "total": 14,
+                  "made": 24,
+                  "total": 25,
+                  "pct": 96
+                },
+                "crosses": {
+                  "made": 1,
+                  "total": 3,
+                  "pct": 33
+                },
+                "dribbles": {
+                  "made": 1,
+                  "total": 1,
                   "pct": 100
                 },
-                "touches": 22,
-                "possession_lost": 2,
-                "clearances": 2,
-                "interceptions": 1
+                "touches": 45,
+                "fouls_won": 2,
+                "fouls_committed": 1,
+                "final_third_possession": 1,
+                "possession_lost": 5,
+                "clearances": 5,
+                "interceptions": 2,
+                "recoveries": 2,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF09F044D04z0z0z0z0d0%26dir%3drtl"
             },
@@ -201033,7 +201725,7 @@
               "name": "Marc Oliver Kempf",
               "number": "2",
               "position": "d",
-              "rating": "7",
+              "rating": "7.5",
               "id": 9471,
               "s365_id": 2677,
               "position_detail": "Centre Back",
@@ -201042,21 +201734,28 @@
                 "depth": 25,
                 "side": 33
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
                 "xa": 0.01,
-                "passes_final_third": 8,
-                "back_passes": 1,
+                "passes_final_third": 10,
+                "back_passes": 4,
                 "passes": {
-                  "made": 52,
-                  "total": 55,
-                  "pct": 95
+                  "made": 70,
+                  "total": 77,
+                  "pct": 91
                 },
-                "touches": 62,
-                "fouls_won": 2,
-                "possession_lost": 3,
-                "clearances": 3,
-                "interceptions": 1
+                "touches": 90,
+                "fouls_won": 3,
+                "possession_lost": 7,
+                "clearances": 6,
+                "interceptions": 1,
+                "recoveries": 2,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "blocks": 1
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d_04N04F09P04W04i04P04z0z0T0%26dir%3drtl"
             },
@@ -201064,7 +201763,7 @@
               "name": "Willy Kambwala",
               "number": "53",
               "position": "d",
-              "rating": "6.3",
+              "rating": "6.5",
               "id": 244860,
               "s365_id": 144306,
               "position_detail": "Centre Back",
@@ -201099,7 +201798,7 @@
               "name": "Yan Couto",
               "number": "27",
               "position": "d",
-              "rating": "6.8",
+              "rating": "6.9",
               "id": 144283,
               "s365_id": 72058,
               "position_detail": "Right Back",
@@ -201108,15 +201807,15 @@
                 "depth": 25,
                 "side": 100
               },
-              "minutes": 51,
+              "minutes": 66,
               "stats": {
                 "xa": 0.12,
-                "chances_created": 1,
-                "passes_final_third": 4,
+                "chances_created": 2,
+                "passes_final_third": 5,
                 "back_passes": 3,
                 "passes": {
-                  "made": 31,
-                  "total": 35,
+                  "made": 34,
+                  "total": 38,
                   "pct": 89
                 },
                 "long_passes": {
@@ -201129,19 +201828,21 @@
                   "total": 2,
                   "pct": 50
                 },
-                "touches": 51,
-                "fouls_committed": 2,
-                "possession_lost": 6,
+                "touches": 55,
+                "fouls_committed": 3,
+                "possession_lost": 7,
                 "dribbled_past": 2,
                 "clearances": 4,
                 "interceptions": 2,
+                "recoveries": 1,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0009D09J09D090099S0909009D0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0009D09J09D090099S0909009D0%26dir%3drtl",
+              "sub_off": 67
             },
             {
               "name": "Samuele Ricci",
@@ -201193,7 +201894,7 @@
               "name": "Maximo Perrone",
               "number": "5",
               "position": "m",
-              "rating": "6.5",
+              "rating": "6.8",
               "id": 179159,
               "s365_id": 106618,
               "position_detail": "Midfielder",
@@ -201202,26 +201903,33 @@
                 "depth": 50,
                 "side": 80
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "xa": 0.02,
-                "passes_final_third": 4,
-                "back_passes": 11,
+                "xa": 0.05,
+                "chances_created": 1,
+                "passes_final_third": 6,
+                "back_passes": 18,
                 "passes": {
-                  "made": 43,
-                  "total": 44,
-                  "pct": 98
+                  "made": 74,
+                  "total": 75,
+                  "pct": 99
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 49,
+                "touches": 82,
                 "fouls_committed": 1,
                 "final_third_possession": 1,
                 "possession_lost": 5,
-                "recoveries": 3
+                "clearances": 1,
+                "recoveries": 6,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dL04z0z0Z04i044O04F04S09o0%26dir%3drtl"
             },
@@ -201267,7 +201975,7 @@
               "name": "Lucas da Cunha",
               "number": "7",
               "position": "m",
-              "rating": "6",
+              "rating": "6.1",
               "id": 124620,
               "s365_id": 72838,
               "position_detail": "Central Midfield",
@@ -201276,35 +201984,40 @@
                 "depth": 75,
                 "side": 50
               },
-              "minutes": 51,
+              "minutes": 88,
               "stats": {
+                "xg": 0.06,
+                "shots": 1,
+                "shots_off_target": 1,
                 "offsides": 1,
-                "xa": 0.03,
-                "passes_final_third": 3,
-                "back_passes": 8,
+                "xa": 0.05,
+                "passes_final_third": 8,
+                "back_passes": 11,
                 "passes": {
-                  "made": 34,
-                  "total": 40,
-                  "pct": 85
+                  "made": 50,
+                  "total": 61,
+                  "pct": 82
                 },
                 "long_passes": {
-                  "made": 1,
-                  "total": 3,
-                  "pct": 33
+                  "made": 6,
+                  "total": 8,
+                  "pct": 75
                 },
-                "touches": 45,
+                "touches": 68,
                 "fouls_committed": 2,
-                "possession_lost": 8,
+                "possession_lost": 13,
                 "dribbled_past": 2,
-                "recoveries": 6
+                "recoveries": 8
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0009i09X09O09D09W0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0009i09X09O09D09W0%26dir%3drtl",
+              "has_shot_chart": true,
+              "sub_off": 89
             },
             {
               "name": "Maxence Caqueret",
               "number": "8",
               "position": "m",
-              "rating": "7.8",
+              "rating": "8.2",
               "id": 101350,
               "s365_id": 68795,
               "position_detail": "Central Midfield",
@@ -201313,36 +202026,41 @@
                 "depth": 75,
                 "side": 100
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
                 "assists": 1,
-                "xg": 0.08,
-                "shots": 1,
+                "xg": 0.19,
+                "shots": 2,
                 "shots_on_target": 1,
                 "xgot": 0.19,
-                "xa": 0.57,
-                "chances_created": 3,
-                "dangerous_chances": 1,
+                "xa": 0.66,
+                "chances_created": 4,
+                "dangerous_chances": 2,
                 "passes_final_third": 2,
-                "back_passes": 6,
+                "back_passes": 11,
                 "passes": {
-                  "made": 22,
-                  "total": 27,
-                  "pct": 81
+                  "made": 40,
+                  "total": 47,
+                  "pct": 85
                 },
                 "dribbles": {
                   "made": 1,
-                  "total": 1,
-                  "pct": 100
-                },
-                "touches": 37,
-                "possession_lost": 7,
-                "dribbled_past": 2,
-                "clearances": 1,
-                "tackles_won": {
-                  "made": 1,
                   "total": 2,
                   "pct": 50
+                },
+                "touches": 67,
+                "fouls_won": 1,
+                "final_third_possession": 2,
+                "possession_lost": 13,
+                "dribbled_past": 3,
+                "shots_blocked": 1,
+                "clearances": 1,
+                "interceptions": 1,
+                "recoveries": 3,
+                "tackles_won": {
+                  "made": 2,
+                  "total": 3,
+                  "pct": 66.7
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0D09Q0909U09009N09U099Q09D09F0%26dir%3drtl",
@@ -201352,7 +202070,7 @@
               "name": "Anastasios Douvikas",
               "number": "9",
               "position": "f",
-              "rating": "8",
+              "rating": "9.1",
               "id": 43285,
               "s365_id": 78176,
               "position_detail": "Centre Forward",
@@ -201361,25 +202079,39 @@
                 "depth": 100,
                 "side": 50
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "goals": 1,
-                "xg": 0.74,
-                "shots": 3,
-                "shots_on_target": 2,
-                "xgot": 0.29,
+                "goals": 2,
+                "xg": 1.1,
+                "shots": 4,
+                "shots_on_target": 3,
+                "xgot": 0.69,
                 "stat_25": 1,
                 "xa": 0.01,
-                "back_passes": 2,
+                "back_passes": 3,
                 "passes": {
-                  "made": 4,
-                  "total": 4,
-                  "pct": 100
+                  "made": 7,
+                  "total": 9,
+                  "pct": 78
                 },
-                "touches": 8,
+                "touches": 23,
+                "fouls_won": 2,
+                "final_third_possession": 1,
+                "possession_lost": 7,
                 "shots_blocked": 1,
                 "clearances": 1,
-                "big_chances_scored": 1
+                "recoveries": 2,
+                "aerial_duels_won": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "ground_duels_won": {
+                  "made": 2,
+                  "total": 2,
+                  "pct": 100
+                },
+                "big_chances_scored": 2
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0%255d03N03W03l0%26dir%3drtl",
               "has_shot_chart": true
@@ -201390,70 +202122,175 @@
               "name": "Jacobo Ramon",
               "number": "4",
               "position": "d",
-              "rating": null,
+              "rating": "6.8",
               "id": 247056,
               "s365_id": 138690,
               "position_detail": "Centre Back",
-              "minutes": 6,
+              "minutes": 45,
               "stats": {
-                "passes_final_third": 1,
+                "xg": 0.08,
+                "shots": 2,
+                "shots_off_target": 2,
+                "passes_final_third": 3,
+                "back_passes": 2,
                 "passes": {
-                  "made": 7,
-                  "total": 7,
+                  "made": 32,
+                  "total": 34,
+                  "pct": 94
+                },
+                "touches": 41,
+                "possession_lost": 3,
+                "clearances": 1,
+                "aerial_duels_won": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "ground_duels_won": {
+                  "made": 1,
+                  "total": 1,
                   "pct": 100
                 },
-                "touches": 7,
                 "blocks": 1
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0Q03z0z0z0d0%26dir%3drtl",
+              "has_shot_chart": true,
               "sub_on": 46
+            },
+            {
+              "name": "Ivan Smolcic",
+              "number": "28",
+              "position": "d",
+              "rating": "7.2",
+              "id": 114212,
+              "s365_id": 108391,
+              "position_detail": "Right Back",
+              "minutes": 24,
+              "stats": {
+                "xa": 0.01,
+                "passes_final_third": 1,
+                "back_passes": 4,
+                "passes": {
+                  "made": 11,
+                  "total": 13,
+                  "pct": 85
+                },
+                "long_passes": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "dribbles": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "touches": 25,
+                "fouls_committed": 1,
+                "possession_lost": 4,
+                "clearances": 2,
+                "interceptions": 4,
+                "blocks": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0T03z003003M0303003003G0%26dir%3drtl",
+              "sub_on": 67
+            },
+            {
+              "name": "Adrian Lahdo",
+              "number": "15",
+              "position": "m",
+              "rating": null,
+              "id": 250600,
+              "s365_id": 187629,
+              "position_detail": "Central Midfield",
+              "minutes": 2,
+              "stats": {
+                "passes": {
+                  "made": 5,
+                  "total": 5,
+                  "pct": 100
+                },
+                "touches": 5
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0y03u0%26dir%3drtl",
+              "sub_on": 89
             },
             {
               "name": "Luis Milla",
               "number": "6",
               "position": "m",
-              "rating": null,
+              "rating": "6.1",
               "id": 32449,
               "s365_id": 55450,
               "position_detail": "Central Midfield",
-              "minutes": 6,
+              "minutes": 45,
               "stats": {
+                "xg": 0.14,
+                "shots": 1,
+                "shots_off_target": 1,
+                "big_chances_missed": 1,
+                "xa": 0.02,
+                "passes_final_third": 2,
+                "back_passes": 2,
                 "passes": {
-                  "made": 2,
-                  "total": 2,
+                  "made": 31,
+                  "total": 32,
+                  "pct": 97
+                },
+                "long_passes": {
+                  "made": 1,
+                  "total": 1,
                   "pct": 100
                 },
-                "touches": 2,
-                "dribbled_past": 1
+                "touches": 40,
+                "fouls_committed": 1,
+                "possession_lost": 6,
+                "dribbled_past": 1,
+                "clearances": 1,
+                "interceptions": 1,
+                "recoveries": 2
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3do03E03z0z0z0z0%26dir%3drtl",
+              "has_shot_chart": true,
               "sub_on": 46
             },
             {
               "name": "Jayden Addai",
               "number": "42",
               "position": "f",
-              "rating": null,
+              "rating": "6.8",
               "id": 178165,
               "s365_id": 131250,
               "position_detail": "Right Forward",
-              "minutes": 6,
+              "minutes": 45,
               "stats": {
-                "back_passes": 1,
+                "xg": 0.04,
+                "shots": 2,
+                "shots_on_target": 1,
+                "xgot": 0.05,
+                "back_passes": 8,
                 "passes": {
-                  "made": 1,
-                  "total": 3,
-                  "pct": 33
+                  "made": 11,
+                  "total": 15,
+                  "pct": 73
                 },
-                "touches": 4,
-                "possession_lost": 2,
-                "tackles_won": {
+                "dribbles": {
                   "made": 1,
-                  "total": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "touches": 24,
+                "possession_lost": 6,
+                "shots_blocked": 1,
+                "recoveries": 1,
+                "tackles_won": {
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0m030303D0%26dir%3drtl",
+              "has_shot_chart": true,
               "sub_on": 46
             },
             {
@@ -201493,15 +202330,6 @@
               "position_detail": "Centre Back"
             },
             {
-              "name": "Ivan Smolcic",
-              "number": "28",
-              "position": "d",
-              "rating": null,
-              "id": 114212,
-              "s365_id": 108391,
-              "position_detail": "Right Back"
-            },
-            {
               "name": "Alex Valle",
               "number": "3",
               "position": "d",
@@ -201509,15 +202337,6 @@
               "id": 189493,
               "s365_id": 114330,
               "position_detail": "Left Back"
-            },
-            {
-              "name": "Adrian Lahdo",
-              "number": "15",
-              "position": "m",
-              "rating": null,
-              "id": 250600,
-              "s365_id": 187629,
-              "position_detail": "Central Midfield"
             },
             {
               "name": "Nicolas Paz",
@@ -201612,7 +202431,7 @@
               "name": "Stefano Turati",
               "number": "80",
               "position": "g",
-              "rating": "6.5",
+              "rating": "6.2",
               "id": 41384,
               "s365_id": 71922,
               "position_detail": "Goalkeeper",
@@ -201621,26 +202440,26 @@
                 "depth": 0,
                 "side": 50
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "saves": 3,
-                "goals_conceded": 1,
+                "saves": 4,
+                "goals_conceded": 2,
                 "passes_final_third": 4,
                 "passes": {
-                  "made": 15,
-                  "total": 20,
-                  "pct": 75
+                  "made": 22,
+                  "total": 31,
+                  "pct": 71
                 },
                 "long_passes": {
                   "made": 1,
-                  "total": 6,
-                  "pct": 17
+                  "total": 10,
+                  "pct": 10
                 },
-                "touches": 24,
-                "xgot_faced": 0.81,
-                "goals_prevented": -0.19,
-                "possession_lost": 5,
-                "recoveries": 4
+                "touches": 40,
+                "xgot_faced": 1.3,
+                "goals_prevented": -0.74,
+                "possession_lost": 9,
+                "recoveries": 8
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0G04Q04j04U04z0z0004T0%26dir%3dltr"
             },
@@ -201648,7 +202467,7 @@
               "name": "Rafael Obrador",
               "number": "33",
               "position": "d",
-              "rating": "6.5",
+              "rating": "6.2",
               "id": 265154,
               "s365_id": 177312,
               "position_detail": "Left Back",
@@ -201657,15 +202476,15 @@
                 "depth": 25,
                 "side": 0
               },
-              "minutes": 51,
+              "minutes": 61,
               "stats": {
                 "xa": 0.01,
-                "passes_final_third": 3,
-                "back_passes": 7,
+                "passes_final_third": 4,
+                "back_passes": 8,
                 "passes": {
-                  "made": 26,
-                  "total": 26,
-                  "pct": 100
+                  "made": 31,
+                  "total": 32,
+                  "pct": 97
                 },
                 "long_passes": {
                   "made": 2,
@@ -201677,19 +202496,20 @@
                   "total": 5,
                   "pct": 40
                 },
-                "touches": 41,
-                "possession_lost": 7,
+                "touches": 47,
+                "possession_lost": 8,
                 "clearances": 1,
                 "interceptions": 1,
-                "recoveries": 3
+                "recoveries": 5
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF094049R049b09z0z0z0o0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF094049R049b09z0z0z0o0%26dir%3dltr",
+              "sub_off": 62
             },
             {
               "name": "Fali Cande",
               "number": "5",
               "position": "d",
-              "rating": "6.8",
+              "rating": "6.2",
               "id": 117370,
               "s365_id": 78207,
               "position_detail": "Centre Back",
@@ -201698,27 +202518,29 @@
                 "depth": 25,
                 "side": 33
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
                 "xa": 0.01,
-                "passes_final_third": 2,
-                "back_passes": 2,
+                "passes_final_third": 4,
+                "back_passes": 5,
                 "passes": {
-                  "made": 37,
-                  "total": 40,
-                  "pct": 92
+                  "made": 63,
+                  "total": 68,
+                  "pct": 93
                 },
                 "long_passes": {
                   "made": 3,
                   "total": 4,
                   "pct": 75
                 },
-                "touches": 48,
-                "possession_lost": 3,
-                "clearances": 5,
+                "touches": 79,
+                "errors_leading_to_shot": 1,
+                "fouls_committed": 2,
+                "possession_lost": 5,
+                "clearances": 7,
                 "interceptions": 1,
-                "recoveries": 2,
-                "blocks": 1
+                "recoveries": 3,
+                "blocks": 2
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d03Y09P0300903Q03303N03Y03z0z0z000%26dir%3dltr"
             },
@@ -201726,7 +202548,7 @@
               "name": "Duje Caleta Car",
               "number": "15",
               "position": "d",
-              "rating": "6.4",
+              "rating": "6.7",
               "id": 10206,
               "s365_id": 12455,
               "position_detail": "Centre Back",
@@ -201735,30 +202557,50 @@
                 "depth": 25,
                 "side": 66
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "passes_final_third": 1,
+                "xg": 0.01,
+                "shots": 1,
+                "shots_off_target": 1,
+                "chances_created": 1,
+                "passes_final_third": 5,
                 "passes": {
-                  "made": 15,
-                  "total": 19,
-                  "pct": 79
+                  "made": 38,
+                  "total": 44,
+                  "pct": 86
                 },
                 "long_passes": {
+                  "made": 3,
+                  "total": 7,
+                  "pct": 43
+                },
+                "touches": 56,
+                "fouls_committed": 1,
+                "possession_lost": 6,
+                "dribbled_past": 1,
+                "clearances": 4,
+                "interceptions": 1,
+                "recoveries": 1,
+                "aerial_duels_won": {
                   "made": 2,
-                  "total": 6,
+                  "total": 4,
+                  "pct": 50
+                },
+                "ground_duels_won": {
+                  "made": 1,
+                  "total": 3,
                   "pct": 33
                 },
-                "touches": 21,
-                "possession_lost": 4,
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0n09V04y04z0D04T04R0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0n09V04y04z0D04T04R0%26dir%3dltr",
+              "has_shot_chart": true
             },
             {
               "name": "Ignace van der Brempt",
               "number": "20",
               "position": "d",
-              "rating": "6.5",
+              "rating": "6",
               "id": 126768,
               "s365_id": 81581,
               "position_detail": "Right Back",
@@ -201767,26 +202609,36 @@
                 "depth": 25,
                 "side": 100
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
                 "xg": 0.01,
                 "shots": 1,
                 "shots_off_target": 1,
-                "passes_final_third": 5,
-                "back_passes": 4,
+                "xa": 0.01,
+                "passes_final_third": 7,
+                "back_passes": 8,
                 "passes": {
-                  "made": 10,
-                  "total": 10,
-                  "pct": 100
+                  "made": 17,
+                  "total": 19,
+                  "pct": 89
                 },
                 "long_passes": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "touches": 38,
+                "fouls_won": 1,
+                "fouls_committed": 2,
+                "possession_lost": 6,
+                "clearances": 1,
+                "recoveries": 1,
+                "tackles_won": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 18,
-                "possession_lost": 1,
-                "clearances": 1
+                "blocks": 1
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0N03z0z0p03O03003N09D3D03033F0%26dir%3dltr",
               "has_shot_chart": true
@@ -201804,41 +202656,42 @@
                 "depth": 50,
                 "side": 20
               },
-              "minutes": 51,
+              "minutes": 61,
               "stats": {
                 "offsides": 1,
                 "xa": 0.05,
-                "passes_final_third": 8,
+                "passes_final_third": 10,
                 "back_passes": 4,
                 "passes": {
-                  "made": 41,
-                  "total": 47,
-                  "pct": 87
+                  "made": 46,
+                  "total": 55,
+                  "pct": 84
                 },
                 "long_passes": {
                   "made": 2,
-                  "total": 4,
-                  "pct": 50
+                  "total": 5,
+                  "pct": 40
                 },
                 "dribbles": {
                   "made": 2,
                   "total": 2,
                   "pct": 100
                 },
-                "touches": 56,
+                "touches": 66,
                 "fouls_won": 1,
                 "fouls_committed": 1,
-                "possession_lost": 8,
+                "possession_lost": 12,
                 "interceptions": 1,
-                "recoveries": 4
+                "recoveries": 5
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0F09D099T09h09z0z0g0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0F09D099T09h09z0z0g0%26dir%3dltr",
+              "sub_off": 62
             },
             {
               "name": "Vasilije Adzic",
               "number": "17",
               "position": "m",
-              "rating": "6.3",
+              "rating": "6.5",
               "id": 183018,
               "s365_id": 134052,
               "position_detail": "Attacking Midfield",
@@ -201847,42 +202700,47 @@
                 "depth": 50,
                 "side": 80
               },
-              "minutes": 51,
+              "minutes": 85,
               "stats": {
-                "xa": 0.01,
-                "passes_final_third": 1,
-                "back_passes": 10,
+                "xa": 0.03,
+                "chances_created": 1,
+                "passes_final_third": 3,
+                "back_passes": 13,
                 "passes": {
-                  "made": 20,
-                  "total": 21,
-                  "pct": 95
+                  "made": 27,
+                  "total": 30,
+                  "pct": 90
                 },
                 "long_passes": {
                   "made": 2,
-                  "total": 2,
-                  "pct": 100
+                  "total": 3,
+                  "pct": 67
                 },
                 "crosses": {
-                  "made": 1,
-                  "total": 1,
-                  "pct": 100
+                  "made": 2,
+                  "total": 3,
+                  "pct": 67
                 },
-                "touches": 29,
+                "touches": 43,
                 "fouls_committed": 2,
-                "possession_lost": 6,
+                "possession_lost": 10,
+                "dribbled_past": 1,
+                "clearances": 1,
+                "recoveries": 2,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH099R09V09W09N09009z0z0z0U0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH099R09V09W09N09009z0z0z0U0%26dir%3dltr",
+              "sub_off": 86
             },
             {
               "name": "Benja Dominguez",
               "number": "25",
               "position": "f",
-              "rating": "6.8",
+              "rating": "6.9",
               "id": 191379,
               "s365_id": 108674,
               "position_detail": "Left Forward",
@@ -201891,18 +202749,18 @@
                 "depth": 75,
                 "side": 0
               },
-              "minutes": 51,
+              "minutes": 61,
               "stats": {
                 "xg": 0.08,
                 "shots": 1,
                 "shots_off_target": 1,
                 "xa": 0.3,
                 "chances_created": 1,
-                "back_passes": 5,
+                "back_passes": 6,
                 "passes": {
-                  "made": 9,
-                  "total": 11,
-                  "pct": 82
+                  "made": 11,
+                  "total": 14,
+                  "pct": 79
                 },
                 "crosses": {
                   "made": 1,
@@ -201914,9 +202772,9 @@
                   "total": 2,
                   "pct": 100
                 },
-                "touches": 32,
+                "touches": 35,
                 "fouls_won": 4,
-                "possession_lost": 10,
+                "possession_lost": 11,
                 "dribbled_past": 1,
                 "recoveries": 2,
                 "tackles_won": {
@@ -201926,13 +202784,14 @@
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255c04H04N0409H04z0z0z0r0%26dir%3dltr",
-              "has_shot_chart": true
+              "has_shot_chart": true,
+              "sub_off": 62
             },
             {
               "name": "Darryl Bakola",
               "number": "50",
               "position": "m",
-              "rating": "6.8",
+              "rating": "7",
               "id": 250948,
               "s365_id": 183009,
               "position_detail": "Attacking Midfield",
@@ -201941,24 +202800,27 @@
                 "depth": 75,
                 "side": 50
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
-                "back_passes": 12,
+                "xa": 0.02,
+                "passes_final_third": 2,
+                "back_passes": 19,
                 "passes": {
-                  "made": 32,
-                  "total": 33,
+                  "made": 62,
+                  "total": 64,
                   "pct": 97
                 },
-                "touches": 41,
-                "fouls_won": 2,
+                "touches": 77,
+                "fouls_won": 3,
                 "final_third_possession": 1,
-                "possession_lost": 3,
+                "possession_lost": 5,
+                "clearances": 1,
                 "interceptions": 1,
-                "recoveries": 2,
+                "recoveries": 3,
                 "tackles_won": {
                   "made": 1,
-                  "total": 1,
-                  "pct": 100
+                  "total": 2,
+                  "pct": 50
                 }
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ04G0904L04S04%255c04z0z0Q04x0%26dir%3dltr"
@@ -201967,7 +202829,7 @@
               "name": "Domenico Berardi",
               "number": "10",
               "position": "f",
-              "rating": "6.9",
+              "rating": "6.7",
               "id": 2202,
               "s365_id": 6363,
               "position_detail": "Right Forward",
@@ -201976,36 +202838,41 @@
                 "depth": 75,
                 "side": 100
               },
-              "minutes": 51,
+              "minutes": 73,
               "stats": {
+                "xg": 0.05,
+                "shots": 1,
                 "offsides": 1,
                 "xa": 0.05,
                 "chances_created": 2,
                 "passes_final_third": 2,
-                "back_passes": 4,
+                "back_passes": 5,
                 "passes": {
-                  "made": 8,
-                  "total": 10,
-                  "pct": 80
+                  "made": 13,
+                  "total": 15,
+                  "pct": 87
                 },
                 "crosses": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 13,
+                "touches": 19,
                 "final_third_possession": 1,
                 "possession_lost": 2,
+                "shots_blocked": 1,
                 "interceptions": 1,
                 "recoveries": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0%255d03%255d033y03003U03%256003Q0303G03N03F033E0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0%255d03%255d033y03003U03%256003Q0303G03N03F033E0%26dir%3dltr",
+              "has_shot_chart": true,
+              "sub_off": 74
             },
             {
               "name": "Kieron Bowie",
               "number": "9",
               "position": "f",
-              "rating": "6.5",
+              "rating": "6.3",
               "id": 105081,
               "s365_id": 138224,
               "position_detail": "Centre Forward",
@@ -202014,33 +202881,189 @@
                 "depth": 100,
                 "side": 50
               },
-              "minutes": 51,
+              "minutes": 90,
               "stats": {
                 "xg": 0.06,
                 "shots": 2,
                 "shots_off_target": 2,
-                "offsides": 1,
-                "back_passes": 4,
+                "offsides": 2,
+                "xa": 0.01,
+                "chances_created": 1,
+                "back_passes": 7,
                 "passes": {
-                  "made": 7,
-                  "total": 10,
-                  "pct": 70
+                  "made": 10,
+                  "total": 16,
+                  "pct": 62
                 },
                 "dribbles": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 18,
+                "touches": 26,
                 "fouls_won": 2,
                 "fouls_committed": 1,
-                "possession_lost": 5
+                "final_third_possession": 1,
+                "possession_lost": 10,
+                "recoveries": 1
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3do03K03%256003G03006G03H03K03D03D033P0303F03%255d03z0d0%26dir%3dltr",
               "has_shot_chart": true
             }
           ],
           "subs": [
+            {
+              "name": "Josh Doig",
+              "number": "3",
+              "position": "d",
+              "rating": "6.6",
+              "id": 122407,
+              "s365_id": 79300,
+              "position_detail": "Left Back",
+              "minutes": 29,
+              "stats": {
+                "passes_final_third": 3,
+                "back_passes": 3,
+                "passes": {
+                  "made": 13,
+                  "total": 15,
+                  "pct": 87
+                },
+                "long_passes": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "touches": 22,
+                "possession_lost": 4,
+                "clearances": 2,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN03D09O03z0z0z0z0T0%26dir%3dltr",
+              "sub_on": 62
+            },
+            {
+              "name": "Luca Lipani",
+              "number": "35",
+              "position": "m",
+              "rating": "6.9",
+              "id": 189844,
+              "s365_id": 123262,
+              "position_detail": "Midfielder",
+              "minutes": 29,
+              "stats": {
+                "xa": 0.01,
+                "passes_final_third": 3,
+                "back_passes": 3,
+                "passes": {
+                  "made": 21,
+                  "total": 30,
+                  "pct": 70
+                },
+                "touches": 37,
+                "fouls_committed": 1,
+                "possession_lost": 10,
+                "clearances": 2,
+                "interceptions": 3,
+                "recoveries": 5,
+                "blocks": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0v03z0x0%26dir%3dltr",
+              "sub_on": 62
+            },
+            {
+              "name": "Cristian Volpato",
+              "number": "7",
+              "position": "m",
+              "rating": "6.5",
+              "id": 191190,
+              "s365_id": 104463,
+              "position_detail": "Attacking Midfield",
+              "minutes": 17,
+              "stats": {
+                "xa": 0.02,
+                "back_passes": 1,
+                "passes": {
+                  "made": 5,
+                  "total": 5,
+                  "pct": 100
+                },
+                "dribbles": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "touches": 8,
+                "final_third_possession": 1,
+                "possession_lost": 2,
+                "recoveries": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0J03Q03W0300%26dir%3dltr",
+              "sub_on": 74
+            },
+            {
+              "name": "Armand Lauriente",
+              "number": "45",
+              "position": "f",
+              "rating": "6.4",
+              "id": 8822,
+              "s365_id": 66861,
+              "position_detail": "Left Forward",
+              "minutes": 29,
+              "stats": {
+                "xg": 0.04,
+                "shots": 1,
+                "shots_on_target": 1,
+                "xgot": 0.12,
+                "offsides": 1,
+                "passes_final_third": 1,
+                "back_passes": 3,
+                "passes": {
+                  "made": 10,
+                  "total": 14,
+                  "pct": 71
+                },
+                "touches": 20,
+                "fouls_won": 1,
+                "final_third_possession": 1,
+                "possession_lost": 8,
+                "dribbled_past": 1,
+                "shots_blocked": 1,
+                "recoveries": 2
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dP03003z0X03z0z0z0J0%26dir%3dltr",
+              "has_shot_chart": true,
+              "sub_on": 62
+            },
+            {
+              "name": "Sebastiano Esposito",
+              "number": "94",
+              "position": "f",
+              "rating": null,
+              "id": 114054,
+              "s365_id": 68401,
+              "position_detail": "Secondary striker",
+              "minutes": 5,
+              "stats": {
+                "xa": 0.11,
+                "passes_final_third": 2,
+                "back_passes": 3,
+                "passes": {
+                  "made": 8,
+                  "total": 9,
+                  "pct": 89
+                },
+                "touches": 10,
+                "fouls_won": 1,
+                "possession_lost": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0%255c03P03z0I0%26dir%3dltr",
+              "sub_on": 86
+            },
             {
               "name": "A. Muric",
               "number": "49",
@@ -202078,30 +203101,12 @@
               "position_detail": "Right Back"
             },
             {
-              "name": "Josh Doig",
-              "number": "3",
-              "position": "d",
-              "rating": null,
-              "id": 122407,
-              "s365_id": 79300,
-              "position_detail": "Left Back"
-            },
-            {
               "name": "Andrea Ghion",
               "number": "8",
               "position": "m",
               "rating": null,
               "id": 119163,
               "s365_id": 71855,
-              "position_detail": "Midfielder"
-            },
-            {
-              "name": "Luca Lipani",
-              "number": "35",
-              "position": "m",
-              "rating": null,
-              "id": 189844,
-              "s365_id": 123262,
               "position_detail": "Midfielder"
             },
             {
@@ -202132,15 +203137,6 @@
               "position_detail": "Right Midfield"
             },
             {
-              "name": "Cristian Volpato",
-              "number": "7",
-              "position": "m",
-              "rating": null,
-              "id": 191190,
-              "s365_id": 104463,
-              "position_detail": "Attacking Midfield"
-            },
-            {
               "name": "Nicholas Pierini",
               "number": "77",
               "position": "f",
@@ -202148,24 +203144,6 @@
               "id": 2203,
               "s365_id": 41912,
               "position_detail": "Right Forward"
-            },
-            {
-              "name": "Armand Lauriente",
-              "number": "45",
-              "position": "f",
-              "rating": null,
-              "id": 8822,
-              "s365_id": 66861,
-              "position_detail": "Left Forward"
-            },
-            {
-              "name": "Sebastiano Esposito",
-              "number": "94",
-              "position": "f",
-              "rating": null,
-              "id": 114054,
-              "s365_id": 68401,
-              "position_detail": "Secondary striker"
             },
             {
               "name": "Laurs Skjellerup",
@@ -202192,7 +203170,7 @@
               "expected_return": "أنهى الموسم ",
               "season": {
                 "appearances": 6,
-                "matches": 7,
+                "matches": 8,
                 "assists": 1
               }
             },
@@ -202206,7 +203184,7 @@
               "expected_return": "Early November 2026",
               "season": {
                 "appearances": 3,
-                "matches": 7
+                "matches": 8
               }
             },
             {
@@ -202242,7 +203220,7 @@
       "match_id": 558561,
       "fd_competition_code": "SA",
       "s365_id": 4732668,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
@@ -202557,12 +203535,12 @@
         "id": 43285,
         "s365_id": 78176,
         "name": "Anastasios Douvikas",
-        "rating": "8"
+        "rating": "9.1"
       },
       "play_time": {
-        "effective": "33:07",
-        "total": "52:11",
-        "effective_pct": 63.5
+        "effective": "57:32",
+        "total": "95:00",
+        "effective_pct": 60.6
       },
       "predictions": {
         "result": {
@@ -202585,18 +203563,19 @@
             "s365_id": 78176,
             "name": "Anastasios Douvikas",
             "stats": {
-              "xg": 0.74,
-              "shots_on_target": 2,
-              "minutes": 51
+              "xg": 1.1,
+              "shots_on_target": 3,
+              "minutes": 90
             }
           },
           "away": {
-            "id": 105081,
-            "s365_id": 138224,
-            "name": "Kieron Bowie",
+            "id": 8822,
+            "s365_id": 66861,
+            "name": "Armand Lauriente",
             "stats": {
-              "xg": 0.06,
-              "minutes": 51
+              "xg": 0.04,
+              "shots_on_target": 1,
+              "minutes": 29
             }
           }
         },
@@ -202606,37 +203585,37 @@
             "s365_id": 68795,
             "name": "Maxence Caqueret",
             "stats": {
-              "xg": 0.08,
+              "xg": 0.19,
               "shots_on_target": 1,
-              "minutes": 51
+              "minutes": 90
             }
           },
           "away": {
-            "id": 2202,
-            "s365_id": 6363,
-            "name": "Domenico Berardi",
+            "id": 250948,
+            "s365_id": 183009,
+            "name": "Darryl Bakola",
             "stats": {
-              "minutes": 51
+              "minutes": 90
             }
           }
         },
         "defence": {
           "home": {
-            "id": 9471,
-            "s365_id": 2677,
-            "name": "Marc Oliver Kempf",
+            "id": 169670,
+            "s365_id": 119903,
+            "name": "Kaiki Bruno da Silva",
             "stats": {
-              "interceptions": 1,
-              "minutes": 51
+              "interceptions": 2,
+              "minutes": 90
             }
           },
           "away": {
-            "id": 265154,
-            "s365_id": 177312,
-            "name": "Rafael Obrador",
+            "id": 10206,
+            "s365_id": 12455,
+            "name": "Duje Caleta Car",
             "stats": {
               "interceptions": 1,
-              "minutes": 51
+              "minutes": 90
             }
           }
         }
@@ -202820,6 +203799,204 @@
           "end": {
             "y": 49.4,
             "z": 10.8
+          }
+        },
+        {
+          "minute": 53,
+          "team": "home",
+          "player": "Jayden Addai",
+          "player_id": 178165,
+          "player_s365_id": 131250,
+          "xg": 0.02,
+          "xgot": 0.05,
+          "outcome": "saved",
+          "body_part": "left_foot",
+          "situation": "counter_attack",
+          "x": 95.1,
+          "y": 32.5,
+          "end": {
+            "y": 51.3,
+            "z": 7.6
+          }
+        },
+        {
+          "minute": 53,
+          "team": "home",
+          "player": "Maxence Caqueret",
+          "player_id": 101350,
+          "player_s365_id": 68795,
+          "xg": 0.11,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "head",
+          "situation": "counter_attack",
+          "x": 92.4,
+          "y": 51.5,
+          "end": {
+            "x": 93.7,
+            "y": 51.6
+          }
+        },
+        {
+          "minute": 55,
+          "team": "home",
+          "player": "Jacobo Ramon",
+          "player_id": 247056,
+          "player_s365_id": 138690,
+          "xg": 0.02,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "right_foot",
+          "x": 77.3,
+          "y": 39.2,
+          "end": {
+            "y": 49.8,
+            "z": 77.8
+          }
+        },
+        {
+          "minute": 60,
+          "team": "home",
+          "player": "Anastasios Douvikas",
+          "player_id": 43285,
+          "player_s365_id": 78176,
+          "xg": 0.34,
+          "xgot": 0.4,
+          "outcome": "goal",
+          "body_part": "right_foot",
+          "situation": "assisted",
+          "x": 90.5,
+          "y": 52.6,
+          "end": {
+            "y": 50.0,
+            "z": 2.5
+          }
+        },
+        {
+          "minute": 64,
+          "team": "away",
+          "player": "Domenico Berardi",
+          "player_id": 2202,
+          "player_s365_id": 6363,
+          "xg": 0.05,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "left_foot",
+          "situation": "open_play",
+          "x": 88.5,
+          "y": 42.1,
+          "end": {
+            "x": 92.3,
+            "y": 44.2
+          }
+        },
+        {
+          "minute": 65,
+          "team": "away",
+          "player": "Duje Caleta Car",
+          "player_id": 10206,
+          "player_s365_id": 12455,
+          "xg": 0.01,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "head",
+          "situation": "assisted",
+          "x": 89.7,
+          "y": 57.9,
+          "end": {
+            "y": 41.5,
+            "z": 33.3
+          }
+        },
+        {
+          "minute": 71,
+          "team": "home",
+          "player": "Luis Milla",
+          "player_id": 32449,
+          "player_s365_id": 55450,
+          "xg": 0.14,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "right_foot",
+          "situation": "assisted",
+          "x": 86.4,
+          "y": 52.8,
+          "end": {
+            "y": 57.7,
+            "z": 47.2
+          }
+        },
+        {
+          "minute": 77,
+          "team": "home",
+          "player": "Lucas da Cunha",
+          "player_id": 124620,
+          "player_s365_id": 72838,
+          "xg": 0.06,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "head",
+          "situation": "assisted",
+          "x": 89.1,
+          "y": 54.6,
+          "end": {
+            "y": 11.6,
+            "z": 8.3
+          }
+        },
+        {
+          "minute": 84,
+          "team": "home",
+          "player": "Jayden Addai",
+          "player_id": 178165,
+          "player_s365_id": 131250,
+          "xg": 0.02,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "left_foot",
+          "situation": "counter_attack",
+          "x": 86.0,
+          "y": 27.0,
+          "end": {
+            "x": 87.2,
+            "y": 29.1
+          }
+        },
+        {
+          "minute": 88,
+          "team": "away",
+          "player": "Armand Lauriente",
+          "player_id": 8822,
+          "player_s365_id": 66861,
+          "xg": 0.04,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "right_foot",
+          "situation": "open_play",
+          "x": 80.6,
+          "y": 66.5,
+          "end": {
+            "x": 87.2,
+            "y": 61.7
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 3,
+          "team": "home",
+          "player": "Jacobo Ramon",
+          "player_id": 247056,
+          "player_s365_id": 138690,
+          "xg": 0.06,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "left_foot",
+          "situation": "subtype_1",
+          "x": 89.0,
+          "y": 52.6,
+          "end": {
+            "y": 62.0,
+            "z": 36.1
           }
         }
       ]
