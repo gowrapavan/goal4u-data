@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-25T18:30:00.578839+00:00",
+    "last_synced": "2026-10-25T20:11:17.425681+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -12034,7 +12034,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T17:30:00Z",
-      "status": "PAUSED",
+      "status": "FINISHED",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12159,7 +12159,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T20:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12192,11 +12192,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
