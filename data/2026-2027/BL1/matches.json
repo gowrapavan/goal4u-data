@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-25T11:51:15.289861+00:00",
+    "last_synced": "2026-10-25T15:11:09.345373+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -7659,7 +7659,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T14:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 7,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7692,11 +7692,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -7746,7 +7746,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15408,
+          "name": "Daniel Siebert",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -7864,7 +7871,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 43878,
+          "name": "Felix Zwayer",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
