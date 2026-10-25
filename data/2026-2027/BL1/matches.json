@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-25T02:21:56.876045+00:00",
+    "last_synced": "2026-10-25T06:22:18.509236+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -7152,7 +7152,7 @@
         "winner": null
       },
       "utcDate": "2026-10-24T13:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 7,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7185,15 +7185,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -7239,7 +7239,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15746,
+          "name": "Bastian Dankert",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

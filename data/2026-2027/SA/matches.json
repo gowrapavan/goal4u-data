@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-25T02:22:38.755634+00:00",
+    "last_synced": "2026-10-25T06:22:30.377813+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9271,7 +9271,7 @@
         "winner": null
       },
       "utcDate": "2026-10-24T18:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9304,15 +9304,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -9358,7 +9358,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 135544,
+          "name": "Alberto Arena",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
