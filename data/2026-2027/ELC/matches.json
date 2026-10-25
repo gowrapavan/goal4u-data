@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-25T10:27:56.618014+00:00",
+    "last_synced": "2026-10-25T11:51:33.418922+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -17227,7 +17227,7 @@
         "winner": null
       },
       "utcDate": "2026-10-24T14:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -17260,15 +17260,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 4,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -17314,7 +17314,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 99047,
+          "name": "Thomas Parsons",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
