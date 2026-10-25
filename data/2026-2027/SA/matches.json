@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-25T15:24:20.610861+00:00",
+    "last_synced": "2026-10-25T18:33:08.792674+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9528,7 +9528,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T14:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9561,11 +9561,11 @@
         "bench": []
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
           "home": 4,
-          "away": 3
+          "away": 4
         },
         "halfTime": {
           "home": 3,
@@ -9653,7 +9653,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T14:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9778,7 +9778,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T17:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9811,15 +9811,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -9990,7 +9990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57868,
+          "name": "Matteo Marcenaro",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
