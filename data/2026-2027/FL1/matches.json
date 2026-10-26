@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-26T11:59:16.223673+00:00",
+    "last_synced": "2026-10-26T18:01:24.051947+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -8153,7 +8153,7 @@
         "winner": null
       },
       "utcDate": "2026-10-25T14:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -8186,15 +8186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -8990,7 +8990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15548,
+          "name": "Jérôme Brisard",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
