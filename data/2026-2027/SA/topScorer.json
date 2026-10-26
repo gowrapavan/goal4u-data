@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-19T09:35:32.214008+00:00",
+    "last_synced": "2026-10-26T09:41:17.301176+00:00",
     "source": "football-data.org v4"
   },
   "data": {
@@ -10,10 +10,33 @@
       "id": 2494,
       "startDate": "2026-08-23",
       "endDate": "2027-05-30",
-      "currentMatchday": 7
+      "currentMatchday": 9
     },
     "count": 10,
     "scorers": [
+      {
+        "player": {
+          "id": 252836,
+          "name": "Gustavo Varela",
+          "firstName": "",
+          "lastName": "Gustavo Varela",
+          "dateOfBirth": "2005-01-30",
+          "nationality": "Portugal",
+          "position": null,
+          "shirtNumber": null
+        },
+        "team": {
+          "id": 5911,
+          "name": "AC Monza",
+          "shortName": "Monza",
+          "tla": "MON",
+          "crest": "https://crests.football-data.org/5911.png"
+        },
+        "playedMatches": 7,
+        "goals": 7,
+        "assists": 1,
+        "penalties": 1
+      },
       {
         "player": {
           "id": 169216,
@@ -32,9 +55,32 @@
           "tla": "FRO",
           "crest": "https://crests.football-data.org/470.png"
         },
-        "playedMatches": 7,
+        "playedMatches": 8,
         "goals": 7,
         "assists": null,
+        "penalties": null
+      },
+      {
+        "player": {
+          "id": 120679,
+          "name": "Nikola Krstović",
+          "firstName": "Nikola",
+          "lastName": "Krstović",
+          "dateOfBirth": "2000-04-05",
+          "nationality": "Montenegro",
+          "position": null,
+          "shirtNumber": null
+        },
+        "team": {
+          "id": 102,
+          "name": "Atalanta BC",
+          "shortName": "Atalanta",
+          "tla": "ATA",
+          "crest": "https://crests.football-data.org/102.png"
+        },
+        "playedMatches": 8,
+        "goals": 6,
+        "assists": 2,
         "penalties": null
       },
       {
@@ -55,55 +101,55 @@
           "tla": "ROM",
           "crest": "https://crests.football-data.org/100.png"
         },
-        "playedMatches": 6,
+        "playedMatches": 7,
         "goals": 6,
+        "assists": 1,
+        "penalties": null
+      },
+      {
+        "player": {
+          "id": 43285,
+          "name": "Anastasios Douvikas",
+          "firstName": "Anastasios",
+          "lastName": "Douvikas",
+          "dateOfBirth": "1999-08-02",
+          "nationality": "Greece",
+          "position": null,
+          "shirtNumber": null
+        },
+        "team": {
+          "id": 7397,
+          "name": "Como 1907",
+          "shortName": "Como 1907",
+          "tla": "COM",
+          "crest": "https://crests.football-data.org/7397.png"
+        },
+        "playedMatches": 8,
+        "goals": 5,
         "assists": null,
         "penalties": null
       },
       {
         "player": {
-          "id": 252836,
-          "name": "Gustavo Varela",
-          "firstName": "",
-          "lastName": "Gustavo Varela",
-          "dateOfBirth": "2005-01-30",
-          "nationality": "Portugal",
+          "id": 8685,
+          "name": "Marcus Thuram-Ulien",
+          "firstName": "Marcus",
+          "lastName": "Thuram",
+          "dateOfBirth": "1997-08-06",
+          "nationality": "France",
           "position": null,
           "shirtNumber": null
         },
         "team": {
-          "id": 5911,
-          "name": "AC Monza",
-          "shortName": "Monza",
-          "tla": "MON",
-          "crest": "https://crests.football-data.org/5911.png"
+          "id": 108,
+          "name": "FC Internazionale Milano",
+          "shortName": "Inter",
+          "tla": "INT",
+          "crest": "https://crests.football-data.org/108.png"
         },
-        "playedMatches": 5,
-        "goals": 4,
-        "assists": null,
-        "penalties": 1
-      },
-      {
-        "player": {
-          "id": 120679,
-          "name": "Nikola Krstović",
-          "firstName": "Nikola",
-          "lastName": "Krstović",
-          "dateOfBirth": "2000-04-05",
-          "nationality": "Montenegro",
-          "position": null,
-          "shirtNumber": null
-        },
-        "team": {
-          "id": 102,
-          "name": "Atalanta BC",
-          "shortName": "Atalanta",
-          "tla": "ATA",
-          "crest": "https://crests.football-data.org/102.png"
-        },
-        "playedMatches": 7,
-        "goals": 4,
-        "assists": 1,
+        "playedMatches": 8,
+        "goals": 5,
+        "assists": 2,
         "penalties": null
       },
       {
@@ -154,29 +200,6 @@
       },
       {
         "player": {
-          "id": 8685,
-          "name": "Marcus Thuram-Ulien",
-          "firstName": "Marcus",
-          "lastName": "Thuram",
-          "dateOfBirth": "1997-08-06",
-          "nationality": "France",
-          "position": null,
-          "shirtNumber": null
-        },
-        "team": {
-          "id": 108,
-          "name": "FC Internazionale Milano",
-          "shortName": "Inter",
-          "tla": "INT",
-          "crest": "https://crests.football-data.org/108.png"
-        },
-        "playedMatches": 7,
-        "goals": 4,
-        "assists": 2,
-        "penalties": null
-      },
-      {
-        "player": {
           "id": 136113,
           "name": "Daniel Maldini",
           "firstName": "Daniel",
@@ -193,33 +216,10 @@
           "tla": "CAG",
           "crest": "https://crests.football-data.org/104.png"
         },
-        "playedMatches": 6,
+        "playedMatches": 8,
         "goals": 4,
         "assists": null,
         "penalties": 1
-      },
-      {
-        "player": {
-          "id": 43285,
-          "name": "Anastasios Douvikas",
-          "firstName": "Anastasios",
-          "lastName": "Douvikas",
-          "dateOfBirth": "1999-08-02",
-          "nationality": "Greece",
-          "position": null,
-          "shirtNumber": null
-        },
-        "team": {
-          "id": 7397,
-          "name": "Como 1907",
-          "shortName": "Como 1907",
-          "tla": "COM",
-          "crest": "https://crests.football-data.org/7397.png"
-        },
-        "playedMatches": 7,
-        "goals": 3,
-        "assists": null,
-        "penalties": null
       },
       {
         "player": {
@@ -239,7 +239,7 @@
           "tla": "INT",
           "crest": "https://crests.football-data.org/108.png"
         },
-        "playedMatches": 5,
+        "playedMatches": 6,
         "goals": 3,
         "assists": null,
         "penalties": 1
