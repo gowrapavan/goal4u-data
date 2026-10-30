@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-30T10:19:55.352084+00:00",
+    "last_synced": "2026-10-30T20:55:52.109572+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -12409,7 +12409,7 @@
         "winner": null
       },
       "utcDate": "2026-10-30T20:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 11,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -12442,15 +12442,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -12496,7 +12496,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 207080,
+          "name": "José Sánchez Martínez",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

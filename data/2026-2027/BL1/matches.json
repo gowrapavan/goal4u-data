@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-10-30T10:20:01.239391+00:00",
+    "last_synced": "2026-10-30T20:55:58.010579+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -7909,7 +7909,7 @@
         "winner": null
       },
       "utcDate": "2026-10-30T19:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 8,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -7942,15 +7942,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -7996,7 +7996,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 9567,
+          "name": "Sascha Stegemann",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
