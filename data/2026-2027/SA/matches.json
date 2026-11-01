@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-01T10:43:17.795884+00:00",
+    "last_synced": "2026-11-01T12:25:18.122949+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11653,7 +11653,7 @@
         "winner": null
       },
       "utcDate": "2026-11-01T11:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11686,11 +11686,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -11865,7 +11865,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 188512,
+          "name": "Giuseppe Mucera",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -11983,7 +11990,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57878,
+          "name": "Andrea Colombo",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
