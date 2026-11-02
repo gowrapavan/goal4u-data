@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-02T14:16:49.867682+00:00",
+    "last_synced": "2026-11-02T22:00:59.266564+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -13409,7 +13409,7 @@
         "winner": null
       },
       "utcDate": "2026-11-02T20:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 11,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -13442,15 +13442,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -13496,7 +13496,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 214122,
+          "name": "Jon González Esteban",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

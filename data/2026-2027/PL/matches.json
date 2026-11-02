@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-02T14:15:01.256247+00:00",
+    "last_synced": "2026-11-02T22:00:53.319335+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11153,7 +11153,7 @@
         "winner": null
       },
       "utcDate": "2026-11-02T20:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11186,15 +11186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11240,7 +11240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11327,
+          "name": "John Brooks",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

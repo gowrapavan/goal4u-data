@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-02T14:20:15.195127+00:00",
+    "last_synced": "2026-11-02T22:01:05.291848+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -10028,7 +10028,7 @@
         "winner": null
       },
       "utcDate": "2026-11-02T19:45:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -10061,15 +10061,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10115,7 +10115,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57073,
+          "name": "Jérémie Pignard",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
