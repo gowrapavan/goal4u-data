@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-06T11:17:58.546566+00:00",
+    "last_synced": "2026-11-06T21:41:24.067147+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9034,7 +9034,7 @@
         "winner": null
       },
       "utcDate": "2026-11-06T19:30:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9067,15 +9067,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -9121,7 +9121,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15824,
+          "name": "Sven Jablonski",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

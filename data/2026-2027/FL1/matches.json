@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-06T11:18:04.544038+00:00",
+    "last_synced": "2026-11-06T21:41:29.937432+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -10153,7 +10153,7 @@
         "winner": null
       },
       "utcDate": "2026-11-06T19:45:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -10186,15 +10186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 3,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10240,7 +10240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57054,
+          "name": "Mathieu Vernice",
+          "type": "REFEREE",
+          "nationality": "France"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
