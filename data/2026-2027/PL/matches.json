@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-07T14:14:45.061853+00:00",
+    "last_synced": "2026-11-07T18:56:44.062453+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -11403,7 +11403,7 @@
         "winner": null
       },
       "utcDate": "2026-11-07T12:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11436,10 +11436,10 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
+          "home": 1,
           "away": 0
         },
         "halfTime": {
@@ -11528,7 +11528,7 @@
         "winner": null
       },
       "utcDate": "2026-11-07T15:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11561,15 +11561,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11653,7 +11653,7 @@
         "winner": null
       },
       "utcDate": "2026-11-07T15:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11686,15 +11686,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11778,7 +11778,7 @@
         "winner": null
       },
       "utcDate": "2026-11-07T17:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 10,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -11811,15 +11811,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -11865,7 +11865,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 213813,
+          "name": "Sam Barrott",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
