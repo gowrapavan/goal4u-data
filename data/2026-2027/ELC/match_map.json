@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-07T06:20:32.596425+00:00",
+    "last_synced": "2026-11-07T13:23:38.003653+00:00",
     "source": "football-data.org v4"
   },
   "data": {
@@ -4396,6 +4396,30 @@
         "how": "teams_loose",
         "fd_home_id": 72,
         "fd_away_id": 343
+      },
+      "562007": {
+        "s365_id": 4745976,
+        "fd_home_s365_id": 67,
+        "fd_away_s365_id": 16,
+        "how": "teams",
+        "fd_home_id": 1126,
+        "fd_away_id": 68
+      },
+      "562154": {
+        "s365_id": 4745825,
+        "fd_home_s365_id": 113,
+        "fd_away_s365_id": 45,
+        "how": "teams",
+        "fd_home_id": 563,
+        "fd_away_id": 384
+      },
+      "562158": {
+        "s365_id": 4745817,
+        "fd_home_s365_id": 111,
+        "fd_away_s365_id": 21,
+        "how": "teams",
+        "fd_home_id": 325,
+        "fd_away_id": 340
       }
     },
     "teams": {
@@ -4425,34 +4449,6 @@
       "404": 75
     },
     "comp365": 1,
-    "unmatched": [
-      {
-        "fd_id": 562007,
-        "utcDate": "2026-12-12T15:00:00Z",
-        "status": "TIMED",
-        "home": "Lincoln City FC",
-        "away": "Norwich City FC",
-        "home_id": 1126,
-        "away_id": 68
-      },
-      {
-        "fd_id": 562154,
-        "utcDate": "2027-02-20T00:00:00Z",
-        "status": "SCHEDULED",
-        "home": "West Ham United FC",
-        "away": "Millwall FC",
-        "home_id": 563,
-        "away_id": 384
-      },
-      {
-        "fd_id": 562158,
-        "utcDate": "2027-02-27T00:00:00Z",
-        "status": "SCHEDULED",
-        "home": "Portsmouth FC",
-        "away": "Southampton FC",
-        "home_id": 325,
-        "away_id": 340
-      }
-    ]
+    "unmatched": []
   }
 }
