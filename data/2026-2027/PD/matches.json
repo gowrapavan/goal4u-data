@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-07T12:07:05.023045+00:00",
+    "last_synced": "2026-11-07T14:14:57.021992+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -13659,7 +13659,7 @@
         "winner": null
       },
       "utcDate": "2026-11-07T13:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -13692,15 +13692,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -13871,7 +13871,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 214410,
+          "name": "Alejandro Quintero González",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
