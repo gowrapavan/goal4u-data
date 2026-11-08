@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-08T15:26:17.317345+00:00",
+    "last_synced": "2026-11-08T19:51:18.790035+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -9784,7 +9784,7 @@
         "winner": null
       },
       "utcDate": "2026-11-08T14:30:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9820,8 +9820,8 @@
         "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
-          "away": 1
+          "home": 1,
+          "away": 2
         },
         "halfTime": {
           "home": 0,
@@ -9909,7 +9909,7 @@
         "winner": null
       },
       "utcDate": "2026-11-08T16:30:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -9942,15 +9942,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10034,7 +10034,7 @@
         "winner": null
       },
       "utcDate": "2026-11-08T18:30:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 9,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -10067,15 +10067,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -10121,7 +10121,20 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15825,
+          "name": "Martin Petersen",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        },
+        {
+          "id": 43943,
+          "name": "Tobias Stieler",
+          "type": "REFEREE",
+          "nationality": "Germany"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
