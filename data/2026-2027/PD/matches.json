@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-15T11:21:15.770726+00:00",
+    "last_synced": "2026-11-16T11:53:12.061039+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -17357,7 +17357,7 @@
       }
     },
     {
-      "id": 564768,
+      "id": 564770,
       "competition_code": "PD",
       "area": {
         "id": 2224,
@@ -17379,8 +17379,8 @@
         "currentMatchday": 13,
         "winner": null
       },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
+      "utcDate": "2026-12-04T20:00:00Z",
+      "status": "TIMED",
       "matchday": 15,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -17389,11 +17389,11 @@
       "attendance": null,
       "venue": null,
       "homeTeam": {
-        "id": 79,
-        "name": "CA Osasuna",
-        "shortName": "Osasuna",
-        "tla": "OSA",
-        "crest": "https://crests.football-data.org/79.png",
+        "id": 263,
+        "name": "Deportivo Alavés",
+        "shortName": "Alavés",
+        "tla": "ALA",
+        "crest": "https://crests.football-data.org/263.png",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -17401,11 +17401,483 @@
         "bench": []
       },
       "awayTeam": {
-        "id": 285,
-        "name": "Elche CF",
-        "shortName": "Elche",
-        "tla": "ELC",
-        "crest": "https://crests.football-data.org/285.png",
+        "id": 80,
+        "name": "RCD Espanyol de Barcelona",
+        "shortName": "Espanyol",
+        "tla": "ESP",
+        "crest": "https://crests.football-data.org/80.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {
+          "home": null,
+          "away": null
+        },
+        "halfTime": {
+          "home": null,
+          "away": null
+        },
+        "regularTime": {
+          "home": null,
+          "away": null
+        },
+        "extraTime": {
+          "home": null,
+          "away": null
+        },
+        "penalties": {
+          "home": null,
+          "away": null
+        }
+      },
+      "statistics": {
+        "home": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        },
+        "away": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        }
+      },
+      "goals": [],
+      "bookings": [],
+      "substitutions": [],
+      "referees": [],
+      "odds": {
+        "homeWin": null,
+        "draw": null,
+        "awayWin": null
+      }
+    },
+    {
+      "id": 564772,
+      "competition_code": "PD",
+      "area": {
+        "id": 2224,
+        "name": "Spain",
+        "code": "ESP",
+        "flag": "https://crests.football-data.org/760.svg"
+      },
+      "competition": {
+        "id": 2014,
+        "name": "Primera Division",
+        "code": "PD",
+        "type": "LEAGUE",
+        "emblem": "https://crests.football-data.org/laliga.png"
+      },
+      "season": {
+        "id": 2518,
+        "startDate": "2026-08-16",
+        "endDate": "2027-05-30",
+        "currentMatchday": 13,
+        "winner": null
+      },
+      "utcDate": "2026-12-05T13:00:00Z",
+      "status": "TIMED",
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "group": null,
+      "minute": null,
+      "injuryTime": null,
+      "attendance": null,
+      "venue": null,
+      "homeTeam": {
+        "id": 5335,
+        "name": "Real Racing Club de Santander",
+        "shortName": "Santander",
+        "tla": "SAN",
+        "crest": "https://crests.football-data.org/5335.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "awayTeam": {
+        "id": 560,
+        "name": "RC Deportivo La Coruña",
+        "shortName": "Deportivo",
+        "tla": "DEP",
+        "crest": "https://crests.football-data.org/560.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {
+          "home": null,
+          "away": null
+        },
+        "halfTime": {
+          "home": null,
+          "away": null
+        },
+        "regularTime": {
+          "home": null,
+          "away": null
+        },
+        "extraTime": {
+          "home": null,
+          "away": null
+        },
+        "penalties": {
+          "home": null,
+          "away": null
+        }
+      },
+      "statistics": {
+        "home": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        },
+        "away": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        }
+      },
+      "goals": [],
+      "bookings": [],
+      "substitutions": [],
+      "referees": [],
+      "odds": {
+        "homeWin": null,
+        "draw": null,
+        "awayWin": null
+      }
+    },
+    {
+      "id": 564777,
+      "competition_code": "PD",
+      "area": {
+        "id": 2224,
+        "name": "Spain",
+        "code": "ESP",
+        "flag": "https://crests.football-data.org/760.svg"
+      },
+      "competition": {
+        "id": 2014,
+        "name": "Primera Division",
+        "code": "PD",
+        "type": "LEAGUE",
+        "emblem": "https://crests.football-data.org/laliga.png"
+      },
+      "season": {
+        "id": 2518,
+        "startDate": "2026-08-16",
+        "endDate": "2027-05-30",
+        "currentMatchday": 13,
+        "winner": null
+      },
+      "utcDate": "2026-12-05T15:15:00Z",
+      "status": "TIMED",
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "group": null,
+      "minute": null,
+      "injuryTime": null,
+      "attendance": null,
+      "venue": null,
+      "homeTeam": {
+        "id": 87,
+        "name": "Rayo Vallecano de Madrid",
+        "shortName": "Rayo Vallecano",
+        "tla": "RAY",
+        "crest": "https://crests.football-data.org/87.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "awayTeam": {
+        "id": 88,
+        "name": "Levante UD",
+        "shortName": "Levante",
+        "tla": "LEV",
+        "crest": "https://crests.football-data.org/88.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {
+          "home": null,
+          "away": null
+        },
+        "halfTime": {
+          "home": null,
+          "away": null
+        },
+        "regularTime": {
+          "home": null,
+          "away": null
+        },
+        "extraTime": {
+          "home": null,
+          "away": null
+        },
+        "penalties": {
+          "home": null,
+          "away": null
+        }
+      },
+      "statistics": {
+        "home": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        },
+        "away": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        }
+      },
+      "goals": [],
+      "bookings": [],
+      "substitutions": [],
+      "referees": [],
+      "odds": {
+        "homeWin": null,
+        "draw": null,
+        "awayWin": null
+      }
+    },
+    {
+      "id": 564776,
+      "competition_code": "PD",
+      "area": {
+        "id": 2224,
+        "name": "Spain",
+        "code": "ESP",
+        "flag": "https://crests.football-data.org/760.svg"
+      },
+      "competition": {
+        "id": 2014,
+        "name": "Primera Division",
+        "code": "PD",
+        "type": "LEAGUE",
+        "emblem": "https://crests.football-data.org/laliga.png"
+      },
+      "season": {
+        "id": 2518,
+        "startDate": "2026-08-16",
+        "endDate": "2027-05-30",
+        "currentMatchday": 13,
+        "winner": null
+      },
+      "utcDate": "2026-12-05T17:30:00Z",
+      "status": "TIMED",
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "group": null,
+      "minute": null,
+      "injuryTime": null,
+      "attendance": null,
+      "venue": null,
+      "homeTeam": {
+        "id": 94,
+        "name": "Villarreal CF",
+        "shortName": "Villarreal",
+        "tla": "VIL",
+        "crest": "https://crests.football-data.org/94.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "awayTeam": {
+        "id": 92,
+        "name": "Real Sociedad de Fútbol",
+        "shortName": "Real Sociedad",
+        "tla": "RSO",
+        "crest": "https://crests.football-data.org/92.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "score": {
+        "winner": null,
+        "duration": "REGULAR",
+        "fullTime": {
+          "home": null,
+          "away": null
+        },
+        "halfTime": {
+          "home": null,
+          "away": null
+        },
+        "regularTime": {
+          "home": null,
+          "away": null
+        },
+        "extraTime": {
+          "home": null,
+          "away": null
+        },
+        "penalties": {
+          "home": null,
+          "away": null
+        }
+      },
+      "statistics": {
+        "home": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        },
+        "away": {
+          "shots": null,
+          "shots_on_goal": null,
+          "shots_off_goal": null,
+          "possession": null,
+          "fouls": null,
+          "corner_kicks": null,
+          "yellow_cards": null,
+          "yellow_red_cards": null,
+          "red_cards": null,
+          "saves": null,
+          "offsides": null
+        }
+      },
+      "goals": [],
+      "bookings": [],
+      "substitutions": [],
+      "referees": [],
+      "odds": {
+        "homeWin": null,
+        "draw": null,
+        "awayWin": null
+      }
+    },
+    {
+      "id": 564773,
+      "competition_code": "PD",
+      "area": {
+        "id": 2224,
+        "name": "Spain",
+        "code": "ESP",
+        "flag": "https://crests.football-data.org/760.svg"
+      },
+      "competition": {
+        "id": 2014,
+        "name": "Primera Division",
+        "code": "PD",
+        "type": "LEAGUE",
+        "emblem": "https://crests.football-data.org/laliga.png"
+      },
+      "season": {
+        "id": 2518,
+        "startDate": "2026-08-16",
+        "endDate": "2027-05-30",
+        "currentMatchday": 13,
+        "winner": null
+      },
+      "utcDate": "2026-12-05T20:00:00Z",
+      "status": "TIMED",
+      "matchday": 15,
+      "stage": "REGULAR_SEASON",
+      "group": null,
+      "minute": null,
+      "injuryTime": null,
+      "attendance": null,
+      "venue": null,
+      "homeTeam": {
+        "id": 81,
+        "name": "FC Barcelona",
+        "shortName": "Barça",
+        "tla": "FCB",
+        "crest": "https://crests.football-data.org/81.png",
+        "leagueRank": null,
+        "formation": null,
+        "coach": null,
+        "lineup": [],
+        "bench": []
+      },
+      "awayTeam": {
+        "id": 558,
+        "name": "RC Celta de Vigo",
+        "shortName": "Celta",
+        "tla": "CEL",
+        "crest": "https://crests.football-data.org/558.png",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -17593,124 +18065,6 @@
       }
     },
     {
-      "id": 564770,
-      "competition_code": "PD",
-      "area": {
-        "id": 2224,
-        "name": "Spain",
-        "code": "ESP",
-        "flag": "https://crests.football-data.org/760.svg"
-      },
-      "competition": {
-        "id": 2014,
-        "name": "Primera Division",
-        "code": "PD",
-        "type": "LEAGUE",
-        "emblem": "https://crests.football-data.org/laliga.png"
-      },
-      "season": {
-        "id": 2518,
-        "startDate": "2026-08-16",
-        "endDate": "2027-05-30",
-        "currentMatchday": 13,
-        "winner": null
-      },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
-      "matchday": 15,
-      "stage": "REGULAR_SEASON",
-      "group": null,
-      "minute": null,
-      "injuryTime": null,
-      "attendance": null,
-      "venue": null,
-      "homeTeam": {
-        "id": 263,
-        "name": "Deportivo Alavés",
-        "shortName": "Alavés",
-        "tla": "ALA",
-        "crest": "https://crests.football-data.org/263.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "awayTeam": {
-        "id": 80,
-        "name": "RCD Espanyol de Barcelona",
-        "shortName": "Espanyol",
-        "tla": "ESP",
-        "crest": "https://crests.football-data.org/80.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "score": {
-        "winner": null,
-        "duration": "REGULAR",
-        "fullTime": {
-          "home": null,
-          "away": null
-        },
-        "halfTime": {
-          "home": null,
-          "away": null
-        },
-        "regularTime": {
-          "home": null,
-          "away": null
-        },
-        "extraTime": {
-          "home": null,
-          "away": null
-        },
-        "penalties": {
-          "home": null,
-          "away": null
-        }
-      },
-      "statistics": {
-        "home": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        },
-        "away": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        }
-      },
-      "goals": [],
-      "bookings": [],
-      "substitutions": [],
-      "referees": [],
-      "odds": {
-        "homeWin": null,
-        "draw": null,
-        "awayWin": null
-      }
-    },
-    {
       "id": 564771,
       "competition_code": "PD",
       "area": {
@@ -17829,7 +18183,7 @@
       }
     },
     {
-      "id": 564772,
+      "id": 564768,
       "competition_code": "PD",
       "area": {
         "id": 2224,
@@ -17851,8 +18205,8 @@
         "currentMatchday": 13,
         "winner": null
       },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
+      "utcDate": "2026-12-06T13:00:00Z",
+      "status": "TIMED",
       "matchday": 15,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -17861,11 +18215,11 @@
       "attendance": null,
       "venue": null,
       "homeTeam": {
-        "id": 5335,
-        "name": "Real Racing Club de Santander",
-        "shortName": "Santander",
-        "tla": "SAN",
-        "crest": "https://crests.football-data.org/5335.png",
+        "id": 79,
+        "name": "CA Osasuna",
+        "shortName": "Osasuna",
+        "tla": "OSA",
+        "crest": "https://crests.football-data.org/79.png",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -17873,247 +18227,11 @@
         "bench": []
       },
       "awayTeam": {
-        "id": 560,
-        "name": "RC Deportivo La Coruña",
-        "shortName": "Deportivo",
-        "tla": "DEP",
-        "crest": "https://crests.football-data.org/560.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "score": {
-        "winner": null,
-        "duration": "REGULAR",
-        "fullTime": {
-          "home": null,
-          "away": null
-        },
-        "halfTime": {
-          "home": null,
-          "away": null
-        },
-        "regularTime": {
-          "home": null,
-          "away": null
-        },
-        "extraTime": {
-          "home": null,
-          "away": null
-        },
-        "penalties": {
-          "home": null,
-          "away": null
-        }
-      },
-      "statistics": {
-        "home": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        },
-        "away": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        }
-      },
-      "goals": [],
-      "bookings": [],
-      "substitutions": [],
-      "referees": [],
-      "odds": {
-        "homeWin": null,
-        "draw": null,
-        "awayWin": null
-      }
-    },
-    {
-      "id": 564773,
-      "competition_code": "PD",
-      "area": {
-        "id": 2224,
-        "name": "Spain",
-        "code": "ESP",
-        "flag": "https://crests.football-data.org/760.svg"
-      },
-      "competition": {
-        "id": 2014,
-        "name": "Primera Division",
-        "code": "PD",
-        "type": "LEAGUE",
-        "emblem": "https://crests.football-data.org/laliga.png"
-      },
-      "season": {
-        "id": 2518,
-        "startDate": "2026-08-16",
-        "endDate": "2027-05-30",
-        "currentMatchday": 13,
-        "winner": null
-      },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
-      "matchday": 15,
-      "stage": "REGULAR_SEASON",
-      "group": null,
-      "minute": null,
-      "injuryTime": null,
-      "attendance": null,
-      "venue": null,
-      "homeTeam": {
-        "id": 81,
-        "name": "FC Barcelona",
-        "shortName": "Barça",
-        "tla": "FCB",
-        "crest": "https://crests.football-data.org/81.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "awayTeam": {
-        "id": 558,
-        "name": "RC Celta de Vigo",
-        "shortName": "Celta",
-        "tla": "CEL",
-        "crest": "https://crests.football-data.org/558.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "score": {
-        "winner": null,
-        "duration": "REGULAR",
-        "fullTime": {
-          "home": null,
-          "away": null
-        },
-        "halfTime": {
-          "home": null,
-          "away": null
-        },
-        "regularTime": {
-          "home": null,
-          "away": null
-        },
-        "extraTime": {
-          "home": null,
-          "away": null
-        },
-        "penalties": {
-          "home": null,
-          "away": null
-        }
-      },
-      "statistics": {
-        "home": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        },
-        "away": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        }
-      },
-      "goals": [],
-      "bookings": [],
-      "substitutions": [],
-      "referees": [],
-      "odds": {
-        "homeWin": null,
-        "draw": null,
-        "awayWin": null
-      }
-    },
-    {
-      "id": 564774,
-      "competition_code": "PD",
-      "area": {
-        "id": 2224,
-        "name": "Spain",
-        "code": "ESP",
-        "flag": "https://crests.football-data.org/760.svg"
-      },
-      "competition": {
-        "id": 2014,
-        "name": "Primera Division",
-        "code": "PD",
-        "type": "LEAGUE",
-        "emblem": "https://crests.football-data.org/laliga.png"
-      },
-      "season": {
-        "id": 2518,
-        "startDate": "2026-08-16",
-        "endDate": "2027-05-30",
-        "currentMatchday": 13,
-        "winner": null
-      },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
-      "matchday": 15,
-      "stage": "REGULAR_SEASON",
-      "group": null,
-      "minute": null,
-      "injuryTime": null,
-      "attendance": null,
-      "venue": null,
-      "homeTeam": {
-        "id": 82,
-        "name": "Getafe CF",
-        "shortName": "Getafe",
-        "tla": "GET",
-        "crest": "https://crests.football-data.org/82.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "awayTeam": {
-        "id": 95,
-        "name": "Valencia CF",
-        "shortName": "Valencia",
-        "tla": "VAL",
-        "crest": "https://crests.football-data.org/95.png",
+        "id": 285,
+        "name": "Elche CF",
+        "shortName": "Elche",
+        "tla": "ELC",
+        "crest": "https://crests.football-data.org/285.png",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -18205,8 +18323,8 @@
         "currentMatchday": 13,
         "winner": null
       },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
+      "utcDate": "2026-12-06T15:15:00Z",
+      "status": "TIMED",
       "matchday": 15,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -18301,7 +18419,7 @@
       }
     },
     {
-      "id": 564776,
+      "id": 564774,
       "competition_code": "PD",
       "area": {
         "id": 2224,
@@ -18323,8 +18441,8 @@
         "currentMatchday": 13,
         "winner": null
       },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
+      "utcDate": "2026-12-06T17:30:00Z",
+      "status": "TIMED",
       "matchday": 15,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -18333,11 +18451,11 @@
       "attendance": null,
       "venue": null,
       "homeTeam": {
-        "id": 94,
-        "name": "Villarreal CF",
-        "shortName": "Villarreal",
-        "tla": "VIL",
-        "crest": "https://crests.football-data.org/94.png",
+        "id": 82,
+        "name": "Getafe CF",
+        "shortName": "Getafe",
+        "tla": "GET",
+        "crest": "https://crests.football-data.org/82.png",
         "leagueRank": null,
         "formation": null,
         "coach": null,
@@ -18345,129 +18463,11 @@
         "bench": []
       },
       "awayTeam": {
-        "id": 92,
-        "name": "Real Sociedad de Fútbol",
-        "shortName": "Real Sociedad",
-        "tla": "RSO",
-        "crest": "https://crests.football-data.org/92.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "score": {
-        "winner": null,
-        "duration": "REGULAR",
-        "fullTime": {
-          "home": null,
-          "away": null
-        },
-        "halfTime": {
-          "home": null,
-          "away": null
-        },
-        "regularTime": {
-          "home": null,
-          "away": null
-        },
-        "extraTime": {
-          "home": null,
-          "away": null
-        },
-        "penalties": {
-          "home": null,
-          "away": null
-        }
-      },
-      "statistics": {
-        "home": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        },
-        "away": {
-          "shots": null,
-          "shots_on_goal": null,
-          "shots_off_goal": null,
-          "possession": null,
-          "fouls": null,
-          "corner_kicks": null,
-          "yellow_cards": null,
-          "yellow_red_cards": null,
-          "red_cards": null,
-          "saves": null,
-          "offsides": null
-        }
-      },
-      "goals": [],
-      "bookings": [],
-      "substitutions": [],
-      "referees": [],
-      "odds": {
-        "homeWin": null,
-        "draw": null,
-        "awayWin": null
-      }
-    },
-    {
-      "id": 564777,
-      "competition_code": "PD",
-      "area": {
-        "id": 2224,
-        "name": "Spain",
-        "code": "ESP",
-        "flag": "https://crests.football-data.org/760.svg"
-      },
-      "competition": {
-        "id": 2014,
-        "name": "Primera Division",
-        "code": "PD",
-        "type": "LEAGUE",
-        "emblem": "https://crests.football-data.org/laliga.png"
-      },
-      "season": {
-        "id": 2518,
-        "startDate": "2026-08-16",
-        "endDate": "2027-05-30",
-        "currentMatchday": 13,
-        "winner": null
-      },
-      "utcDate": "2026-12-06T00:00:00Z",
-      "status": "SCHEDULED",
-      "matchday": 15,
-      "stage": "REGULAR_SEASON",
-      "group": null,
-      "minute": null,
-      "injuryTime": null,
-      "attendance": null,
-      "venue": null,
-      "homeTeam": {
-        "id": 87,
-        "name": "Rayo Vallecano de Madrid",
-        "shortName": "Rayo Vallecano",
-        "tla": "RAY",
-        "crest": "https://crests.football-data.org/87.png",
-        "leagueRank": null,
-        "formation": null,
-        "coach": null,
-        "lineup": [],
-        "bench": []
-      },
-      "awayTeam": {
-        "id": 88,
-        "name": "Levante UD",
-        "shortName": "Levante",
-        "tla": "LEV",
-        "crest": "https://crests.football-data.org/88.png",
+        "id": 95,
+        "name": "Valencia CF",
+        "shortName": "Valencia",
+        "tla": "VAL",
+        "crest": "https://crests.football-data.org/95.png",
         "leagueRank": null,
         "formation": null,
         "coach": null,
