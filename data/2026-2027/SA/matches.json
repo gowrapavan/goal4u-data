@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-21T15:33:20.128570+00:00",
+    "last_synced": "2026-11-21T21:18:59.860314+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -13778,7 +13778,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T14:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -13903,7 +13903,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T14:00:00Z",
-      "status": "IN_PLAY",
+      "status": "TIMED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -13936,15 +13936,15 @@
         "bench": []
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": null,
         "duration": "REGULAR",
         "fullTime": {
-          "home": 2,
-          "away": 0
+          "home": null,
+          "away": null
         },
         "halfTime": {
-          "home": 1,
-          "away": 0
+          "home": null,
+          "away": null
         },
         "regularTime": {
           "home": null,
@@ -14028,7 +14028,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T17:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -14061,15 +14061,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 5
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -14153,7 +14153,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T19:45:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -14186,15 +14186,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -14240,7 +14240,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11018,
+          "name": "Antonio Rapuano",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

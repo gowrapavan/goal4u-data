@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-21T15:36:21.034199+00:00",
+    "last_synced": "2026-11-21T21:21:00.731496+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -22563,7 +22563,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T12:30:00Z",
-      "status": "FINISHED",
+      "status": "SCHEDULED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -22596,15 +22596,15 @@
         "bench": []
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": null,
         "duration": "REGULAR",
         "fullTime": {
-          "home": 2,
-          "away": 0
+          "home": null,
+          "away": null
         },
         "halfTime": {
-          "home": 0,
-          "away": 0
+          "home": null,
+          "away": null
         },
         "regularTime": {
           "home": null,
@@ -22938,7 +22938,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -22974,12 +22974,12 @@
         "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 2,
+          "home": 4,
           "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -23056,7 +23056,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -23092,12 +23092,12 @@
         "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 1,
-          "away": 1
+          "home": 2,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -23143,7 +23143,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 214210,
+          "name": "Thomas Kirk",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -23174,7 +23181,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "SCHEDULED",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -23207,15 +23214,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -23292,7 +23299,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -23332,8 +23339,8 @@
           "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -23410,7 +23417,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -23443,15 +23450,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
+          "home": 1,
           "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -23561,15 +23568,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
           "home": 0,
-          "away": 0
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -23646,7 +23653,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "SCHEDULED",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -23679,15 +23686,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -23764,7 +23771,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T15:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 16,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -23797,15 +23804,15 @@
         "bench": []
       },
       "score": {
-        "winner": "DRAW",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
-          "away": 0
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "regularTime": {
           "home": null,
