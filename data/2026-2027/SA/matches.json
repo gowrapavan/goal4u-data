@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-21T13:56:15.140889+00:00",
+    "last_synced": "2026-11-21T15:33:20.128570+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -13778,7 +13778,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -13811,15 +13811,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -13903,7 +13903,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T14:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -13936,15 +13936,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 0
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -14115,7 +14115,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 57826,
+          "name": "Simone Sozza",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
