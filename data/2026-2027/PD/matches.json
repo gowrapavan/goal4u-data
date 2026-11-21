@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-21T11:33:38.175932+00:00",
+    "last_synced": "2026-11-21T13:55:21.157401+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -14909,7 +14909,7 @@
         "winner": null
       },
       "utcDate": "2026-11-21T13:00:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 13,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -14942,11 +14942,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
           "home": null,
@@ -15121,7 +15121,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 206223,
+          "name": "José Munuera Montero",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
