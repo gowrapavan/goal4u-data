@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-22T13:49:27.804615+00:00",
+    "last_synced": "2026-11-22T16:29:36.986467+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -15409,7 +15409,7 @@
         "winner": null
       },
       "utcDate": "2026-11-22T13:00:00Z",
-      "status": "IN_PLAY",
+      "status": "FINISHED",
       "matchday": 13,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -15442,15 +15442,15 @@
         "bench": []
       },
       "score": {
-        "winner": "AWAY_TEAM",
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": 0,
+          "home": 3,
           "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -15534,7 +15534,7 @@
         "winner": null
       },
       "utcDate": "2026-11-22T15:15:00Z",
-      "status": "TIMED",
+      "status": "IN_PLAY",
       "matchday": 13,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -15567,15 +15567,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 2,
+          "away": 1
         },
         "regularTime": {
           "home": null,
@@ -15746,7 +15746,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 15628,
+          "name": "Ricardo de Burgos",
+          "type": "REFEREE",
+          "nationality": "Spain"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,

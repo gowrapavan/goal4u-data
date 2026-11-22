@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-22T13:53:23.273870+00:00",
+    "last_synced": "2026-11-22T16:31:19.733483+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -14278,7 +14278,7 @@
         "winner": null
       },
       "utcDate": "2026-11-22T11:30:00Z",
-      "status": "FINISHED",
+      "status": "TIMED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -14311,15 +14311,15 @@
         "bench": []
       },
       "score": {
-        "winner": "HOME_TEAM",
+        "winner": null,
         "duration": "REGULAR",
         "fullTime": {
-          "home": 4,
-          "away": 0
+          "home": null,
+          "away": null
         },
         "halfTime": {
-          "home": 0,
-          "away": 0
+          "home": null,
+          "away": null
         },
         "regularTime": {
           "home": null,
@@ -14403,7 +14403,7 @@
         "winner": null
       },
       "utcDate": "2026-11-22T14:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -14436,15 +14436,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 1
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "regularTime": {
           "home": null,
@@ -14528,7 +14528,7 @@
         "winner": null
       },
       "utcDate": "2026-11-22T14:00:00Z",
-      "status": "TIMED",
+      "status": "FINISHED",
       "matchday": 12,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -14561,15 +14561,15 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "halfTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 2
         },
         "regularTime": {
           "home": null,
@@ -14740,7 +14740,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 11002,
+          "name": "Luca Pairetto",
+          "type": "REFEREE",
+          "nationality": "Italy"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
