@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-21T22:38:28.162257+00:00",
+    "last_synced": "2026-11-22T02:45:51.854134+00:00",
     "competition": "FL1",
     "season": "2026-2027",
     "total_entries": 96
@@ -240926,77 +240926,81 @@
       ]
     },
     "559628": {
-      "scraped_at": "2026-11-21T17:51:47.206320+00:00",
+      "scraped_at": "2026-11-22T02:45:35.832303+00:00",
       "source_url": "https://www.koora-l.live/game/4735203",
-      "status": "live",
+      "status": "full time",
       "home_team": "Ogc Nice",
       "away_team": "PSG",
       "score": {
-        "home": 1,
-        "away": 2,
+        "home": 2,
+        "away": 3,
         "ht_home": 1,
         "ht_away": 2
       },
       "stats": {
         "yellow_cards": {
-          "home": 1,
+          "home": 2,
           "away": 0
         },
         "corners": {
           "home": 1,
-          "away": 3
+          "away": 5
         },
         "fouls": {
-          "home": 7,
-          "away": 7
+          "home": 11,
+          "away": 12
         },
         "offsides": {
-          "home": 2,
-          "away": 2
+          "home": 3,
+          "away": 3
         },
         "possession": {
-          "home": "32%",
-          "away": "68%"
+          "home": "37%",
+          "away": "63%"
         },
         "shots": {
-          "home": 1,
-          "away": 9
+          "home": 4,
+          "away": 14
         },
         "shots_on_target": {
-          "home": 1,
-          "away": 2
+          "home": 3,
+          "away": 5
         },
         "goals": {
-          "home": 1,
-          "away": 2
+          "home": 2,
+          "away": 3
         },
         "shots_off_goal": {
           "home": 0,
-          "away": 6
+          "away": 8
         },
         "blocked_shots": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "shots_insidebox": {
-          "home": 1,
-          "away": 4
+          "home": 3,
+          "away": 7
         },
         "shots_outsidebox": {
-          "home": 0,
-          "away": 5
+          "home": 1,
+          "away": 7
+        },
+        "goalkeeper_saves": {
+          "home": 2,
+          "away": 1
         },
         "total_passes": {
-          "home": 287,
-          "away": 616
+          "home": 434,
+          "away": 767
         },
         "passes_accurate": {
-          "home": 222,
-          "away": 572
+          "home": 353,
+          "away": 706
         },
         "expected_goals": {
-          "home": 0.34,
-          "away": 1.61
+          "home": 0.75,
+          "away": 1.99
         }
       },
       "events": [
@@ -241116,6 +241120,72 @@
           "player_s365_id": 44491,
           "player_out_id": 180827,
           "player_out_s365_id": 102622
+        },
+        {
+          "minute": 75,
+          "type": "yellow_card",
+          "team": "home",
+          "player": "Alidu Seidu",
+          "player_id": 147893,
+          "player_s365_id": 80121
+        },
+        {
+          "minute": 78,
+          "type": "substitution",
+          "team": "home",
+          "player": "Nathan N'goumou",
+          "player_out": "Elye Wahi",
+          "player_id": 98746,
+          "player_s365_id": 67365,
+          "player_out_id": 156808,
+          "player_out_s365_id": 86597
+        },
+        {
+          "minute": 78,
+          "type": "substitution",
+          "team": "home",
+          "player": "Djibril Coulibaly",
+          "player_out": "Axel Witsel",
+          "player_id": 273766,
+          "player_s365_id": 194609,
+          "player_out_id": 3656,
+          "player_out_s365_id": 838
+        },
+        {
+          "minute": 79,
+          "type": "substitution",
+          "team": "away",
+          "player": "Marquinhos",
+          "player_out": "Lucas Hernandez",
+          "player_id": 3225,
+          "player_s365_id": 2214,
+          "player_out_id": 3365,
+          "player_out_s365_id": 12660
+        },
+        {
+          "minute": 85,
+          "type": "goal",
+          "team": "away",
+          "player": "Ferran Torres",
+          "goal_type": "normal",
+          "assistant": "Ousmane Dembele",
+          "player_id": 33154,
+          "player_s365_id": 53924,
+          "assistant_id": 3373,
+          "assistant_s365_id": 39779
+        },
+        {
+          "minute": 90,
+          "type": "goal",
+          "team": "home",
+          "player": "Ali Abdi",
+          "goal_type": "normal",
+          "assistant": "Jonathan Clauss",
+          "player_id": 99394,
+          "player_s365_id": 65840,
+          "assistant_id": 1023,
+          "assistant_s365_id": 61006,
+          "added_time": 5
         }
       ],
       "lineups": {
@@ -241126,7 +241196,7 @@
               "name": "Y. Diouf",
               "number": "23",
               "position": "g",
-              "rating": "5.6",
+              "rating": "5.4",
               "id": 8608,
               "s365_id": 48965,
               "position_detail": "Goalkeeper",
@@ -241135,37 +241205,40 @@
                 "depth": 0,
                 "side": 50
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
+                "saves": 2,
                 "penalties_saved": {
                   "made": 0,
                   "total": 1,
                   "pct": 0
                 },
-                "goals_conceded": 2,
+                "goals_conceded": 3,
+                "passes_final_third": 1,
                 "passes": {
-                  "made": 21,
-                  "total": 31,
-                  "pct": 68
+                  "made": 30,
+                  "total": 45,
+                  "pct": 67
                 },
                 "long_passes": {
-                  "made": 5,
-                  "total": 15,
-                  "pct": 33
+                  "made": 9,
+                  "total": 23,
+                  "pct": 39
                 },
-                "touches": 34,
-                "xgot_faced": 1.8,
-                "goals_prevented": -0.24,
-                "possession_lost": 10,
-                "recoveries": 5
+                "touches": 51,
+                "xgot_faced": 2.5,
+                "goals_prevented": -0.54,
+                "possession_lost": 15,
+                "defensive_actions": 1,
+                "recoveries": 7
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0n09S09S099z0z0Y0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0D01D03P0121E01M01541Q04511Q0952U02T01R0101z0T0%26dir%3drtl"
             },
             {
               "name": "Xavier Mandza",
               "number": "35",
               "position": "m",
-              "rating": "4.8",
+              "rating": "4.6",
               "id": null,
               "s365_id": 243429,
               "position_detail": "Midfielder",
@@ -241178,9 +241251,9 @@
               "stats": {
                 "back_passes": 6,
                 "passes": {
-                  "made": 26,
-                  "total": 30,
-                  "pct": 87
+                  "made": 25,
+                  "total": 29,
+                  "pct": 86
                 },
                 "long_passes": {
                   "made": 1,
@@ -241191,7 +241264,7 @@
                 "penalties_conceded": 1,
                 "errors_leading_to_goal": 1,
                 "fouls_committed": 1,
-                "possession_lost": 6,
+                "possession_lost": 7,
                 "clearances": 4,
                 "interceptions": 2,
                 "recoveries": 3,
@@ -241202,18 +241275,18 @@
                 },
                 "ground_duels_won": {
                   "made": 2,
-                  "total": 3,
-                  "pct": 67
+                  "total": 4,
+                  "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE09R049F04L0404S04009Q09G04K04F04N04z0z0n0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD024002O024F02L0242F04M02204D02M07G0252I07F05N020D2U022x02T02z0%26dir%3drtl",
               "sub_off": 66
             },
             {
               "name": "Youssouf Ndayishimiye",
               "number": "55",
               "position": "d",
-              "rating": "6",
+              "rating": "6.1",
               "id": 172057,
               "s365_id": 73862,
               "position_detail": "Centre Back",
@@ -241222,43 +241295,45 @@
                 "depth": 25,
                 "side": 50
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "passes_final_third": 5,
-                "back_passes": 4,
+                "xa": 0.01,
+                "passes_final_third": 6,
+                "back_passes": 5,
                 "passes": {
-                  "made": 30,
-                  "total": 38,
-                  "pct": 79
+                  "made": 39,
+                  "total": 47,
+                  "pct": 83
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 5,
                   "pct": 20
                 },
-                "touches": 39,
+                "touches": 51,
+                "fouls_won": 1,
                 "possession_lost": 8,
                 "dribbled_past": 1,
-                "clearances": 1,
-                "recoveries": 5,
+                "clearances": 3,
+                "recoveries": 7,
                 "aerial_duels_won": {
                   "made": 2,
                   "total": 2,
                   "pct": 100
                 },
                 "ground_duels_won": {
-                  "made": 0,
-                  "total": 1,
-                  "pct": 0
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0M02P02Y02e04S02T09e0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0K02M03I02a02D0220032K02D03S02232N02020024D022H042092P0306002O024630230033%255d0%26dir%3drtl"
             },
             {
               "name": "Alidu Seidu",
               "number": "36",
               "position": "d",
-              "rating": "6.2",
+              "rating": "6.3",
               "id": 147893,
               "s365_id": 80121,
               "position_detail": "Centre Back",
@@ -241267,37 +241342,51 @@
                 "depth": 25,
                 "side": 75
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "back_passes": 5,
+                "xa": 0.01,
+                "passes_final_third": 2,
+                "back_passes": 8,
                 "passes": {
-                  "made": 29,
-                  "total": 31,
-                  "pct": 94
+                  "made": 46,
+                  "total": 48,
+                  "pct": 96
                 },
                 "long_passes": {
-                  "made": 1,
-                  "total": 3,
-                  "pct": 33
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
                 },
-                "touches": 39,
-                "fouls_won": 2,
-                "fouls_committed": 1,
-                "possession_lost": 4,
-                "clearances": 1,
-                "recoveries": 3,
+                "dribbles": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "touches": 65,
+                "fouls_won": 3,
+                "fouls_committed": 2,
+                "possession_lost": 3,
+                "clearances": 3,
+                "interceptions": 1,
+                "recoveries": 4,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
+                "aerial_duels_won": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
                 "ground_duels_won": {
-                  "made": 3,
-                  "total": 5,
-                  "pct": 60
-                }
+                  "made": 5,
+                  "total": 7,
+                  "pct": 71
+                },
+                "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0U03o03W03F03K033E0303K0303036033003%255d0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0O02v02I02K02H02K02Q020044D2P05202504K044024D24002H02072274472522J02022E042E02D0%26dir%3drtl"
             },
             {
               "name": "Niels Nkounkou",
@@ -241312,29 +241401,40 @@
                 "depth": 50,
                 "side": 0
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "passes_final_third": 2,
-                "back_passes": 4,
+                "xg": 0.03,
+                "shots": 1,
+                "shots_on_target": 1,
+                "xgot": 0.2,
+                "xa": 0.01,
+                "passes_final_third": 4,
+                "back_passes": 6,
                 "passes": {
-                  "made": 10,
-                  "total": 17,
-                  "pct": 59
+                  "made": 25,
+                  "total": 34,
+                  "pct": 74
                 },
                 "long_passes": {
-                  "made": 2,
-                  "total": 3,
-                  "pct": 67
+                  "made": 3,
+                  "total": 4,
+                  "pct": 75
                 },
                 "crosses": {
                   "made": 0,
                   "total": 2,
                   "pct": 0
                 },
-                "touches": 36,
-                "possession_lost": 13,
+                "dribbles": {
+                  "made": 0,
+                  "total": 2,
+                  "pct": 0
+                },
+                "touches": 58,
+                "fouls_committed": 1,
+                "possession_lost": 17,
                 "clearances": 1,
-                "recoveries": 4,
+                "recoveries": 6,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
@@ -241342,11 +241442,12 @@
                 },
                 "ground_duels_won": {
                   "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "total": 4,
+                  "pct": 25
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d404049H04I0404e04T04z0z0z0%255c0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d202055245E022002D0470457252055002G0400D2E022H022E04D022I04o02z0G02S02z0L0%26dir%3drtl",
+              "has_shot_chart": true
             },
             {
               "name": "Hicham Boudaoui",
@@ -241361,44 +241462,57 @@
                 "depth": 50,
                 "side": 33
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "back_passes": 8,
+                "xa": 0.01,
+                "chances_created": 1,
+                "passes_final_third": 1,
+                "back_passes": 11,
                 "passes": {
-                  "made": 25,
-                  "total": 31,
-                  "pct": 81
+                  "made": 37,
+                  "total": 43,
+                  "pct": 86
                 },
                 "long_passes": {
-                  "made": 0,
+                  "made": 2,
+                  "total": 3,
+                  "pct": 67
+                },
+                "crosses": {
+                  "made": 1,
                   "total": 1,
+                  "pct": 100
+                },
+                "dribbles": {
+                  "made": 0,
+                  "total": 2,
                   "pct": 0
                 },
-                "touches": 41,
+                "touches": 59,
                 "fouls_won": 2,
-                "fouls_committed": 3,
-                "possession_lost": 7,
+                "fouls_committed": 4,
+                "possession_lost": 10,
                 "clearances": 1,
                 "interceptions": 1,
                 "recoveries": 2,
                 "tackles_won": {
-                  "made": 4,
-                  "total": 5,
-                  "pct": 80
+                  "made": 5,
+                  "total": 7,
+                  "pct": 71.4
                 },
                 "ground_duels_won": {
-                  "made": 7,
-                  "total": 11,
-                  "pct": 64
+                  "made": 9,
+                  "total": 17,
+                  "pct": 53
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dW044004O094z0F04i04g0904U04z0O0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE02002O0420022M0275220202M02E0242O025202002O05G0202K02E0202K022022F02F02M02M04D2005Q04F02H02D02I02D02G02L04V0%26dir%3drtl"
             },
             {
               "name": "Axel Witsel",
               "number": "28",
               "position": "m",
-              "rating": "6.2",
+              "rating": "6",
               "id": 3656,
               "s365_id": 838,
               "position_detail": "Midfielder",
@@ -241407,17 +241521,16 @@
                 "depth": 50,
                 "side": 66
               },
-              "minutes": 69,
+              "minutes": 77,
               "stats": {
                 "offsides": 1,
-                "back_passes": 6,
+                "back_passes": 9,
                 "passes": {
-                  "made": 19,
-                  "total": 20,
-                  "pct": 95
+                  "made": 24,
+                  "total": 25,
+                  "pct": 96
                 },
-                "touches": 21,
-                "penalties_conceded": 1,
+                "touches": 27,
                 "possession_lost": 1,
                 "dribbled_past": 1,
                 "interceptions": 1,
@@ -241428,13 +241541,14 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0p03%255b03K03F033N03X063003N06T03w0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255b02E02d04e022W02002K02F022N04002S02042002N042P02002002Q0200200D2%255b0%26dir%3drtl",
+              "sub_off": 78
             },
             {
               "name": "Jonathan Clauss",
               "number": "92",
               "position": "d",
-              "rating": "7.1",
+              "rating": "8",
               "id": 1023,
               "s365_id": 61006,
               "position_detail": "Right Back",
@@ -241443,33 +241557,38 @@
                 "depth": 50,
                 "side": 100
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "assists": 1,
-                "xa": 0.01,
-                "chances_created": 1,
-                "dangerous_chances": 1,
-                "passes_final_third": 3,
-                "back_passes": 6,
+                "assists": 2,
+                "xa": 0.42,
+                "chances_created": 2,
+                "dangerous_chances": 2,
+                "passes_final_third": 5,
+                "back_passes": 7,
                 "passes": {
-                  "made": 26,
-                  "total": 36,
-                  "pct": 72
+                  "made": 41,
+                  "total": 54,
+                  "pct": 76
                 },
                 "long_passes": {
                   "made": 3,
                   "total": 5,
                   "pct": 60
                 },
+                "crosses": {
+                  "made": 0,
+                  "total": 3,
+                  "pct": 0
+                },
                 "dribbles": {
                   "made": 1,
                   "total": 2,
                   "pct": 50
                 },
-                "touches": 44,
-                "possession_lost": 11,
+                "touches": 68,
+                "possession_lost": 18,
                 "interceptions": 1,
-                "recoveries": 1,
+                "recoveries": 2,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
@@ -241481,7 +241600,7 @@
                   "pct": 67
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0b09K0303H063E03J03E066F033H03006D3K03%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0x02P02002200202J072F02D020202F0424D05E02E0200924452247422004D050254D20D2022002%26dir%3drtl"
             },
             {
               "name": "Mohamed Amoura",
@@ -241499,10 +241618,10 @@
               "minutes": 66,
               "stats": {
                 "goals": 1,
-                "xg": 0.34,
+                "xg": 0.27,
                 "shots": 1,
                 "shots_on_target": 1,
-                "xgot": 0.44,
+                "xgot": 0.52,
                 "back_passes": 4,
                 "passes": {
                   "made": 7,
@@ -241538,7 +241657,7 @@
                 },
                 "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD0303M03F03I03K03F03003R03003_03z0P03%255e03z0O0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d002202M0202020402E0402K04F022022J02H0202R02D02I02%255b02002k02%255e02Z04Q022%255c0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 67
             },
@@ -241586,7 +241705,7 @@
                   "pct": 75
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dn0309z003m03w03i03T06M0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ02T0405g02S0422S022X02c04E0202I05D07202E02N052R02D024O040022I0%26dir%3drtl",
               "sub_off": 62
             },
             {
@@ -241602,18 +241721,18 @@
                 "depth": 100,
                 "side": 50
               },
-              "minutes": 69,
+              "minutes": 77,
               "stats": {
-                "shots_off_target": 1,
                 "offsides": 1,
+                "xa": 0.01,
                 "passes_final_third": 2,
-                "back_passes": 6,
+                "back_passes": 9,
                 "passes": {
-                  "made": 9,
-                  "total": 13,
-                  "pct": 69
+                  "made": 13,
+                  "total": 17,
+                  "pct": 76
                 },
-                "touches": 17,
+                "touches": 21,
                 "fouls_won": 2,
                 "possession_lost": 5,
                 "recoveries": 1,
@@ -241628,7 +241747,8 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3ds06S03e06F03e033x03q03Y0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dp02004S02T02Q04200202Q02F02N022V02b022E02002R02R022002Y0%26dir%3drtl",
+              "sub_off": 78
             }
           ],
           "subs": [
@@ -241636,63 +241756,214 @@
               "name": "Ali Abdi",
               "number": "2",
               "position": "d",
-              "rating": null,
+              "rating": "7.4",
               "id": 99394,
               "s365_id": 65840,
               "position_detail": "Left Back",
-              "minutes": 4,
-              "stats": {},
-              "sub_on": 66
-            },
-            {
-              "name": "Morgan Sanson",
-              "number": "8",
-              "position": "m",
-              "rating": null,
-              "id": 8355,
-              "s365_id": 2100,
-              "position_detail": "Central Midfield",
-              "minutes": 8,
+              "minutes": 25,
               "stats": {
-                "xa": 0.02,
+                "goals": 1,
+                "xg": 0.44,
+                "shots": 2,
+                "shots_on_target": 1,
+                "xgot": 0.96,
                 "passes_final_third": 1,
+                "back_passes": 4,
                 "passes": {
-                  "made": 1,
-                  "total": 2,
-                  "pct": 50
+                  "made": 10,
+                  "total": 10,
+                  "pct": 100
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
+                "crosses": {
+                  "made": 0,
+                  "total": 3,
+                  "pct": 0
+                },
+                "touches": 18,
+                "fouls_won": 1,
+                "possession_lost": 3,
+                "shots_blocked": 1,
+                "clearances": 1,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "ground_duels_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "big_chances_scored": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD02Y042D024K02N02G02K02J02002J02f02z0z0%255c0%26dir%3drtl",
+              "has_shot_chart": true,
+              "sub_on": 66
+            },
+            {
+              "name": "Djibril Coulibaly",
+              "number": "39",
+              "position": "m",
+              "rating": "6.6",
+              "id": 273766,
+              "s365_id": 194609,
+              "position_detail": "Central Midfield",
+              "minutes": 13,
+              "stats": {
+                "back_passes": 5,
+                "passes": {
+                  "made": 10,
+                  "total": 13,
+                  "pct": 77
+                },
+                "long_passes": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
+                "touches": 17,
+                "fouls_won": 1,
+                "possession_lost": 4,
+                "recoveries": 2,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "aerial_duels_won": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "ground_duels_won": {
+                  "made": 2,
+                  "total": 2,
+                  "pct": 100
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dL02x02T02Y02P02T04Q04D02E04D02L02O02F022L02I04M02V02L0%26dir%3drtl",
+              "sub_on": 78
+            },
+            {
+              "name": "Morgan Sanson",
+              "number": "8",
+              "position": "m",
+              "rating": "6.3",
+              "id": 8355,
+              "s365_id": 2100,
+              "position_detail": "Central Midfield",
+              "minutes": 29,
+              "stats": {
+                "xa": 0.02,
+                "passes_final_third": 1,
+                "back_passes": 5,
+                "passes": {
+                  "made": 11,
+                  "total": 12,
+                  "pct": 92
+                },
+                "long_passes": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "crosses": {
+                  "made": 0,
+                  "total": 2,
+                  "pct": 0
+                },
                 "dribbles": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 3,
-                "possession_lost": 1,
-                "ground_duels_won": {
-                  "made": 1,
-                  "total": 1,
+                "touches": 23,
+                "fouls_won": 1,
+                "fouls_committed": 1,
+                "possession_lost": 4,
+                "interceptions": 1,
+                "recoveries": 3,
+                "tackles_won": {
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
+                },
+                "ground_duels_won": {
+                  "made": 4,
+                  "total": 6,
+                  "pct": 67
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0H02O02%255e0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH02V05T02I04%255d02D02Q02M04G0D2z0E02N02F04L02G020202002L02G02W0%26dir%3drtl",
               "sub_on": 62
             },
             {
               "name": "Gauthier Hein",
               "number": "7",
               "position": "f",
-              "rating": null,
+              "rating": "6.1",
               "id": 752,
               "s365_id": 44491,
               "position_detail": "Right Forward",
-              "minutes": 3,
-              "stats": {},
+              "minutes": 24,
+              "stats": {
+                "xa": 0.01,
+                "back_passes": 7,
+                "passes": {
+                  "made": 14,
+                  "total": 15,
+                  "pct": 93
+                },
+                "touches": 16,
+                "possession_lost": 1
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255c0202d02i02G02O02G02f02n02G02G02N02F02002M02D02G0%26dir%3drtl",
               "sub_on": 67
+            },
+            {
+              "name": "Nathan N'goumou",
+              "number": "29",
+              "position": "f",
+              "rating": "6.4",
+              "id": 98746,
+              "s365_id": 67365,
+              "position_detail": "Right Forward",
+              "minutes": 13,
+              "stats": {
+                "offsides": 1,
+                "xa": 0.01,
+                "passes_final_third": 1,
+                "back_passes": 2,
+                "passes": {
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
+                },
+                "touches": 5,
+                "possession_lost": 2,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "aerial_duels_won": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
+                "ground_duels_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0T02P02y02002h02z0_0%26dir%3drtl",
+              "sub_on": 78
             },
             {
               "name": "Teddy Boulhendi",
@@ -241722,24 +241993,6 @@
               "position_detail": "Central Midfield"
             },
             {
-              "name": "Djibril Coulibaly",
-              "number": "39",
-              "position": "m",
-              "rating": null,
-              "id": 273766,
-              "s365_id": 194609,
-              "position_detail": "Central Midfield"
-            },
-            {
-              "name": "Nathan N'goumou",
-              "number": "29",
-              "position": "f",
-              "rating": null,
-              "id": 98746,
-              "s365_id": 67365,
-              "position_detail": "Right Forward"
-            },
-            {
               "name": "Djelan Morana",
               "number": "41",
               "position": "f",
@@ -241764,7 +242017,7 @@
               "expected_return": "Early December 2026",
               "season": {
                 "appearances": 10,
-                "matches": 10
+                "matches": 11
               }
             },
             {
@@ -241777,7 +242030,7 @@
               "expected_return": "Late May 2027",
               "season": {
                 "appearances": 3,
-                "matches": 10
+                "matches": 11
               }
             },
             {
@@ -241807,7 +242060,7 @@
               "name": "Matvey Safonov",
               "number": "39",
               "position": "g",
-              "rating": "6.1",
+              "rating": "6.5",
               "id": 49244,
               "s365_id": 45785,
               "position_detail": "Goalkeeper",
@@ -241816,32 +242069,47 @@
                 "depth": 0,
                 "side": 50
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "goals_conceded": 1,
+                "saves": 1,
+                "goals_conceded": 2,
+                "passes_final_third": 1,
                 "passes": {
-                  "made": 7,
-                  "total": 9,
-                  "pct": 78
+                  "made": 12,
+                  "total": 14,
+                  "pct": 86
                 },
                 "long_passes": {
-                  "made": 0,
-                  "total": 2,
-                  "pct": 0
+                  "made": 4,
+                  "total": 6,
+                  "pct": 67
                 },
-                "touches": 10,
-                "xgot_faced": 0.44,
-                "goals_prevented": -0.56,
+                "touches": 19,
+                "fouls_won": 1,
+                "xgot_faced": 1.7,
+                "goals_prevented": -0.32,
                 "possession_lost": 2,
-                "recoveries": 3
+                "punches": 2,
+                "clearances": 2,
+                "recoveries": 3,
+                "aerial_duels_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "ground_duels_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0m03U09U06U03z0z00%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dk02f02U09S0245R02424Q020202z0z00%26dir%3dltr"
             },
             {
               "name": "Nuno Mendes",
               "number": "25",
               "position": "d",
-              "rating": "6.2",
+              "rating": "6",
               "id": 144570,
               "s365_id": 77441,
               "position_detail": "Left Back",
@@ -241852,7 +242120,7 @@
               },
               "minutes": 60,
               "stats": {
-                "xg": 0.08,
+                "xg": 0.11,
                 "shots": 2,
                 "shots_off_target": 2,
                 "offsides": 1,
@@ -241889,7 +242157,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dL039M03E0363Q036U0303c03g03z0z0S0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE02020040474D02F0202070254425H02F04255440202I024202242D02L02E02N02g02z0z0S0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 61
             },
@@ -241897,7 +242165,7 @@
               "name": "Lucas Hernandez",
               "number": "21",
               "position": "d",
-              "rating": "6.4",
+              "rating": "6.3",
               "id": 3365,
               "s365_id": 12660,
               "position_detail": "Left Back",
@@ -241906,14 +242174,14 @@
                 "depth": 33,
                 "side": 33
               },
-              "minutes": 69,
+              "minutes": 78,
               "stats": {
                 "xa": 0.01,
                 "passes_final_third": 1,
-                "back_passes": 2,
+                "back_passes": 3,
                 "passes": {
-                  "made": 57,
-                  "total": 60,
+                  "made": 61,
+                  "total": 64,
                   "pct": 95
                 },
                 "long_passes": {
@@ -241921,11 +242189,11 @@
                   "total": 2,
                   "pct": 50
                 },
-                "touches": 63,
+                "touches": 68,
                 "fouls_committed": 2,
                 "possession_lost": 3,
                 "dribbled_past": 1,
-                "clearances": 2,
+                "clearances": 3,
                 "interceptions": 1,
                 "recoveries": 3,
                 "aerial_duels_won": {
@@ -241939,13 +242207,14 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0I0202Q092T02D022Q0D2T02z0D024z0L0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD02U0400D2O0200D2L024022522524M09220400404J020D402422K022022544P040252g02U024U02p0%26dir%3dltr",
+              "sub_off": 79
             },
             {
               "name": "Ilya Zabarnyi",
               "number": "6",
               "position": "d",
-              "rating": "6.8",
+              "rating": "6.6",
               "id": 143573,
               "s365_id": 80015,
               "position_detail": "Centre Back",
@@ -241954,21 +242223,21 @@
                 "depth": 33,
                 "side": 66
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "xa": 0.04,
-                "chances_created": 1,
-                "passes_final_third": 7,
+                "xa": 0.01,
+                "passes_final_third": 9,
                 "back_passes": 1,
                 "passes": {
-                  "made": 63,
-                  "total": 64,
+                  "made": 79,
+                  "total": 81,
                   "pct": 98
                 },
-                "touches": 68,
-                "possession_lost": 1,
-                "clearances": 2,
-                "recoveries": 6,
+                "touches": 89,
+                "fouls_committed": 1,
+                "possession_lost": 2,
+                "clearances": 5,
+                "recoveries": 9,
                 "aerial_duels_won": {
                   "made": 1,
                   "total": 2,
@@ -241976,17 +242245,18 @@
                 },
                 "ground_duels_won": {
                   "made": 1,
-                  "total": 1,
-                  "pct": 100
-                }
+                  "total": 2,
+                  "pct": 50
+                },
+                "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0Z03z0X03E033P0330336e03369T06T03J0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0L01N01q01M01E031M01D04411K031003115345J01103414351311H01D013564913I0131G0301J01H0401H0%26dir%3dltr"
             },
             {
               "name": "Hakimi",
               "number": "2",
               "position": "d",
-              "rating": "7.3",
+              "rating": "7.1",
               "id": 53,
               "s365_id": 47349,
               "position_detail": "Right Back",
@@ -241995,22 +242265,25 @@
                 "depth": 33,
                 "side": 100
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
                 "assists": 1,
-                "xg": 0.03,
-                "shots": 1,
+                "xg": 0.14,
+                "shots": 2,
+                "shots_on_target": 1,
+                "xgot": 0.26,
                 "shots_off_target": 1,
+                "big_chances_missed": 1,
                 "offsides": 1,
-                "xa": 0.56,
+                "xa": 0.52,
                 "chances_created": 1,
                 "dangerous_chances": 1,
                 "passes_final_third": 8,
-                "back_passes": 21,
+                "back_passes": 24,
                 "passes": {
-                  "made": 74,
-                  "total": 78,
-                  "pct": 95
+                  "made": 90,
+                  "total": 98,
+                  "pct": 92
                 },
                 "long_passes": {
                   "made": 0,
@@ -242024,28 +242297,28 @@
                 },
                 "dribbles": {
                   "made": 0,
-                  "total": 1,
+                  "total": 2,
                   "pct": 0
                 },
-                "touches": 102,
-                "fouls_won": 1,
-                "possession_lost": 13,
+                "touches": 125,
+                "fouls_won": 2,
+                "possession_lost": 19,
                 "interceptions": 1,
-                "recoveries": 10,
+                "recoveries": 14,
                 "ground_duels_won": {
-                  "made": 2,
-                  "total": 7,
-                  "pct": 29
+                  "made": 3,
+                  "total": 8,
+                  "pct": 38
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0%255c04P09D04%25600449R09D4G0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0x012e01D01E01M0401N0230020110121H01D020133D1J030211292D01F01125025543151100E1210126581182210%26dir%3dltr",
               "has_shot_chart": true
             },
             {
               "name": "Fabian Ruiz",
               "number": "8",
               "position": "m",
-              "rating": "6.9",
+              "rating": "7.1",
               "id": 22,
               "s365_id": 27109,
               "position_detail": "Central Midfield",
@@ -242054,44 +242327,54 @@
                 "depth": 66,
                 "side": 20
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
+                "xg": 0.02,
+                "shots": 1,
+                "shots_off_target": 1,
                 "xa": 0.08,
-                "chances_created": 2,
-                "passes_final_third": 10,
-                "back_passes": 5,
+                "chances_created": 3,
+                "passes_final_third": 12,
+                "back_passes": 10,
                 "passes": {
-                  "made": 56,
-                  "total": 61,
-                  "pct": 92
+                  "made": 65,
+                  "total": 72,
+                  "pct": 90
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 3,
                   "pct": 33
                 },
-                "touches": 66,
+                "crosses": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
+                "touches": 86,
                 "fouls_won": 1,
-                "possession_lost": 6,
+                "possession_lost": 11,
+                "interceptions": 1,
                 "recoveries": 6,
                 "tackles_won": {
-                  "made": 1,
-                  "total": 1,
-                  "pct": 100
+                  "made": 2,
+                  "total": 4,
+                  "pct": 50
                 },
                 "ground_duels_won": {
-                  "made": 2,
-                  "total": 2,
-                  "pct": 100
+                  "made": 5,
+                  "total": 6,
+                  "pct": 83
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255d09044T04Q04z0o0404R04z0_0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0202002D02G040024025047J0200E250042022L0542022O04022D422K04020D202J02002209042J04G02022S0204N02D02R024D04002E02H04022n0%26dir%3dltr",
+              "has_shot_chart": true
             },
             {
               "name": "Joao Neves",
               "number": "87",
               "position": "m",
-              "rating": "6.8",
+              "rating": "6.5",
               "id": 190877,
               "s365_id": 124523,
               "position_detail": "Central Midfield",
@@ -242100,28 +242383,31 @@
                 "depth": 66,
                 "side": 50
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
-                "xa": 0.06,
-                "passes_final_third": 14,
-                "back_passes": 15,
+                "xg": 0.01,
+                "shots": 1,
+                "xa": 0.09,
+                "passes_final_third": 18,
+                "back_passes": 20,
                 "passes": {
-                  "made": 106,
-                  "total": 115,
+                  "made": 130,
+                  "total": 141,
                   "pct": 92
                 },
                 "long_passes": {
                   "made": 2,
-                  "total": 8,
-                  "pct": 25
+                  "total": 9,
+                  "pct": 22
                 },
-                "touches": 122,
+                "touches": 152,
                 "fouls_won": 1,
-                "fouls_committed": 1,
-                "possession_lost": 10,
+                "fouls_committed": 3,
+                "possession_lost": 14,
                 "dribbled_past": 1,
+                "shots_blocked": 1,
                 "interceptions": 3,
-                "recoveries": 2,
+                "recoveries": 4,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
@@ -242134,17 +242420,18 @@
                 },
                 "ground_duels_won": {
                   "made": 2,
-                  "total": 4,
-                  "pct": 50
+                  "total": 7,
+                  "pct": 29
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM03O03X06e03069N03G03P036U0303M03W0303T03V066P030033%255b0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH04E02J02D0420042D02J04002404N05245024D2L02940472G02F022D0D2L02040240D2J02004E202M052004200402D02H024045502H022D0242524042F022D02002427972H02F0424D7D2002G02402204404D0%26dir%3dltr",
+              "has_shot_chart": true
             },
             {
               "name": "Warren Zaire Emery",
               "number": "33",
               "position": "m",
-              "rating": "6.7",
+              "rating": "6.5",
               "id": 186089,
               "s365_id": 114699,
               "position_detail": "Central Midfield",
@@ -242153,18 +242440,18 @@
                 "depth": 66,
                 "side": 80
               },
-              "minutes": 69,
+              "minutes": 90,
               "stats": {
                 "xg": 0.04,
                 "shots": 1,
                 "shots_off_target": 1,
-                "xa": 0.05,
+                "xa": 0.07,
                 "chances_created": 1,
-                "passes_final_third": 3,
-                "back_passes": 10,
+                "passes_final_third": 2,
+                "back_passes": 14,
                 "passes": {
-                  "made": 60,
-                  "total": 62,
+                  "made": 70,
+                  "total": 72,
                   "pct": 97
                 },
                 "dribbles": {
@@ -242172,22 +242459,24 @@
                   "total": 2,
                   "pct": 50
                 },
-                "touches": 70,
+                "touches": 85,
+                "fouls_won": 1,
+                "fouls_committed": 1,
                 "final_third_possession": 1,
-                "possession_lost": 6,
+                "possession_lost": 8,
                 "recoveries": 3,
-                "aerial_duels_won": {
-                  "made": 0,
-                  "total": 1,
-                  "pct": 0
+                "tackles_won": {
+                  "made": 2,
+                  "total": 2,
+                  "pct": 100
                 },
                 "ground_duels_won": {
-                  "made": 1,
-                  "total": 4,
-                  "pct": 25
+                  "made": 4,
+                  "total": 9,
+                  "pct": 44
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0R04O04%255e04M0404S0409g09004Z0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dc02M02E022M02U02004O022D02D02J02D02202002L025044004P020025002J04245D2402M020D4054M022042524002I02D04002244H02G05052E0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -242206,10 +242495,10 @@
               "minutes": 43,
               "stats": {
                 "goals": 1,
-                "xg": 0.39,
+                "xg": 0.31,
                 "shots": 1,
                 "shots_on_target": 1,
-                "xgot": 0.9,
+                "xgot": 0.86,
                 "xa": 0.06,
                 "passes_final_third": 1,
                 "back_passes": 2,
@@ -242244,7 +242533,7 @@
                 },
                 "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM09004z0z0z0t04P04Y04%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dG0202D04002D02H02D02U022T02T02n02P02T04z0F02P02Y02%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 44
             },
@@ -242252,7 +242541,7 @@
               "name": "Senny Mayulu",
               "number": "24",
               "position": "m",
-              "rating": "7.1",
+              "rating": "7",
               "id": 246066,
               "s365_id": 144636,
               "position_detail": "Central Midfield",
@@ -242270,7 +242559,7 @@
                 "shots_on_target": 1,
                 "xgot": 0.85,
                 "shots_off_target": 1,
-                "xa": 0.04,
+                "xa": 0.05,
                 "back_passes": 14,
                 "passes": {
                   "made": 23,
@@ -242287,19 +242576,19 @@
                   "total": 2,
                   "pct": 100
                 },
-                "touches": 36,
+                "touches": 35,
                 "fouls_committed": 4,
                 "possession_lost": 6,
                 "interceptions": 1,
                 "recoveries": 1,
                 "ground_duels_won": {
-                  "made": 3,
-                  "total": 7,
-                  "pct": 43
+                  "made": 2,
+                  "total": 6,
+                  "pct": 33
                 },
                 "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dK03f0303H06J0303E03Q03E033f06N06G03Q03Q03D09T033Q033h03F0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dK0D2002L020202Q040202002004J0202E022L02D04002022a02E04N04G02Q02Q02D05T022Q022h02F0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 61
             },
@@ -242320,7 +242609,7 @@
               "stats": {
                 "xa": 0.08,
                 "passes_final_third": 4,
-                "back_passes": 8,
+                "back_passes": 10,
                 "passes": {
                   "made": 48,
                   "total": 52,
@@ -242331,7 +242620,12 @@
                   "total": 1,
                   "pct": 0
                 },
-                "touches": 60,
+                "dribbles": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
+                "touches": 61,
                 "fouls_won": 1,
                 "final_third_possession": 1,
                 "possession_lost": 8,
@@ -242339,70 +242633,133 @@
                 "recoveries": 1,
                 "tackles_won": {
                   "made": 2,
-                  "total": 2,
-                  "pct": 100
+                  "total": 3,
+                  "pct": 66.7
                 },
                 "ground_duels_won": {
-                  "made": 3,
-                  "total": 6,
-                  "pct": 50
+                  "made": 4,
+                  "total": 7,
+                  "pct": 57
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dq04z0z0E04%255b044O04D04004%255b04K09O044I0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3df02K02H022M02U02Z02E02W02V02E02P02202004402L0225005202M02040445002E02D0242D02902L0225E2E0%26dir%3dltr",
               "sub_off": 62
             }
           ],
           "subs": [
             {
+              "name": "Marquinhos",
+              "number": "5",
+              "position": "d",
+              "rating": "6.6",
+              "id": 3225,
+              "s365_id": 2214,
+              "position_detail": "Centre Back",
+              "minutes": 12,
+              "stats": {
+                "passes": {
+                  "made": 5,
+                  "total": 7,
+                  "pct": 71
+                },
+                "long_passes": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "touches": 11,
+                "possession_lost": 2,
+                "clearances": 2,
+                "recoveries": 1,
+                "aerial_duels_won": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0K02N02S02D022T022S02U04z0y0%26dir%3dltr",
+              "sub_on": 79
+            },
+            {
               "name": "Willian Pacho",
               "number": "51",
               "position": "d",
-              "rating": null,
+              "rating": "6.5",
               "id": 114102,
               "s365_id": 71848,
               "position_detail": "Centre Back",
-              "minutes": 9,
+              "minutes": 30,
               "stats": {
+                "passes_final_third": 1,
                 "passes": {
-                  "made": 4,
-                  "total": 4,
+                  "made": 15,
+                  "total": 15,
                   "pct": 100
                 },
-                "touches": 5,
-                "clearances": 1,
-                "recoveries": 1
-              },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0a02E02P02z0x0%26dir%3dltr",
-              "sub_on": 61
-            },
-            {
-              "name": "Mika Godts",
-              "number": "22",
-              "position": "f",
-              "rating": null,
-              "id": 189574,
-              "s365_id": 131640,
-              "position_detail": "Left Forward",
-              "minutes": 8,
-              "stats": {
-                "xg": 0.06,
-                "shots": 1,
-                "back_passes": 2,
-                "passes": {
-                  "made": 3,
-                  "total": 3,
+                "long_passes": {
+                  "made": 1,
+                  "total": 1,
                   "pct": 100
                 },
-                "touches": 5,
+                "touches": 19,
                 "fouls_won": 1,
-                "shots_blocked": 1,
+                "clearances": 1,
+                "interceptions": 1,
+                "recoveries": 1,
+                "aerial_duels_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
                 "ground_duels_won": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255e02z0z0z0z0W0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d02U02U0D2U02T02F02H02G022S04S0200204P02O04z0i0%26dir%3dltr",
+              "sub_on": 61
+            },
+            {
+              "name": "Mika Godts",
+              "number": "22",
+              "position": "f",
+              "rating": "6.5",
+              "id": 189574,
+              "s365_id": 131640,
+              "position_detail": "Left Forward",
+              "minutes": 29,
+              "stats": {
+                "xg": 0.05,
+                "shots": 2,
+                "shots_on_target": 1,
+                "xgot": 0.33,
+                "shots_off_target": 1,
+                "passes_final_third": 1,
+                "back_passes": 6,
+                "passes": {
+                  "made": 10,
+                  "total": 12,
+                  "pct": 83
+                },
+                "touches": 21,
+                "fouls_won": 1,
+                "possession_lost": 5,
+                "dribbled_past": 1,
+                "clearances": 1,
+                "recoveries": 2,
+                "aerial_duels_won": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
+                "ground_duels_won": {
+                  "made": 1,
+                  "total": 3,
+                  "pct": 33
+                }
+              },
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI04F02K020702042202M02020024P02V02z0z0v02T0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_on": 62
             },
@@ -242410,56 +242767,88 @@
               "name": "Ousmane Dembele",
               "number": "10",
               "position": "f",
-              "rating": null,
+              "rating": "7.6",
               "id": 3373,
               "s365_id": 39779,
               "position_detail": "Centre Forward",
-              "minutes": 9,
+              "minutes": 30,
               "stats": {
-                "xa": 0.01,
-                "passes_final_third": 4,
-                "back_passes": 3,
+                "assists": 1,
+                "xa": 0.41,
+                "chances_created": 5,
+                "dangerous_chances": 1,
+                "passes_final_third": 10,
+                "back_passes": 8,
                 "passes": {
-                  "made": 12,
-                  "total": 13,
-                  "pct": 92
+                  "made": 33,
+                  "total": 38,
+                  "pct": 87
                 },
-                "touches": 13,
-                "possession_lost": 1
+                "long_passes": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "crosses": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
+                "touches": 42,
+                "fouls_committed": 1,
+                "final_third_possession": 2,
+                "possession_lost": 8,
+                "recoveries": 3,
+                "ground_duels_won": {
+                  "made": 0,
+                  "total": 3,
+                  "pct": 0
+                }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z002z0022Q0200220202P02F02%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dw02U02L02%255c02R02W02P02S0D27E02L054R022442202J0H20202K020024202D05%26dir%3dltr",
               "sub_on": 61
             },
             {
               "name": "Ferran Torres",
               "number": "9",
               "position": "f",
-              "rating": "6.9",
+              "rating": "7.5",
               "id": 33154,
               "s365_id": 53924,
               "position_detail": "Centre Forward",
-              "minutes": 26,
+              "minutes": 47,
               "stats": {
-                "xg": 0.16,
-                "shots": 1,
+                "goals": 1,
+                "xg": 0.45,
+                "shots": 2,
+                "shots_on_target": 1,
+                "xgot": 0.16,
                 "shots_off_target": 1,
-                "xa": 0.02,
+                "offsides": 1,
+                "xa": 0.03,
                 "chances_created": 1,
-                "back_passes": 3,
+                "back_passes": 4,
                 "passes": {
-                  "made": 13,
-                  "total": 16,
-                  "pct": 81
+                  "made": 19,
+                  "total": 22,
+                  "pct": 86
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 20,
+                "crosses": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
+                "touches": 29,
                 "fouls_won": 1,
-                "possession_lost": 3,
-                "recoveries": 1,
+                "final_third_possession": 1,
+                "possession_lost": 4,
+                "interceptions": 1,
+                "recoveries": 3,
                 "tackles_won": {
                   "made": 1,
                   "total": 1,
@@ -242476,7 +242865,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM022P0204h024Q04i02D02O02T02z0v0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM022P0204h024Q04i02D02D02K024S02Y02002I0224F02W02K0224D02Q024H0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_on": 44
             },
@@ -242488,15 +242877,6 @@
               "id": 147896,
               "s365_id": 79714,
               "position_detail": "Goalkeeper"
-            },
-            {
-              "name": "Marquinhos",
-              "number": "5",
-              "position": "d",
-              "rating": null,
-              "id": 3225,
-              "s365_id": 2214,
-              "position_detail": "Centre Back"
             },
             {
               "name": "Beraldo",
@@ -242541,7 +242921,7 @@
               "expected_return": "أنهى الموسم ",
               "season": {
                 "appearances": 7,
-                "matches": 10,
+                "matches": 11,
                 "goals": 1,
                 "assists": 1
               }
@@ -242560,13 +242940,13 @@
       "match_id": 559628,
       "fd_competition_code": "FL1",
       "s365_id": 4735203,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
           "name": "Yellow Cards",
           "name_ar": "بطاقات صفراء",
-          "home": 1.0,
+          "home": 2.0,
           "away": 0.0
         },
         "red_cards": {
@@ -242580,28 +242960,28 @@
           "id": 3,
           "name": "Total Shots",
           "name_ar": "إجمالي التسديدات",
-          "home": 1.0,
-          "away": 9.0
+          "home": 4.0,
+          "away": 14.0
         },
         "shots_on_goal": {
           "id": 4,
           "name": "Shots on Target",
           "name_ar": "تسديدات على المرمى",
-          "home": 1.0,
-          "away": 2.0
+          "home": 3.0,
+          "away": 5.0
         },
         "shots_off_goal": {
           "id": 5,
           "name": "Shots off Target",
           "name_ar": "تسديدات خارج المرمى",
           "home": 0.0,
-          "away": 6.0
+          "away": 8.0
         },
         "blocked_shots": {
           "id": 6,
           "name": "Blocked Shots",
           "name_ar": "تسديدات تم اعتراضها",
-          "home": 0.0,
+          "home": 1.0,
           "away": 1.0
         },
         "corner_kicks": {
@@ -242609,84 +242989,84 @@
           "name": "Corners",
           "name_ar": "الضربات الركنية",
           "home": 1.0,
-          "away": 3.0
+          "away": 5.0
         },
         "offsides": {
           "id": 9,
           "name": "Offsides",
           "name_ar": "حالات التسلل",
-          "home": 2.0,
-          "away": 2.0
+          "home": 3.0,
+          "away": 3.0
         },
         "possession": {
           "id": 10,
           "name": "Possession",
           "name_ar": "الاستحواذ",
-          "home": 32.0,
-          "away": 68.0
+          "home": 37.0,
+          "away": 63.0
         },
         "attacks": {
           "id": 11,
           "name": "Attacks",
           "name_ar": "هجمات",
-          "home": 39.0,
-          "away": 101.0
+          "home": 60.0,
+          "away": 128.0
         },
         "fouls": {
           "id": 12,
           "name": "Fouls",
           "name_ar": "مخالفات",
-          "home": 7.0,
-          "away": 7.0
+          "home": 11.0,
+          "away": 12.0
         },
         "free_kicks": {
           "id": 13,
           "name": "Free Kicks",
           "name_ar": "الركلات الحرة",
-          "home": 7.0,
-          "away": 6.0
+          "home": 12.0,
+          "away": 10.0
         },
         "goal_kicks": {
           "id": 14,
           "name": "Goal Kicks",
           "name_ar": "ضربات مرمى",
-          "home": 8.0,
-          "away": 0.0
+          "home": 11.0,
+          "away": 2.0
         },
         "throw_ins": {
           "id": 15,
           "name": "Throw-ins",
           "name_ar": "رميات التماس‬‎",
-          "home": 15.0,
-          "away": 15.0
+          "home": 20.0,
+          "away": 17.0
         },
         "accurate_passes": {
           "id": 19,
           "name": "Accurate Passes",
           "name_ar": "تمريرات صحيحة",
-          "home": 222.0,
-          "away": 572.0
+          "home": 353.0,
+          "away": 706.0
         },
         "total_passes": {
           "id": 21,
           "name": "Total Passes",
           "name_ar": "تمريرات",
-          "home": 287.0,
-          "away": 616.0
+          "home": 434.0,
+          "away": 767.0
         },
         "saves": {
           "id": 23,
           "name": "Goalkeeper Saves",
           "name_ar": "تصديات حارس المرمى",
-          "home": 0.0,
-          "away": 0.0
+          "home": 2.0,
+          "away": 1.0
         },
         "dangerous_chances": {
           "id": 24,
           "name": "Dangerous Chances",
           "name_ar": "فرص خطيرة",
-          "home": 1.0,
-          "away": 2.0
+          "home": 2.0,
+          "away": 3.0
         },
         "hit_woodwork": {
           "id": 25,
@@ -242699,85 +243079,92 @@
           "id": 29,
           "name": "Substitutions",
           "name_ar": "تبديلات",
-          "home": 3.0,
-          "away": 4.0
+          "home": 5.0,
+          "away": 5.0
+        },
+        "big_chances_missed": {
+          "id": 36,
+          "name": "Big Chances Missed",
+          "name_ar": "إضاعة فرص كبيرة",
+          "home": 0.0,
+          "away": 1.0
         },
         "fouls_won": {
           "id": 37,
           "name": "Fouls Won",
           "name_ar": "أخطاء حصل عليها",
-          "home": 7.0,
-          "away": 6.0
+          "home": 12.0,
+          "away": 10.0
         },
         "clearances": {
           "id": 40,
           "name": "Clearances",
           "name_ar": "تشتيت كرات",
-          "home": 9.0,
-          "away": 5.0
+          "home": 14.0,
+          "away": 14.0
         },
         "interceptions": {
           "id": 41,
           "name": "Interceptions",
           "name_ar": "اعتراضات",
-          "home": 7.0,
-          "away": 8.0
+          "home": 9.0,
+          "away": 11.0
         },
         "chances_created": {
           "id": 46,
           "name": "Chances Created",
           "name_ar": "صناعة فرص",
-          "home": 1.0,
-          "away": 6.0
+          "home": 3.0,
+          "away": 11.0
         },
         "tackles_won": {
           "id": 51,
           "name": "Successful Tackles",
           "name_ar": "تدخلات ناجحة",
-          "home": 12.0,
-          "away": 5.0
+          "home": 17.0,
+          "away": 8.0
         },
         "crosses_completed": {
           "id": 52,
           "name": "Completed Crosses",
           "name_ar": "عرضيات اكتملت",
-          "home": 0.0,
-          "away": 1.0
+          "home": 1.0,
+          "away": 2.0
         },
         "long_passes_completed": {
           "id": 53,
           "name": "Completed Long Passes",
           "name_ar": "تمريرات طويلة اكتملت",
-          "home": 15.0,
-          "away": 10.0
+          "home": 24.0,
+          "away": 17.0
         },
         "dribbles_completed": {
           "id": 54,
           "name": "Completed Dribbles",
           "name_ar": "مراوغات اكتملت",
-          "home": 2.0,
+          "home": 3.0,
           "away": 4.0
         },
         "ground_duels_won": {
           "id": 55,
           "name": "Ground Duels Won",
           "name_ar": "كسب التحامات أرضية",
-          "home": 24.0,
-          "away": 18.0
+          "home": 36.0,
+          "away": 27.0
         },
         "aerial_duels_won": {
           "id": 56,
           "name": "Aerial Duels Won",
           "name_ar": "كسب التحامات هوائية",
-          "home": 5.0,
-          "away": 2.0
+          "home": 6.0,
+          "away": 5.0
         },
         "dribbled_past": {
           "id": 60,
           "name": "Dribbled Past",
           "name_ar": "تمت مرواغته",
-          "home": 1.0,
-          "away": 5.0
+          "home": 5.0,
+          "away": 7.0
         },
         "errors_leading_to_goal": {
           "id": 66,
@@ -242790,92 +243177,92 @@
           "id": 73,
           "name": "Possession Lost",
           "name_ar": "فقد الاستحواذ",
-          "home": 85.0,
-          "away": 77.0
+          "home": 117.0,
+          "away": 110.0
         },
         "xg": {
           "id": 76,
           "name": "Expected Goals (xG)",
           "name_ar": "أهداف متوقعة",
-          "home": 0.34,
-          "away": 1.61
+          "home": 0.75,
+          "away": 1.99
         },
         "xg_conceded": {
           "id": 77,
           "name": "Expected Goals Conceded",
           "name_ar": "أهداف متوقعة أُستقبلت",
-          "home": 1.61,
-          "away": 0.34
+          "home": 1.99,
+          "away": 0.75
         },
         "xg_created": {
           "id": 78,
           "name": "Expected Goals Created",
           "name_ar": "صناعة أهداف متوقعة",
-          "home": 0.05,
-          "away": 1.04
+          "home": 0.51,
+          "away": 1.43
         },
         "xg_on_target": {
           "id": 79,
           "name": "Expected Goals on Target (xGOT)",
           "name_ar": "أهداف متوقعة على المرمى",
-          "home": 0.44,
-          "away": 1.76
+          "home": 1.68,
+          "away": 2.46
         },
         "passes_final_third": {
           "id": 80,
           "name": "Passes into Final Third",
           "name_ar": "تمريرات لداخل الثلث الأخير",
-          "home": 14.0,
-          "away": 158.0
+          "home": 40.0,
+          "away": 197.0
         },
         "back_passes": {
           "id": 81,
           "name": "Back Passes",
           "name_ar": "تمريرات خلفية",
-          "home": 55.0,
-          "away": 90.0
+          "home": 94.0,
+          "away": 120.0
         },
         "final_third_possession": {
           "id": 84,
           "name": "Possession in Final Third",
           "name_ar": "سيطرة على الكرة في الثلث الأخير",
           "home": 1.0,
-          "away": 3.0
+          "away": 6.0
         },
         "shots_inside_box": {
           "id": 146,
           "name": "Shots Inside Box",
           "name_ar": "تسديدات من داخل الصندوق",
-          "home": 1.0,
-          "away": 4.0
+          "home": 3.0,
+          "away": 7.0
         },
         "shots_outside_box": {
           "id": 147,
           "name": "Shots Outside Box",
           "name_ar": "تسديدات من خارج الصندوق",
-          "home": 0.0,
-          "away": 5.0
+          "home": 1.0,
+          "away": 7.0
         },
         "passes_own_half": {
           "id": 148,
           "name": "Passes in Own Half",
           "name_ar": "تمريرات في نصف ملعب الفريق",
-          "home": 210.0,
-          "away": 223.0
+          "home": 291.0,
+          "away": 292.0
         },
         "passes_opposition_half": {
           "id": 149,
           "name": "Passes in Opposition Half",
           "name_ar": "تمريرات في نصف ملعب الخصم",
-          "home": 79.0,
-          "away": 400.0
+          "home": 154.0,
+          "away": 486.0
         },
         "duels_won": {
           "id": 150,
           "name": "Duels Won",
           "name_ar": "الفوز بالثنائيات",
-          "home": 29.0,
-          "away": 20.0
+          "home": 42.0,
+          "away": 32.0
         }
       },
       "schema": 2,
@@ -242885,29 +243272,29 @@
       },
       "referee": "Jerome Brisard",
       "player_of_the_match": {
-        "team": "away",
-        "id": 177522,
-        "s365_id": 109665,
-        "name": "Doue",
-        "rating": "7.5"
+        "team": "home",
+        "id": 1023,
+        "s365_id": 61006,
+        "name": "Jonathan Clauss",
+        "rating": "8"
       },
       "play_time": {
-        "effective": "46:44",
-        "total": "74:57",
-        "effective_pct": 62.4
+        "effective": "64:42",
+        "total": "104:05",
+        "effective_pct": 62.2
       },
       "predictions": {
         "result": {
           "home": 11,
           "draw": 11,
           "away": 78,
-          "votes": 14967
+          "votes": 15273
         },
         "total_goals": {
           "line": 2.5,
           "under": 13,
           "over": 87,
-          "votes": 277
+          "votes": 284
         }
       },
       "top_performers": {
@@ -242917,29 +243304,25 @@
             "s365_id": 86597,
             "name": "Elye Wahi",
             "stats": {
-              "minutes": 69
+              "minutes": 77
             }
           },
           "away": {
-            "id": 177522,
-            "s365_id": 109665,
-            "name": "Doue",
+            "id": 3373,
+            "s365_id": 39779,
+            "name": "Ousmane Dembele",
             "stats": {
-              "xg": 0.39,
-              "shots_on_target": 1,
-              "minutes": 43
+              "minutes": 30
             }
           }
         },
         "midfield": {
           "home": {
-            "id": 180827,
-            "s365_id": 102622,
-            "name": "Mohamed Amoura",
+            "id": 1023,
+            "s365_id": 61006,
+            "name": "Jonathan Clauss",
             "stats": {
-              "xg": 0.34,
-              "shots_on_target": 1,
-              "minutes": 66
+              "minutes": 90
             }
           },
           "away": {
@@ -242947,17 +243330,18 @@
             "s365_id": 27109,
             "name": "Fabian Ruiz",
             "stats": {
-              "minutes": 69
+              "xg": 0.02,
+              "minutes": 90
             }
           }
         },
         "defence": {
           "home": {
-            "id": 147893,
-            "s365_id": 80121,
-            "name": "Alidu Seidu",
+            "id": 99394,
+            "s365_id": 65840,
+            "name": "Ali Abdi",
             "stats": {
-              "minutes": 69
+              "minutes": 25
             }
           },
           "away": {
@@ -242966,7 +243350,7 @@
             "name": "Hakimi",
             "stats": {
               "interceptions": 1,
-              "minutes": 69
+              "minutes": 90
             }
           }
         }
@@ -242978,16 +243362,16 @@
           "player": "Nuno Mendes",
           "player_id": 144570,
           "player_s365_id": 77441,
-          "xg": 0.02,
+          "xg": 0.04,
           "xgot": 0.0,
           "outcome": "off_target",
           "body_part": "right_foot",
           "situation": "open_play",
-          "x": 74.5,
-          "y": 67.6,
+          "x": 75.4,
+          "y": 63.0,
           "end": {
-            "y": 48.7,
-            "z": 87.5
+            "y": 47.9,
+            "z": 91.7
           }
         },
         {
@@ -242996,13 +243380,13 @@
           "player": "Mohamed Amoura",
           "player_id": 180827,
           "player_s365_id": 102622,
-          "xg": 0.34,
-          "xgot": 0.44,
+          "xg": 0.27,
+          "xgot": 0.52,
           "outcome": "goal",
           "body_part": "right_foot",
           "situation": "assisted",
-          "x": 90.6,
-          "y": 37.7,
+          "x": 92.7,
+          "y": 33.1,
           "end": {
             "y": 52.3,
             "z": 1.9
@@ -243019,11 +243403,11 @@
           "outcome": "off_target",
           "body_part": "left_foot",
           "situation": "assisted",
-          "x": 80.4,
-          "y": 50.7,
+          "x": 81.3,
+          "y": 49.7,
           "end": {
-            "y": 60.0,
-            "z": 68.1
+            "y": 58.5,
+            "z": 77.8
           }
         },
         {
@@ -243040,8 +243424,8 @@
           "x": 88.5,
           "y": 50.0,
           "end": {
-            "y": 53.1,
-            "z": 19.6
+            "y": 53.0,
+            "z": 22.2
           }
         },
         {
@@ -243050,16 +243434,16 @@
           "player": "Doue",
           "player_id": 177522,
           "player_s365_id": 109665,
-          "xg": 0.39,
-          "xgot": 0.9,
+          "xg": 0.31,
+          "xgot": 0.86,
           "outcome": "goal",
           "body_part": "right_foot",
           "situation": "counter_attack",
           "x": 96.8,
-          "y": 56.9,
+          "y": 58.3,
           "end": {
             "y": 50.6,
-            "z": 1.9
+            "z": 1.3
           }
         },
         {
@@ -243073,10 +243457,10 @@
           "outcome": "off_target",
           "body_part": "right_foot",
           "situation": "corner",
-          "x": 80.6,
-          "y": 48.4,
+          "x": 79.6,
+          "y": 46.0,
           "end": {
-            "y": 46.9,
+            "y": 56.1,
             "z": 91.7
           }
         },
@@ -243087,7 +243471,7 @@
           "player": "Ferran Torres",
           "player_id": 33154,
           "player_s365_id": 53924,
-          "xg": 0.16,
+          "xg": 0.32,
           "xgot": 0.0,
           "outcome": "off_target",
           "body_part": "right_foot",
@@ -243095,7 +243479,7 @@
           "x": 82.9,
           "y": 54.7,
           "end": {
-            "y": 59.8,
+            "y": 58.5,
             "z": 2.8
           }
         },
@@ -243113,8 +243497,8 @@
           "x": 76.1,
           "y": 39.9,
           "end": {
-            "y": 46.4,
-            "z": 75.0
+            "y": 49.9,
+            "z": 94.4
           }
         },
         {
@@ -243136,33 +243520,181 @@
           }
         },
         {
-          "minute": 65,
+          "minute": 74,
           "team": "away",
           "player": "Mika Godts",
           "player_id": 189574,
           "player_s365_id": 131640,
-          "xg": 0.06,
+          "xg": 0.02,
+          "xgot": 0.33,
+          "outcome": "saved",
+          "body_part": "left_foot",
+          "situation": "open_play",
+          "x": 83.0,
+          "y": 39.7,
+          "end": {
+            "y": 52.4,
+            "z": 26.6
+          }
+        },
+        {
+          "minute": 85,
+          "team": "away",
+          "player": "Fabian Ruiz",
+          "player_id": 22,
+          "player_s365_id": 27109,
+          "xg": 0.02,
           "xgot": 0.0,
-          "outcome": "blocked",
+          "outcome": "off_target",
+          "body_part": "left_foot",
+          "situation": "open_play",
+          "x": 74.6,
+          "y": 59.1,
+          "end": {
+            "y": 57.8,
+            "z": 72.2
+          }
+        },
+        {
+          "minute": 85,
+          "team": "away",
+          "player": "Ferran Torres",
+          "player_id": 33154,
+          "player_s365_id": 53924,
+          "xg": 0.13,
+          "xgot": 0.16,
+          "outcome": "goal",
           "body_part": "right_foot",
           "situation": "assisted",
-          "x": 91.7,
-          "y": 61.3,
+          "x": 91.8,
+          "y": 53.2,
           "end": {
-            "x": 93.6,
-            "y": 59.4
+            "y": 48.7,
+            "z": 6.3
+          }
+        },
+        {
+          "minute": 88,
+          "team": "away",
+          "player": "Mika Godts",
+          "player_id": 189574,
+          "player_s365_id": 131640,
+          "xg": 0.02,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "right_foot",
+          "situation": "assisted",
+          "x": 85.5,
+          "y": 66.0,
+          "end": {
+            "y": 39.7,
+            "z": 69.4
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 1,
+          "team": "away",
+          "player": "Hakimi",
+          "player_id": 53,
+          "player_s365_id": 47349,
+          "xg": 0.11,
+          "xgot": 0.26,
+          "outcome": "saved",
+          "body_part": "right_foot",
+          "situation": "assisted",
+          "x": 95.9,
+          "y": 34.6,
+          "end": {
+            "y": 46.5,
+            "z": 16.5
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 1,
+          "team": "away",
+          "player": "Joao Neves",
+          "player_id": 190877,
+          "player_s365_id": 124523,
+          "xg": 0.01,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "head",
+          "situation": "assisted",
+          "x": 90.3,
+          "y": 39.1,
+          "end": {
+            "x": 92.3,
+            "y": 40.8
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 4,
+          "team": "home",
+          "player": "Ali Abdi",
+          "player_id": 99394,
+          "player_s365_id": 65840,
+          "xg": 0.09,
+          "xgot": 0.0,
+          "outcome": "blocked",
+          "body_part": "left_foot",
+          "x": 90.1,
+          "y": 65.0,
+          "end": {
+            "x": 91.8,
+            "y": 60.1
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 4,
+          "team": "home",
+          "player": "Niels Nkounkou",
+          "player_id": 133292,
+          "player_s365_id": 80479,
+          "xg": 0.03,
+          "xgot": 0.2,
+          "outcome": "saved",
+          "body_part": "left_foot",
+          "situation": "open_play",
+          "x": 76.0,
+          "y": 62.4,
+          "end": {
+            "y": 46.9,
+            "z": 8.2
+          }
+        },
+        {
+          "minute": 90,
+          "added_time": 5,
+          "team": "home",
+          "player": "Ali Abdi",
+          "player_id": 99394,
+          "player_s365_id": 65840,
+          "xg": 0.35,
+          "xgot": 0.96,
+          "outcome": "goal",
+          "body_part": "left_foot",
+          "situation": "assisted",
+          "x": 92.9,
+          "y": 50.6,
+          "end": {
+            "y": 53.1,
+            "z": 5.7
           }
         }
       ]
     },
     "559621": {
-      "scraped_at": "2026-11-21T22:38:14.888183+00:00",
+      "scraped_at": "2026-11-22T02:45:39.836397+00:00",
       "source_url": "https://www.koora-l.live/game/4735204",
-      "status": "live",
+      "status": "full time",
       "home_team": "Monaco",
       "away_team": "Auxerre",
       "score": {
-        "home": 0,
+        "home": 1,
         "away": 1,
         "ht_home": 0,
         "ht_away": 1
@@ -243197,7 +243729,7 @@
           "away": 2
         },
         "goals": {
-          "home": 0,
+          "home": 1,
           "away": 1
         },
         "shots_off_goal": {
@@ -243221,16 +243753,16 @@
           "away": 3
         },
         "total_passes": {
-          "home": 686,
-          "away": 370
+          "home": 685,
+          "away": 369
         },
         "passes_accurate": {
           "home": 614,
-          "away": 277
+          "away": 276
         },
         "expected_goals": {
-          "home": 2.18,
-          "away": 0.26
+          "home": 2.4,
+          "away": 0.29
         }
       },
       "events": [
@@ -243402,7 +243934,7 @@
                 "defensive_actions": 1,
                 "recoveries": 5
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dm02h02Q022R0D2R0422S02S04z0k0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dm02f0402Q022R0624R04232Q022002P03z0_02L0%26dir%3drtl"
             },
             {
               "name": "Jordan Teze",
@@ -243460,7 +243992,7 @@
                   "pct": 25
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF022D02L03J02O0320033M02430032232K04803322932L03300226Q020203U02P02022Q0D2L033F02U03U02%255b0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF012D01L02F02D01O0211022M01332122331J015712312942L0320011611O0D103Q02D01P01012Q0D1L022F0102P01003I02F01E011M01N0%26dir%3drtl"
             },
             {
               "name": "Eric Dier",
@@ -243514,7 +244046,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dP02J02F0202K020040024M022D024M0700200D2002G02F02D4M02042247924F04G027044224N04D02422O0402022Q02z0M0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dG02F02002J0200300E2J0202320233L0D20023232J06206203D202G02D032363402J022032236862F03G028033236N042D0462J02E0302042Q02R03M02g0%26dir%3drtl"
             },
             {
               "name": "S. Sane",
@@ -243572,7 +244104,7 @@
                   "pct": 82
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE01W03D01b01G01P01N01W011F01J01E011001M0100E14M01151022121L012120269L0D100D1331L01022132101Y0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE01W02D01b01F011O021N02W011F01J01E0110221H01010112E135L0227E2145L0121212692K0D10E1421F012E010221D202001D01E0101I010%26dir%3drtl"
             },
             {
               "name": "Flavio Nazinho",
@@ -243635,7 +244167,7 @@
                   "pct": 60
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0542D057D204H0477200242D02I042D02F02D02K0204D02N02U022z0d04F02g0242W0200%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0433D04843303H036832023203022H032D02F02D02E02E0D23D02N02U022z0d03F02g0232W0200%26dir%3drtl",
               "sub_off": 69
             },
             {
@@ -243688,7 +244220,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0O02R04U0224M040200202T02O0200229E02I02420042002J0200422744N04D04745J02002D0D20202M02D02F0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN02z0202O023T02424M030200202T022N0200228E02I02320032202J0200322633N03D03844J02002D0D20202M02D02F0%26dir%3drtl",
               "sub_off": 69
             },
             {
@@ -243755,7 +244287,7 @@
                   "pct": 57
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM0202002I02G042D04I02002202M022D02P04D0D2M042D022522L02S0400D2D02R02R0244R02U02%255c02T0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dJ0100101001I01G031D03I01001301M011030101N03D0133M053D011411J0101S03F10301P03341K0101D01953K01D0E14S01003Q01001E01N01E01%26dir%3drtl",
               "has_shot_chart": true
             },
             {
@@ -243825,7 +244357,7 @@
                   "pct": 83
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dP01Q021h01T01z0I01N010011I03001002O011E012J01E010021D01H021020020341001D021002E034292E1%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dP01Q021h01T01z0I01N020011G0203002002211D01H011E022E01E01D01100230011H022020020461002D021013E0344921211%26dir%3drtl",
               "has_shot_chart": true
             },
             {
@@ -243883,7 +244415,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255d02E02N022O04Y02F02002z0002Q02W024U02P02g02F0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255d02E02O03O03Y02E022002Q02P02W02D02L02E02W024U02N02020022O02D02P02F0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 80
             },
@@ -243944,7 +244476,7 @@
                   "pct": 14
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dr04T02m02002%255d02J02P022D02J02E022D0202K040024L0422020445L02402004702J0205F02020020%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dr03T02m02002%255d02H0202P022D02H0202E022D0202K030023L0322020334H02D02302003602J0204F02020020%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 59
             },
@@ -244001,7 +244533,7 @@
                   "pct": 20
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dR02V02a04m02a04D02N02F02002N02G02N02002s02N0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dL02F02Q0D2002P02K0203D04m02a03D02003K02E022002N02G034M02002h02K02D02J0%26dir%3drtl",
               "has_shot_chart": true
             }
           ],
@@ -244048,7 +244580,7 @@
                 },
                 "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dO02z0z0z0z0f0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dJ02E02302E02K023Q020243S02y02Z02L022T02z0a0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_on": 69
             },
@@ -244086,7 +244618,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0F02o0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0v03G02X02c022S02Z02%26dir%3drtl",
               "sub_on": 80
             },
             {
@@ -244117,7 +244649,7 @@
                 "interceptions": 1,
                 "recoveries": 2
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN02I02J02E04z0z0z0z0O0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI02E0320202D02G020020322302S04S023z0z0z0_0%26dir%3drtl",
               "sub_on": 69
             },
             {
@@ -244144,7 +244676,7 @@
                 "possession_lost": 1,
                 "recoveries": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dv02z0z0z0D02t0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dv02z0z0F022T022a02S02a0%26dir%3drtl",
               "sub_on": 59
             },
             {
@@ -244280,7 +244812,7 @@
                 "stat_57": 1,
                 "recoveries": 8
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dY02f02S02S0202R0639R0844R022402z0z00%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dY01f01S01S010101P0648R09843Q043603R01z0i0%26dir%3dltr"
             },
             {
               "name": "Telli Siwe",
@@ -244333,7 +244865,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d0022H02D02F02G0404M02447O020D202202K02D02e02S04m04z0e0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d0022H02D02F02202D0303M04386E02J02022302202K0202022d02S03m03z0e0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 72
             },
@@ -244387,7 +244919,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD024R02h02I02K020202022M04004E022N024S0D2O02020202W02M02h04d0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD023R02F02S02O02I02I0D20202022M03303030022N023Q020D2O02032204W02K0302h03d0%26dir%3dltr"
             },
             {
               "name": "Tuanzebe",
@@ -244438,7 +244970,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0G02U02S020202G02L022D02004P0402L04002202202L040020440E2I02D0202L0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0G02J02K02S020202G02L0234302003K02D02302L03002204202L030240330E2I020F2L0%26dir%3dltr"
             },
             {
               "name": "Fredrik Oppegard",
@@ -244495,7 +245027,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d00407005D0427202I024G04z0P02z0z0z000%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d00606246D0366202I02302E03O02G03002D020032H02%256002z0z0z000%26dir%3dltr"
             },
             {
               "name": "Naouirou Ahamada",
@@ -244543,7 +245075,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0204E02P02R020020044I02002404D04L04I022L02D02G02M02T020402e02002O0202R02s0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0203E02P0200203M0300202433H02003324D03002I032H023J03023003002D02K0202T040302M02S02E02002O0D2R02s0%26dir%3dltr"
             },
             {
               "name": "Pierre Ekwah",
@@ -244593,7 +245125,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM02S04T02O02T0402P0202S02002D02S02M02D02Q0220020202L024202202P0202c02O0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM02S032L02002D02O02T0332D032I020232P0200200220022R02M02D02Q0220020202L023203202L0302030202a02O0%26dir%3dltr",
               "sub_off": 81
             },
             {
@@ -244654,7 +245186,7 @@
                   "pct": 20
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0_02T04K04702F052E02200275K024D02425D02D0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0_022S0322H032602F04230203200394E02F0362002324D02D0%26dir%3dltr",
               "sub_off": 76
             },
             {
@@ -244713,7 +245245,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dc02002J04E02L02002E022c022f02F02O04E02R0D2S0202U02m0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dO02T02002J03E02L02002E022c02S02T02F02O03E03D02N0202S0202P02E02m0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 72
             },
@@ -244776,7 +245308,7 @@
                   "pct": 54
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dJ0202_02E02S02002M04_02N05S02002W02002J04G0202K0254F0204002G024P022D02D02Q0202204G0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE02E0202D02F02002002K02D02E03E0202L02002002I023I02V022L02422F02F02E02022W02002J03002D04022J0244F0203002G043F02J022022302022O0F203G0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -244832,7 +245364,7 @@
                   "pct": 46
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dn02J02%256002U02f04G02U02002I0202D02E02J022E02E02I02E0D2M02F02%255b0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dG02G03F02G02S02J02Q022M02200202002M03V02P03G022T03003H02202D033D02H02022E06E02I02E0322M022003022Z0%26dir%3dltr",
               "has_shot_chart": true
             }
           ],
@@ -244860,7 +245392,7 @@
                 "touches": 7,
                 "clearances": 3
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI02z0z0z0z0l0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI02S02u02j02z0z0l0%26dir%3dltr",
               "sub_on": 72
             },
             {
@@ -244883,7 +245415,7 @@
                 "touches": 5,
                 "possession_lost": 2
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0W02U02I0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0l02d02K02G02002I0%26dir%3dltr",
               "sub_on": 76
             },
             {
@@ -244917,7 +245449,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dR02P03z0z0z0z0S0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dR02O023f02O02Z023u0202D03z0s0%26dir%3dltr",
               "sub_on": 81
             },
             {
@@ -244946,7 +245478,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0z0D02q0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0O02z0T02f02R02T022F0203L02c0%26dir%3dltr",
               "sub_on": 72
             },
             {
@@ -245048,7 +245580,7 @@
       "match_id": 559621,
       "fd_competition_code": "FL1",
       "s365_id": 4735204,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
@@ -245153,14 +245685,14 @@
           "name": "Accurate Passes",
           "name_ar": "تمريرات صحيحة",
           "home": 614.0,
-          "away": 277.0
+          "away": 276.0
         },
         "total_passes": {
           "id": 21,
           "name": "Total Passes",
           "name_ar": "تمريرات",
-          "home": 686.0,
-          "away": 370.0
+          "home": 685.0,
+          "away": 369.0
         },
         "saves": {
           "id": 23,
@@ -245173,7 +245705,7 @@
           "id": 24,
           "name": "Dangerous Chances",
           "name_ar": "فرص خطيرة",
-          "home": 5.0,
+          "home": 6.0,
           "away": 0.0
         },
         "hit_woodwork": {
@@ -245194,7 +245726,7 @@
           "id": 36,
           "name": "Big Chances Missed",
           "name_ar": "إضاعة فرص كبيرة",
-          "home": 4.0,
+          "home": 5.0,
           "away": 0.0
         },
         "fouls_won": {
@@ -245216,7 +245748,7 @@
           "name": "Interceptions",
           "name_ar": "اعتراضات",
           "home": 9.0,
-          "away": 11.0
+          "away": 12.0
         },
         "chances_created": {
           "id": 46,
@@ -245229,8 +245761,8 @@
           "id": 51,
           "name": "Successful Tackles",
           "name_ar": "تدخلات ناجحة",
-          "home": 12.0,
-          "away": 11.0
+          "home": 13.0,
+          "away": 10.0
         },
         "crosses_completed": {
           "id": 52,
@@ -245250,22 +245782,22 @@
           "id": 54,
           "name": "Completed Dribbles",
           "name_ar": "مراوغات اكتملت",
-          "home": 3.0,
-          "away": 7.0
+          "home": 2.0,
+          "away": 8.0
         },
         "ground_duels_won": {
           "id": 55,
           "name": "Ground Duels Won",
           "name_ar": "كسب التحامات أرضية",
-          "home": 30.0,
-          "away": 30.0
+          "home": 29.0,
+          "away": 32.0
         },
         "aerial_duels_won": {
           "id": 56,
           "name": "Aerial Duels Won",
           "name_ar": "كسب التحامات هوائية",
           "home": 17.0,
-          "away": 9.0
+          "away": 10.0
         },
         "dribbled_past": {
           "id": 60,
@@ -245285,35 +245817,35 @@
           "id": 76,
           "name": "Expected Goals (xG)",
           "name_ar": "أهداف متوقعة",
-          "home": 2.18,
-          "away": 0.26
+          "home": 2.4,
+          "away": 0.29
         },
         "xg_conceded": {
           "id": 77,
           "name": "Expected Goals Conceded",
           "name_ar": "أهداف متوقعة أُستقبلت",
-          "home": 0.26,
-          "away": 2.18
+          "home": 0.29,
+          "away": 2.4
         },
         "xg_created": {
           "id": 78,
           "name": "Expected Goals Created",
           "name_ar": "صناعة أهداف متوقعة",
-          "home": 1.97,
+          "home": 2.13,
           "away": 0.17
         },
         "xg_on_target": {
           "id": 79,
           "name": "Expected Goals on Target (xGOT)",
           "name_ar": "أهداف متوقعة على المرمى",
-          "home": 1.15,
-          "away": 0.27
+          "home": 1.27,
+          "away": 0.35
         },
         "passes_final_third": {
           "id": 80,
           "name": "Passes into Final Third",
           "name_ar": "تمريرات لداخل الثلث الأخير",
-          "home": 171.0,
+          "home": 172.0,
           "away": 47.0
         },
         "back_passes": {
@@ -245321,14 +245853,14 @@
           "name": "Back Passes",
           "name_ar": "تمريرات خلفية",
           "home": 88.0,
-          "away": 54.0
+          "away": 53.0
         },
         "final_third_possession": {
           "id": 84,
           "name": "Possession in Final Third",
           "name_ar": "سيطرة على الكرة في الثلث الأخير",
           "home": 4.0,
-          "away": 2.0
+          "away": 1.0
         },
         "shots_inside_box": {
           "id": 146,
@@ -245349,7 +245881,7 @@
           "name": "Passes in Own Half",
           "name_ar": "تمريرات في نصف ملعب الفريق",
           "home": 215.0,
-          "away": 190.0
+          "away": 189.0
         },
         "passes_opposition_half": {
           "id": 149,
@@ -245362,8 +245894,8 @@
           "id": 150,
           "name": "Duels Won",
           "name_ar": "الفوز بالثنائيات",
-          "home": 47.0,
-          "away": 39.0
+          "home": 46.0,
+          "away": 42.0
         }
       },
       "schema": 2,
@@ -245845,9 +246377,9 @@
       ]
     },
     "559623": {
-      "scraped_at": "2026-11-21T22:38:18.878933+00:00",
+      "scraped_at": "2026-11-22T02:45:43.869012+00:00",
       "source_url": "https://www.koora-l.live/game/4735208",
-      "status": "live",
+      "status": "full time",
       "home_team": "Lens",
       "away_team": "Toulouse",
       "score": {
@@ -245878,7 +246410,7 @@
           "away": "40%"
         },
         "shots": {
-          "home": 20,
+          "home": 22,
           "away": 9
         },
         "shots_on_target": {
@@ -245890,15 +246422,15 @@
           "away": 1
         },
         "shots_off_goal": {
-          "home": 7,
+          "home": 10,
           "away": 2
         },
         "blocked_shots": {
-          "home": 5,
+          "home": 4,
           "away": 2
         },
         "shots_insidebox": {
-          "home": 18,
+          "home": 20,
           "away": 5
         },
         "shots_outsidebox": {
@@ -245910,15 +246442,15 @@
           "away": 7
         },
         "total_passes": {
-          "home": 579,
-          "away": 387
+          "home": 575,
+          "away": 397
         },
         "passes_accurate": {
-          "home": 495,
-          "away": 305
+          "home": 493,
+          "away": 311
         },
         "expected_goals": {
-          "home": 2.4,
+          "home": 2.61,
           "away": 0.74
         }
       },
@@ -246176,7 +246708,7 @@
               "name": "Samson Baidoo",
               "number": "6",
               "position": "d",
-              "rating": "7.1",
+              "rating": "7.4",
               "id": 188148,
               "s365_id": 110909,
               "position_detail": "Centre Back",
@@ -246187,18 +246719,19 @@
               },
               "minutes": 90,
               "stats": {
-                "xg": 0.23,
+                "xg": 0.22,
                 "shots": 1,
-                "xa": 0.01,
+                "xa": 0.15,
+                "chances_created": 1,
                 "passes_final_third": 2,
                 "back_passes": 3,
                 "passes": {
-                  "made": 74,
+                  "made": 75,
                   "total": 80,
-                  "pct": 92
+                  "pct": 94
                 },
-                "touches": 96,
-                "possession_lost": 7,
+                "touches": 97,
+                "possession_lost": 6,
                 "shots_blocked": 1,
                 "clearances": 9,
                 "recoveries": 6,
@@ -246273,7 +246806,7 @@
               "name": "Matthieu Udol",
               "number": "14",
               "position": "d",
-              "rating": "6.9",
+              "rating": "7",
               "id": 8717,
               "s365_id": 42583,
               "position_detail": "Left Back",
@@ -246284,11 +246817,11 @@
               },
               "minutes": 90,
               "stats": {
-                "xg": 0.68,
+                "xg": 0.76,
                 "shots": 4,
                 "shots_on_target": 1,
                 "xgot": 0.11,
-                "shots_off_target": 2,
+                "shots_off_target": 3,
                 "big_chances_missed": 1,
                 "xa": 0.11,
                 "chances_created": 1,
@@ -246296,8 +246829,8 @@
                 "back_passes": 19,
                 "passes": {
                   "made": 33,
-                  "total": 42,
-                  "pct": 79
+                  "total": 41,
+                  "pct": 80
                 },
                 "long_passes": {
                   "made": 1,
@@ -246317,7 +246850,7 @@
                 "touches": 92,
                 "fouls_won": 3,
                 "final_third_possession": 2,
-                "possession_lost": 22,
+                "possession_lost": 21,
                 "dribbled_past": 3,
                 "shots_blocked": 1,
                 "clearances": 3,
@@ -246414,7 +246947,7 @@
               },
               "minutes": 90,
               "stats": {
-                "xg": 0.12,
+                "xg": 0.13,
                 "shots": 1,
                 "xa": 0.07,
                 "passes_final_third": 4,
@@ -246543,18 +247076,18 @@
               },
               "minutes": 90,
               "stats": {
-                "xg": 0.35,
+                "xg": 0.29,
                 "shots": 3,
                 "shots_on_target": 2,
                 "xgot": 0.69,
-                "xa": 0.97,
+                "xa": 1,
                 "chances_created": 3,
                 "dangerous_chances": 1,
                 "passes_final_third": 8,
                 "back_passes": 11,
                 "passes": {
-                  "made": 31,
-                  "total": 39,
+                  "made": 30,
+                  "total": 38,
                   "pct": 79
                 },
                 "crosses": {
@@ -246567,7 +247100,7 @@
                   "total": 1,
                   "pct": 0
                 },
-                "touches": 52,
+                "touches": 51,
                 "fouls_committed": 2,
                 "possession_lost": 13,
                 "shots_blocked": 1,
@@ -246596,7 +247129,7 @@
               "name": "Mezian Mesloub",
               "number": "38",
               "position": "m",
-              "rating": "7.2",
+              "rating": "7.3",
               "id": null,
               "s365_id": 244795,
               "position_detail": "Central Midfield",
@@ -246640,6 +247173,7 @@
                 "possession_lost": 12,
                 "dribbled_past": 1,
                 "shots_blocked": 1,
+                "interceptions": 1,
                 "recoveries": 4,
                 "ground_duels_won": {
                   "made": 3,
@@ -246655,7 +247189,7 @@
               "name": "Florian Thauvin",
               "number": "10",
               "position": "f",
-              "rating": "7.1",
+              "rating": "7.3",
               "id": 3370,
               "s365_id": 2205,
               "position_detail": "Right Forward",
@@ -246671,15 +247205,15 @@
                 "shots_off_target": 2,
                 "big_chances_missed": 1,
                 "offsides": 2,
-                "xa": 0.85,
-                "chances_created": 6,
+                "xa": 0.92,
+                "chances_created": 7,
                 "dangerous_chances": 1,
                 "passes_final_third": 6,
                 "back_passes": 7,
                 "passes": {
-                  "made": 33,
-                  "total": 39,
-                  "pct": 85
+                  "made": 32,
+                  "total": 38,
+                  "pct": 84
                 },
                 "long_passes": {
                   "made": 5,
@@ -246696,7 +247230,7 @@
                   "total": 5,
                   "pct": 60
                 },
-                "touches": 73,
+                "touches": 72,
                 "fouls_won": 3,
                 "fouls_committed": 1,
                 "final_third_possession": 2,
@@ -246863,19 +247397,18 @@
               "name": "Abdallah Sima",
               "number": "19",
               "position": "f",
-              "rating": "7.2",
+              "rating": "7",
               "id": 151264,
               "s365_id": 82140,
               "position_detail": "Left Forward",
               "minutes": 32,
               "stats": {
-                "xg": 0.17,
-                "shots": 2,
+                "xg": 0.26,
+                "shots": 3,
                 "shots_on_target": 1,
                 "xgot": 0.19,
-                "shots_off_target": 1,
+                "shots_off_target": 2,
                 "stat_25": 1,
-                "chances_created": 1,
                 "passes": {
                   "made": 1,
                   "total": 2,
@@ -246892,8 +247425,8 @@
                 "possession_lost": 6,
                 "recoveries": 1,
                 "aerial_duels_won": {
-                  "made": 1,
-                  "total": 1,
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
                 },
                 "ground_duels_won": {
@@ -246979,7 +247512,7 @@
               "expected_return": "About 1-2 weeks",
               "season": {
                 "appearances": 8,
-                "matches": 10
+                "matches": 11
               }
             },
             {
@@ -246992,7 +247525,7 @@
               "expected_return": "Early January 2027",
               "season": {
                 "appearances": 6,
-                "matches": 10,
+                "matches": 11,
                 "goals": 1
               }
             },
@@ -247006,7 +247539,7 @@
               "expected_return": "Mid May 2027",
               "season": {
                 "appearances": 2,
-                "matches": 10
+                "matches": 11
               }
             }
           ]
@@ -247076,8 +247609,8 @@
                 "back_passes": 4,
                 "passes": {
                   "made": 29,
-                  "total": 38,
-                  "pct": 76
+                  "total": 39,
+                  "pct": 74
                 },
                 "long_passes": {
                   "made": 4,
@@ -247089,9 +247622,9 @@
                   "total": 1,
                   "pct": 0
                 },
-                "touches": 57,
+                "touches": 58,
                 "fouls_committed": 1,
-                "possession_lost": 12,
+                "possession_lost": 13,
                 "clearances": 8,
                 "recoveries": 6,
                 "tackles_won": {
@@ -247149,7 +247682,7 @@
                 "fouls_won": 2,
                 "errors_leading_to_shot": 1,
                 "possession_lost": 8,
-                "clearances": 7,
+                "clearances": 8,
                 "interceptions": 2,
                 "recoveries": 5,
                 "tackles_won": {
@@ -247159,15 +247692,15 @@
                 },
                 "aerial_duels_won": {
                   "made": 3,
-                  "total": 4,
-                  "pct": 75
+                  "total": 5,
+                  "pct": 60
                 },
                 "ground_duels_won": {
                   "made": 2,
                   "total": 4,
                   "pct": 50
                 },
-                "blocks": 3
+                "blocks": 2
               },
               "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dW09W09009V09P09j09z0z0f0%26dir%3dltr"
             },
@@ -247239,11 +247772,11 @@
               "minutes": 90,
               "stats": {
                 "xa": 0.02,
-                "passes_final_third": 8,
+                "passes_final_third": 10,
                 "back_passes": 9,
                 "passes": {
-                  "made": 31,
-                  "total": 41,
+                  "made": 32,
+                  "total": 42,
                   "pct": 76
                 },
                 "long_passes": {
@@ -247261,12 +247794,12 @@
                   "total": 3,
                   "pct": 33
                 },
-                "touches": 71,
+                "touches": 74,
                 "possession_lost": 19,
                 "dribbled_past": 1,
                 "clearances": 1,
                 "interceptions": 3,
-                "recoveries": 5,
+                "recoveries": 4,
                 "tackles_won": {
                   "made": 2,
                   "total": 2,
@@ -247367,11 +247900,11 @@
               "stats": {
                 "xa": 0.02,
                 "passes_final_third": 7,
-                "back_passes": 6,
+                "back_passes": 7,
                 "passes": {
-                  "made": 29,
-                  "total": 36,
-                  "pct": 81
+                  "made": 31,
+                  "total": 38,
+                  "pct": 82
                 },
                 "long_passes": {
                   "made": 2,
@@ -247383,13 +247916,13 @@
                   "total": 1,
                   "pct": 0
                 },
-                "touches": 49,
+                "touches": 52,
                 "fouls_won": 1,
                 "errors_leading_to_shot": 1,
                 "fouls_committed": 3,
                 "possession_lost": 12,
                 "dribbled_past": 2,
-                "clearances": 1,
+                "clearances": 2,
                 "recoveries": 4,
                 "tackles_won": {
                   "made": 1,
@@ -247429,8 +247962,8 @@
                 "passes_final_third": 6,
                 "back_passes": 9,
                 "passes": {
-                  "made": 45,
-                  "total": 55,
+                  "made": 46,
+                  "total": 56,
                   "pct": 82
                 },
                 "long_passes": {
@@ -247448,7 +247981,7 @@
                   "total": 1,
                   "pct": 100
                 },
-                "touches": 75,
+                "touches": 76,
                 "fouls_won": 1,
                 "fouls_committed": 4,
                 "possession_lost": 16,
@@ -247490,7 +248023,7 @@
                 "xa": 0.05,
                 "chances_created": 1,
                 "passes_final_third": 2,
-                "back_passes": 9,
+                "back_passes": 8,
                 "passes": {
                   "made": 23,
                   "total": 28,
@@ -247547,11 +248080,11 @@
                 "xa": 0.14,
                 "chances_created": 1,
                 "passes_final_third": 1,
-                "back_passes": 3,
+                "back_passes": 4,
                 "passes": {
-                  "made": 10,
-                  "total": 14,
-                  "pct": 71
+                  "made": 11,
+                  "total": 16,
+                  "pct": 69
                 },
                 "long_passes": {
                   "made": 2,
@@ -247568,9 +248101,9 @@
                   "total": 2,
                   "pct": 50
                 },
-                "touches": 32,
+                "touches": 33,
                 "fouls_committed": 1,
-                "possession_lost": 10,
+                "possession_lost": 11,
                 "clearances": 3,
                 "interceptions": 2,
                 "recoveries": 2,
@@ -247612,9 +248145,9 @@
                 "passes_final_third": 1,
                 "back_passes": 2,
                 "passes": {
-                  "made": 7,
+                  "made": 6,
                   "total": 15,
-                  "pct": 47
+                  "pct": 40
                 },
                 "long_passes": {
                   "made": 0,
@@ -247623,10 +248156,10 @@
                 },
                 "dribbles": {
                   "made": 0,
-                  "total": 2,
+                  "total": 1,
                   "pct": 0
                 },
-                "touches": 30,
+                "touches": 29,
                 "fouls_committed": 1,
                 "possession_lost": 14,
                 "shots_blocked": 1,
@@ -247644,8 +248177,8 @@
                 },
                 "ground_duels_won": {
                   "made": 1,
-                  "total": 4,
-                  "pct": 25
+                  "total": 3,
+                  "pct": 33
                 },
                 "big_chances_scored": 1
               },
@@ -247669,28 +248202,33 @@
                 "chances_created": 1,
                 "passes_final_third": 5,
                 "passes": {
-                  "made": 14,
-                  "total": 17,
-                  "pct": 82
+                  "made": 15,
+                  "total": 19,
+                  "pct": 79
                 },
                 "long_passes": {
                   "made": 1,
                   "total": 3,
                   "pct": 33
                 },
-                "touches": 24,
-                "possession_lost": 4,
+                "touches": 27,
+                "possession_lost": 5,
                 "clearances": 3,
                 "interceptions": 1,
-                "recoveries": 2,
+                "recoveries": 3,
+                "tackles_won": {
+                  "made": 1,
+                  "total": 2,
+                  "pct": 50
+                },
                 "aerial_duels_won": {
                   "made": 0,
                   "total": 2,
                   "pct": 0
                 },
                 "ground_duels_won": {
-                  "made": 1,
-                  "total": 1,
+                  "made": 2,
+                  "total": 2,
                   "pct": 100
                 },
                 "blocks": 1
@@ -247765,11 +248303,11 @@
               "minutes": 28,
               "stats": {
                 "xa": 0.01,
-                "back_passes": 3,
+                "back_passes": 4,
                 "passes": {
-                  "made": 3,
-                  "total": 5,
-                  "pct": 60
+                  "made": 4,
+                  "total": 6,
+                  "pct": 67
                 },
                 "dribbles": {
                   "made": 0,
@@ -247780,7 +248318,7 @@
                 "fouls_committed": 1,
                 "possession_lost": 4,
                 "dribbled_past": 1,
-                "clearances": 2,
+                "clearances": 1,
                 "aerial_duels_won": {
                   "made": 0,
                   "total": 2,
@@ -247865,7 +248403,7 @@
       "match_id": 559623,
       "fd_competition_code": "FL1",
       "s365_id": 4735208,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
@@ -247885,7 +248423,7 @@
           "id": 3,
           "name": "Total Shots",
           "name_ar": "إجمالي التسديدات",
-          "home": 20.0,
+          "home": 22.0,
           "away": 9.0
         },
         "shots_on_goal": {
@@ -247899,14 +248437,14 @@
           "id": 5,
           "name": "Shots off Target",
           "name_ar": "تسديدات خارج المرمى",
-          "home": 7.0,
+          "home": 10.0,
           "away": 2.0
         },
         "blocked_shots": {
           "id": 6,
           "name": "Blocked Shots",
           "name_ar": "تسديدات تم اعتراضها",
-          "home": 5.0,
+          "home": 4.0,
           "away": 2.0
         },
         "corner_kicks": {
@@ -247963,21 +248501,21 @@
           "name": "Throw-ins",
           "name_ar": "رميات التماس‬‎",
           "home": 26.0,
-          "away": 22.0
+          "away": 24.0
         },
         "accurate_passes": {
           "id": 19,
           "name": "Accurate Passes",
           "name_ar": "تمريرات صحيحة",
-          "home": 495.0,
-          "away": 305.0
+          "home": 493.0,
+          "away": 311.0
         },
         "total_passes": {
           "id": 21,
           "name": "Total Passes",
           "name_ar": "تمريرات",
-          "home": 579.0,
-          "away": 387.0
+          "home": 575.0,
+          "away": 397.0
         },
         "saves": {
           "id": 23,
@@ -248026,20 +248564,20 @@
           "name": "Clearances",
           "name_ar": "تشتيت كرات",
           "home": 21.0,
-          "away": 39.0
+          "away": 40.0
         },
         "interceptions": {
           "id": 41,
           "name": "Interceptions",
           "name_ar": "اعتراضات",
-          "home": 12.0,
+          "home": 13.0,
           "away": 10.0
         },
         "chances_created": {
           "id": 46,
           "name": "Chances Created",
           "name_ar": "صناعة فرص",
-          "home": 15.0,
+          "home": 17.0,
           "away": 6.0
         },
         "tackles_won": {
@@ -248047,7 +248585,7 @@
           "name": "Successful Tackles",
           "name_ar": "تدخلات ناجحة",
           "home": 11.0,
-          "away": 14.0
+          "away": 15.0
         },
         "crosses_completed": {
           "id": 52,
@@ -248075,13 +248613,13 @@
           "name": "Ground Duels Won",
           "name_ar": "كسب التحامات أرضية",
           "home": 44.0,
-          "away": 37.0
+          "away": 38.0
         },
         "aerial_duels_won": {
           "id": 56,
           "name": "Aerial Duels Won",
           "name_ar": "كسب التحامات هوائية",
-          "home": 19.0,
+          "home": 20.0,
           "away": 14.0
         },
         "dribbled_past": {
@@ -248089,20 +248627,20 @@
           "name": "Dribbled Past",
           "name_ar": "تمت مرواغته",
           "home": 7.0,
-          "away": 10.0
+          "away": 9.0
         },
         "possession_lost": {
           "id": 73,
           "name": "Possession Lost",
           "name_ar": "فقد الاستحواذ",
-          "home": 148.0,
-          "away": 140.0
+          "home": 146.0,
+          "away": 143.0
         },
         "xg": {
           "id": 76,
           "name": "Expected Goals (xG)",
           "name_ar": "أهداف متوقعة",
-          "home": 2.4,
+          "home": 2.61,
           "away": 0.74
         },
         "xg_conceded": {
@@ -248110,14 +248648,14 @@
           "name": "Expected Goals Conceded",
           "name_ar": "أهداف متوقعة أُستقبلت",
           "home": 0.74,
-          "away": 2.4
+          "away": 2.61
         },
         "xg_created": {
           "id": 78,
           "name": "Expected Goals Created",
           "name_ar": "صناعة أهداف متوقعة",
-          "home": 2.26,
-          "away": 0.49
+          "home": 2.39,
+          "away": 0.48
         },
         "xg_on_target": {
           "id": 79,
@@ -248131,14 +248669,14 @@
           "name": "Passes into Final Third",
           "name_ar": "تمريرات لداخل الثلث الأخير",
           "home": 81.0,
-          "away": 64.0
+          "away": 65.0
         },
         "back_passes": {
           "id": 81,
           "name": "Back Passes",
           "name_ar": "تمريرات خلفية",
           "home": 98.0,
-          "away": 56.0
+          "away": 58.0
         },
         "final_third_possession": {
           "id": 84,
@@ -248151,7 +248689,7 @@
           "id": 146,
           "name": "Shots Inside Box",
           "name_ar": "تسديدات من داخل الصندوق",
-          "home": 18.0,
+          "home": 20.0,
           "away": 5.0
         },
         "shots_outside_box": {
@@ -248166,21 +248704,21 @@
           "name": "Passes in Own Half",
           "name_ar": "تمريرات في نصف ملعب الفريق",
           "home": 333.0,
-          "away": 186.0
+          "away": 187.0
         },
         "passes_opposition_half": {
           "id": 149,
           "name": "Passes in Opposition Half",
           "name_ar": "تمريرات في نصف ملعب الخصم",
-          "home": 280.0,
-          "away": 211.0
+          "home": 276.0,
+          "away": 220.0
         },
         "duels_won": {
           "id": 150,
           "name": "Duels Won",
           "name_ar": "الفوز بالثنائيات",
-          "home": 63.0,
-          "away": 51.0
+          "home": 64.0,
+          "away": 52.0
         }
       },
       "schema": 2,
@@ -248218,13 +248756,12 @@
       "top_performers": {
         "attack": {
           "home": {
-            "id": 151264,
-            "s365_id": 82140,
-            "name": "Abdallah Sima",
+            "id": 3370,
+            "s365_id": 2205,
+            "name": "Florian Thauvin",
             "stats": {
-              "xg": 0.17,
-              "shots_on_target": 1,
-              "minutes": 32
+              "xg": 0.51,
+              "minutes": 90
             }
           },
           "away": {
@@ -248244,7 +248781,7 @@
             "s365_id": 14910,
             "name": "Florian Sotoca",
             "stats": {
-              "xg": 0.35,
+              "xg": 0.29,
               "shots_on_target": 2,
               "minutes": 90
             }
@@ -248262,11 +248799,10 @@
         },
         "defence": {
           "home": {
-            "id": 79903,
-            "s365_id": 60612,
-            "name": "Jean Clair Todibo",
+            "id": 188148,
+            "s365_id": 110909,
+            "name": "Samson Baidoo",
             "stats": {
-              "interceptions": 3,
               "minutes": 90
             }
           },
@@ -248709,19 +249245,55 @@
         {
           "minute": 89,
           "team": "home",
+          "player": "Abdallah Sima",
+          "player_id": 151264,
+          "player_s365_id": 82140,
+          "xg": 0.09,
+          "xgot": 0.0,
+          "outcome": "off_target",
+          "body_part": "head",
+          "situation": "assisted",
+          "x": 92.3,
+          "y": 47.8,
+          "end": {
+            "y": 61.3,
+            "z": 19.4
+          }
+        },
+        {
+          "minute": 89,
+          "team": "home",
           "player": "Matthieu Udol",
           "player_id": 8717,
           "player_s365_id": 42583,
-          "xg": 0.04,
+          "xg": 0.12,
           "xgot": 0.0,
-          "outcome": "blocked",
+          "outcome": "off_target",
+          "body_part": "head",
+          "situation": "corner",
+          "x": 94.9,
+          "y": 55.1,
+          "end": {
+            "y": 39.2,
+            "z": 13.9
+          }
+        },
+        {
+          "minute": 90,
+          "team": "home",
+          "player": "Samson Baidoo",
+          "player_id": 188148,
+          "player_s365_id": 110909,
+          "xg": 0.09,
+          "xgot": 0.0,
+          "outcome": "off_target",
           "body_part": "head",
           "situation": "assisted",
-          "x": 94.7,
-          "y": 60.6,
+          "x": 92.6,
+          "y": 45.4,
           "end": {
-            "x": 96.6,
-            "y": 58.5
+            "y": 60.8,
+            "z": 9.7
           }
         },
         {
@@ -248730,15 +249302,16 @@
           "player": "Florian Sotoca",
           "player_id": 64837,
           "player_s365_id": 14910,
-          "xg": 0.19,
+          "xg": 0.13,
           "xgot": 0.0,
           "outcome": "blocked",
           "body_part": "right_foot",
-          "x": 90.0,
-          "y": 43.2,
+          "situation": "open_play",
+          "x": 91.7,
+          "y": 41.5,
           "end": {
-            "x": 92.7,
-            "y": 45.3
+            "x": 94.2,
+            "y": 44.2
           }
         },
         {
@@ -248765,7 +249338,7 @@
           "player": "Samson Baidoo",
           "player_id": 188148,
           "player_s365_id": 110909,
-          "xg": 0.23,
+          "xg": 0.22,
           "xgot": 0.0,
           "outcome": "blocked",
           "body_part": "right_foot",
@@ -248782,10 +249355,10 @@
           "player": "Yassine Titraoui",
           "player_id": 261523,
           "player_s365_id": 105206,
-          "xg": 0.12,
+          "xg": 0.13,
           "xgot": 0.0,
           "outcome": "blocked",
-          "body_part": "right_foot",
+          "body_part": "left_foot",
           "x": 84.3,
           "y": 51.5,
           "end": {
@@ -248796,9 +249369,9 @@
       ]
     },
     "559624": {
-      "scraped_at": "2026-11-21T22:38:22.893077+00:00",
+      "scraped_at": "2026-11-22T02:45:47.850338+00:00",
       "source_url": "https://www.koora-l.live/game/4735207",
-      "status": "live",
+      "status": "full time",
       "home_team": "Lille",
       "away_team": "Lyon",
       "score": {
@@ -249054,7 +249627,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0X011T011R09941Q046511P011E01z0g01R0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0X04h0994R044S044z0z0E0%26dir%3drtl"
             },
             {
               "name": "Perraud",
@@ -249117,7 +249690,7 @@
                   "pct": 43
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d0F24047E27442F042D4002720402H022024002I02F0202202D02L04F02h02T02M04z0y0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD0909009F09I099X09T09z0z0z0i0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 80
             },
@@ -249171,7 +249744,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d03T032030200200202G0223022033K0224223220244202G032284940223I02420432D02D02F02E022S02003J02H020022Q02T02z0P0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dV04V04R049004F09J04400409O04W04z0z0i0%26dir%3drtl"
             },
             {
               "name": "Tanguy Nianzou",
@@ -249195,17 +249768,27 @@
                   "total": 30,
                   "pct": 100
                 },
+                "long_passes": {
+                  "made": 1,
+                  "total": 1,
+                  "pct": 100
+                },
                 "touches": 35,
                 "fouls_won": 1,
                 "possession_lost": 2,
                 "clearances": 1,
+                "aerial_duels_won": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
                 "ground_duels_won": {
                   "made": 1,
                   "total": 2,
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0L02R020442D02L0F2E02J020242D02K02427Q04G022M02T02R0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0%255e04D04Q04404c0D4Q09U04f0%26dir%3drtl",
               "sub_off": 52
             },
             {
@@ -249266,7 +249849,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0%255e022M02202007J02E02002020D2N02009002202H02D02D020202G0200D24402L0200442940024002F0442924040D202K0424002L02244F02E02400%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0c04Q0404D09Q0904Q094K04D0%26dir%3drtl",
               "has_shot_chart": true
             },
             {
@@ -249325,7 +249908,7 @@
                   "pct": 57
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN04K022H02002I022D0D2F04N07420022L024044O040202I02I02002M02404202202002E0220720020202J02F0202M02U02F02E02P02D02M02F0420%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0Q09R09_04Z04K04Y044F04z0%25600%26dir%3drtl"
             },
             {
               "name": "Nabil Bentaleb",
@@ -249383,7 +249966,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dO022S02E04002J024L0D4E042L02002249402J040020092J0202022402E022E02020022047727M04002022Q04047O0D2E02T022n0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dn09V09x09z0u099n0%26dir%3drtl",
               "has_shot_chart": true
             },
             {
@@ -249439,7 +250022,7 @@
                   "pct": 60
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0K02Y02T02c02E0D2P022F02G02G0920024I02G042202I02004T07004024L027002J0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0K04Y04z0z0S04004T04009004M04M0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 80
             },
@@ -249470,6 +250053,11 @@
                   "total": 1,
                   "pct": 0
                 },
+                "crosses": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
                 "dribbles": {
                   "made": 0,
                   "total": 1,
@@ -249493,7 +250081,7 @@
                   "pct": 60
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0E200D2D02F022400244202N02D04202N0202X02d02z0z0d0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF044E04L0404D0944U0404P04z0z0z0f04%26dir%3drtl",
               "sub_off": 46
             },
             {
@@ -249554,7 +250142,7 @@
                   "pct": 33
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI0D2D0200207G02022442002J02022020202E04F02G029E02G042E07i02022002E02G0202O02O04D0402I02J07J02J02D02422002N022O02M0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dR03K03G03e036M03y03G03d03K03J06J03P033003%255e03M0%26dir%3drtl",
               "has_shot_chart": true
             },
             {
@@ -249613,7 +250201,7 @@
                   "pct": 67
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0%256002b02E042E02D02J02D0202I04F020242D02D07G020022D0200224H02427204D040229%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0T09z0S0D9J090%26dir%3drtl",
               "sub_off": 62
             }
           ],
@@ -249654,7 +250242,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0P02X02J02H022M022I02I044D20202K024E022E02J04220202L0202D022402002D0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0b04T02F02O02T02F04I0%26dir%3drtl",
               "sub_on": 52
             },
             {
@@ -249694,7 +250282,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dO04R022H02004R02L02J02z0K04z0z0N0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3db02z0z0z0z0S0%26dir%3drtl",
               "sub_on": 80
             },
             {
@@ -249740,7 +250328,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0r04%255d02V02202N04002002F02D0D2002004N0202I0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0r04v02Q02e02I0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_on": 62
             },
@@ -249786,7 +250374,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0U022W07N07T07W02z0H0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0m02N04T04z0_0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_on": 80
             },
@@ -249828,7 +250416,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dR07v02G02R04402P02T02O02J02F04L02z0m0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dR04z0W04u02z0z0P0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_on": 46
             },
@@ -249944,7 +250532,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0H02Q0D1Q04301Q07392012N0344011P031j01z0S0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0H09Q04g09090044O044T04z0z0D0%26dir%3dltr"
             },
             {
               "name": "Abner",
@@ -250001,7 +250589,7 @@
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE04D20242202H0200224D0D202F0220D240020202G02E04040D2K020702D02H02H02D02H02E0204002D02L07T0224E02M0202z0d0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM09O09W09P09i09Q09j09z0y0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 74
             },
@@ -250061,7 +250649,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d022002P02702G02J02D07004002422G0420497440404L09E742042F0402E0724D2J04D07242004H040202i02D02c02K02P02002%255b0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d04T04J04J04G04M04D0D4Q040049D04a0404z0D04z0E04%255e0%26dir%3dltr"
             },
             {
               "name": "Felix Bacher",
@@ -250121,7 +250709,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0s02N0200202D02002J02242400402G0D20722770022I0E2924770402K02424720204I0202077E2072I0202D02022K07E04M0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0a03O03E03O0300D3F03O03E03K030063E093Q033%255d0%26dir%3dltr"
             },
             {
               "name": "Z. Athekame",
@@ -250140,6 +250728,8 @@
               "stats": {
                 "xg": 0.02,
                 "shots": 1,
+                "shots_on_target": 1,
+                "xgot": 0.02,
                 "shots_off_target": 1,
                 "xa": 0.04,
                 "passes_final_third": 2,
@@ -250181,7 +250771,7 @@
                   "pct": 75
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3do02Y02z0U0204G02K04P02E05O0205E0200202G0244002002M02422022045402D0242204290277544E0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0f09z0R04T0404F049G09D04E0D404E0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 74
             },
@@ -250245,7 +250835,7 @@
                   "pct": 44
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE0402202H02H04204R02070047M0204200240204H0227040020D2H02200400400202K0220200227K02L02K0202L02J022M024O02L02G04_024G0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ099j09D09P09F09z0w099z0P0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -250298,7 +250888,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dH04Q02G0D2I02I0202G020207002202402M0742040240022G0227202N02E024004M0272022P0422K022E02002004202M072D024M04E0202f02I0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3da09v0404i04U04R04h04W04q0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -250350,9 +250940,10 @@
                   "made": 4,
                   "total": 6,
                   "pct": 67
-                }
+                },
+                "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dt02K02D04G0202I0200D2O04_02D02G04T022J02H0404F04N02E02402E02J02D0202Q072H02D022002J0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0k0909O09D09T09Z0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -250400,7 +250991,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d002320063D292330203020023E020D2022H02023002232L02H022022G02H0202I03X02%255d02z0z0H02%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d004940044M04P04z0z0z0z0O0%26dir%3dltr",
               "sub_off": 82
             },
             {
@@ -250458,7 +251049,7 @@
                   "pct": 67
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0204202920202I02I0402J044G04D02F02005E0D2D04H02G02F024H02D02N0422F02L022F02M02G02F02I0502022K02002D02V022H02Y02M0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dL09c04U04z0%255d04e04N04z0S0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 90
             },
@@ -250483,6 +251074,7 @@
                 "xgot": 0.25,
                 "big_chances_missed": 1,
                 "xa": 0.02,
+                "dangerous_chances": 1,
                 "back_passes": 13,
                 "passes": {
                   "made": 23,
@@ -250509,6 +251101,7 @@
                 "final_third_possession": 1,
                 "possession_lost": 17,
                 "dribbled_past": 2,
+                "shots_blocked": 1,
                 "recoveries": 2,
                 "aerial_duels_won": {
                   "made": 1,
@@ -250521,7 +251114,7 @@
                   "pct": 44
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dN02z0W02i02L07M02G02G04N02E02242L022002F0204G022402F022G02D020200220740020020024044207022009%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0o09S099S099I099009909009D0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 82
             }
@@ -250553,13 +251146,18 @@
                 "fouls_committed": 1,
                 "possession_lost": 3,
                 "recoveries": 1,
+                "aerial_duels_won": {
+                  "made": 0,
+                  "total": 1,
+                  "pct": 0
+                },
                 "ground_duels_won": {
                   "made": 1,
                   "total": 2,
                   "pct": 50
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0u04i02F0202F02E02202E02D02M02N024N0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0x02z0f02z02O0%26dir%3dltr",
               "sub_on": 74
             },
             {
@@ -250588,7 +251186,7 @@
                 "possession_lost": 1,
                 "interceptions": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dJ044Q022N04E02D02D02z0z0z0v0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dJ02z0002z0z0z0h0%26dir%3dltr",
               "sub_on": 74
             },
             {
@@ -250637,7 +251235,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0Y02c020022V0202H022M0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0Y02z0D0202H022M0%26dir%3dltr",
               "sub_on": 82
             },
             {
@@ -250670,7 +251268,7 @@
                   "pct": 0
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3de02J0402002d02E02F02z0z0z0K0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3do0402002d02z0z0z0V0%26dir%3dltr",
               "sub_on": 82
             },
             {
@@ -250790,7 +251388,7 @@
       "match_id": 559624,
       "fd_competition_code": "FL1",
       "s365_id": 4735207,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
@@ -251131,13 +251729,13 @@
           "home": 50,
           "draw": 21,
           "away": 29,
-          "votes": 7768
+          "votes": 7656
         },
         "total_goals": {
           "line": 2.5,
           "under": 25,
           "over": 75,
-          "votes": 549
+          "votes": 534
         }
       },
       "top_performers": {
@@ -251622,9 +252220,9 @@
       ]
     },
     "559627": {
-      "scraped_at": "2026-11-21T22:38:26.876767+00:00",
+      "scraped_at": "2026-11-22T02:45:51.850183+00:00",
       "source_url": "https://www.koora-l.live/game/4735201",
-      "status": "live",
+      "status": "full time",
       "home_team": "Strasbourg",
       "away_team": "Brest",
       "score": {
@@ -251759,11 +252357,12 @@
           "minute": 60,
           "type": "substitution",
           "team": "home",
-          "player": "Diogo Sousa",
-          "player_out": "Sebastian Nanasi",
-          "player_s365_id": 194547,
-          "player_out_id": 144643,
-          "player_out_s365_id": 78408
+          "player": "Pape Diop",
+          "player_out": "Dario Essugo",
+          "player_id": 192686,
+          "player_s365_id": 132092,
+          "player_out_id": 165314,
+          "player_out_s365_id": 94653
         },
         {
           "minute": 60,
@@ -251779,12 +252378,11 @@
           "minute": 60,
           "type": "substitution",
           "team": "home",
-          "player": "Pape Diop",
-          "player_out": "Dario Essugo",
-          "player_id": 192686,
-          "player_s365_id": 132092,
-          "player_out_id": 165314,
-          "player_out_s365_id": 94653
+          "player": "Diogo Sousa",
+          "player_out": "Sebastian Nanasi",
+          "player_s365_id": 194547,
+          "player_out_id": 144643,
+          "player_out_s365_id": 78408
         },
         {
           "minute": 66,
@@ -251897,7 +252495,7 @@
                 "clearances": 1,
                 "recoveries": 11
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0p04U04Q0904z0z0V0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0F044U04Q09004P0904404Q0909P04400404z0R04g0%26dir%3drtl"
             },
             {
               "name": "Lucas Hogsberg",
@@ -251957,7 +252555,7 @@
                   "pct": 80
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dP09J04J04K04Q04Y04z0z0z0U0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dG063D03D06J09F0330096J0396H03G03H03303N0D30606X03%256006z0z0I03G0%26dir%3drtl"
             },
             {
               "name": "Karim Coulibaly",
@@ -252012,7 +252610,7 @@
                 },
                 "blocks": 3
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3do04R0494T09z0z0z0W0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dE06V03P030303003O03933003O03933R09003N03H03z0z0c0%26dir%3drtl"
             },
             {
               "name": "Ismael Doukoure",
@@ -252064,7 +252662,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0t039S03O060033003S03v0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0Y02G02T02722002K04004E2K040E249402P0220202%255e02S0%26dir%3drtl"
             },
             {
               "name": "Genesis Antwi",
@@ -252129,7 +252727,7 @@
                 },
                 "blocks": 3
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0%255e04%255c09c0404H04G0%26dir%3drtl"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0Q03z0M03D06I03033L09G03G06F03D0306E03D06063D0336D3E0%26dir%3drtl"
             },
             {
               "name": "Dario Essugo",
@@ -252181,7 +252779,7 @@
                   "pct": 25
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3db09y09y0909Q09W09S09z0O0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3db03V0303E06F09V03O033E03303O03030633L0303F03K03D03003006M03S03F06P03033%255b033K03H0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 60
             },
@@ -252239,7 +252837,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0I09X09e09z0G09O09009099N0D9D09q0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dy03I03X0303T0306D03I033F03I03D0330390033U03N09303M0300D36D03J0D3D03003Q06D03Q063G0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 80
             },
@@ -252301,7 +252899,7 @@
                   "pct": 61
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI09T04S04J044G04G040044z0R04z0z0O0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI09E09004J0409E0404D04H04004E0E4G04G040094049e04V04M04E04z0z0J0%26dir%3drtl",
               "has_shot_chart": true
             },
             {
@@ -252359,7 +252957,7 @@
                   "pct": 75
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255b09j04I04t04z0z0d04%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dI03D033F09G06E03F03M06H03F030033G060306N0336M03E03P03k03F03z0j0306%26dir%3drtl",
               "sub_off": 60
             },
             {
@@ -252413,7 +253011,7 @@
                   "pct": 42
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0z0W04F04S04_09D04%255b0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dx03e03f03%255c03N03T0363E03P03006K03G0303G03D063303003K030300D39E0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 66
             },
@@ -252451,11 +253049,6 @@
                 "final_third_possession": 2,
                 "possession_lost": 9,
                 "recoveries": 2,
-                "tackles_won": {
-                  "made": 1,
-                  "total": 1,
-                  "pct": 100
-                },
                 "aerial_duels_won": {
                   "made": 2,
                   "total": 5,
@@ -252467,7 +253060,7 @@
                   "pct": 17
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0t09%255b044d04Y04c04F09j0%26dir%3drtl",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0f04N09G04S0944N04H04N04F04Q0944c04F09j0%26dir%3drtl",
               "has_shot_chart": true,
               "sub_off": 60
             }
@@ -252766,7 +253359,7 @@
               "expected_return": "Early March 2026",
               "season": {
                 "appearances": 10,
-                "matches": 10,
+                "matches": 11,
                 "goals": 3
               }
             },
@@ -252780,7 +253373,7 @@
               "expected_return": "شكوك حول مشاركة",
               "season": {
                 "appearances": 8,
-                "matches": 10,
+                "matches": 11,
                 "assists": 2
               }
             },
@@ -252794,7 +253387,7 @@
               "expected_return": "About 1-2 weeks",
               "season": {
                 "appearances": 4,
-                "matches": 10
+                "matches": 11
               }
             },
             {
@@ -252854,7 +253447,7 @@
                   "pct": 100
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0l04D04T04P0904009O04z0z0F0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0l044004P044904P0949009O04044z0z000%26dir%3dltr"
             },
             {
               "name": "B. Locko",
@@ -252921,7 +253514,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dM09K09I09L09009Y09z0z0z0e0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dD0D272D022K020729E0202202G0202402W02N022Q042z0z0z0D0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -252978,7 +253571,7 @@
                 },
                 "blocks": 2
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dj09g04H04g04z0D04z0c0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dX04R094004Y04J04D044004g04Q04l04z0c0%26dir%3dltr",
               "has_shot_chart": true
             },
             {
@@ -253032,7 +253625,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0%255c04%255e04c04E04O0404U04_0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dV04T04j04R04F04b04%255e04S04P04E04O0404U04_0%26dir%3dltr"
             },
             {
               "name": "Kenny Lala",
@@ -253128,7 +253721,7 @@
                   "pct": 43
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ044G04u04V09m04z0z0M0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ044G04L04V04S044P04E09m04H04h04T04T04g0%26dir%3dltr"
             },
             {
               "name": "Joris Chotard",
@@ -253189,7 +253782,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0z0P04T04h09X09z0J0%26dir%3dltr"
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dZ04R044z0E04W04L04D09D04N04049S09400904P04F09a04E04%255d0%26dir%3dltr"
             },
             {
               "name": "Pathe Mboup",
@@ -253245,7 +253838,7 @@
                   "pct": 46
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF09S099009Q09X09F09z0z0z0b0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dF0D400404F04E0F49E044004H09E04H04F0404004F04W04H04z0z0z000%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 72
             },
@@ -253306,7 +253899,7 @@
                   "pct": 33
                 }
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%256004V04Z09l04i04Y044z0a0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3d%255b04E04V04M09M09H04W0404K04K04J04T04H04M0D4044E04z0%255c0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 72
             },
@@ -253367,7 +253960,7 @@
                 },
                 "big_chances_scored": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0u03z009D03N03E03F06r03a0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0%255e03W03x03009D03M063E033E06U03E03E0303N06033a0%26dir%3dltr",
               "has_shot_chart": true,
               "sub_off": 72
             },
@@ -253427,7 +254020,7 @@
                 },
                 "blocks": 1
               },
-              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0c04v04p04c04t0%26dir%3dltr",
+              "heatmap": "https://imagecache.365scores.com/image/fetch/w_1080,q_auto:eco,f_webp/https%3a%2f%2fheatmap.365scores.com%2f%3fcompressed_data%3dz0%255d04F04v0404S04%255b04c04t0%26dir%3dltr",
               "has_shot_chart": true
             }
           ],
@@ -253662,7 +254255,7 @@
               "expected_return": "Late January 2027",
               "season": {
                 "appearances": 5,
-                "matches": 10
+                "matches": 11
               }
             },
             {
@@ -253680,7 +254273,7 @@
       "match_id": 559627,
       "fd_competition_code": "FL1",
       "s365_id": 4735201,
-      "recorded": false,
+      "recorded": true,
       "all_stats": {
         "yellow_cards": {
           "id": 1,
@@ -254028,13 +254621,13 @@
           "home": 46,
           "draw": 22,
           "away": 32,
-          "votes": 4947
+          "votes": 5071
         },
         "total_goals": {
           "line": 2.5,
           "under": 25,
           "over": 75,
-          "votes": 354
+          "votes": 374
         }
       },
       "top_performers": {
