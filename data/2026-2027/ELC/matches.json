@@ -1,6 +1,6 @@
 {
   "_meta": {
-    "last_synced": "2026-11-25T16:33:22.355071+00:00",
+    "last_synced": "2026-11-25T20:19:21.609274+00:00",
     "source": "football-data.org v4"
   },
   "data": [
@@ -25046,7 +25046,7 @@
         "winner": null
       },
       "utcDate": "2026-11-25T19:45:00Z",
-      "status": "SCHEDULED",
+      "status": "IN_PLAY",
       "matchday": 17,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -25079,11 +25079,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "DRAW",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -25133,7 +25133,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 201387,
+          "name": "John Martin",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -25164,7 +25171,7 @@
         "winner": null
       },
       "utcDate": "2026-11-25T19:45:00Z",
-      "status": "SCHEDULED",
+      "status": "LIVE",
       "matchday": 17,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -25197,11 +25204,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "AWAY_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 0,
+          "away": 1
         },
         "halfTime": {
           "home": null,
@@ -25251,7 +25258,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 217584,
+          "name": "Elliot Bell",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -25369,7 +25383,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 210716,
+          "name": "Matthew Corlett",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
@@ -25400,7 +25421,7 @@
         "winner": null
       },
       "utcDate": "2026-11-25T20:00:00Z",
-      "status": "SCHEDULED",
+      "status": "IN_PLAY",
       "matchday": 17,
       "stage": "REGULAR_SEASON",
       "group": null,
@@ -25433,11 +25454,11 @@
         "bench": []
       },
       "score": {
-        "winner": null,
+        "winner": "HOME_TEAM",
         "duration": "REGULAR",
         "fullTime": {
-          "home": null,
-          "away": null
+          "home": 1,
+          "away": 0
         },
         "halfTime": {
           "home": null,
@@ -25487,7 +25508,14 @@
       "goals": [],
       "bookings": [],
       "substitutions": [],
-      "referees": [],
+      "referees": [
+        {
+          "id": 14659,
+          "name": "James Bell",
+          "type": "REFEREE",
+          "nationality": "England"
+        }
+      ],
       "odds": {
         "homeWin": null,
         "draw": null,
